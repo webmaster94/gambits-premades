@@ -10,11 +10,11 @@
       "ko-fi": "https://ko-fi.com/gambit07"
     }
   ],
-  "version": "2.1.43",
+  "version": "99.0.0-v14dev",
   "compatibility": {
-    "minimum": 13.346,
-    "verified": 13.351,
-    "maximum": 13
+    "minimum": "14",
+    "verified": "14.360",
+    "maximum": "14.999"
   },
   "socket": true,
   "esmodules": [
@@ -227,24 +227,24 @@
         "id": "midi-qol",
         "type": "module",
         "compatibility": {
-          "minimum": "13.0.48",
-          "verified": "13.0.49"
+          "minimum": "14.0.5",
+          "verified": "14.0.5"
         }
       },
       {
         "id": "auraeffects",
         "type": "module",
         "compatibility": {
-          "minimum": "1.2.1",
-          "verified": "1.2.1"
+          "minimum": "2.1.1",
+          "verified": "2.1.1"
         }
       },
       {
         "id": "sequencer",
         "type": "module",
         "compatibility": {
-          "minimum": "3.6.7",
-          "verified": "3.6.7"
+          "minimum": "4.2.2",
+          "verified": "4.2.2"
         }
       },
       {
@@ -259,32 +259,16 @@
         "id": "lib-wrapper",
         "type": "module",
         "compatibility": {
-          "minimum": "1.13.3.0",
-          "verified": "1.13.3.0"
+          "minimum": "1.13.5.1",
+          "verified": "1.13.5.1"
         }
       },
       {
         "id": "dae",
         "type": "module",
         "compatibility": {
-          "minimum": "13.0.22",
-          "verified": "13.0.22"
-        }
-      },
-      {
-        "id": "region-attacher",
-        "type": "module",
-        "compatibility": {
-          "minimum": "1.9.1",
-          "verified": "1.9.1"
-        }
-      },
-      {
-        "id": "times-up",
-        "type": "module",
-        "compatibility": {
-          "minimum": "13.1.0",
-          "verified": "13.1.9"
+          "minimum": "14.0.0",
+          "verified": "14.0.6"
         }
       }
     ],
