@@ -1,4 +1,4 @@
-import { executeWorkflow, updateRegionPosition, hideTemplateElements, updateSettings, daeAddFlags, arcaneShotValidActivities } from "./hookUtils.js";
+import { executeWorkflow, updateRegionPosition, hideTemplateElements, applyRegionAttachment, updateSettings, daeAddFlags, arcaneShotValidActivities } from "./hookUtils.js";
 
 export function registerHooks() {
     Hooks.on("preUpdateToken", async (token, updateData, options, userId) => {
@@ -198,24 +198,37 @@ export function registerHooks() {
         }
     });
 
-    Hooks.on('createMeasuredTemplate', (templateDocument) => {
-        const template = canvas.templates.get(templateDocument.id);
-        if (template && (game.gpsSettings.hideTemplates || templateDocument.getFlag('gambits-premades', 'templateHiddenOA'))) {
-        hideTemplateElements(template);
+    // v14: placed templates are Region documents (flags.core.MeasuredTemplate); MeasuredTemplate CRUD/refresh hooks no longer fire
+    const isTemplateRegion = (doc) => !!doc?.getFlag?.('core', 'MeasuredTemplate');
+    Hooks.on('createRegion', (regionDocument) => {
+        if (!isTemplateRegion(regionDocument)) return;
+        const region = regionDocument.object;
+        if (region && (game.gpsSettings.hideTemplates || regionDocument.getFlag('gambits-premades', 'templateHiddenOA'))) {
+            hideTemplateElements(region);
         }
     });
 
-    Hooks.on('updateMeasuredTemplate', (templateDocument) => {
-        const template = canvas.templates.get(templateDocument.id);
-        if (template && (game.gpsSettings.hideTemplates || templateDocument.getFlag('gambits-premades', 'templateHiddenOA'))) {
-        hideTemplateElements(template);
+    Hooks.on('updateRegion', (regionDocument) => {
+        if (!isTemplateRegion(regionDocument)) return;
+        const region = regionDocument.object;
+        if (region && (game.gpsSettings.hideTemplates || regionDocument.getFlag('gambits-premades', 'templateHiddenOA'))) {
+            hideTemplateElements(region);
         }
     });
 
-    Hooks.on('refreshMeasuredTemplate', (template) => {
-        if (game.gpsSettings.hideTemplates || template.document.getFlag('gambits-premades', 'templateHiddenOA')) {
-            hideTemplateElements(template);
+    Hooks.on('refreshRegion', (region) => {
+        if (!isTemplateRegion(region.document)) return;
+        if (game.gpsSettings.hideTemplates || region.document.getFlag('gambits-premades', 'templateHiddenOA')) {
+            hideTemplateElements(region);
         }
+    });
+
+    // v14 replacement for the region-attacher module: the template's backing Region IS the region,
+    // so apply the item's configured region behaviors + flag contract directly to it.
+    Hooks.on('createRegion', async (regionDocument, options, userId) => {
+        if (game.user.id !== game.gps.getPrimaryGM()) return;
+        if (!isTemplateRegion(regionDocument)) return;
+        await applyRegionAttachment(regionDocument);
     });
 
     Hooks.on('updateToken', async (tokenDocument, updateData, options, userId) => {

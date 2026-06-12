@@ -430,7 +430,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
       async function rangedAttack({target, targetScale}) {
           const sourceScale = { x: source?.document?.texture?.scaleX ?? 1, y: source?.document?.texture?.scaleY ?? 1 }
           const amplitude = Sequencer.Helpers.random_float_between(0.0, 0.2);
-          let hitRay = new Ray(source, target);
+          let hitRay = new foundry.canvas.geometry.Ray(source, target); // v14: bare Ray global removed
           const shakeDirection = { x: Math.sign(hitRay.dx), y: Math.sign(hitRay.dy) };
           const values = {
               x: [0, -amplitude * shakeDirection.y, amplitude * shakeDirection.y, (-amplitude * shakeDirection.y) / 4, (amplitude * shakeDirection.y) / 4, 0],

@@ -102,7 +102,7 @@ export async function freeSpellUse({ item, actor, activity }) {
 
             const effectData = {
                 name: effectNameNext,
-                icon: item.img,
+                img: item.img, // v14: ActiveEffect icon field removed
                 duration: {},
                 origin: item.uuid,
                 flags: { dae: { specialDuration } }
@@ -130,7 +130,17 @@ export async function freeSpellUse({ item, actor, activity }) {
 export async function gmUpdateTemplateSize({ templateUuid, templateSize }) {
     if(!templateUuid || !templateSize) return;
     let template = await fromUuid(`${templateUuid}`);
-    if(template) await template.update({"distance": templateSize});
+    if(!template) return;
+    if(template.documentName === "Region") {
+        // v14: template-backed Region — size lives on the shape data in pixels
+        const distancePixels = canvas.dimensions?.distancePixels ?? (canvas.grid.size / canvas.grid.distance);
+        const shapes = template.shapes.map(s => {
+            const o = s.toObject();
+            if("radius" in o) o.radius = templateSize * distancePixels;
+            return o;
+        });
+        await template.update({shapes});
+    } else await template.update({"distance": templateSize});
 }
 
 export async function closeDialogById({ dialogId }) {
@@ -138,7 +148,8 @@ export async function closeDialogById({ dialogId }) {
       ui.activeWindow.dialogState.programmaticallyClosed = true;
       ui.activeWindow.close();
   } else {
-      let dialog = Object.values(ui.windows).find(d => d.dialogState && d.dialogState.dialogId === dialogId);
+      // v14: ui.windows only tracked AppV1; DialogV2 instances live in foundry.applications.instances
+      let dialog = [...foundry.applications.instances.values()].find(d => d.dialogState && d.dialogState.dialogId === dialogId);
       if (dialog) {
           dialog.dialogState.programmaticallyClosed = true;
           dialog.close();
@@ -163,7 +174,8 @@ export function pauseDialogById({ dialogId, timeLeft, isPaused }) {
     if (ui.activeWindow && ui.activeWindow.dialogState && ui.activeWindow.dialogState.dialogId === dialogId) {
         updateDialogState(ui.activeWindow);
     } else {
-        let dialog = Object.values(ui.windows).find(d => d.dialogState && d.dialogState.dialogId === dialogId);
+        // v14: ui.windows only tracked AppV1; DialogV2 instances live in foundry.applications.instances
+        let dialog = [...foundry.applications.instances.values()].find(d => d.dialogState && d.dialogState.dialogId === dialogId);
         if (dialog) {
             updateDialogState(dialog);
         }
@@ -1418,7 +1430,7 @@ export async function replaceChatCard({ actorUuid, itemUuid, chatContent, rollDa
             data: chatData
         };
 
-        let itemContent = await renderTemplate("modules/midi-qol/templates/item-card.hbs", itemCardData);
+        let itemContent = await foundry.applications.handlebars.renderTemplate("modules/midi-qol/templates/item-card.hbs", itemCardData);
 
         let combinedContent = `
             <div class="custom-message">
@@ -1431,7 +1443,7 @@ export async function replaceChatCard({ actorUuid, itemUuid, chatContent, rollDa
         `;
 
         ChatMessage.create({
-            user: actorPlayer.id,
+            author: actorPlayer.id, // v14: ChatMessage user field removed
             content: combinedContent,
             speaker: ChatMessage.getSpeaker({ token: token })
         });
@@ -1475,7 +1487,7 @@ export async function ritualSpellUse({ workflowUuid }) {
 
                 let content = `<span style='text-wrap: wrap;'><img src="${workflow.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Utils.Helpers.CastRitually", { actorName: workflow.actor.name, itemName: workflow.item.name })}</span>`
                 let chatData = {
-                user: getPrimaryGM(),
+                author: getPrimaryGM(), // v14: ChatMessage user field removed
                 content: content,
                 whisper: getPrimaryGM()
                 };
@@ -1630,7 +1642,7 @@ export async function remoteAbilityTest({spellcasting, actorUuid}) {
         rollId = chatMessage.id;
     });
 
-    await actor.rollAbilityTest(spellcasting);
+    await actor.rollAbilityCheck({ability: spellcasting}); // v14/dnd5e 5.x: rollAbilityTest removed
 
     return {skillRoll: rollId};
 }

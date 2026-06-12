@@ -88,9 +88,12 @@ export function updateRegionPosition(region, tokenDocument, updatedElevation = n
 }
 
 export function refreshTemplateVisibility() {
-    canvas.templates.placeables.forEach(template => {
-        if (game.gpsSettings.hideTemplates || template.document.getFlag('gambits-premades', 'templateHiddenOA')) {
-            hideTemplateElements(template);
+    // v14: placed templates render as Region placeables (flags.core.MeasuredTemplate);
+    // canvas.templates.placeables only holds previews
+    canvas.scene?.regions?.forEach(regionDocument => {
+        if (!regionDocument.getFlag('core', 'MeasuredTemplate')) return;
+        if (game.gpsSettings.hideTemplates || regionDocument.getFlag('gambits-premades', 'templateHiddenOA')) {
+            if (regionDocument.object) hideTemplateElements(regionDocument.object);
         }
     });
 }
@@ -98,16 +101,18 @@ export function refreshTemplateVisibility() {
 export function hideTemplateElements(template) {
     if (!template) return;
 
-    // Check if we're on the template layer, in which case I still want template visibility
-    if(canvas?.activeLayer?.constructor?.name === "TemplateLayer") return;
+    // Check if we're on the template/region layer, in which case I still want template visibility
+    if (canvas?.activeLayer === canvas?.templates || canvas?.activeLayer === canvas?.regions) return;
 
-    // Hide primary template
+    // Hide primary template/region placeable
     template.alpha = 0;
 
-    // Hide highlight
-    const hl = canvas.interface.grid.getHighlightLayer(template.highlightId);
-    if (hl) {
-        hl.alpha = 0;
+    // Hide highlight (legacy MeasuredTemplate placeables only — Region placeables have no highlight layer)
+    if (template.highlightId) {
+        const hl = canvas.interface.grid.getHighlightLayer(template.highlightId);
+        if (hl) {
+            hl.alpha = 0;
+        }
     }
 
     // Hide border
@@ -117,6 +122,35 @@ export function hideTemplateElements(template) {
 
     //Reduce unneeded (I think?) refresh activity
     template.hitArea = null;
+}
+
+// v14 replacement for the region-attacher module. A placed template is already a Region, so we
+// recreate region-attacher's contract on it: copy the item's configured RegionBehaviors onto the
+// backing region and write the flags the automations read (attachedTemplate/attachedRegion/itemUuid/actorUuid).
+export async function applyRegionAttachment(regionDocument) {
+    const originUuid = regionDocument.getFlag('dnd5e', 'origin');
+    if (!originUuid) return;
+    const origin = await fromUuid(originUuid);
+    if (!origin) return;
+    const activity = origin.documentName === 'Item' ? null : origin;
+    const item = activity?.item ?? origin;
+    if (!item?.flags) return;
+    const raFlags = item.flags['region-attacher'];
+    const activityKey = activity?.id ?? 'dnd5eactivity000';
+    if (!raFlags?.attachRegionToTemplate?.[activityKey]) return;
+    await regionDocument.update({
+        flags: {
+            'region-attacher': {
+                // proxy-uuid form keeps legacy geometry reads working via the MeasuredTemplate shim
+                attachedTemplate: regionDocument.uuid.replace('.Region.', '.MeasuredTemplate.'),
+                attachedRegion: regionDocument.uuid,
+                itemUuid: item.uuid,
+                actorUuid: item.actor?.uuid
+            }
+        }
+    });
+    const behaviors = (raFlags.regionBehaviors?.[activityKey] ?? []).map(b => foundry.utils.deepClone(b));
+    if (behaviors.length) await regionDocument.createEmbeddedDocuments('RegionBehavior', behaviors);
 }
 
 export function registerWrapping() {
@@ -147,7 +181,7 @@ export function registerWrapping() {
             { x: data.x + wPx / 2, y: data.y + hPx / 2, elevation: data.elevation }
         ];
 
-        const isInside = points.some(p => region.testPoint(p, p.elevation));
+        const isInside = points.some(p => region.testPoint(p)); // v14: single point-object signature, elevation included in p
         return isInside || wrapped.call(this, region, data);
     }, 'MIXED');
 
