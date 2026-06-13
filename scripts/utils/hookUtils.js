@@ -89,7 +89,6 @@ export function updateRegionPosition(region, tokenDocument, updatedElevation = n
 
 export function refreshTemplateVisibility() {
     // v14: placed templates render as Region placeables (flags.core.MeasuredTemplate);
-    // canvas.templates.placeables only holds previews
     canvas.scene?.regions?.forEach(regionDocument => {
         if (!regionDocument.getFlag('core', 'MeasuredTemplate')) return;
         if (game.gpsSettings.hideTemplates || regionDocument.getFlag('gambits-premades', 'templateHiddenOA')) {

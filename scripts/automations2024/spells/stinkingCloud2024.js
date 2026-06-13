@@ -44,7 +44,7 @@ export async function stinkingCloud2024({tokenUuid, regionUuid, regionScenario, 
     if (saveResult.failedSaves.size !== 0) {
         let browserUser = MidiQOL.playerForActor(token.actor);
         let chatData = {
-            user: browserUser.id,
+            author: browserUser.id,
             speaker: ChatMessage.getSpeaker({ token: token }),
             content: game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations2024.Spells.StinkingCloud2024.Content"),
         };

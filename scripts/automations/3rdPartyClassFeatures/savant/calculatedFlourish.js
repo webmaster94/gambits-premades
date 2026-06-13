@@ -92,7 +92,7 @@ export async function calculatedFlourish({workflowData,workflowType,workflowComb
         `;
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableAttackTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
         let result;
 

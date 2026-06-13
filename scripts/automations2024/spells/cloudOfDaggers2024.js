@@ -26,7 +26,7 @@ export async function cloudOfDaggers2024({tokenUuid, regionUuid, regionScenario,
         const template = await fromUuidSync(workflow.templateUuid);
         const templateId = template.id;
         let turn = game.combat.round + '-' + game.combat.turn;
-        const region = await fromUuid(template.flags["region-attacher"]?.attachedRegion);
+        const region = template?.documentName === "Region" ? template : await fromUuid(template.flags["region-attacher"]?.attachedRegion);
         for(let target of workflow.targets) {
             await region.setFlag('gambits-premades', 'spell.cloudOfDaggers.' + target.id + '.turn', turn);
         }
@@ -96,12 +96,16 @@ export async function cloudOfDaggers2024({tokenUuid, regionUuid, regionScenario,
                     "scope": "global",
                     "command": `
                         if(args[0].macroPass === \"preActiveEffects\") {
-                            let template = canvas.templates.placeables.find(t => t.id === '${templateId}');
+                            let regionDoc = canvas.scene.regions.get('${templateId}');
+                            if(!regionDoc) return;
+                            let shape = regionDoc.shapes.at(0)?.toObject();
+                            if(!shape) return;
+                            let origin = { x: shape.x, y: shape.y };
 
                             let config = {
                                 gridHighlight: true,
                                 icon: {texture: 'icons/svg/dice-target.svg', borderVisible: true},
-                                location: {obj: template, limitMaxRange: 30, showRange: true}
+                                location: {obj: origin, limitMaxRange: 30, showRange: true}
                             }
 
                             actor.sheet.minimize();
@@ -110,7 +114,11 @@ export async function cloudOfDaggers2024({tokenUuid, regionUuid, regionScenario,
 
                             if(!position) return actor.sheet.maximize();
 
-                            template.document.update({ x: position.x, y: position.y });
+                            let dx = position.x - origin.x;
+                            let dy = position.y - origin.y;
+                            shape.x += dx;
+                            shape.y += dy;
+                            await regionDoc.update({ shapes: [shape] });
 
                             actor.sheet.maximize();
                         }

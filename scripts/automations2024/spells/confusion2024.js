@@ -56,7 +56,7 @@ export async function confusion2024({ speaker, actor, token, character, item, ar
     
             let actorPlayer = MidiQOL.playerForActor(token.actor);
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: content1,
                 roll: directionRoll
@@ -110,7 +110,7 @@ export async function confusion2024({ speaker, actor, token, character, item, ar
         if(content) {
             let actorPlayer = MidiQOL.playerForActor(token.actor);
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: `${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Confusion.RollForIs", { actorName: token.actor.name, result: result })}<br>${content}`
             };
@@ -157,7 +157,7 @@ export async function confusion2024({ speaker, actor, token, character, item, ar
             if(animEnabled) {
                 new Sequence()
                 .effect()
-                .atLocation(template.object)
+                .atLocation(canvas.scene.regions.get(template.id)?.object ?? template.object ?? template)
                 .file("jaamod.misc.qm")
                 .filter("ColorMatrix", { hue:60, saturate:1, contrast: 1 })
                 .scaleToObject(1.5)
