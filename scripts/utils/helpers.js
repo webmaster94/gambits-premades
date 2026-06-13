@@ -143,43 +143,38 @@ export async function gmUpdateTemplateSize({ templateUuid, templateSize }) {
     } else await template.update({"distance": templateSize});
 }
 
+function findDialogById(dialogId) {
+    if (ui.activeWindow?.dialogState?.dialogId === dialogId) return ui.activeWindow;
+    // v14: ui.windows only tracked AppV1; DialogV2 instances live in foundry.applications.instances
+    return [...foundry.applications.instances.values()].find(d => d.dialogState?.dialogId === dialogId);
+}
+
 export async function closeDialogById({ dialogId }) {
-  if (ui.activeWindow && ui.activeWindow.dialogState && ui.activeWindow.dialogState.dialogId === dialogId) {
-      ui.activeWindow.dialogState.programmaticallyClosed = true;
-      ui.activeWindow.close();
-  } else {
-      // v14: ui.windows only tracked AppV1; DialogV2 instances live in foundry.applications.instances
-      let dialog = [...foundry.applications.instances.values()].find(d => d.dialogState && d.dialogState.dialogId === dialogId);
-      if (dialog) {
-          dialog.dialogState.programmaticallyClosed = true;
-          dialog.close();
-      }
-  }
+    let dialog = findDialogById(dialogId);
+    if (!dialog) return;
+    dialog.dialogState.programmaticallyClosed = true;
+    dialog.close();
 }
 
 export function pauseDialogById({ dialogId, timeLeft, isPaused }) {
-    const updateDialogState = (dialog) => {
-        dialog.timeLeft = timeLeft;
-        dialog.isPaused = isPaused;
-        dialog.pausedTime = isPaused ? Date.now() : dialog.pausedTime;
-
-        if (!isPaused) {
-            dialog.endTime += (Date.now() - dialog.pausedTime);
-            requestAnimationFrame(dialog.animate);
-        }
-
-        dialog.updateTimer(dialog.timeLeft, isPaused);
-    };
-
-    if (ui.activeWindow && ui.activeWindow.dialogState && ui.activeWindow.dialogState.dialogId === dialogId) {
-        updateDialogState(ui.activeWindow);
-    } else {
-        // v14: ui.windows only tracked AppV1; DialogV2 instances live in foundry.applications.instances
-        let dialog = [...foundry.applications.instances.values()].find(d => d.dialogState && d.dialogState.dialogId === dialogId);
-        if (dialog) {
-            updateDialogState(dialog);
-        }
+    let dialog = findDialogById(dialogId);
+    if (!dialog) return;
+    if (dialog.setTimeLeft && dialog.setPaused && dialog.updateUI) {
+        dialog.setTimeLeft(timeLeft);
+        dialog.setPaused(isPaused);
+        dialog.updateUI(true);
+        return;
     }
+    dialog.timeLeft = timeLeft;
+    dialog.isPaused = isPaused;
+    dialog.pausedTime = isPaused ? Date.now() : dialog.pausedTime;
+
+    if (!isPaused && dialog.endTime && dialog.pausedTime) {
+        dialog.endTime += (Date.now() - dialog.pausedTime);
+        if (dialog.animate) requestAnimationFrame(dialog.animate);
+    }
+
+    if (dialog.updateTimer) dialog.updateTimer(dialog.timeLeft, isPaused);
 }
 
 export async function rollAsUser({ rollParams, type }) {
@@ -900,9 +895,7 @@ export async function process3rdPartyReactionDialog({
       }
     ],
 
-    render: (event) => {
-        const dialog = event.target;
-
+    render: (event, dialog = event.target) => {
         dialog.dialogState = dialogState;
         dialog.isPaused = false;
         dialog._closing = false;
@@ -1097,14 +1090,14 @@ export async function process3rdPartyReactionDialog({
         await game.gps.socket.executeAsUser("deleteChatMessage", getPrimaryGM(), { chatId: notificationId });
         }
 
-        if (dialog.dialogState.programmaticallyClosed)
+        if (dialog.dialogState?.programmaticallyClosed)
         result = { userDecision: false, programmaticallyClosed: true, source, type };
-        else if (!dialog.dialogState.interacted)
+        else if (!dialog.dialogState?.interacted)
         result = { userDecision: false, programmaticallyClosed: false, source, type };
 
-        if (source && source === "user" && type === "multiDialog" && !dialog.dialogState.programmaticallyClosed)
+        if (source && source === "user" && type === "multiDialog" && !dialog.dialogState?.programmaticallyClosed)
         await game.gps.socket.executeAsUser("closeDialogById", getPrimaryGM(), { dialogId: dialogId });
-        else if (source && source === "gm" && type === "multiDialog" && !dialog.dialogState.programmaticallyClosed)
+        else if (source && source === "gm" && type === "multiDialog" && !dialog.dialogState?.programmaticallyClosed)
         await game.gps.socket.executeAsUser("closeDialogById", browserUser, { dialogId: dialogId });
     },
 

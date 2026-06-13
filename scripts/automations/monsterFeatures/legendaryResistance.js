@@ -13,8 +13,10 @@ export async function legendaryResistance({workflowData,workflowType,workflowCom
     let browserUser;
 
     for (const validTokenPrimary of findValidTokens) {
-        let saveFailure = workflow.failedSaves.has(validTokenPrimary);
-        if(!saveFailure) return;
+        let failedToken = workflow.failedSaves.has(validTokenPrimary)
+            ? validTokenPrimary
+            : Array.from(workflow.failedSaves).find(t => t.document?.uuid === validTokenPrimary.document.uuid);
+        if(!failedToken) continue;
 
         let chosenItem = validTokenPrimary.actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === gpsUuid);
         let itemProperName = chosenItem?.name;
@@ -79,8 +81,8 @@ export async function legendaryResistance({workflowData,workflowType,workflowCom
             else if(source && source === "gm") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", gmUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
             if(!itemRoll) continue;
 
-            workflow.saves.add(validTokenPrimary);
-            workflow.failedSaves.delete(validTokenPrimary);
+            workflow.saves.add(failedToken);
+            workflow.failedSaves.delete(failedToken);
             workflow.legendaryResistanceUsed = true;
         }
     }
