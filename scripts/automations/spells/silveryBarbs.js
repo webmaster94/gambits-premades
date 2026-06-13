@@ -40,7 +40,7 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
         let dialogContent;
         const rollDetailSetting = MidiQOL.safeGetGameSetting('midi-qol', 'ConfigSettings').hideRollDetails;
         const nearbyFriendlies = MidiQOL.findNearby(null, validTokenPrimary, 60, { includeToken: true });
-        let validFriendlies = nearbyFriendlies.filter(token => token.document.disposition === validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary.document.uuid,token.document.uuid) && !token.actor.effects.getName(`${itemProperName} - Advantage`));
+        let validFriendlies = nearbyFriendlies.filter(token => token.document.disposition === validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary.document.uuid,token.document.uuid) && !token.actor.effects.find(e => e.name === `${itemProperName} - Advantage` && !e.duration?.expired && !e.disabled));
 
         if(workflowType === "save") {
             let targets = Array.from(workflow.saves).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && MidiQOL.computeDistance(validTokenPrimary, t, {wallsBlock: true, includeCover: true}) <= 60);
@@ -127,7 +127,7 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
         }
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableSaveTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
         
         let result;
@@ -172,33 +172,39 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
 
             let effectData = [
                 {
-                    "icon": `${chosenItem.img}`,
+                    "img": `${chosenItem.img}`,
                     "origin": `${validTokenPrimary.actor.uuid}`,
                     "duration": {
-                    "seconds": 60
+                    "value": 60,
+                    "units": "seconds"
+                    },
+                    "start": {
+                    "time": game.time?.worldTime ?? 0
                     },
                     "disabled": false,
                     "name": "Silvery Barbs - Advantage",
+                    "system": {
                     "changes": [
                     {
                         "key": "flags.midi-qol.advantage.attack.all",
-                        "mode": 0,
+                        "type": "custom",
                         "value": "1",
                         "priority": 20
                     },
                     {
                         "key": "flags.midi-qol.advantage.check.all",
-                        "mode": 0,
+                        "type": "custom",
                         "value": "1",
                         "priority": 20
                     },
                     {
                         "key": "flags.midi-qol.advantage.save.all",
-                        "mode": 0,
+                        "type": "custom",
                         "value": "1",
                         "priority": 20
                     }
-                    ],
+                    ]
+                    },
                     "transfer": false,
                     "flags": {
                     "dae": {

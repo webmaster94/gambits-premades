@@ -1,7 +1,7 @@
 export async function enervation({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "postActiveEffects") {
         let targets = Array.from(workflow.failedSaves);
-        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "9c513478-ffd9-4d5a-9e39-3d72bf0518ab");
+        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "9c513478-ffd9-4d5a-9e39-3d72bf0518ab" && !e.duration?.expired);
 
         if(!targets || targets.length >= 3) {
             const concEffect = MidiQOL.getConcentrationEffect(actor, item.uuid);
@@ -26,7 +26,7 @@ export async function enervation({ speaker, actor, token, character, item, args,
             let content = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Enervation.DealDamageHeal", { damageTotal: workflow.damageTotal, healAmount: healAmount })} <img src="${target.actor.img}" width="30" height="30" style="border:0px"></span>`
             let actorPlayer = MidiQOL.playerForActor(actor);
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: content
             };
@@ -51,7 +51,11 @@ export async function enervation({ speaker, actor, token, character, item, args,
         let effectDataRange = [{
             "origin": item.uuid,
             "duration": {
-                "seconds": 60
+                "value": 60,
+                "units": "seconds"
+            },
+            "start": {
+                "time": game.time?.worldTime ?? 0
             },
             "disabled": false,
             "name": "Enervation - Range",
@@ -76,16 +80,16 @@ export async function enervation({ speaker, actor, token, character, item, args,
                 "overrideName": "",
                 "script": auraTargets,
                 "stashedChanges": [],
-                "stashedStatuses": []
+                "stashedStatuses": [],
+                "changes": [
+                    {
+                        "key": "macro.itemMacro",
+                        "type": "custom",
+                        "value": `function.game.gps.enervation ${actor.uuid} ${item.uuid}`,
+                        "priority": 20
+                    }
+                ]
             },
-            "changes": [
-                {
-                    "key": "macro.itemMacro",
-                    "mode": 0,
-                    "value": `function.game.gps.enervation ${actor.uuid} ${item.uuid}`,
-                    "priority": 20
-                }
-            ],
             "transfer": false,
             "flags": {
                 "dae": {
@@ -107,7 +111,8 @@ export async function enervation({ speaker, actor, token, character, item, args,
         let rangeEffect = await MidiQOL.socket().executeAsGM("createEffects", { actorUuid: actor.uuid, effects: effectDataRange });
 
         const concEffect = MidiQOL.getConcentrationEffect(actor, item.uuid);
-        await concEffect.addDependent(rangeEffect[0]);
+        const rangeEffectDoc = actor.effects.get(rangeEffect[0]._id ?? rangeEffect[0].id) ?? rangeEffect[0];
+        await rangeEffectDoc.setFlag("dnd5e", "dependentOn", concEffect.uuid);
 
         await effectData.setFlag("gambits-premades", "enervationTargetUuid", targetUuids);
         await effectData.setFlag("gambits-premades", "enervationCastLevel", workflow.castData.castLevel);
@@ -139,7 +144,7 @@ export async function enervation({ speaker, actor, token, character, item, args,
         let dialogTitlePrimary = `${token.actor.name} | ${item.name}`;
         let browserUser = game.gps.getBrowserUser({ actorUuid: actor.uuid });
         let gmUser = game.gps.getPrimaryGM();
-        let effectData = actor.appliedEffects.find(e => e.name === item.name);
+        let effectData = actor.appliedEffects.find(e => e.name === item.name && !e.duration?.expired);
         const targetUuids = effectData.getFlag("gambits-premades", "enervationTargetUuid");
         const castLevel = effectData.getFlag("gambits-premades", "enervationCastLevel");
         const numDice = castLevel - 1;
@@ -201,7 +206,7 @@ export async function enervation({ speaker, actor, token, character, item, args,
                 let content = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Enervation.DealDamageHeal", { damageTotal: damageRoll.total, healAmount: healAmount })} <img src="${target.actor.img}" width="30" height="30" style="border:0px"></span>`
                 let actorPlayer = MidiQOL.playerForActor(actor);
                 let chatData = {
-                    user: actorPlayer.id,
+                    author: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: content
                 };

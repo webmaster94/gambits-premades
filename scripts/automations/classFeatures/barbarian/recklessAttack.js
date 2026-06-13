@@ -60,26 +60,28 @@ export async function recklessAttack({ speaker, actor, token, character, item, a
             await actor.setFlag("midi-qol", "checkRecklessAttack", true);
 
             let effectData = [{
-                "changes": [
-                    {
-                        "key": "flags.midi-qol.grants.advantage.attack.all",
-                        "value": "1",
-                        "mode": 0,
-                        "priority": 20
-                    },
-                    {
-                        "key": "flags.midi-qol.advantage.attack.all",
-                        "value": "activity?.ability === 'str' && activity?.actionType === 'mwak'",
-                        "mode": 0,
-                        "priority": 20
-                    },
-                    {
-                        "key": "macro.itemMacro",
-                        "mode": 0,
-                        "value": "function.game.gps.recklessAttack",
-                        "priority": 20
-                    },
-                ],
+                "system": {
+                    "changes": [
+                        {
+                            "key": "flags.midi-qol.grants.advantage.attack.all",
+                            "value": "1",
+                            "type": "custom",
+                            "priority": 20
+                        },
+                        {
+                            "key": "flags.midi-qol.advantage.attack.all",
+                            "value": "activity?.ability === 'str' && activity?.actionType === 'mwak'",
+                            "type": "custom",
+                            "priority": 20
+                        },
+                        {
+                            "key": "macro.itemMacro",
+                            "type": "custom",
+                            "value": "function.game.gps.recklessAttack",
+                            "priority": 20
+                        },
+                    ]
+                },
                 "transfer": false,
                 "disabled": false,
                 "flags": {
@@ -99,7 +101,7 @@ export async function recklessAttack({ speaker, actor, token, character, item, a
                     }
                 },
                 "name": "Reckless Attack - Effects",
-                "icon": item.img,
+                "img": item.img,
                 "origin": item.uuid
             }];
 
@@ -113,10 +115,10 @@ export async function recklessAttack({ speaker, actor, token, character, item, a
     }
 
     if(args?.[0] === "each" && args?.[2].turn === "endTurn") {
-        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "872c2cfd-5f58-4e64-a804-2b0db2c65900");
+        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "872c2cfd-5f58-4e64-a804-2b0db2c65900" && !e.duration?.expired);
         if(effectData) {
-            let removeAdv = effectData.changes.filter(change => change.key !== "flags.midi-qol.advantage.attack.all");
-            await MidiQOL.socket().executeAsGM("updateEffects",{actorUuid:actor.uuid,updates:[{_id: effectData.id,changes: removeAdv}]});
+            let removeAdv = effectData.system.changes.filter(change => change.key !== "flags.midi-qol.advantage.attack.all");
+            await MidiQOL.socket().executeAsGM("updateEffects",{actorUuid:actor.uuid,updates:[{_id: effectData.id,"system.changes": removeAdv}]});
         }
     }
 

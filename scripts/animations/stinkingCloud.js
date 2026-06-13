@@ -4,7 +4,7 @@ export function stinkingCloud({template, itemUuid}) {
 
     new Sequence()
         .effect()
-            .atLocation(template)
+            .atLocation(canvas.scene.regions.get(template.id)?.object ?? template.object ?? template)
             .file("jb2a.fog_cloud.02.green")
             .scaleToObject()
             .tieToDocuments(template)

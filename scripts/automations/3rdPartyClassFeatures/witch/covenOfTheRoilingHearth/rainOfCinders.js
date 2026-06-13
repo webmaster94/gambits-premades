@@ -17,7 +17,7 @@ export async function rainOfCinders({workflowData,workflowType,workflowCombat}) 
     let browserUser;
 
     for (const validTokenPrimary of findValidTokens) {
-        if(!validTokenPrimary.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "2300dad6-8de1-4fa5-9878-40cec8ee37aa")) {
+        if(!validTokenPrimary.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "2300dad6-8de1-4fa5-9878-40cec8ee37aa" && !e.duration?.expired)) {
             if(debugEnabled) game.gps.logInfo(`${itemName} for ${validTokenPrimary.actor.name} failed at parent effect active`);
             continue;
         }
@@ -55,7 +55,7 @@ export async function rainOfCinders({workflowData,workflowType,workflowCombat}) 
         let result;
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableAttackTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
@@ -135,7 +135,7 @@ export async function rainOfCinders({workflowData,workflowType,workflowCombat}) 
                     let content = game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartyClassFeatures.Witch.CovenOfTheRoilingHearth.SootSpiritAttackedHit", { sootSpiritsRemaining: itemUsesRemaining - 1 })
                     let actorPlayer = MidiQOL.playerForActor(validTokenPrimary.actor);
                     let chatData = {
-                        user: actorPlayer.id,
+                        author: actorPlayer.id,
                         speaker: ChatMessage.getSpeaker({ token: validTokenPrimary }),
                         content: content
                     };
@@ -175,7 +175,7 @@ export async function rainOfCinders({workflowData,workflowType,workflowCombat}) 
                     let content = game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartyClassFeatures.Witch.CovenOfTheRoilingHearth.SootSpiritAttackedMiss", { sootSpiritsRemaining: itemUsesRemaining })
                     let actorPlayer = MidiQOL.playerForActor(validTokenPrimary.actor);
                     let chatData = {
-                        user: actorPlayer.id,
+                        author: actorPlayer.id,
                         speaker: ChatMessage.getSpeaker({ token: validTokenPrimary }),
                         content: content
                     };

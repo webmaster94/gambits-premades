@@ -27,7 +27,7 @@ export async function entangle({ tokenUuid, regionUuid, regionScenario, speaker,
         actor = tokenDocument.actor;
         item = await fromUuid(region.flags["region-attacher"].itemUuid);
 
-        const hasEffectApplied = actor.appliedEffects.find(e => e.name === "Restrained");
+        const hasEffectApplied = actor.appliedEffects.find(e => e.name === "Restrained" && !e.duration?.expired);
         if(!hasEffectApplied) return;
 
         let dialogId = "entangle";

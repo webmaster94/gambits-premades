@@ -82,7 +82,7 @@ export async function sentinel2024({workflowData,workflowType,workflowCombat}) {
         `;
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableAttackTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
         let result;
@@ -160,21 +160,27 @@ export async function sentinel2024({workflowData,workflowType,workflowCombat}) {
             if(checkHits) {
                 let effectData = [
                     {
-                        "icon": `${chosenItem.img}`,
+                        "img": `${chosenItem.img}`,
                         "origin": `${validTokenPrimary.actor.uuid}`,
                         "duration": {
-                        "seconds": 1
+                        "value": 1,
+                        "units": "seconds"
+                        },
+                        "start": {
+                        "time": game.time?.worldTime ?? 0
                         },
                         "disabled": false,
                         "name": "Sentinel - Movement",
-                        "changes": [
-                        {
-                            "key": "system.attributes.movement.all",
-                            "mode": 0,
-                            "value": "0",
-                            "priority": 20
-                        }
-                        ],
+                        "system": {
+                            "changes": [
+                            {
+                                "key": "system.attributes.movement.all",
+                                "type": "custom",
+                                "value": "0",
+                                "priority": 20
+                            }
+                            ]
+                        },
                         "transfer": false
                     }
                 ];

@@ -69,14 +69,16 @@ export async function caltrops({tokenUuid, regionUuid, regionScenario, originX, 
                     "img": chosenItem.img,
                     "origin": effectOriginActor.uuid,
                     "disabled": false,
-                    "changes": [
-                        {
-                            "key": "system.attributes.movement.all",
-                            "mode": 0,
-                            "value": "-10",
-                            "priority": 20
-                        }
-                    ],
+                    "system": {
+                        "changes": [
+                            {
+                                "key": "system.attributes.movement.all",
+                                "type": "custom",
+                                "value": "-10",
+                                "priority": 20
+                            }
+                        ]
+                    },
                     "transfer": false,
                     "flags": {
                         "dae": {
@@ -93,7 +95,7 @@ export async function caltrops({tokenUuid, regionUuid, regionScenario, originX, 
 
                 let actorPlayer = MidiQOL.playerForActor(token.actor);
                 let chatData = {
-                    user: actorPlayer.id,
+                    author: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Items.Caltrops.PiercingDamageTaken", { actorName: token.actor.name, damage: 1 })} <div><img src="${token.actor.img}" width="30" height="30" style="border:0px"></div></div>`
                 };

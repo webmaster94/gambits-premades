@@ -52,39 +52,45 @@ export async function staffOfWithering({ speaker, actor, token, character, item,
             if (saveResult.failedSaves.size !== 0) {
                 let effectData = [
                 {
-                    "icon": item.img,
+                    "img": item.img,
                     "origin": item.uuid,
                     "duration": {
-                        "seconds": 3600
+                        "value": 3600,
+                        "units": "seconds"
+                    },
+                    "start": {
+                        "time": game.time?.worldTime ?? 0
                     },
                     "disabled": false,
                     "name": "Staff of Withering",
-                    "changes": [
-                        {
-                        "key": "flags.midi-qol.disadvantage.check.str",
-                        "mode": 0,
-                        "value": "1",
-                        "priority": 20
-                        },
-                        {
-                        "key": "flags.midi-qol.disadvantage.check.con",
-                        "mode": 0,
-                        "value": "1",
-                        "priority": 20
-                        },
-                        {
-                        "key": "flags.midi-qol.disadvantage.save.str",
-                        "mode": 0,
-                        "value": "1",
-                        "priority": 20
-                        },
-                        {
-                        "key": "flags.midi-qol.disadvantage.save.con",
-                        "mode": 0,
-                        "value": "1",
-                        "priority": 20
-                        }
-                    ]
+                    "system": {
+                        "changes": [
+                            {
+                            "key": "flags.midi-qol.disadvantage.check.str",
+                            "type": "custom",
+                            "value": "1",
+                            "priority": 20
+                            },
+                            {
+                            "key": "flags.midi-qol.disadvantage.check.con",
+                            "type": "custom",
+                            "value": "1",
+                            "priority": 20
+                            },
+                            {
+                            "key": "flags.midi-qol.disadvantage.save.str",
+                            "type": "custom",
+                            "value": "1",
+                            "priority": 20
+                            },
+                            {
+                            "key": "flags.midi-qol.disadvantage.save.con",
+                            "type": "custom",
+                            "value": "1",
+                            "priority": 20
+                            }
+                        ]
+                    }
                 }
                 ];
                 await MidiQOL.socket().executeAsGM("createEffects", { actorUuid: target.actor.uuid, effects: effectData });

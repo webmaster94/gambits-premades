@@ -12,7 +12,7 @@ export async function rabbitHop({ speaker, actor, token, character, item, args, 
     let bootsEquipped = actor.items.find(i => i.identifier === "boots-of-striding-and-springing" && i.system.equipped && i.system.attuned);
 
     // Check if actor has the 'Jump' spell active
-    let jumpActive = actor.effects.some(eff => eff.name === "Jump");  
+    let jumpActive = actor.effects.some(eff => eff.name === "Jump" && !eff.duration?.expired && !eff.disabled);
 
     if (bootsEquipped && jumpActive) {
         rabbitHop *= 6;  // Both boots and Jump spell active grants a x6 jump distance

@@ -1,6 +1,6 @@
 export async function bootsOfSpeed({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if (args[0].macroPass === "preItemRoll") {
-        if(!actor.appliedEffects.some(e => e.name === "Boots of Speed")) return;
+        if(!actor.appliedEffects.some(e => e.name === "Boots of Speed" && !e.duration?.expired)) return;
 
         await foundry.applications.api.DialogV2.wait({
             window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Items.BootsOfSpeed.Windowtitle") },
@@ -44,20 +44,22 @@ export async function bootsOfSpeed({ speaker, actor, token, character, item, arg
     if(args[0] === "off" && args[2]["expiry-reason"]?.includes("longRest")) {
         await updateEffect(actor, item, 100);
         let effectData = await actor.allApplicableEffects().find(e => e.flags["gambits-premades"]?.gpsUuid === "61bf2fcd-bc81-4b38-a4bb-41bc2159c9cf");
-        await effectData.update({"disabled" : false});
+        await effectData.update({"disabled" : false, "duration.expired" : false});
     }
 
     else if(args[0] === "off" && args[2].efData.flags["gambits-premades"]?.gpsUuid === "61bf2fcd-bc81-4b38-a4bb-41bc2159c9cf") {
         let effectDataCurrent = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "6274a76f-2c25-4f80-8cc0-70e02f8d880c");
         if(effectDataCurrent) await effectDataCurrent.delete();
         let effectData = await actor.allApplicableEffects().find(e => e.flags["gambits-premades"]?.gpsUuid === "61bf2fcd-bc81-4b38-a4bb-41bc2159c9cf");
-        await effectData.update({"disabled" : false});
+        await effectData.update({"disabled" : false, "duration.expired" : false});
     }
 
     else if(args[0] === "off" && args[2].efData.flags["gambits-premades"]?.gpsUuid === "6274a76f-2c25-4f80-8cc0-70e02f8d880c") {
         await updateEffect(actor, item);
+        let expiredEffect = actor.effects.find(e => e.flags["gambits-premades"]?.gpsUuid === "6274a76f-2c25-4f80-8cc0-70e02f8d880c" && e.duration?.expired);
+        if(expiredEffect) await expiredEffect.delete();
         let effectData = await actor.allApplicableEffects().find(e => e.flags["gambits-premades"]?.gpsUuid === "61bf2fcd-bc81-4b38-a4bb-41bc2159c9cf");
-        await effectData.update({"disabled" : false});
+        await effectData.update({"disabled" : false, "duration.expired" : false});
     }
 
     async function updateEffect(actor, item, duration) {
@@ -69,12 +71,12 @@ export async function bootsOfSpeed({ speaker, actor, token, character, item, arg
             effectDataCurrent = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "6274a76f-2c25-4f80-8cc0-70e02f8d880c");
             manualTrigger = true;
         }
-        let currentSeconds = effectDataCurrent?.duration?.seconds;
+        let currentSeconds = effectDataCurrent?.duration?.units === "seconds" ? effectDataCurrent?.duration?.value : undefined;
         let currentRounds;
-        if(!currentSeconds) currentRounds = effectDataCurrent?.duration?.remaining;
+        if(!currentSeconds) currentRounds = effectDataCurrent?.duration?.units === "rounds" ? effectDataCurrent?.duration?.value : undefined;
         else currentRounds = currentSeconds / 6;
         if(currentRounds || duration) {
-            await effectData.update({ "duration.rounds": duration ? duration : currentRounds });
+            await effectData.update({ "duration.value": duration ? duration : currentRounds, "duration.units": "rounds" });
         }
         if(manualTrigger) await effectDataCurrent.delete();
     }

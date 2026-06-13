@@ -60,26 +60,28 @@ export async function recklessAttack2024({ speaker, actor, token, character, ite
             await actor.setFlag("midi-qol", "checkRecklessAttack2024", true);
 
             let effectData = [{
-                "changes": [
-                    {
-                        "key": "flags.midi-qol.grants.advantage.attack.all",
-                        "value": "1",
-                        "mode": 0,
-                        "priority": 20
-                    },
-                    {
-                        "key": "flags.midi-qol.advantage.attack.all",
-                        "value": "activity?.ability === 'str'",
-                        "mode": 0,
-                        "priority": 20
-                    },
-                    {
-                        "key": "macro.itemMacro",
-                        "mode": 0,
-                        "value": "function.game.gps.recklessAttack2024",
-                        "priority": 20
-                    },
-                ],
+                "system": {
+                    "changes": [
+                        {
+                            "key": "flags.midi-qol.grants.advantage.attack.all",
+                            "value": "1",
+                            "type": "custom",
+                            "priority": 20
+                        },
+                        {
+                            "key": "flags.midi-qol.advantage.attack.all",
+                            "value": "activity?.ability === 'str'",
+                            "type": "custom",
+                            "priority": 20
+                        },
+                        {
+                            "key": "macro.itemMacro",
+                            "type": "custom",
+                            "value": "function.game.gps.recklessAttack2024",
+                            "priority": 20
+                        },
+                    ]
+                },
                 "transfer": false,
                 "disabled": false,
                 "flags": {
@@ -104,7 +106,7 @@ export async function recklessAttack2024({ speaker, actor, token, character, ite
                     }
                 },
                 "name": "Reckless Attack - Effects",
-                "icon": item.img,
+                "img": item.img,
                 "origin": item.uuid
             }];
 

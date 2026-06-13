@@ -2,7 +2,7 @@ export async function contagiousHealing({ speaker, actor, token, character, item
     if(args[0].macroPass === "isDamaged") {
         const rangeCheck = MidiQOL.findNearby(null, token, 10, { includeToken: false });
         const withinRange = rangeCheck.filter(t => (!t.actor.flags["gambits-premades"].contagiousHealingApplied) && t.document.disposition === token.document.disposition && !["undead","construct"].includes(MidiQOL.raceOrType(t)));
-        let effectData = token.actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "dabf704f-a59b-43b4-8552-9aa18734a362");
+        let effectData = token.actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "dabf704f-a59b-43b4-8552-9aa18734a362" && !e.duration?.expired);
 
         if (withinRange.length > 0) {
             const randomToken = withinRange[Math.floor(Math.random() * withinRange.length)];
@@ -27,7 +27,7 @@ export async function contagiousHealing({ speaker, actor, token, character, item
             let actorPlayer = MidiQOL.playerForActor(effectOriginToken.actor);
 
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: effectOriginToken }),
                 content: game.i18n.localize(content)
             };
@@ -40,7 +40,7 @@ export async function contagiousHealing({ speaker, actor, token, character, item
 
     else if(args[0].macroPass === "postActiveEffects") {
         let target = workflow.targets.first();
-        let effectData = target.actor.appliedEffects.find(e => e.name === macroItem.name);
+        let effectData = target.actor.appliedEffects.find(e => e.name === macroItem.name && !e.duration?.expired);
         let spellcasting = actor.system.attributes.spellcasting;
         let spellMod = actor.system.abilities[spellcasting].mod;
         let castLevel = workflow.castData.castLevel - 1;
@@ -64,7 +64,7 @@ export async function contagiousHealing({ speaker, actor, token, character, item
     }
 
     else if(args[0] === "on") {
-        let effectData = token.actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "dabf704f-a59b-43b4-8552-9aa18734a362");
+        let effectData = token.actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "dabf704f-a59b-43b4-8552-9aa18734a362" && !e.duration?.expired);
         if(!effectData) return;
         let effectOriginToken = await fromUuid(effectData.getFlag("gambits-premades", "contagiousHealingTokenUuid"));
         if(!effectOriginToken) return;

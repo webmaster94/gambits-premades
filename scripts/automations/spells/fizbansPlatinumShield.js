@@ -8,7 +8,7 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
             
             const rangeCheck = MidiQOL.findNearby(null, token, 60, { includeToken: true });
             const withinRange = rangeCheck.filter(t => {
-                const hasShield = t.actor.appliedEffects.some(e => e.name === "Fizban's Platinum Shield");
+                const hasShield = t.actor.appliedEffects.some(e => e.name === "Fizban's Platinum Shield" && !e.duration?.expired);
                 return !hasShield && t.document.disposition === token.document.disposition;
             });
             
@@ -72,7 +72,8 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
                 
                 let originItemUuid = macroItem.getFlag("gambits-premades", "fizbansPlatShieldItem");
                 const concEffect = MidiQOL.getConcentrationEffect(actor, originItemUuid);
-                await concEffect.addDependent(newEffect[0]);
+                let newEffectDoc = await fromUuid(newEffect[0].uuid);
+                await newEffectDoc?.setFlag('dnd5e', 'dependentOn', concEffect.uuid);
                 
                 await MidiQOL.socket().executeAsGM("removeEffects", {
                     actorUuid: currentTarget.actor.uuid,

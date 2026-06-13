@@ -26,25 +26,32 @@ export async function zephyrStrike({ speaker, actor, token, character, item, arg
                 callback: async (event, button, dialog) => {
                 workflow.tracker.advantage.add(true, "Zephyr Strike");
     
-                let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "507baaea-a55b-43b5-af50-6fefba1b3220");
+                let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "507baaea-a55b-43b5-af50-6fefba1b3220" && !e.duration?.expired);
                 await effectData.setFlag("gambits-premades", "zephyrStrikeUsed", true);
     
                     let effectDataSpeed = [
                     {
-                        "icon": `${item.img}`,
+                        "img": `${item.img}`,
                         "origin": `${actor.uuid}`,
                         "disabled": false,
                         "duration": {
-                            "turns": 1
+                            "value": 1,
+                            "units": "turns"
+                        },
+                        "start": {
+                            "round": game.combat?.round ?? 0,
+                            "turn": game.combat?.turn ?? 0
                         },
                         "name": "Zephyr Strike - Speed",
-                        "changes": [
-                        {
-                            "key": "system.attributes.movement.all",
-                            "value": "+ 30",
-                            "mode": CONST.ACTIVE_EFFECT_MODES.CUSTOM
-                        }
-                        ],
+                        "system": {
+                            "changes": [
+                            {
+                                "key": "system.attributes.movement.all",
+                                "value": "+ 30",
+                                "type": "custom"
+                            }
+                            ]
+                        },
                         "transfer": false
                     }
                 ];
@@ -65,7 +72,7 @@ export async function zephyrStrike({ speaker, actor, token, character, item, arg
     
     if(args[0].macroPass === "preDamageRollComplete") {
         if(workflow.activity?.actionType !== "mwak" && workflow.activity?.actionType !== "rwak") return;
-        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "507baaea-a55b-43b5-af50-6fefba1b3220");
+        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "507baaea-a55b-43b5-af50-6fefba1b3220" && !e.duration?.expired);
         let effectAdv = effectData.getFlag("gambits-premades", "zephyrStrikeUsed");
         let numDice = workflow.isCritical ? 2 : 1;
         if(effectAdv) {

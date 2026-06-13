@@ -70,20 +70,22 @@ export async function entropicWard({ speaker, actor, token, character, item, arg
                 "name": `${chosenItem.name} - Advantage`,
                 "img": chosenItem.img,
                 "type": "base",
-                "changes": [
-                    {
-                        "key": "flags.midi-qol.advantage.attack.all",
-                        "mode": 0,
-                        "value": "false",
-                        "priority": 20
-                    },
-                    {
-                        "key": "flags.midi-qol.onUseMacroName",
-                        "mode": 0,
-                        "value": "ItemMacro, postAttackRoll",
-                        "priority": 20
-                    }
-                ],
+                "system": {
+                    "changes": [
+                        {
+                            "key": "flags.midi-qol.advantage.attack.all",
+                            "type": "custom",
+                            "value": "false",
+                            "priority": 20
+                        },
+                        {
+                            "key": "flags.midi-qol.onUseMacroName",
+                            "type": "custom",
+                            "value": "ItemMacro, postAttackRoll",
+                            "priority": 20
+                        }
+                    ]
+                },
                 "transfer": true,
                 "flags": {
                     "dae": {
@@ -104,13 +106,13 @@ export async function entropicWard({ speaker, actor, token, character, item, arg
                     let updatedChanges = [
                         {
                             "key": "flags.midi-qol.advantage.attack.all",
-                            "mode": 0,
+                            "type": "custom",
                             "value": "\"@targetUuid\" === \"" + workflow.token.document.uuid + "\"",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.onUseMacroName",
-                            "mode": 0,
+                            "type": "custom",
                             "value": "ItemMacro, postAttackRoll",
                             "priority": 20
                         }
@@ -118,7 +120,7 @@ export async function entropicWard({ speaker, actor, token, character, item, arg
 
                     actor.updateEmbeddedDocuments("ActiveEffect", [{
                         _id: effectId,
-                        changes: updatedChanges
+                        "system.changes": updatedChanges
                     }]);
                 });
 

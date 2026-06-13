@@ -45,9 +45,13 @@ export async function stinkingCloud({tokenUuid, regionUuid, regionScenario, regi
         const effectData = [
             {
                 "name": "Asphyxiated",
-                "icon": "icons/svg/stoned.svg",
+                "img": "icons/svg/stoned.svg",
                 "duration": {
-                    "seconds": 6
+                    "value": 6,
+                    "units": "seconds"
+                },
+                "start": {
+                    "time": game.time?.worldTime ?? 0
                 },
                 "description": "An asphyxiated creature must spend their action retching and reeling"
             }
@@ -55,7 +59,7 @@ export async function stinkingCloud({tokenUuid, regionUuid, regionScenario, regi
         await MidiQOL.socket().executeAsGM("createEffects", { actorUuid: token.actor.uuid, effects: effectData });
         let browserUser = MidiQOL.playerForActor(token.actor);
         let chatData = {
-            user: browserUser.id,
+            author: browserUser.id,
             speaker: ChatMessage.getSpeaker({ token: token }),
             content: game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.Spells.StinkingCloud.Content"),
         };

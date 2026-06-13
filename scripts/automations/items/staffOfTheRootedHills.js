@@ -15,7 +15,7 @@ export async function staffOfTheRootedHills({ speaker, actor, token, character, 
             let content = game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.Items.StaffOfTheRootedHills.RestrainedBy")
             let actorPlayer = MidiQOL.playerForActor(actor);
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: content
             };

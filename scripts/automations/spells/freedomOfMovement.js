@@ -8,60 +8,65 @@ export async function freedomOfMovement({ speaker, actor, token, character, item
             "img": item.img,
             "origin": item.uuid,
             "type": "base",
-            "system": {},
-            "changes": [
+            "system": {
+                "changes": [
                 {
                 "key": "system.attributes.movement.ignoredDifficultTerrain",
-                "mode": 5,
+                "type": "override",
                 "value": "all",
                 "priority": 99
                 },
                 {
                 "key": "system.attributes.movement.burrow",
-                "mode": 5,
+                "type": "override",
                 "value": actor._source.system.attributes.movement.burrow ? actor._source.system.attributes.movement.burrow : 0,
                 "priority": 99
                 },
                 {
                 "key": "system.attributes.movement.climb",
-                "mode": 5,
+                "type": "override",
                 "value": actor._source.system.attributes.movement.climb ? actor._source.system.attributes.movement.climb : 0,
                 "priority": 99
                 },
                 {
                 "key": "system.attributes.movement.fly",
-                "mode": 5,
+                "type": "override",
                 "value": actor._source.system.attributes.movement.fly ? actor._source.system.attributes.movement.fly : 0,
                 "priority": 99
                 },
                 {
                 "key": "system.attributes.movement.swim",
-                "mode": 5,
+                "type": "override",
                 "value": actor._source.system.attributes.movement.swim ? actor._source.system.attributes.movement.swim : actor._source.system.attributes.movement.walk ? actor._source.system.attributes.movement.walk : 30,
                 "priority": 99
                 },
                 {
                 "key": "system.attributes.movement.walk",
-                "mode": 5,
+                "type": "override",
                 "value": actor._source.system.attributes.movement.walk ? actor._source.system.attributes.movement.walk : 30,
                 "priority": 99
                 },
                 {
                 "key": "system.traits.ci.value",
-                "mode": 0,
+                "type": "custom",
                 "value": "paralyzed",
                 "priority": 99
                 },
                 {
                 "key": "system.traits.ci.value",
-                "mode": 0,
+                "type": "custom",
                 "value": "restrained",
                 "priority": 99
                 }
-            ],
+                ]
+            },
             "disabled": false,
             "duration": {
-                "seconds": 3600
+                "value": 3600,
+                "units": "seconds"
+            },
+            "start": {
+                "time": game.time?.worldTime ?? 0
             },
             "transfer": false,
         }

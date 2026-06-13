@@ -31,7 +31,7 @@ export async function instinctiveCharm({workflowData,workflowType,workflowCombat
         
         let chosenItem = validTokenPrimary.actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === gpsUuid);
         let itemProperName = chosenItem?.name;
-        if(target.actor.appliedEffects.some(e => e.name === `${itemProperName} - Immunity`)) return;
+        if(target.actor.appliedEffects.some(e => e.name === `${itemProperName} - Immunity` && !e.duration?.expired)) return;
         const dialogTitlePrimary = `${validTokenPrimary.actor.name} | ${itemProperName}`;
         const dialogTitleGM = game.i18n.format("GAMBITSPREMADES.Dialogs.Common.WaitingForSelection", { actorName: validTokenPrimary.actor.name, itemName: itemProperName });
         browserUser = game.gps.getBrowserUser({ actorUuid: validTokenPrimary.actor.uuid });
@@ -59,7 +59,7 @@ export async function instinctiveCharm({workflowData,workflowType,workflowCombat
         `;
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Wizard.SchoolOfEnchantment.InstinctiveCharm.OptionAvailableAttackTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
         let result;
@@ -185,7 +185,7 @@ export async function instinctiveCharm({workflowData,workflowType,workflowCombat
                 if(hasCharmImmunity) ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.ClassFeatures.Wizard.SchoolOfEnchantment.InstinctiveCharm.CharmImmunity"));
                 let effectData = [
                     {
-                        "icon": `${chosenItem.img}`,
+                        "img": `${chosenItem.img}`,
                         "origin": `${validTokenPrimary.actor.uuid}`,
                         "disabled": false,
                         "name": `${chosenItem.name} - Immunity`,

@@ -30,7 +30,7 @@ export async function interception({workflowData,workflowType,workflowCombat}) {
         let damageTotals = workflow.damageRolls.map(roll => roll.total);
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableRollTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
         const rollDetailSetting = MidiQOL.safeGetGameSetting('midi-qol', 'ConfigSettings').hideRollDetails;
@@ -154,7 +154,7 @@ export async function interception({workflowData,workflowType,workflowCombat}) {
             let content = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Interception.ReduceDamageTakenBy", { itemProperName: itemProperName, targetName: target.actor.name, reduction: reroll.total })} <img src="${workflow.token.actor.img}" width="30" height="30" style="border:0px"></span>`;
             let actorPlayer = MidiQOL.playerForActor(validTokenPrimary.actor);
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: validTokenPrimary }),
                 content: content
             };

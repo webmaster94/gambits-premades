@@ -13,72 +13,78 @@ export async function powerWordPain({ speaker, actor, token, character, item, ar
                     "name": item.name,
                     "origin": item.uuid,
                     "duration": {
-                        "seconds": 99999
+                        "value": 99999,
+                        "units": "seconds"
+                    },
+                    "start": {
+                        "time": game.time?.worldTime ?? 0
                     },
                     "disabled": false,
                     "img": item.img,
-                    "changes": [
+                    "system": {
+                        "changes": [
                         {
                             "key": "macro.itemMacro",
-                            "mode": 0,
+                            "type": "custom",
                             "value": "function.game.gps.powerWordPain @itemUuid",
                             "priority": 20
                         },
                         {
                             "key": "system.attributes.movement.all",
-                            "mode": 0,
+                            "type": "custom",
                             "value": "10",
                             "priority": 90
                         },
                         {
                             "key": "flags.midi-qol.disadvantage.attack.all",
-                            "mode": 2,
+                            "type": "add",
                             "value": "1",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.disadvantage.check.all",
-                            "mode": 2,
+                            "type": "add",
                             "value": "1",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.disadvantage.save.cha",
-                            "mode": 2,
+                            "type": "add",
                             "value": "1",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.disadvantage.save.dex",
-                            "mode": 2,
+                            "type": "add",
                             "value": "1",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.disadvantage.save.int",
-                            "mode": 2,
+                            "type": "add",
                             "value": "1",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.disadvantage.save.str",
-                            "mode": 2,
+                            "type": "add",
                             "value": "1",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.disadvantage.save.wis",
-                            "mode": 2,
+                            "type": "add",
                             "value": "1",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.onUseMacroName",
-                            "mode": 0,
+                            "type": "custom",
                             "value": "function.game.gps.powerWordPain, prePreambleComplete",
                             "priority": 20
                         }
-                    ],
+                        ]
+                    },
                     "transfer": false,
                     "flags": {
                         "dae": {

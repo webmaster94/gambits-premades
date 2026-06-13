@@ -22,29 +22,32 @@ export async function torch({ speaker, actor, token, item, args, workflow }) {
   const lightEffect = [
     {
       origin: item.uuid,
-      duration: { seconds: 3600 },
+      duration: { value: 3600, units: "seconds" },
+      start: { time: game.time?.worldTime ?? 0 },
       disabled: false,
       name: item.name,
       img: item.img,
       type: "base",
-      changes: [
-        { key: "ATL.light.dim", mode: 0, value: `${rangeDim}`, priority: 20 },
-        { key: "ATL.light.bright", mode: 0, value: `${rangeBright}`, priority: 20 },
-        { key: "ATL.light.alpha", mode: 0, value: "0.25", priority: 20 },
-        { key: "ATL.light.angle", mode: 0, value: "360", priority: 20 },
-        { key: "ATL.light.luminosity", mode: 0, value: "0.5", priority: 20 },
-        { key: "ATL.light.color", mode: 0, value: "#ffb433", priority: 20 },
-        { key: "ATL.light.animation", mode: 0, value: "{ type: \"torch\", speed: 4, intensity: 4 }", priority: 20 },
-        { key: "ATL.light.attenuation", mode: 0, value: "0.75", priority: 20 },
-        { key: "ATL.light.contrast", mode: 0, value: "0.15", priority: 20 },
-        { key: "ATL.light.shadows", mode: 0, value: "0.2", priority: 20 },
-        {
-          key: "macro.itemMacro",
-          mode: 0,
-          value: "function.game.gps.torch",
-          priority: 20
-        }
-      ],
+      system: {
+        changes: [
+          { key: "ATL.light.dim", type: "custom", value: `${rangeDim}`, priority: 20 },
+          { key: "ATL.light.bright", type: "custom", value: `${rangeBright}`, priority: 20 },
+          { key: "ATL.light.alpha", type: "custom", value: "0.25", priority: 20 },
+          { key: "ATL.light.angle", type: "custom", value: "360", priority: 20 },
+          { key: "ATL.light.luminosity", type: "custom", value: "0.5", priority: 20 },
+          { key: "ATL.light.color", type: "custom", value: "#ffb433", priority: 20 },
+          { key: "ATL.light.animation", type: "custom", value: "{ type: \"torch\", speed: 4, intensity: 4 }", priority: 20 },
+          { key: "ATL.light.attenuation", type: "custom", value: "0.75", priority: 20 },
+          { key: "ATL.light.contrast", type: "custom", value: "0.15", priority: 20 },
+          { key: "ATL.light.shadows", type: "custom", value: "0.2", priority: 20 },
+          {
+            key: "macro.itemMacro",
+            type: "custom",
+            value: "function.game.gps.torch",
+            priority: 20
+          }
+        ]
+      },
       transfer: false,
       flags: {
         "gambits-premades": { gpsUuid: gpsUuid }
@@ -52,7 +55,7 @@ export async function torch({ speaker, actor, token, item, args, workflow }) {
     }
   ];
 
-  const activeLight = actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === gpsUuid);
+  const activeLight = actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === gpsUuid && !e.duration?.expired);
   const canThrow = game.modules.get("item-piles")?.active;
   const hasRemaining = (item.system.quantity !== 0);
 

@@ -9,22 +9,22 @@ export async function confusion2024({ speaker, actor, token, character, item, ar
         if(changeType === true) {
             const newChange = {
                 key: "system.attributes.movement.walk",
-                mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+                type: 'override',
                 value: "0",
                 priority: 20
             };
     
-            const updatedChanges = [...findEffect.changes, newChange];
-            await findEffect.update({ 'changes': updatedChanges });
+            const updatedChanges = [...findEffect.system.changes, newChange];
+            await findEffect.update({ system: {changes: updatedChanges} });
         }
     
         if(changeType === false) {
-            const removeChanges = findEffect.changes.filter(change => 
-                !(change.key === "system.attributes.movement.walk" && change.mode === CONST.ACTIVE_EFFECT_MODES.OVERRIDE && change.value === "0")
+            const removeChanges = findEffect.system.changes.filter(change =>
+                !(change.key === "system.attributes.movement.walk" && change.type === 'override' && change.value === "0")
             );
     
-            if (findEffect.changes.length !== removeChanges.length) {
-                await findEffect.update({ 'changes': removeChanges });
+            if (findEffect.system.changes.length !== removeChanges.length) {
+                await findEffect.update({ system: {changes: removeChanges} });
             }
         }
     }

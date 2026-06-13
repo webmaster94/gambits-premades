@@ -2,7 +2,14 @@ export async function defileGround({ speaker, actor, token, character, item, arg
     if(args[0].macroPass === "postActiveEffects") {
         const template = await fromUuidSync(args[0].templateUuid);
         const distanceTotal = actor.classes.druid?.system.levels < 10 ? 10 : 20;
-        await template.update({distance:distanceTotal});
+        if(template?.documentName === "Region") {
+            const shape = template.shapes.at(0)?.toObject();
+            if(shape?.radius !== undefined) {
+                shape.radius = distanceTotal * canvas.dimensions.distancePixels;
+                await template.update({shapes: [shape]});
+            }
+        }
+        else await template.update({distance:distanceTotal});
         const templateId = template.id;
         let itemData = [{
             "name": `${item.name} - Move`,
@@ -69,19 +76,22 @@ export async function defileGround({ speaker, actor, token, character, item, arg
                     "scope": "global",
                     "command": `
                         if(args[0].macroPass === \"preActiveEffects\") {
-                        let template = canvas.templates.placeables.find(t => t.id === '${templateId}');
+                        let regionDoc = canvas.scene.regions.get('${templateId}');
+                        let shape = regionDoc.shapes.at(0).toObject();
 
                         let config = {
                             gridHighlight: true,
                             icon: {texture: 'icons/svg/dice-target.svg', borderVisible: true},
-                            location: {obj: template, limitMaxRange: 30, showRange: true}
+                            location: {obj: {x: shape.x, y: shape.y}, limitMaxRange: 30, showRange: true}
                         }
 
                         let position = await Sequencer.Crosshair.show(config);
 
                         if(!position) return;
 
-                        template.document.update({ x: position.x, y: position.y });
+                        shape.x = position.x;
+                        shape.y = position.y;
+                        await regionDoc.update({ shapes: [shape] });
                         await MidiQOL.setBonusActionUsed(actor);
                     }`
                 }
@@ -128,7 +138,7 @@ export async function defileGround({ speaker, actor, token, character, item, arg
         let itemCheck = originActor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === "f3bca81e-885d-4f45-aac4-c817eba4efc2");
         item = originActor.items.find(i => i.identifier === "defile-ground");
         
-        let effectCheck = originActor.appliedEffects.find(e => e.name === `${item.name} Template`);
+        let effectCheck = originActor.appliedEffects.find(e => e.name === `${item.name} Template` && !e.duration?.expired);
         if(!effectCheck)
         {
             await originActor.deleteEmbeddedDocuments("Item", [itemCheck.id]);

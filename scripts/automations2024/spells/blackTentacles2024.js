@@ -66,7 +66,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
             if (skillCheck.failedSaves.size === 0) {
                 await game.gps.socket.executeAsUser("gmToggleStatus", gmUser, {tokenUuid: `${token.document.uuid}`, status: "restrained", active: false });
                 let chatData = {
-                user: browserUser.id,
+                author: browserUser.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: `You successfully escape from Black Tentacles!`
                 };
@@ -74,7 +74,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
             }
             else {
                 let chatData = {
-                user: browserUser.id,
+                author: browserUser.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: `You are unable to escape Black Tentacles this turn.`
                 };
@@ -131,7 +131,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
                 if (skillCheck.failedSaves.size === 0) {
                     await game.gps.socket.executeAsUser("gmToggleStatus", gmUser, {tokenUuid: `${token.document.uuid}`, status: "restrained", active: false });
                     let chatData = {
-                    user: browserUser.id,
+                    author: browserUser.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `<span style='text-wrap: wrap;'>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.Spells.BlackTentacles.EscapeSucceeded")}</span>`
                     };
@@ -140,7 +140,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
                 }
                 else {
                     let chatData = {
-                    user: browserUser.id,
+                    author: browserUser.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `<span style='text-wrap: wrap;'>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.Spells.BlackTentacles.EscapeFailed")}</span>`
                     };

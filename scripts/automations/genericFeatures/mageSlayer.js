@@ -24,14 +24,16 @@ export async function mageSlayer({workflowData,workflowType,workflowCombat}) {
                     "name": `${chosenItem.name} - Advantage`,
                     "img": chosenItem.img,
                     "type": "base",
-                    "changes": [
-                      {
-                        "key": "flags.midi-qol.advantage.save.all",
-                        "mode": 0,
-                        "value": "1",
-                        "priority": 20
-                      }
-                    ],
+                    "system": {
+                      "changes": [
+                        {
+                          "key": "flags.midi-qol.advantage.save.all",
+                          "type": "custom",
+                          "value": "1",
+                          "priority": 20
+                        }
+                      ]
+                    },
                     "transfer": false,
                     "flags": {
                       "dae": {
@@ -110,7 +112,7 @@ export async function mageSlayer({workflowData,workflowType,workflowCombat}) {
             `;
 
             let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableAttackTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-            let chatData = { user: gmUser, content: content, roll: false };
+            let chatData = { author: gmUser, content: content, roll: false };
             let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
             let result;

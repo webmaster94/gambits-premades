@@ -13,7 +13,7 @@ export async function dissonantWhispers({ speaker, actor, token, character, item
 
             if (hasDeafened) {
                 let chatData = {
-                    user: actorPlayer.id,
+                    author: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: game.i18n.localize(content)
                 };
@@ -69,7 +69,7 @@ export async function dissonantWhispers({ speaker, actor, token, character, item
                     await game.gps.socket.executeAsGM("moveTokenByOriginPoint", {originX: token.center.x, originY: token.center.y, targetUuid: target.document.uuid, distance: targetMovementSpeed });
 
                     let chatData = {
-                        user: gmUser,
+                        author: gmUser,
                         speaker: ChatMessage.getSpeaker({ token: token }),
                         content: game.i18n.localize(`The target moved ${targetMovementSpeed} feet away from ${token.actor.name}. The target doesn't move into obviously dangerous ground, adjust the movement if this occurs.`)
                     };

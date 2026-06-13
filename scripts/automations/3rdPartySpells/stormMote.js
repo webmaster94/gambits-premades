@@ -135,7 +135,7 @@ export async function stormMote({ speaker, actor, token, character, item, args, 
         if (workflow.targets.size === 1) {
             let target = workflow.targets.first();
             for (let i = 0; i < numMotes; i++) {
-                let effectData = target.actor.effects.find(e => e.name === "Storm Mote");
+                let effectData = target.actor.effects.find(e => e.name === "Storm Mote" && !e.duration?.expired && !e.disabled);
                 let offset = offsets[i % offsets.length];
 
                 if(animEnabled) {
@@ -159,7 +159,7 @@ export async function stormMote({ speaker, actor, token, character, item, args, 
             for (let target of workflow.targets) {
                 let givenMotes = await target.actor.getFlag("gambits-premades", "stormMotesGiven")
                 for (let i = 0; i < givenMotes; i++) {
-                    let effectData = target.actor.effects.find(e => e.name === "Storm Mote");
+                    let effectData = target.actor.effects.find(e => e.name === "Storm Mote" && !e.duration?.expired && !e.disabled);
                     let offset = offsets[i % offsets.length];
 
                     if(animEnabled) {

@@ -32,21 +32,21 @@ export async function strokeOfLuck({ speaker, actor, token, character, item, arg
         `;
         
         let content = `<span style='text-wrap: wrap;'><img src="${token.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Rogue.StrokeOfLuck.ReactionAvailableSaveTrigger", { actorName: token.actor.name, itemName: macroItem.name })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
         let result;
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
             let userDialogArgs = { dialogTitle: dialogTitlePrimary, dialogContent, dialogId, initialTimeLeft, validTokenPrimaryUuid: token.document.uuid, source: "user", type: "multiDialog", browserUser: browserUser, notificationId: notificationMessage._id };
-            
+
             let gmDialogArgs = { dialogTitle: dialogTitleGM, dialogContent, dialogId, initialTimeLeft, validTokenPrimaryUuid: token.document.uuid, source: "gm", type: "multiDialog", notificationId: notificationMessage._id };
-            
+
             result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
         } else {
             result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
         }
-                
+
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result || {};
 
         if (!userDecision) {
@@ -65,7 +65,7 @@ export async function strokeOfLuck({ speaker, actor, token, character, item, arg
 
     if(args[0] === "off") {
         let effectData = Array.from(actor.allApplicableEffects()).find(e => e.name === item.name);
-        await effectData.update({"disabled" : false});
+        await effectData.update({"disabled" : false, "duration.expired" : false});
         if(item.system.uses.spent >= item.system.uses.max) return;
 
         let msgHistory = [];
@@ -107,7 +107,7 @@ export async function strokeOfLuck({ speaker, actor, token, character, item, arg
         `;
 
         let content = `<span style='text-wrap: wrap;'><img src="${token.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Rogue.StrokeOfLuck.ReactionAvailableSaveTrigger", { actorName: token.actor.name, itemName: macroItem.name })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
         let result;
@@ -137,14 +137,14 @@ export async function strokeOfLuck({ speaker, actor, token, character, item, arg
 
                 let actorPlayer = MidiQOL.playerForActor(actor);
                 let chatData = {
-                    user: actorPlayer.id,
+                    author: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: content,
                     whisper: actorPlayer.id
                 };
                 ChatMessage.create(chatData);
 
-                
+
                 await item.update({"system.uses.spent":item.system.uses.spent + 1})
             }
 
@@ -156,7 +156,7 @@ export async function strokeOfLuck({ speaker, actor, token, character, item, arg
 
                 let actorPlayer = MidiQOL.playerForActor(actor);
                 let chatData = {
-                    user: actorPlayer.id,
+                    author: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: content,
                     whisper: actorPlayer.id

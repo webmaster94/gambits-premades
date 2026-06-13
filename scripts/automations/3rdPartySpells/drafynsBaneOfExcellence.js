@@ -31,7 +31,7 @@ export async function drafynsBaneOfExcellence({ speaker, actor, token, character
         }
         let content = `<div class="midi-qol-flex-container"><div class="midi-qol-target-npc midi-qol-target-name" id="${token.id}"></br>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartySpells.DrafynsBaneOfExcellence.Natural20CancelledAttack")}</div><div><img src="${token.actor.img}" width="30" height="30" style="border:0px"></div></div>`;
         let chatData = {
-            user: actor.id,
+            author: actor.id,
             speaker: ChatMessage.getSpeaker({ token: token }),
             content: content
         };
@@ -39,7 +39,7 @@ export async function drafynsBaneOfExcellence({ speaker, actor, token, character
     }
     if(workflowType && workflowType === "save") {
         const workflow = await MidiQOL.Workflow.getWorkflow(workflowData);
-        let workflowTargets = Array.from(workflow.saves).filter(t => t.document.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "e6e24759-a9d3-4993-b0f2-6328010a6520"));
+        let workflowTargets = Array.from(workflow.saves).filter(t => t.document.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "e6e24759-a9d3-4993-b0f2-6328010a6520" && !e.duration?.expired));
         let validTargets = workflowTargets.filter(t => workflow.saveRolls.find(roll => roll.data.actorUuid === t.actor.uuid && roll.dice[0].total === 20));
         if(validTargets <= 0) return;
 
@@ -59,7 +59,7 @@ export async function drafynsBaneOfExcellence({ speaker, actor, token, character
 
             let content = `<div class="midi-qol-flex-container"><div class="midi-qol-target-npc midi-qol-target-name" id="${target.id}"></br>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartySpells.DrafynsBaneOfExcellence.Natural20CancelledSave")}</div><div><img src="${target.actor.img}" width="30" height="30" style="border:0px"></div></div>`;
             let chatData = {
-                user: target.actor.id,
+                author: target.actor.id,
                 speaker: ChatMessage.getSpeaker({ token: target }),
                 content: content
             };

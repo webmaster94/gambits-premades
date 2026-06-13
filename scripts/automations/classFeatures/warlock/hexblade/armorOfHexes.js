@@ -1,6 +1,6 @@
 export async function armorOfHexes({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "isAttacked") {
-        if(!workflow.actor.appliedEffects.some(e => e.name === "Hexblade's Curse: Target")) return;
+        if(!workflow.actor.appliedEffects.some(e => e.name === "Hexblade's Curse: Target" && !e.duration?.expired)) return;
         let target = workflow.targets.first();
         if(item.parent.uuid !== target.actor.uuid) return;
         if (MidiQOL.hasUsedReaction(target.actor)) return;
@@ -57,7 +57,7 @@ export async function armorOfHexes({ speaker, actor, token, character, item, arg
             if(rollData.total >= 4) {
                 let actorPlayer = MidiQOL.playerForActor(actor);
                 let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: `${target.actor.name} used Armor of Hexes and successfully avoided the attack.`
                 };
@@ -69,7 +69,7 @@ export async function armorOfHexes({ speaker, actor, token, character, item, arg
             else {
                 let actorPlayer = MidiQOL.playerForActor(actor);
                 let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: `${target.actor.name} used Armor of Hexes but was unable to avoid the attack.`
                 };

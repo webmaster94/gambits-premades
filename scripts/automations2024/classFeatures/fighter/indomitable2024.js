@@ -54,7 +54,7 @@ export async function indomitable2024({workflowData,workflowType,workflowCombat}
 
         let result;
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.OptionAvailableSaveTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { user: gmUser, content: content, roll: false };
+        let chatData = { author: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
@@ -99,15 +99,16 @@ export async function indomitable2024({workflowData,workflowType,workflowCombat}
                         "img": chosenItem.img,
                         "origin": chosenItem.uuid,
                         "type": "base",
-                        "system": {},
-                        "changes": [
-                            {
-                            "key": "system.bonuses.abilities.save",
-                            "mode": 2,
-                            "value": `${validTokenPrimary.actor.classes?.fighter.system.levels}`,
-                            "priority": 20
-                            }
-                        ],
+                        "system": {
+                            "changes": [
+                                {
+                                "key": "system.bonuses.abilities.save",
+                                "type": "add",
+                                "value": `${validTokenPrimary.actor.classes?.fighter.system.levels}`,
+                                "priority": 20
+                                }
+                            ]
+                        },
                         "disabled": false,
                         "flags": {
                             "dae": {

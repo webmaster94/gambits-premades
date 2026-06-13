@@ -163,7 +163,7 @@ export async function opportunityAttackScenarios({tokenUuid, regionUuid, regionS
     }
 
     //Check if token is disengaged and origin token does not have Sentinel
-    let isDisengaged = token.actor.effects.some(e => e.name.toLowerCase() === "disengage");
+    let isDisengaged = token.actor.effects.some(e => e.name.toLowerCase() === "disengage" && !e.duration?.expired && !e.disabled);
     if(isDisengaged && !hasSentinel) {
         if(debugEnabled) game.gps.logInfo(`Opportunity Attack for ${effectOriginActor.name} failed because token is using disengage`);
         return;
@@ -184,7 +184,7 @@ export async function opportunityAttackScenarios({tokenUuid, regionUuid, regionS
     }
 
     //Check if origin token is Charmed by initiating token
-    let isCharmed = effectOriginActor.appliedEffects.find(e => e.name.toLowerCase() === "charmed");
+    let isCharmed = effectOriginActor.appliedEffects.find(e => e.name.toLowerCase() === "charmed" && !e.duration?.expired);
     if(isCharmed) {
         let charmerItem = fromUuidSync(isCharmed.origin);
         let charmer;
@@ -246,7 +246,7 @@ export async function opportunityAttackScenarios({tokenUuid, regionUuid, regionS
     let dialogTitleGM = game.i18n.format("GAMBITSPREMADES.Dialogs.Common.WaitingForSelection", { actorName: effectOriginActor.name, itemName: dialogTitle });
 
     let content = `<span style='text-wrap: wrap;'><img src="${effectOriginToken.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.GenericFeatures.OpportunityAttack.ReactionAvailableOpportunityAttack", { actorName: effectOriginToken.actor.name })}</span>`
-    let chatData = { user: gmUser, content: content, roll: false };
+    let chatData = { author: gmUser, content: content, roll: false };
     let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
     if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
@@ -339,21 +339,27 @@ export async function opportunityAttackScenarios({tokenUuid, regionUuid, regionS
 
             let effectData = [
                 {
-                    "icon": `${hasSentinel.img}`,
+                    "img": `${hasSentinel.img}`,
                     "origin": `${effectOriginActor.uuid}`,
                     "duration": {
-                    "seconds": 1
+                    "value": 1,
+                    "units": "seconds"
+                    },
+                    "start": {
+                    "time": game.time?.worldTime ?? 0
                     },
                     "disabled": false,
                     "name": "Sentinel - Movement",
+                    "system": {
                     "changes": [
                     {
                         "key": "system.attributes.movement.all",
-                        "mode": 0,
+                        "type": "custom",
                         "value": "0",
                         "priority": 20
                     }
-                    ],
+                    ]
+                    },
                     "transfer": false
                 }
             ];
@@ -758,9 +764,9 @@ async function handleMwakRange(effectOriginActor, region) {
     if (!effectOriginActor.flags["midi-qol"]?.range?.mwak) return false;
 
     let mwakExpire = effectOriginActor.appliedEffects
-        .filter(effect => effect.duration.turns == 1)
+        .filter(effect => effect.duration.units === "turns" && effect.duration.value == 1 && !effect.duration.expired)
         .reduce((acc, effect) => {
-            const change = effect.changes.find(change => change.key == "flags.midi-qol.range.mwak");
+            const change = effect.system.changes.find(change => change.key == "flags.midi-qol.range.mwak");
             return change ? acc + Number(change.value) : acc;
         }, 0);
 

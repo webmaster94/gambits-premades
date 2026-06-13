@@ -10,7 +10,7 @@ export async function shroomOfDoom({ speaker, actor, token, character, item, arg
         let actorPlayer = MidiQOL.playerForActor(actor);
 
         let chatData = {
-            user: actorPlayer.id,
+            author: actorPlayer.id,
             speaker: ChatMessage.getSpeaker({ token: token }),
             content: content
         };

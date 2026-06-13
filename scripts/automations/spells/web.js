@@ -72,7 +72,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
             if (skillCheck.failedSaves.size === 0) {
                 await game.gps.socket.executeAsUser("gmToggleStatus", gmUser, {tokenUuid: `${token.document.uuid}`, status: "restrained", active: false });
                 let chatData = {
-                    user: browserUser.id,
+                    author: browserUser.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Web.Escape", { itemName: chosenItem.name })}</span>`
                 };
@@ -80,7 +80,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
             }
             else {
                 let chatData = {
-                    user: browserUser.id,
+                    author: browserUser.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Web.UnableEscapeTurn", { itemName: chosenItem.name })}</span>`
                 };
@@ -143,7 +143,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
                 if (skillCheck.failedSaves.size === 0) {
                     await game.gps.socket.executeAsUser("gmToggleStatus", gmUser, {tokenUuid: `${token.document.uuid}`, status: "restrained", active: false });
                         let chatData = {
-                        user: browserUser.id,
+                        author: browserUser.id,
                         speaker: ChatMessage.getSpeaker({ token: token }),
                         content: `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Web.Escape", { itemName: chosenItem.name })}</span>`
                     };
@@ -152,7 +152,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
                 }
                 else {
                     let chatData = {
-                        user: browserUser.id,
+                        author: browserUser.id,
                         speaker: ChatMessage.getSpeaker({ token: token }),
                         content: `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Web.UnableEscapeTurn", { itemName: chosenItem.name })}</span>`
                     };

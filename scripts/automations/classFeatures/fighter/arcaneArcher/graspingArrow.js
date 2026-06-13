@@ -94,7 +94,7 @@ export async function graspingArrow({ speaker, actor, token, character, item, ar
                         "img": "icons/magic/nature/root-vine-entangled-humanoid.webp",
                         "type": "script",
                         "scope": "global",
-                        "command": `if(args[0].macroPass === \"preActiveEffects\") {\n  let target = workflow.targets.first();\n let effectNameMovement = target.actor.appliedEffects.find(effect => effect.name === 'Grasping Arrow - Movement'); let effectName = target.actor.appliedEffects.find(effect => effect.name === 'Grasping Arrow');\n    if(!effectName && !effectNameMovement) {\n        ui.notifications.warn(\"This actor is not effected by Grasping Arrow\")\n        return workflow.aborted = true;\n    } let saveRoll = await actor.rollAbilityTest('str'); if(saveRoll.total >= (8 + ${intMod} + ${profMod})) {await MidiQOL.socket().executeAsGM(\"removeEffects\", { actorUuid: target.actor.uuid, effects: [effectNameMovement.id] }); await MidiQOL.socket().executeAsGM(\"removeEffects\", { actorUuid: target.actor.uuid, effects: [effectName.id] }); let content = game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Fighter.ArcaneArcher.GraspingArrow.RemoveVinesSuccess"); let actorPlayer = MidiQOL.playerForActor(actor); let chatData = {user: actorPlayer.id,speaker: ChatMessage.getSpeaker({ token: token }),content: content}; ChatMessage.create(chatData);} else{let content = game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Fighter.ArcaneArcher.GraspingArrow.RemoveVinesFail"); let actorPlayer = MidiQOL.playerForActor(actor); let chatData = {user: actorPlayer.id,speaker: ChatMessage.getSpeaker({ token: token }),content: content}; ChatMessage.create(chatData);} }`
+                        "command": `if(args[0].macroPass === \"preActiveEffects\") {\n  let target = workflow.targets.first();\n let effectNameMovement = target.actor.appliedEffects.find(effect => effect.name === 'Grasping Arrow - Movement'); let effectName = target.actor.appliedEffects.find(effect => effect.name === 'Grasping Arrow');\n    if(!effectName && !effectNameMovement) {\n        ui.notifications.warn(\"This actor is not effected by Grasping Arrow\")\n        return workflow.aborted = true;\n    } let saveRoll = await actor.rollAbilityCheck({ability: 'str'}); if(saveRoll.total >= (8 + ${intMod} + ${profMod})) {await MidiQOL.socket().executeAsGM(\"removeEffects\", { actorUuid: target.actor.uuid, effects: [effectNameMovement.id] }); await MidiQOL.socket().executeAsGM(\"removeEffects\", { actorUuid: target.actor.uuid, effects: [effectName.id] }); let content = game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Fighter.ArcaneArcher.GraspingArrow.RemoveVinesSuccess"); let actorPlayer = MidiQOL.playerForActor(actor); let chatData = {author: actorPlayer.id,speaker: ChatMessage.getSpeaker({ token: token }),content: content}; ChatMessage.create(chatData);} else{let content = game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Fighter.ArcaneArcher.GraspingArrow.RemoveVinesFail"); let actorPlayer = MidiQOL.playerForActor(actor); let chatData = {author: actorPlayer.id,speaker: ChatMessage.getSpeaker({ token: token }),content: content}; ChatMessage.create(chatData);} }`
                     }
                 }
             }
@@ -144,19 +144,25 @@ export async function graspingArrow({ speaker, actor, token, character, item, ar
             let effectData = [{
             "origin": `${item.uuid}`,
             "duration": {
-                "seconds": 60
+                "value": 60,
+                "units": "seconds"
+            },
+            "start": {
+                "time": game.time?.worldTime ?? 0
             },
             "disabled": false,
             "name": "Grasping Arrow - Movement",
             "img": item.img,
-            "changes": [
-                {
-                "key": "macro.itemMacro",
-                "mode": 0,
-                "value": `function.game.gps.graspingArrow ${effectOriginActor.uuid}`,
-                "priority": 20
-                }
-            ],
+            "system": {
+                "changes": [
+                    {
+                    "key": "macro.itemMacro",
+                    "type": "custom",
+                    "value": `function.game.gps.graspingArrow ${effectOriginActor.uuid}`,
+                    "priority": 20
+                    }
+                ]
+            },
             "transfer": false,
             "flags": {
                 "dae": {
@@ -186,19 +192,25 @@ export async function graspingArrow({ speaker, actor, token, character, item, ar
         let effectData = [{
             "origin": `${item.uuid}`,
             "duration": {
-                "seconds": 60
+                "value": 60,
+                "units": "seconds"
+            },
+            "start": {
+                "time": game.time?.worldTime ?? 0
             },
             "disabled": false,
             "name": "Grasping Arrow - Movement",
             "img": item.img,
-            "changes": [
-                {
-                "key": "macro.itemMacro",
-                "mode": 0,
-                "value": `function.game.gps.graspingArrow ${effectOriginActor.uuid}`,
-                "priority": 20
-                }
-            ],
+            "system": {
+                "changes": [
+                    {
+                    "key": "macro.itemMacro",
+                    "type": "custom",
+                    "value": `function.game.gps.graspingArrow ${effectOriginActor.uuid}`,
+                    "priority": 20
+                    }
+                ]
+            },
             "transfer": false,
             "flags": {
                 "dae": {

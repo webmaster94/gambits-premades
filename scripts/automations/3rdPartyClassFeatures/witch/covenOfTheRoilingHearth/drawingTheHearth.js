@@ -5,7 +5,7 @@ export async function drawingTheHearth({ speaker, actor, token, character, item,
         let cprConfig = game.gps.getCprConfig({itemUuid: macroItem.uuid});
         const { animEnabled } = cprConfig;
         
-        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "2300dad6-8de1-4fa5-9878-40cec8ee37aa");
+        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "2300dad6-8de1-4fa5-9878-40cec8ee37aa" && !e.duration?.expired);
         if(animEnabled) {
             new Sequence()
             .effect()
@@ -84,7 +84,7 @@ export async function drawingTheHearth({ speaker, actor, token, character, item,
                 let content = game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartyClassFeatures.Witch.CovenOfTheRoilingHearth.SootSpiritAttackedHit", { sootSpiritsRemaining: itemUsesRemaining - 1 })
                 let actorPlayer = MidiQOL.playerForActor(actor);
                 let chatData = {
-                    user: actorPlayer.id,
+                    author: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: content
                 };
@@ -102,7 +102,7 @@ export async function drawingTheHearth({ speaker, actor, token, character, item,
                 let content = game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartyClassFeatures.Witch.CovenOfTheRoilingHearth.SootSpiritAttackedMiss", { sootSpiritsRemaining: itemUsesRemaining })
                 let actorPlayer = MidiQOL.playerForActor(actor);
                 let chatData = {
-                    user: actorPlayer.id,
+                    author: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: content
                 };

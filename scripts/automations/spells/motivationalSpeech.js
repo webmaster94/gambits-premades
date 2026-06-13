@@ -3,7 +3,7 @@ export async function motivationalSpeech({ speaker, actor, token, character, ite
     {
       item = await actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === "32cabdaf-560e-48ea-8980-37cf5ad242c0");
       const effectName = "Motivational Speech Advantage";
-      const effectCheck = await token.actor.appliedEffects.some(e => e.name === effectName);
+      const effectCheck = await token.actor.appliedEffects.some(e => e.name === effectName && !e.duration?.expired);
     
       if(!effectCheck)
       {
@@ -13,19 +13,25 @@ export async function motivationalSpeech({ speaker, actor, token, character, ite
           flags: {
             dae: { specialDuration: ["1Attack"] }
           },
-          icon: macroItem.img,
+          img: macroItem.img,
           duration: {
-            seconds: 99999
+            value: 99999,
+            units: "seconds"
+          },
+          start: {
+            time: game.time?.worldTime ?? 0
           },
           name: "Motivational Speech Advantage",
-          changes: [
+          system: {
+            changes: [
                 {
                   key: "flags.midi-qol.advantage.attack.all",
-                  mode: 2,
+                  type: "add",
                   value: "1",
                   priority: 20
                 }
               ]
+          }
           }];
         await MidiQOL.socket().executeAsGM("createEffects", { actorUuid: uuid, effects: effectData });
       }

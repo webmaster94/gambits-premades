@@ -44,7 +44,7 @@ export async function command({ speaker, actor, token, character, item, args, sc
         let content = game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Command.MustNow", { actorName: actor.name, wordInput: wordInput });
         let actorPlayer = MidiQOL.playerForActor(actor);
         let chatData = {
-            user: actorPlayer.id,
+            author: actorPlayer.id,
             speaker: ChatMessage.getSpeaker({ token: token }),
             content: content
         };

@@ -28,16 +28,20 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
             const uuid = targetActor.uuid;
 
             const effectDisadv = [{
-                changes: [{ key: "flags.midi-qol.disadvantage.attack.all", mode: CONST.ACTIVE_EFFECT_MODES.CUSTOM, value: 1, priority: 20 }],
+                system: { changes: [{ key: "flags.midi-qol.disadvantage.attack.all", type: "custom", value: 1, priority: 20 }] },
                 flags: { "dae": { "token": targetUuid, "specialDuration": ["1Attack","turnEnd"] } },
                 disabled: false,
                 name: item.name,
-                icon: item.img,
+                img: item.img,
                 duration: {
-                    seconds: 12
+                    value: 12,
+                    units: "seconds"
+                },
+                start: {
+                    time: game.time?.worldTime ?? 0
                 }
             }];
-            const checkEffect = targetActor.appliedEffects.find(i => i.name ===  item.name);
+            const checkEffect = targetActor.appliedEffects.find(i => i.name ===  item.name && !i.duration?.expired);
             if(!checkEffect) await MidiQOL.socket().executeAsGM("createEffects", { actorUuid: uuid, effects: effectDisadv });
 
             if((gmInputType !== "dropdown" && gmInputType !== "freeform") || !gmInputType) return;

@@ -1,6 +1,6 @@
 export async function confusion({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     async function updateConfusionEffect(actor, changeType) {
-        const findEffect = actor.appliedEffects.find(e => e.name === "Confusion");
+        const findEffect = actor.appliedEffects.find(e => e.name === "Confusion" && !e.duration?.expired);
         if (!findEffect) {
             console.log(game.i18n.localize("GAMBITSPREMADES.Debug.Automations.Spells.Confusion.EffectNotFound"));
             return;
@@ -9,22 +9,22 @@ export async function confusion({ speaker, actor, token, character, item, args, 
         if(changeType === true) {
             const newChange = {
                 key: "system.attributes.movement.walk",
-                mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE,
+                type: "override",
                 value: "0",
                 priority: 20
             };
-    
-            const updatedChanges = [...findEffect.changes, newChange];
-            await findEffect.update({ 'changes': updatedChanges });
+
+            const updatedChanges = [...findEffect.system.changes, newChange];
+            await findEffect.update({ 'system.changes': updatedChanges });
         }
-    
+
         if(changeType === false) {
-            const removeChanges = findEffect.changes.filter(change => 
-                !(change.key === "system.attributes.movement.walk" && change.mode === CONST.ACTIVE_EFFECT_MODES.OVERRIDE && change.value === "0")
+            const removeChanges = findEffect.system.changes.filter(change =>
+                !(change.key === "system.attributes.movement.walk" && change.type === "override" && String(change.value) === "0")
             );
-    
-            if (findEffect.changes.length !== removeChanges.length) {
-                await findEffect.update({ 'changes': removeChanges });
+
+            if (findEffect.system.changes.length !== removeChanges.length) {
+                await findEffect.update({ 'system.changes': removeChanges });
             }
         }
     }
@@ -56,7 +56,7 @@ export async function confusion({ speaker, actor, token, character, item, args, 
     
             let actorPlayer = MidiQOL.playerForActor(token.actor);
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: content1,
                 roll: directionRoll
@@ -110,7 +110,7 @@ export async function confusion({ speaker, actor, token, character, item, args, 
         if(content) {
             let actorPlayer = MidiQOL.playerForActor(token.actor);
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: `${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Confusion.RollForIs", { actorName: token.actor.name, result: result })}<br>${content}`
             };
@@ -157,7 +157,7 @@ export async function confusion({ speaker, actor, token, character, item, args, 
             if(animEnabled) {
                 new Sequence()
                 .effect()
-                .atLocation(template.object)
+                .atLocation(canvas.scene.regions.get(template.id)?.object ?? template.object ?? template)
                 .file("jaamod.misc.qm")
                 .filter("ColorMatrix", { hue:60, saturate:1, contrast: 1 })
                 .scaleToObject(1.5)

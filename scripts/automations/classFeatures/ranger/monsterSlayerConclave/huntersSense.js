@@ -6,7 +6,7 @@ export async function huntersSense({ speaker, actor, token, character, item, arg
 
     // Effect names to check if target is immune to Divination Magic, add additional effects below
     let effectNames = ["mind blank", "nondetection", "private sanctum"];
-    let isImmuneEffect = targetActor.appliedEffects.some(effect => effectNames.includes(effect.name.toLowerCase()));
+    let isImmuneEffect = targetActor.appliedEffects.some(effect => effectNames.includes(effect.name.toLowerCase()) && !effect.duration?.expired);
     // Item names to check if target is immune to Divination Magic, add additional items below
     let itemNames = ["amulet of proof against detection and location"];
     let isImmuneItem = targetActor.items.some(item => itemNames.includes(item.name.toLowerCase()) && item.system.equipped === true);

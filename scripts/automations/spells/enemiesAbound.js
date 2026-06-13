@@ -22,7 +22,7 @@ export async function enemiesAbound({ speaker, actor, token, character, item, ma
 
             let browserUser = game.users?.activeGM;
             let chatData = {
-                user: browserUser.id,
+                author: browserUser.id,
                 speaker: ChatMessage.getSpeaker({ token: target }),
                 content: `${target.actor.name}'s disposition was changed to Neutral allowing them to attack enemies or allies. This change will be reverted to their original disposition when the effect ends.`,
                 whisper: browserUser.id
@@ -65,7 +65,7 @@ export async function enemiesAbound({ speaker, actor, token, character, item, ma
     }
 
     if(args[0].macroPass === "isDamaged") {
-        const effect = token.actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "4ad56aaf-b9b4-40ce-9869-ff62b999b7be");
+        const effect = token.actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "4ad56aaf-b9b4-40ce-9869-ff62b999b7be" && !e.duration?.expired);
         if(!effect) return;
 
         const saveResult = await game.gps.gpsActivityUse({itemUuid: effect.flags["midi-qol"].castData.itemUuid, identifier: "syntheticSave", targetUuid: token.document.uuid});

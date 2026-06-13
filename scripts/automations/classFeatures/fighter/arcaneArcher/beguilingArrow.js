@@ -52,7 +52,7 @@ export async function beguilingArrow({ speaker, actor, token, character, item, a
 
             let effectData = [
                 {
-                    "icon": "systems/dnd5e/icons/svg/statuses/charmed.svg",
+                    "img": "systems/dnd5e/icons/svg/statuses/charmed.svg",
                     "origin": `${allyToken.actor.uuid}`,
                     "disabled": false,
                     "name": "Charmed",
@@ -72,7 +72,7 @@ export async function beguilingArrow({ speaker, actor, token, character, item, a
 
             let actorPlayer = MidiQOL.playerForActor(actor);
             let chatData = {
-                user: actorPlayer.id,
+                author: actorPlayer.id,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: content
             };
@@ -82,7 +82,7 @@ export async function beguilingArrow({ speaker, actor, token, character, item, a
 
             let actorPlayerAlly = MidiQOL.playerForActor(allyToken.actor);
             let chatDataAlly = {
-                user: actorPlayerAlly.id,
+                author: actorPlayerAlly.id,
                 speaker: ChatMessage.getSpeaker({ token: allyToken }),
                 content: contentAlly
             };

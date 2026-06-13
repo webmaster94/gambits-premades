@@ -60,18 +60,20 @@ export async function divineSense({ speaker, actor, token, character, item, args
     }
 
     let effectData = [{
-        "icon": item.img,
+        "img": item.img,
         "origin": item.uuid,
         "disabled": false,
         "name": item.name,
-        "changes": [
-        {
-            "key": "ATL.detectionModes.divineSense.range",
-            "mode": 0,
-            "value": "60",
-            "priority": 20
+        "system": {
+            "changes": [
+            {
+                "key": "ATL.detectionModes.divineSense.range",
+                "type": "custom",
+                "value": "60",
+                "priority": 20
+            }
+            ]
         }
-        ]
     }];
     await MidiQOL.socket().executeAsGM("createEffects", { actorUuid: actor.uuid, effects: effectData });
 

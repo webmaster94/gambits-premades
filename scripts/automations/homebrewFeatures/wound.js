@@ -10,7 +10,7 @@ export async function wound({ speaker, actor, token, character, item, args, scop
     }
     else if(args?.[0] === "each") {
         item = await fromUuid(args[2]);
-        let effectData = token.actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "7186eac1-010a-4fb4-bd22-699d06839162");
+        let effectData = token.actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "7186eac1-010a-4fb4-bd22-699d06839162" && !e.duration?.expired);
         if (!effectData) return;
 
         let count = effectData.flags.dae.stacks;
@@ -27,7 +27,7 @@ export async function wound({ speaker, actor, token, character, item, args, scop
     }
     else if(args === "woundRemovalFullHeal") {
         if (!options.system?.attributes?.hp) return;
-        if (!token?.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "7186eac1-010a-4fb4-bd22-699d06839162")) return;
+        if (!token?.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "7186eac1-010a-4fb4-bd22-699d06839162" && !e.duration?.expired)) return;
     
         const hpCurr = token.actor.system.attributes.hp.value;
         const hpMax = token.actor.system.attributes.hp.max;

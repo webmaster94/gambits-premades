@@ -4,6 +4,7 @@ const DEFAULT_SOUND = {
 }
 
 export function fireball({type, token, templateData, color = "orange", sound = {}}) {
+    const templateLocation = canvas.scene.regions.get(templateData?.id)?.object ?? templateData?.object ?? templateData;
     const soundCfg = foundry.utils.mergeObject(DEFAULT_SOUND, sound, {inplace:false});
     const castSound = "modules/gambits-premades/assets/sounds/fire-blast-binaural-1.ogg";
     const blastSound = "modules/gambits-premades/assets/sounds/explosion-echo-5.ogg";
@@ -63,7 +64,7 @@ export function fireball({type, token, templateData, color = "orange", sound = {
                 .anchor({x:0.4})
                 .scaleToObject(.5)
                 .animateProperty("sprite", "position.x", { from: 0, to: -1000, duration: 15000})
-                .rotateTowards(templateData, {cacheLocation: true})
+                .rotateTowards(templateLocation, {cacheLocation: true})
                 .scaleIn(0, 500, {ease: "easeOutQuint"})
                 .duration(6000)
                 .playbackRate(2)
@@ -78,7 +79,7 @@ export function fireball({type, token, templateData, color = "orange", sound = {
                 .anchor({x:0.5})
                 .scaleToObject(2)
                 .duration(5000)
-                .rotateTowards(templateData, {cacheLocation: true})
+                .rotateTowards(templateLocation, {cacheLocation: true})
                 .loopProperty("sprite", "rotation", { from: 0, to: 360, duration: 3000})
                 .scaleOut(0, 5000, {ease: "easeOutQuint", delay: 0})
                 .zIndex(1)
@@ -119,19 +120,19 @@ export function fireball({type, token, templateData, color = "orange", sound = {
                 .file(beamSupplement)
                 .filter("ColorMatrix", { hue: hue })
                 .attachTo(token)
-                .stretchTo(templateData)
+                .stretchTo(templateLocation)
                 .delay(2100)
 
             .effect()
                 .file(beam)
                 .attachTo(token)
-                .stretchTo(templateData)
+                .stretchTo(templateLocation)
                 .waitUntilFinished(-1200)
 
             .effect()
                 .file(explosionBlast)
                 .filter("ColorMatrix", { hue: hue })
-                .atLocation(templateData)
+                .atLocation(templateLocation)
                 .size(10.5, {gridUnits:true})
                 .scaleIn(0, 500, {ease: "easeOutQuint"})
                 .zIndex(1)
@@ -146,7 +147,7 @@ export function fireball({type, token, templateData, color = "orange", sound = {
 
             .effect()
                 .file(explosion)
-                .atLocation(templateData)
+                .atLocation(templateLocation)
                 .size(10.5, {gridUnits:true})
                 .scaleIn(0, 500, {ease: "easeOutQuint"})
                 .zIndex(2)
