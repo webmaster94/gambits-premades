@@ -18,8 +18,10 @@ export async function legendaryResistance({workflowData,workflowType,workflowCom
             : Array.from(workflow.failedSaves).find(t => t.document?.uuid === validTokenPrimary.document.uuid);
         if(!failedToken) continue;
 
-        let chosenItem = validTokenPrimary.actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === gpsUuid);
-        let itemProperName = chosenItem?.name;
+        let chosenItem = validTokenPrimary.actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === gpsUuid)
+            ?? validTokenPrimary.actor.items.find(i => i.identifier === "legendary-resistance")
+            ?? validTokenPrimary.actor.identifiedItems?.get?.("legendary-resistance", { type: "feat" })?.first?.();
+        let itemProperName = chosenItem?.name ?? itemName;
         const dialogTitlePrimary = `${validTokenPrimary.actor.name} | ${itemProperName}`;
         const dialogTitleGM = game.i18n.format("GAMBITSPREMADES.Dialogs.Common.WaitingForSelection", { actorName: validTokenPrimary.actor.name, itemName: itemProperName });
         browserUser = game.gps.getBrowserUser({ actorUuid: validTokenPrimary.actor.uuid });
@@ -32,7 +34,7 @@ export async function legendaryResistance({workflowData,workflowType,workflowCom
                             <div class="gps-dialog-flex">
                                 <p class="gps-dialog-paragraph">${game.i18n.format("GAMBITSPREMADES.Dialogs.Automations.MonsterFeatures.LegendaryResistance.PromptUseLegendaryResistance", { actorName: validTokenPrimary.actor.name, itemName: itemProperName  })}</p>
                                 <div id="image-container" class="gps-dialog-image-container">
-                                    <img id="img_${dialogId}" src="${chosenItem.img}" class="gps-dialog-image">
+                                    <img id="img_${dialogId}" src="${chosenItem?.img ?? validTokenPrimary.actor.img}" class="gps-dialog-image">
                                 </div>
                             </div>
                         </div>
@@ -77,8 +79,15 @@ export async function legendaryResistance({workflowData,workflowType,workflowCom
             };
 
             let itemRoll;
-            if(source && source === "user") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", browserUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
-            else if(source && source === "gm") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", gmUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
+            if(chosenItem && source && source === "user") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", browserUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
+            else if(chosenItem && source && source === "gm") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", gmUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
+            else if(!chosenItem) {
+                let spent = validTokenPrimary.actor.system.resources?.legres?.spent ?? 0;
+                itemRoll = await game.gps.socket.executeAsUser("gmUpdateActor", gmUser, {
+                    actorUuid: validTokenPrimary.actor.uuid,
+                    updates: {"system.resources.legres.spent": spent + 1}
+                });
+            }
             if(!itemRoll) continue;
 
             workflow.saves.add(failedToken);

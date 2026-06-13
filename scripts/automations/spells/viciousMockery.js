@@ -12,7 +12,7 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
         if(workflow.targets.size === 0) return workflow.aborted = true;
     }
 
-    if(args[0].macroPass === "postSavesComplete") {
+    if(args[0].macroPass === "postSave") {
         if(!game.modules.get("animated-spell-effects-cartoon")?.active) return ui.notifications.error(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.MissingDependency"));
         let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
         const { animEnabled } = cprConfig;

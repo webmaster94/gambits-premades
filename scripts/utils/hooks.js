@@ -92,7 +92,7 @@ export function registerHooks() {
         if (game.gpsSettings.mageSlayerEnabled) await executeWorkflow({ workflowItem: "mageSlayer", workflowData: workflowItemUuid, workflowType: "save", workflowCombat: true });
     });
 
-    Hooks.on("midi-qol.preSavesComplete", async (workflow) => {
+    Hooks.on("midi-qol.postCheckSaves", async (workflow) => {
         if(!workflow.saveActivity) return;
         let workflowItemUuid = workflow.itemCardUuid;
         const hasDrafynsBaneOfExcellence = Array.from(workflow.saves).some(t => t.document.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "e6e24759-a9d3-4993-b0f2-6328010a6520"));

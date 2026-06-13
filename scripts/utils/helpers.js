@@ -387,7 +387,7 @@ export function findValidTokens({initiatingToken, targetedToken, itemName, itemT
             let resourceExistsWithValue;
             let itemExistsWithValue;
 
-            if(itemNames.includes("legres")) resourceExistsWithValue = t.actor.system.resources?.legres?.value !== 0 ? true : false;
+            if(itemNames.includes("legres")) resourceExistsWithValue = (t.actor.system.resources?.legres?.value ?? 0) > 0;
             else itemExistsWithValue = t.actor.items.some(i => (itemNames.includes(i.name.toLowerCase()) || itemNames.includes(i.identifier.toLowerCase())) && i.system.uses?.spent < i.system.uses?.max);
 
             if (!itemExistsWithValue && !resourceExistsWithValue) {
@@ -579,7 +579,7 @@ export function findValidToken({initiatingTokenUuid, targetedTokenUuid, itemName
         let resourceExistsWithValue;
         let itemExistsWithValue;
 
-        if(itemNames.includes("legres")) resourceExistsWithValue = targetedToken.actor.system.resources.legres.value !== 0 ? true : false;
+        if(itemNames.includes("legres")) resourceExistsWithValue = (targetedToken.actor.system.resources?.legres?.value ?? 0) > 0;
         else itemExistsWithValue = targetedToken.actor.items.some(i => (itemNames.includes(i.name.toLowerCase()) || itemNames.includes(i.identifier.toLowerCase())) && i.system.uses?.spent < i.system.uses?.max);
 
         if (!itemExistsWithValue && !resourceExistsWithValue) {
@@ -1825,6 +1825,12 @@ export async function stopMovementEnter({ token }) {
 export async function gmSetFlag({flagDocumentUuid, key, value}) {
     let flagDocument = await fromUuid(flagDocumentUuid);
     await flagDocument.setFlag("gambits-premades", key, value);
+}
+
+export async function gmUpdateActor({actorUuid, updates}) {
+    let actor = await fromUuid(actorUuid);
+    if (!actor) return;
+    return await actor.update(updates);
 }
 
 const LOG_PREFIX = "GPS | ";
