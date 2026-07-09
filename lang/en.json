@@ -634,7 +634,10 @@
             }
           },
           "LegendaryResistance": {
-            "PromptUseLegendaryResistance": "{actorName} failed a saving throw. Would you like to use {itemName} to succeed?"
+            "Outcome": "Failed Save -> Success",
+            "PromptUseLegendaryResistance": "{actorName} failed a saving throw. Would you like to use {itemName} to succeed?",
+            "RemainingUses": "{remaining} of {max} Legendary Resistances remaining.",
+            "Used": "{actorName} uses {itemName} to turn a failed saving throw into a success."
           }
         },
         "Spells": {

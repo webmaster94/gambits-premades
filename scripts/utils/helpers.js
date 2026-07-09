@@ -252,20 +252,29 @@ export function findValidTokens({initiatingToken, targetedToken, itemName, itemT
             return;
         }
         let checkItem;
+        const featureItemNames = itemType === "feature" && itemChecked ? itemChecked.map(item => item.toLowerCase()) : [];
+        const isLegendaryResistance = featureItemNames.includes("legres");
+        const hasLegendaryResistanceResource = isLegendaryResistance && (t.actor.system.resources?.legres?.value ?? 0) > 0;
         if(gpsUuid) checkItem = t.actor?.items?.find(i => i.flags["gambits-premades"]?.gpsUuid === gpsUuid);
         else checkItem = t.actor?.items?.find(i => i.name.toLowerCase() === itemName.toLowerCase());
+        if(!checkItem && isLegendaryResistance) {
+            const identifiedLegendaryResistance = t.actor.identifiedItems?.get?.("legendary-resistance", { type: "feat" });
+            checkItem = t.actor.items.find(i => i.identifier === "legendary-resistance")
+                ?? identifiedLegendaryResistance?.first?.()
+                ?? identifiedLegendaryResistance;
+        }
         const effectNamesOrigin = ["Confusion", "Arms of Hadar", "Shocking Grasp", "Slow", "Staggering Smite"];
         let hasEffectOrigin = t.actor?.appliedEffects.some(effect => effectNamesOrigin.includes(effect.name));
         let measuredDistance = (dispositionCheckType === "ally" || dispositionCheckType === "enemyAlly") ? MidiQOL.computeDistance(targetedToken,t, {wallsBlock: true, includeCover: true}) : MidiQOL.computeDistance(initiatingToken,t, {wallsBlock: true, includeCover: true});
         let range = game.gps.convertFromFeet({range: rangeTotal});
 
         // Check if the token has the actual item to use (With some checking for 2014/2024)
-        if(!checkItem && sourceRules === "2024") {
+        if(!checkItem && sourceRules === "2024" && !hasLegendaryResistanceResource) {
             if(debugEnabled) game.gps.logInfo(`${itemName} 2024 for ${t.actor.name} failed at check if reaction item exists`);
             return;
         }
 
-        else if(!checkItem) {
+        else if(!checkItem && !hasLegendaryResistanceResource) {
             if(debugEnabled) game.gps.logInfo(`${itemName} for ${t.actor.name} failed at check if reaction item exists`);
             return;
         }
@@ -382,12 +391,12 @@ export function findValidTokens({initiatingToken, targetedToken, itemName, itemT
         // Check if the token has available resource or item uses
         if(itemType === "feature") {
             let itemNames;
-            if(itemChecked) itemNames = itemChecked.map(item => item.toLowerCase());
+            if(itemChecked) itemNames = featureItemNames;
             else itemNames = [checkItem.name.toLowerCase()];
             let resourceExistsWithValue;
             let itemExistsWithValue;
 
-            if(itemNames.includes("legres")) resourceExistsWithValue = (t.actor.system.resources?.legres?.value ?? 0) > 0;
+            if(isLegendaryResistance) resourceExistsWithValue = hasLegendaryResistanceResource;
             else itemExistsWithValue = t.actor.items.some(i => (itemNames.includes(i.name.toLowerCase()) || itemNames.includes(i.identifier.toLowerCase())) && i.system.uses?.spent < i.system.uses?.max);
 
             if (!itemExistsWithValue && !resourceExistsWithValue) {

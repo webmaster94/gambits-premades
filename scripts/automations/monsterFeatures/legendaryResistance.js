@@ -1,3 +1,50 @@
+function gpsEscapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
+async function createLegendaryResistanceChatCard({ validTokenPrimary, itemProperName, remainingUses, maxUses, gmUser, gpsUuid }) {
+    const actorName = gpsEscapeHTML(validTokenPrimary.actor.name);
+    const itemName = gpsEscapeHTML(itemProperName);
+    const outcomeKey = "GAMBITSPREMADES.ChatMessages.Automations.MonsterFeatures.LegendaryResistance.Outcome";
+    const usedKey = "GAMBITSPREMADES.ChatMessages.Automations.MonsterFeatures.LegendaryResistance.Used";
+    const remainingKey = "GAMBITSPREMADES.ChatMessages.Automations.MonsterFeatures.LegendaryResistance.RemainingUses";
+    const outcomeLocalized = game.i18n.localize(outcomeKey);
+    const usedLocalized = game.i18n.format(usedKey, { actorName, itemName });
+    const remainingLocalized = game.i18n.format(remainingKey, { remaining: remainingUses, max: maxUses });
+    const outcomeText = outcomeLocalized === outcomeKey ? "Failed Save -> Success" : outcomeLocalized;
+    const usedText = usedLocalized === usedKey ? `${actorName} uses ${itemName} to turn a failed saving throw into a success.` : usedLocalized;
+    const remainingText = remainingLocalized === remainingKey ? `${remainingUses} of ${maxUses} Legendary Resistances remaining.` : remainingLocalized;
+    const content = `
+        <div class="gps-legendary-resistance-card" style="border: 1px solid rgba(120, 92, 42, 0.45); border-left: 4px solid #8a6a2f; border-radius: 5px; background: rgba(255, 255, 255, 0.06); padding: 8px 10px;">
+            <div style="font-weight: 700; font-size: 14px; line-height: 1.2; color: inherit;">${itemName}</div>
+            <div style="margin-top: 4px; line-height: 1.35;">${usedText}</div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px;">
+                <span style="border: 1px solid rgba(57, 132, 74, 0.35); border-radius: 4px; background: rgba(57, 132, 74, 0.12); color: #2f7d42; font-weight: 700; padding: 2px 6px;">${outcomeText}</span>
+                <span style="opacity: 0.82;">${remainingText}</span>
+            </div>
+        </div>
+    `;
+    const chatData = {
+        author: gmUser,
+        speaker: ChatMessage.getSpeaker({ token: validTokenPrimary }),
+        content,
+        flags: {
+            "gambits-premades": {
+                gpsUuid,
+                legendaryResistanceUsed: true,
+                tokenUuid: validTokenPrimary.document.uuid
+            }
+        }
+    };
+    await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
+}
+
 export async function legendaryResistance({workflowData,workflowType,workflowCombat}) {
     const workflow = await MidiQOL.Workflow.getWorkflow(workflowData);
     if(!workflow) return;
@@ -18,9 +65,11 @@ export async function legendaryResistance({workflowData,workflowType,workflowCom
             : Array.from(workflow.failedSaves).find(t => t.document?.uuid === validTokenPrimary.document.uuid);
         if(!failedToken) continue;
 
+        const identifiedLegendaryResistance = validTokenPrimary.actor.identifiedItems?.get?.("legendary-resistance", { type: "feat" });
         let chosenItem = validTokenPrimary.actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === gpsUuid)
             ?? validTokenPrimary.actor.items.find(i => i.identifier === "legendary-resistance")
-            ?? validTokenPrimary.actor.identifiedItems?.get?.("legendary-resistance", { type: "feat" })?.first?.();
+            ?? identifiedLegendaryResistance?.first?.()
+            ?? identifiedLegendaryResistance;
         let itemProperName = chosenItem?.name ?? itemName;
         const dialogTitlePrimary = `${validTokenPrimary.actor.name} | ${itemProperName}`;
         const dialogTitleGM = game.i18n.format("GAMBITSPREMADES.Dialogs.Common.WaitingForSelection", { actorName: validTokenPrimary.actor.name, itemName: itemProperName });
@@ -70,29 +119,20 @@ export async function legendaryResistance({workflowData,workflowType,workflowCom
             continue;
         }
         else if (userDecision) {
-            const options = {
-                showFullCard: false,
-                createWorkflow: true,
-                versatile: false,
-                configureDialog: false,
-                targetUuids: [workflow.token.document.uuid]
-            };
-
-            let itemRoll;
-            if(chosenItem && source && source === "user") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", browserUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
-            else if(chosenItem && source && source === "gm") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", gmUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
-            else if(!chosenItem) {
-                let spent = validTokenPrimary.actor.system.resources?.legres?.spent ?? 0;
-                itemRoll = await game.gps.socket.executeAsUser("gmUpdateActor", gmUser, {
-                    actorUuid: validTokenPrimary.actor.uuid,
-                    updates: {"system.resources.legres.spent": spent + 1}
-                });
-            }
+            const legres = validTokenPrimary.actor.system.resources?.legres;
+            if((legres?.value ?? 0) <= 0) continue;
+            const remainingUses = Math.max(Number(legres.value ?? 0) - 1, 0);
+            const maxUses = Number.isFinite(Number(legres.max)) ? Number(legres.max) : "?";
+            const itemRoll = await game.gps.socket.executeAsUser("gmUpdateActor", gmUser, {
+                actorUuid: validTokenPrimary.actor.uuid,
+                updates: {"system.resources.legres.spent": (legres.spent ?? 0) + 1}
+            });
             if(!itemRoll) continue;
 
             workflow.saves.add(failedToken);
             workflow.failedSaves.delete(failedToken);
             workflow.legendaryResistanceUsed = true;
+            await createLegendaryResistanceChatCard({ validTokenPrimary, itemProperName, remainingUses, maxUses, gmUser, gpsUuid });
         }
     }
 }

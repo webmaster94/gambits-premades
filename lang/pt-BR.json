@@ -634,7 +634,10 @@
             }
           },
           "LegendaryResistance": {
-            "PromptUseLegendaryResistance": "{actorName} falhou na salvaguarda. Deseja usar {itemName} para ter sucesso?"
+            "Outcome": "Salvaguarda falha -> Sucesso",
+            "PromptUseLegendaryResistance": "{actorName} falhou na salvaguarda. Deseja usar {itemName} para ter sucesso?",
+            "RemainingUses": "{remaining} de {max} Resistências Lendárias restantes.",
+            "Used": "{actorName} usa {itemName} para transformar uma salvaguarda falha em sucesso."
           }
         },
         "Spells": {
