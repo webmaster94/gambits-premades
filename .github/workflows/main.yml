@@ -25,6 +25,25 @@ jobs:
       - name: Install deps
         run: npm ci
 
+      # Compute the release version and fork-local Foundry URLs before packaging.
+      - name: Set VERSION/URLs for Foundry
+        run: |
+          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+          echo "FOUNDRY_MANIFEST=https://github.com/${{ github.repository }}/releases/latest/download/module.json" >> $GITHUB_ENV
+          echo "FOUNDRY_DOWNLOAD=https://github.com/${{ github.repository }}/releases/download/${{ github.event.release.tag_name }}/module.zip" >> $GITHUB_ENV
+
+      - name: Update release manifest
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const manifest = JSON.parse(fs.readFileSync('module.json', 'utf8'));
+          manifest.version = process.env.VERSION;
+          manifest.url = `https://github.com/${process.env.GITHUB_REPOSITORY}`;
+          manifest.manifest = process.env.FOUNDRY_MANIFEST;
+          manifest.download = process.env.FOUNDRY_DOWNLOAD;
+          fs.writeFileSync('module.json', JSON.stringify(manifest, null, 2) + '\n');
+          NODE
+
       # Build packs from packData -> packs
       - name: Compile packs (packData -> packs)
         run: npm run packData
@@ -37,8 +56,9 @@ jobs:
       # Append packs to the zip
       - name: Add packs/ to ZIP
         run: |
+          sudo apt-get update && sudo apt-get install -y zip
+          zip -u module.zip module.json
           if [ -d "packs" ]; then
-            sudo apt-get update && sudo apt-get install -y zip
             zip -r module.zip packs
           fi
 
@@ -73,16 +93,9 @@ jobs:
           artifacts: "module.zip,module.json"         # ← no spaces
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Compute plain version and URLs for Foundry
-      - name: Set VERSION/URLs for Foundry
-        run: |
-          echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
-          echo "FOUNDRY_MANIFEST=https://github.com/${{ github.repository }}/releases/latest/download/module.json" >> $GITHUB_ENV
-          echo "FOUNDRY_DOWNLOAD=https://github.com/${{ github.repository }}/releases/download/${{ github.event.release.tag_name }}/module.zip" >> $GITHUB_ENV
-
       # Publish to Foundry
       - name: Release Foundry Package
-        if: ${{ success() }}
+        if: ${{ success() && github.repository_owner == 'gambit07' }}
         env:
           FOUNDRY_API_TOKEN: ${{ secrets.FOUNDRY_API_TOKEN }}
         run: |
@@ -102,6 +115,7 @@ jobs:
 
       # Discord posts (use *release_body.txt*, not repo file)
       - name: Post to Midi Discord
+        if: ${{ github.repository_owner == 'gambit07' }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_MIDI_WEBHOOK }}
         run: |
@@ -111,12 +125,13 @@ jobs:
                -d '{
                  "embeds": [{
                    "title": "Gambit'\''s Premades Release: '"$VERSION"'",
-                   "description": "[Gambits Lounge Discord](https://discord.gg/NVpRhRPdE4)\n**To support my continued work on this module!**\n[Patreon ❤️](https://www.patreon.com/GambitsLounge) | [Ko-fi ❤️](https://ko-fi.com/gambit07)\n\n'"$RELEASE_NOTES"'\n\nCheck it out through the Foundry package manager or the link below:\n<https://github.com/gambit07/gambits-premades/releases/tag/'"$VERSION"'>",
+                   "description": "[Gambits Lounge Discord](https://discord.gg/NVpRhRPdE4)\n**To support my continued work on this module!**\n[Patreon ❤️](https://www.patreon.com/GambitsLounge) | [Ko-fi ❤️](https://ko-fi.com/gambit07)\n\n'"$RELEASE_NOTES"'\n\nCheck it out through the Foundry package manager or the link below:\n<https://github.com/'"${GITHUB_REPOSITORY}"'/releases/tag/'"$VERSION"'>",
                    "image": { "url": "https://avatars.githubusercontent.com/u/4236874?s=400&u=05d3718580ef87ea13467131a0c1fcaf4956630d&v=4" }
                  }]
                }' "$DISCORD_WEBHOOK"
 
       - name: Post to GPS Discord
+        if: ${{ github.repository_owner == 'gambit07' }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_GPS_WEBHOOK }}
         run: |
@@ -125,7 +140,7 @@ jobs:
                -d '{
                  "embeds": [{
                    "title": "Gambit'\''s Premades Release: '"$VERSION"'",
-                   "description": "**To support my continued work on this module!**\n[Patreon ❤️](https://www.patreon.com/GambitsLounge) | [Ko-fi ❤️](https://ko-fi.com/gambit07)\n\n'"$RELEASE_NOTES"'\n\nCheck it out through the Foundry package manager or the link below:\n<https://github.com/gambit07/gambits-premades/releases/tag/'"$VERSION"'>",
+                   "description": "**To support my continued work on this module!**\n[Patreon ❤️](https://www.patreon.com/GambitsLounge) | [Ko-fi ❤️](https://ko-fi.com/gambit07)\n\n'"$RELEASE_NOTES"'\n\nCheck it out through the Foundry package manager or the link below:\n<https://github.com/'"${GITHUB_REPOSITORY}"'/releases/tag/'"$VERSION"'>",
                    "image": { "url": "https://avatars.githubusercontent.com/u/4236874?s=400&u=05d3718580ef87ea13467131a0c1fcaf4956630d&v=4" }
                  }]
                }' "$DISCORD_WEBHOOK"

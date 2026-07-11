@@ -5,6 +5,17 @@
 <p style="text-align: center;"><a href="https://ko-fi.com/gambit07" target="_blank" rel="nofollow noopener"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi" /></a> <a href="https://www.patreon.com/GambitsLounge" target="_blank" rel="nofollow noopener"> <img src="https://img.shields.io/badge/Patreon-Gambits Lounge-F96854?style=for-the-badge&amp;logo=patreon" alt="Patreon Gambits Lounge" /> </a></p>
 
 <p>A custom collection of automated spells, items, and feats for Foundry VTT. These automations primarily use the MidiQOL and Dynamic Active Effect modules to implement automations, along with other synergistic modules.</p>
+
+## Manual Installation (Foundry V14 Fork)
+
+In Foundry VTT, open **Add-on Modules**, choose **Install Module**, paste the manifest URL below into **Manifest URL**, and select **Install**:
+
+```text
+https://github.com/webmaster94/gambits-premades/releases/latest/download/module.json
+```
+
+This fork keeps the same module ID as the upstream package, so it replaces an existing Gambit's Premades installation rather than installing alongside it.
+
 <ul>
 <li>Contains a suite of fully automated items, features, spells, etc. This includes some very difficult to handle "3rd party reaction" items such as Counterspell, Opportunity Attacks, Silvery Barbs, etc.</li>
 <li>Beautiful AppV2 Dialogs for reaction automations with an integrated and animated countdown timer.</li>
