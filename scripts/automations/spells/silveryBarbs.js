@@ -223,7 +223,7 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
             let cprConfig = game.gps.getCprConfig({itemUuid: chosenItem.uuid});
             const { animEnabled } = cprConfig;
             if(animEnabled) {
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                     .file("animated-spell-effects-cartoon.misc.music.01")
                     .fadeIn(500)
@@ -233,7 +233,7 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
                     .playbackRate(1)
                 .play()
 
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                     .file("jb2a.cast_generic.sound.side01.pinkteal")
                     .fadeIn(500)
@@ -245,10 +245,12 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
             }
 
             if(workflowType === "save") {
-                let isSave = workflow?.saveActivity.type === "save" ? true : false;
-                let saveDC = workflow?.saveActivityDetails?.dc?.value;
-                let getAbility = workflow?.saveActivityDetails?.ability?.first() ?? workflow?.saveActivityDetails?.ability;
-                let saveAbility = isSave ? getAbility : workflow?.saveActivityDetails?.associated.first() ? workflow?.saveActivityDetails?.associated.first() : getAbility;
+                const saveActivity = game.gps.getWorkflowSaveActivity(workflow);
+                const saveDetails = game.gps.getWorkflowSaveDetails(workflow);
+                let isSave = saveActivity?.type === "save" || !!saveActivity?.save;
+                let saveDC = saveDetails?.dc?.value;
+                let getAbility = saveDetails?.ability?.first?.() ?? saveDetails?.ability;
+                let saveAbility = isSave ? getAbility : saveDetails?.associated?.first?.() ?? getAbility;
                 let workflowTarget = Array.from(workflow.saves).find(t => t.document.uuid === enemyTokenUuid);
 
                 let browserUserTarget = game.gps.getBrowserUser({ actorUuid: workflowTarget.actor.uuid });

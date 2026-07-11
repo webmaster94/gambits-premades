@@ -159,45 +159,41 @@
       "name": "Wound",
       "origin": "Item.sPAhgPgannSphKdZ",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 99999,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 99999,
+        "units": "seconds"
       },
       "disabled": false,
       "img": "icons/creatures/abilities/fang-tooth-blood-red.webp",
       "_id": "PyTbYhpx8qAUSYhr",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.bonuses.All-Attacks",
-          "mode": 2,
-          "value": "-1",
-          "priority": 20
-        },
-        {
-          "key": "system.bonuses.abilities.save",
-          "mode": 2,
-          "value": "-1",
-          "priority": 20
-        },
-        {
-          "key": "system.bonuses.abilities.check",
-          "mode": 2,
-          "value": "-1",
-          "priority": 20
-        },
-        {
-          "key": "system.bonuses.All-Damage",
-          "mode": 2,
-          "value": "-1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.All-Attacks",
+            "value": -1,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.bonuses.abilities.save",
+            "value": -1,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.bonuses.abilities.check",
+            "value": -1,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.bonuses.All-Damage",
+            "value": -1,
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -260,33 +256,27 @@
           "gpsUuid": "7186eac1-010a-4fb4-bd22-699d06839162"
         }
       },
-      "_key": "!items.effects!caYyWnXvYjgsJnQd.PyTbYhpx8qAUSYhr"
+      "_key": "!items.effects!caYyWnXvYjgsJnQd.PyTbYhpx8qAUSYhr",
+      "start": null
     },
     {
       "name": "Wound Applicator",
       "origin": "Scene.1mkVNeOdyVIlDdH7.Token.Ct9wAPpQAERU5Bng.Actor.SNZJsEKbROB1q6bT.Item.7t9BNvIZ884SYTJ7",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": 35,
-        "startTurn": 1
-      },
+      "duration": {},
       "disabled": false,
       "img": "icons/creatures/abilities/fang-tooth-blood-red.webp",
       "_id": "5lN7yVKA5sdsrcMN",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.wound, postDamageRollComplete",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.wound, postDamageRollComplete",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -328,33 +318,27 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!caYyWnXvYjgsJnQd.5lN7yVKA5sdsrcMN"
+      "_key": "!items.effects!caYyWnXvYjgsJnQd.5lN7yVKA5sdsrcMN",
+      "start": null
     },
     {
       "name": "Wound Checker",
       "origin": "Scene.1mkVNeOdyVIlDdH7.Token.Ct9wAPpQAERU5Bng.Actor.SNZJsEKbROB1q6bT.Item.7t9BNvIZ884SYTJ7",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "img": "icons/creatures/abilities/fang-tooth-blood-red.webp",
       "_id": "aXetKSabQ5JW5gEu",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.wound @itemUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.wound @itemUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -403,7 +387,8 @@
           "gpsUuid": "a6e73d28-8fac-4aad-a30a-4d992217a710"
         }
       },
-      "_key": "!items.effects!caYyWnXvYjgsJnQd.aXetKSabQ5JW5gEu"
+      "_key": "!items.effects!caYyWnXvYjgsJnQd.aXetKSabQ5JW5gEu",
+      "start": null
     }
   ],
   "folder": null,

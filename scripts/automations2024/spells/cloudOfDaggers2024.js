@@ -1,4 +1,16 @@
 export async function cloudOfDaggers2024({tokenUuid, regionUuid, regionScenario, movementScenario, regionStatus, speaker, actor, token, character, item, args, scope, workflow, options, userId}) {
+    if (args?.[0] === "off") {
+        async function wait(ms) { return new Promise(resolve => { setTimeout(resolve, ms); }); }
+        await wait(250);
+        const originActor = await fromUuid(args[2]);
+        const itemCheck = originActor?.items.find(i => i.flags["gambits-premades"]?.gpsUuid === "920bfa86-2a3a-4e6a-ae7d-3d420c2c5992");
+        item = originActor?.items.find(i => i.identifier === "cloud-of-daggers");
+
+        const effectCheck = originActor?.appliedEffects.some(e => e.name === item?.name);
+        if(itemCheck && !effectCheck) await originActor.deleteEmbeddedDocuments("Item", [itemCheck.id]);
+        return;
+    }
+
     if(!game.combat) return ui.notifications.warn(game.i18n.format("GAMBITSPREMADES.Notifications.Common.RequiresActiveCombat", { effectName: workflow?.item?.name ?? item?.name ?? game.i18n.localize("GAMBITSPREMADES.Notifications.Common.ThisEffect") }))
 
     if(args?.[0]?.macroPass === "templatePlaced") {
@@ -131,21 +143,6 @@ export async function cloudOfDaggers2024({tokenUuid, regionUuid, regionScenario,
         let itemCheck = actor.items.some(i => i.flags["gambits-premades"]?.gpsUuid === "920bfa86-2a3a-4e6a-ae7d-3d420c2c5992");
         if (!itemCheck) await actor.createEmbeddedDocuments("Item", itemData);
         ui.notifications.info(game.i18n.format("GAMBITSPREMADES.Notifications.Automations2024.Spells.CloudOfDaggers2024.MoveFeatureItemCreated", { name: item.name, name2: item.name }))
-        return;
-    }
-
-    if (args?.[0] === "off") {
-        async function wait(ms) { return new Promise(resolve => { setTimeout(resolve, ms); }); }
-        await wait(250);
-        const originActor = await fromUuid(args[2]);
-        let itemCheck = originActor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === "920bfa86-2a3a-4e6a-ae7d-3d420c2c5992");
-        item = originActor.items.find(i => i.identifier === "cloud-of-daggers");
-        
-        let effectCheck = originActor.appliedEffects.some(e => e.name === `${item.name}`);
-        if(!effectCheck)
-        {
-            await originActor.deleteEmbeddedDocuments("Item", [itemCheck.id]);
-        }
         return;
     }
 

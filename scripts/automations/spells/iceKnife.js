@@ -17,7 +17,7 @@ export async function iceKnife({ speaker, actor, token, character, item, args, s
         let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
         const { animEnabled } = cprConfig;
         if(animEnabled) {
-            new Sequence()
+            new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .file("jb2a.spell_projectile.ice_shard.blue")
                 .atLocation(token)

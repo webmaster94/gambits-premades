@@ -280,7 +280,7 @@
               "events": [
                 "tokenEnter"
               ],
-              "source": "if(game.user.id !== event.user.id) return;\n\nlet effectData = event.data.token.actor.appliedEffects.find(e => e.name === \"Defile Ground\");\n\nif(!effectData) {\n  effectData = [{\n        \"disabled\": false,\n        \"name\": \"Defile Ground\",\n        \"img\": \"icons/magic/nature/root-vine-entangled-humanoid.webp\",\n        \"changes\": [\n          { \n            \"key\": \"flags.midi-qol.onUseMacroName\", \n            \"mode\": CONST.ACTIVE_EFFECT_MODES.CUSTOM, \n            \"value\": \"function.game.gps.defileGround,isDamaged\", \n            \"priority\": 20 \n          }\n        ],\n        \"transfer\": false\n  }];\n\nawait MidiQOL.socket().executeAsGM(\"createEffects\", { actorUuid: event.data.token.actor.uuid, effects: effectData });\n}"
+              "source": "if(game.user.id !== event.user.id) return;\n\nlet effectData = event.data.token.actor.appliedEffects.find(e => e.name === \"Defile Ground\");\n\nif(!effectData) {\n  effectData = [{\n        \"disabled\": false,\n        \"name\": \"Defile Ground\",\n        \"img\": \"icons/magic/nature/root-vine-entangled-humanoid.webp\",\n        \"system\": {\n          \"changes\": [\n            {\n              \"key\": \"flags.midi-qol.onUseMacroName\",\n              \"type\": \"custom\",\n              \"value\": \"function.game.gps.defileGround,isDamaged\",\n              \"priority\": 20\n            }\n          ]\n        },\n        \"transfer\": false\n  }];\n\nawait MidiQOL.socket().executeAsGM(\"createEffects\", { actorUuid: event.data.token.actor.uuid, effects: effectData });\n}"
             },
             "disabled": false,
             "flags": {},
@@ -358,27 +358,23 @@
       "name": "Defile Ground Template",
       "origin": "Actor.mMXv7VFWRU8zfbGg.Item.11Sixq2TYrE7dGVk",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "img": "icons/magic/nature/root-vine-entangled-humanoid.webp",
       "_id": "P5i3KrGHjOygstb6",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.defileGround @actorUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.defileGround @actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -424,7 +420,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!bmRAzh2pHksDyDM3.P5i3KrGHjOygstb6"
+      "_key": "!items.effects!bmRAzh2pHksDyDM3.P5i3KrGHjOygstb6",
+      "start": null
     }
   ],
   "folder": "4Ecsdk7k1FvMs9OF",

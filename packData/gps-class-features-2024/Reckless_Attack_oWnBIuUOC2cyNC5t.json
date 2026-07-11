@@ -129,32 +129,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-class-features-2024.Item.oWnBIuUOC2cyNC5t",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": 152,
-        "startTurn": 0
-      },
+      "duration": {},
       "disabled": false,
       "name": "Reckless Attack",
       "_id": "HvqYLk6a33Mq6j0n",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.recklessAttack2024, preAttackRollConfig",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.recklessAttack2024",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -204,9 +182,25 @@
       "tint": "#ffffff",
       "img": "icons/skills/melee/strike-axe-blood-red.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.recklessAttack2024, preAttackRollConfig",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.recklessAttack2024",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!oWnBIuUOC2cyNC5t.HvqYLk6a33Mq6j0n"
+      "_key": "!items.effects!oWnBIuUOC2cyNC5t.HvqYLk6a33Mq6j0n",
+      "start": null
     }
   ],
   "img": "icons/skills/melee/strike-axe-blood-red.webp",

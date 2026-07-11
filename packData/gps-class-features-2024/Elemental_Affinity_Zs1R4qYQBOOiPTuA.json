@@ -175,34 +175,27 @@
     {
       "name": "Elemental Affinity",
       "origin": "Compendium.world.gps-class-features-2024.Item.Zs1R4qYQBOOiPTuA",
-      "duration": {
-        "startTime": null,
-        "combat": null,
-        "seconds": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "img": "icons/magic/symbols/elements-air-earth-fire-water.webp",
       "_id": "yHQF1hyZZzy4TrT1",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.elementalAffinity2024, preAllRollsComplete",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.elementalAffinity2024 @itemUuid @actorUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.elementalAffinity2024, preAllRollsComplete",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.elementalAffinity2024 @itemUuid @actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -244,7 +237,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!Zs1R4qYQBOOiPTuA.yHQF1hyZZzy4TrT1"
+      "_key": "!items.effects!Zs1R4qYQBOOiPTuA.yHQF1hyZZzy4TrT1",
+      "start": null
     }
   ],
   "flags": {

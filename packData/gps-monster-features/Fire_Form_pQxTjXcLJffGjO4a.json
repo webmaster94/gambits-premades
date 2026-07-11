@@ -40,29 +40,22 @@
   "effects": [
     {
       "origin": "Scene.bAQsBAiUKXSqmows.Token.V7Cw9dXWIwhc2oNl.Actor.99amRyyGWbOk6u8F.Item.1F5YZIe6tLPfTt45",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Fire Form",
       "img": "icons/magic/fire/projectile-embers-orange.webp",
       "_id": "mSyMADxeNUdhaAxr",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, isHit",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, isHit",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -98,19 +91,12 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!pQxTjXcLJffGjO4a.mSyMADxeNUdhaAxr"
+      "_key": "!items.effects!pQxTjXcLJffGjO4a.mSyMADxeNUdhaAxr",
+      "start": null
     },
     {
       "origin": "Compendium.world.gps-monster-features.Item.pQxTjXcLJffGjO4a",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Fire Form Aura",
       "img": "icons/magic/fire/projectile-embers-orange.webp",
@@ -134,16 +120,16 @@
         "overrideName": "",
         "script": "",
         "stashedChanges": [],
-        "stashedStatuses": []
+        "stashedStatuses": [],
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "@actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
       },
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "@actorUuid",
-          "priority": 20
-        }
-      ],
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -188,7 +174,8 @@
           "originalType": "base"
         }
       },
-      "_key": "!items.effects!pQxTjXcLJffGjO4a.0CgHOBu0Iq25jpYi"
+      "_key": "!items.effects!pQxTjXcLJffGjO4a.0CgHOBu0Iq25jpYi",
+      "start": null
     }
   ],
   "flags": {

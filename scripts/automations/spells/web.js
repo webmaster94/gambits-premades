@@ -26,8 +26,14 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
     let dialogTitlePrimary = `${token.actor.name} | ${itemProperName}`;
 
     const hasEffectApplied = token.document.hasStatusEffect("restrained");
+    const combatRound = game.combat?.round;
+    const webRoundKey = Number.isInteger(combatRound) ? `${token.id}_${combatRound}` : null;
+    const markWebRound = async () => {
+        if (!webRoundKey) return;
+        await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkWebRound", value: webRoundKey });
+    };
     const damagedThisTurn = await region.getFlag("gambits-premades", "checkWebRound");
-    if(damagedThisTurn && damagedThisTurn === `${token.id}_${game.combat.round}`) return;
+    if(webRoundKey && damagedThisTurn === webRoundKey) return;
     let browserUser = game.gps.getBrowserUser({ actorUuid: token.actor.uuid });
 
     let resumeMovement;
@@ -60,7 +66,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result || {};
 
         if (!userDecision) {
-            await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkWebRound", value: `${token.id}_${game.combat.round}` });
+            await markWebRound();
             return;
         }
         else if (userDecision) {
@@ -72,7 +78,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
             if (skillCheck.failedSaves.size === 0) {
                 await game.gps.socket.executeAsUser("gmToggleStatus", gmUser, {tokenUuid: `${token.document.uuid}`, status: "restrained", active: false });
                 let chatData = {
-                    author: browserUser.id,
+                    author: browserUser,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Web.Escape", { itemName: chosenItem.name })}</span>`
                 };
@@ -80,7 +86,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
             }
             else {
                 let chatData = {
-                    author: browserUser.id,
+                    author: browserUser,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Web.UnableEscapeTurn", { itemName: chosenItem.name })}</span>`
                 };
@@ -88,7 +94,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
             }
         }
     
-        await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkWebRound", value: `${token.id}_${game.combat.round}` });
+        await markWebRound();
     }
 
     else if (!hasEffectApplied) {
@@ -97,7 +103,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
         if(!saveResult) return;
         
         if (saveResult.failedSaves.size !== 0) {
-            await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkWebRound", value: `${token.id}_${game.combat.round}` });
+            await markWebRound();
             const hasEffectApplied = token.document.hasStatusEffect("restrained");
 
             if (!hasEffectApplied) {
@@ -143,7 +149,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
                 if (skillCheck.failedSaves.size === 0) {
                     await game.gps.socket.executeAsUser("gmToggleStatus", gmUser, {tokenUuid: `${token.document.uuid}`, status: "restrained", active: false });
                         let chatData = {
-                        author: browserUser.id,
+                        author: browserUser,
                         speaker: ChatMessage.getSpeaker({ token: token }),
                         content: `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Web.Escape", { itemName: chosenItem.name })}</span>`
                     };
@@ -152,7 +158,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
                 }
                 else {
                     let chatData = {
-                        author: browserUser.id,
+                        author: browserUser,
                         speaker: ChatMessage.getSpeaker({ token: token }),
                         content: `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Web.UnableEscapeTurn", { itemName: chosenItem.name })}</span>`
                     };
@@ -167,7 +173,7 @@ export async function web({tokenUuid, regionUuid, regionScenario, originX, origi
         }
         
         if(saveResult) {
-            await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkWebRound", value: `${token.id}_${game.combat.round}` });
+            await markWebRound();
         }
     }
 }

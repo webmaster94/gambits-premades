@@ -149,7 +149,7 @@ export async function dreadCounterspell({ workflowData,workflowType,workflowComb
                 let cprConfig = game.gps.getCprConfig({itemUuid: chosenItem.uuid});
                 const { animEnabled } = cprConfig;
                 if(animEnabled) {
-                    new Sequence()
+                    new Sequence({moduleName: "gambits-premades", softFail: true})
                     .effect()
                         .file("animated-spell-effects-cartoon.energy.beam.01")
                         .fadeIn(500)

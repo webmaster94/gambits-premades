@@ -1,5 +1,4 @@
 export async function hideousLaughter({ speaker, actor, token, character, item, args, scope, workflow, options }) {
-    if(!game.modules.get("animated-spell-effects-cartoon")?.active) return ui.notifications.error(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.MissingDependency"));
     if (args[0].macroPass === "isDamaged" || args[0] === "each")
     {
         let effectOriginActor;
@@ -47,7 +46,7 @@ export async function hideousLaughter({ speaker, actor, token, character, item, 
 
                 let facing = 1;
 
-                await new Sequence()
+                await new Sequence({moduleName: "gambits-premades", softFail: true})
 
                 .sound()
                     .file("modules/gambits-premades/assets/sounds/laugh.ogg")
@@ -138,7 +137,7 @@ export async function hideousLaughter({ speaker, actor, token, character, item, 
 
                 .play();
 
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
 
                 .effect()
                 .name(`Fear_${target.id}`)

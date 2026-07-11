@@ -6,34 +6,30 @@
     {
       "origin": "Actor.AIqSi2gtDqMmCsIl.Item.KRL5vlmfsP90KgwS",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Grasping Arrow",
       "img": "icons/magic/nature/root-vine-entangled-humanoid.webp",
       "_id": "ODWwJEZO2OfbPZCX",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.attributes.movement.walk",
-          "mode": 2,
-          "value": "-10",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.graspingArrow @actorUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.movement.walk",
+            "value": -10,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.graspingArrow @actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -79,33 +75,30 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!HXiUB8b13hEHEdsp.ODWwJEZO2OfbPZCX"
+      "_key": "!items.effects!HXiUB8b13hEHEdsp.ODWwJEZO2OfbPZCX",
+      "start": null
     },
     {
       "origin": "Actor.AIqSi2gtDqMmCsIl.Item.KRL5vlmfsP90KgwS",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Grasping Arrow - Movement",
       "img": "icons/magic/nature/root-vine-entangled-humanoid.webp",
       "_id": "O4qMbR0ctOVrVzmh",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.graspingArrow @actorUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.graspingArrow @actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -153,33 +146,30 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!HXiUB8b13hEHEdsp.O4qMbR0ctOVrVzmh"
+      "_key": "!items.effects!HXiUB8b13hEHEdsp.O4qMbR0ctOVrVzmh",
+      "start": null
     },
     {
       "origin": "Actor.AIqSi2gtDqMmCsIl.Item.KRL5vlmfsP90KgwS",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 12,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 12,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Shadow Arrow",
       "img": "icons/skills/ranged/arrows-flying-salvo-purple.webp",
       "_id": "3jbcLQeq7xscB7Zx",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "ATL.detectionModes.lightPerception.range",
-          "mode": 5,
-          "value": "5",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "ATL.detectionModes.lightPerception.range",
+            "value": 5,
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -232,33 +222,30 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!HXiUB8b13hEHEdsp.3jbcLQeq7xscB7Zx"
+      "_key": "!items.effects!HXiUB8b13hEHEdsp.3jbcLQeq7xscB7Zx",
+      "start": null
     },
     {
       "origin": "Actor.AIqSi2gtDqMmCsIl.Item.KRL5vlmfsP90KgwS",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 12,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 12,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Enfeebling Arrow",
       "img": "icons/weapons/ammunition/arrow-broadhead-bent-teal.webp",
       "_id": "rwfjw7ZdrE79qnv9",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.enfeeblingArrow, preDamageRollComplete",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.enfeeblingArrow, preDamageRollComplete",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -306,33 +293,30 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!HXiUB8b13hEHEdsp.rwfjw7ZdrE79qnv9"
+      "_key": "!items.effects!HXiUB8b13hEHEdsp.rwfjw7ZdrE79qnv9",
+      "start": null
     },
     {
       "origin": "Actor.AIqSi2gtDqMmCsIl.Item.KRL5vlmfsP90KgwS",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 12,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 12,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Banishing Arrow",
       "img": "icons/weapons/ammunition/arrowhead-glowing-blue.webp",
       "_id": "sHvO3h6X0O0ohneV",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "ATL.hidden",
-          "mode": 0,
-          "value": "true",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "ATL.hidden",
+            "value": true,
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -380,39 +364,33 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!HXiUB8b13hEHEdsp.sHvO3h6X0O0ohneV"
+      "_key": "!items.effects!HXiUB8b13hEHEdsp.sHvO3h6X0O0ohneV",
+      "start": null
     },
     {
       "origin": "Actor.AIqSi2gtDqMmCsIl.Item.KRL5vlmfsP90KgwS",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Arcane Shot",
       "img": "icons/magic/fire/projectile-arrow-fire-purple.webp",
       "_id": "vTTq7IsEpwHNoR1H",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.arcaneShot, postAttackRollComplete",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.arcaneShot",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.arcaneShot, postAttackRollComplete",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.arcaneShot",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -454,7 +432,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!HXiUB8b13hEHEdsp.vTTq7IsEpwHNoR1H"
+      "_key": "!items.effects!HXiUB8b13hEHEdsp.vTTq7IsEpwHNoR1H",
+      "start": null
     }
   ],
   "system": {

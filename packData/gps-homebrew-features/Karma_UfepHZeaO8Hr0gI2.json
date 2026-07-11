@@ -5,54 +5,8 @@
   "effects": [
     {
       "_id": "GrZ2AlujZEWCppJt",
-      "changes": [
-        {
-          "key": "flags.midi-qol.optional.Karma.attack.all",
-          "mode": 5,
-          "value": "1d6",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.Karma.save.all",
-          "mode": 5,
-          "value": "1d6",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.Karma.check.all",
-          "mode": 5,
-          "value": "1d6",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.Karma.label",
-          "mode": 5,
-          "value": "Karma",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.Karma.skill.all",
-          "mode": 2,
-          "value": "1d6",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.Karma.damage.all",
-          "mode": 2,
-          "value": "1d6",
-          "priority": 20
-        }
-      ],
       "disabled": false,
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "origin": "Item.dQvh9dejF0s0d9nk",
       "transfer": false,
       "flags": {
@@ -107,9 +61,49 @@
       "statuses": [],
       "img": "modules/gambits-premades/assets/images/karma.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.optional.Karma.attack.all",
+            "value": "1d6",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.Karma.save.all",
+            "value": "1d6",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.Karma.check.all",
+            "value": "1d6",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.Karma.label",
+            "value": "Karma",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.Karma.skill.all",
+            "value": "1d6",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "flags.midi-qol.optional.Karma.damage.all",
+            "value": "1d6",
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!UfepHZeaO8Hr0gI2.GrZ2AlujZEWCppJt"
+      "_key": "!items.effects!UfepHZeaO8Hr0gI2.GrZ2AlujZEWCppJt",
+      "start": null
     }
   ],
   "flags": {

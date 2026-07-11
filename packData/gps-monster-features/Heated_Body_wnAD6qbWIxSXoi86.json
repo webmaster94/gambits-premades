@@ -40,29 +40,22 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-monster-features.Item.wnAD6qbWIxSXoi86",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Heated Body",
       "img": "icons/creatures/unholy/demon-fanged-horned-yellow.webp",
       "_id": "Ap1lR2BdOvMMD4hx",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro,isHit",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro,isHit",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -94,7 +87,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!wnAD6qbWIxSXoi86.Ap1lR2BdOvMMD4hx"
+      "_key": "!items.effects!wnAD6qbWIxSXoi86.Ap1lR2BdOvMMD4hx",
+      "start": null
     }
   ],
   "flags": {

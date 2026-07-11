@@ -1,5 +1,5 @@
 export async function infestation({ speaker, actor, token, character, item, args, scope, workflow, options }) {
-    if(args[0].macroPass === "postSave" && workflow.failedSaves.size !== 0) {
+    if(["postSave", "postSavesComplete"].includes(args?.[0]?.macroPass) && workflow.failedSaves.size !== 0) {
         let gmUser = game.gps.getPrimaryGM();
         let targets = workflow.failedSaves;
         for(let target of targets) {

@@ -4,14 +4,14 @@ export async function scatter({ speaker, actor, token, character, item, args, sc
             if(!MidiQOL.canSee(token, target)) continue;
             const portalScale = target.w / canvas.grid.size * 0.7;
 
-            const magicSign = new Sequence().effect()
+            const magicSign = new Sequence({moduleName: "gambits-premades", softFail: true}).effect()
                 .file('jb2a.magic_signs.rune.conjuration.intro.purple')
                 .atLocation(target)
                 .scale(portalScale * 0.7)
                 .opacity(0.5)
                 .waitUntilFinished(-600);
 
-            const introSequence = new Sequence().effect()
+            const introSequence = new Sequence({moduleName: "gambits-premades", softFail: true}).effect()
                 .file('jb2a.template_circle.vortex.loop.purple')
                 .atLocation(target)
                 .scale(portalScale * 0.5)
@@ -42,7 +42,7 @@ export async function scatter({ speaker, actor, token, character, item, args, sc
 
             Sequencer.EffectManager.endEffects({ name: `${target.document.name}_Scatter` });
             if(!position) return;
-            const outroSequence = new Sequence();
+            const outroSequence = new Sequence({moduleName: "gambits-premades", softFail: true});
             outroSequence.effect()
                 .file('jb2a.template_circle.vortex.outro.purple')
                 .scale(portalScale * 0.5)

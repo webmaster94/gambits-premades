@@ -201,40 +201,36 @@
     {
       "origin": "Compendium.world.gps-homebrew-items.Item.zEXJxqsAmVM7Pohu",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Oil, Spark",
       "img": "icons/consumables/potions/potion-flask-stopped-labeled-yellow.webp",
       "_id": "v3j3orDGcbQyk7ZI",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.bonuses.rwak.damage",
-          "mode": 0,
-          "value": "1d6[lightning]",
-          "priority": 20
-        },
-        {
-          "key": "system.bonuses.mwak.damage",
-          "mode": 0,
-          "value": "1d6[lightning]",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.rwak.damage",
+            "value": "1d6[lightning]",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "system.bonuses.mwak.damage",
+            "value": "1d6[lightning]",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -269,7 +265,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!2QwH6ENaDlhEbZtM.v3j3orDGcbQyk7ZI"
+      "_key": "!items.effects!2QwH6ENaDlhEbZtM.v3j3orDGcbQyk7ZI",
+      "start": null
     }
   ],
   "folder": null,

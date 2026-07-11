@@ -201,28 +201,24 @@
     {
       "origin": "Actor.Q7GcFBwAbXgQX9Yv.Item.qWiv28Gjy6Da4SDd",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Tale of Hubris",
       "img": "icons/creatures/abilities/wings-birdlike-blue.webp",
       "_id": "dB8JqVuRW2YroKII",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.grants.criticalThreshold",
-          "mode": 2,
-          "value": "@classes.bard.levels >= 14 ? (flags?.dnd5e?.weaponCriticalThreshold ? (flags?.dnd5e?.weaponCriticalThreshold - 3) : (20 - 3)) : (flags?.dnd5e?.weaponCriticalThreshold ? (flags?.dnd5e?.weaponCriticalThreshold - 2) : (20 - 2))",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.grants.criticalThreshold",
+            "value": "@classes.bard.levels >= 14 ? (flags?.dnd5e?.weaponCriticalThreshold ? (flags?.dnd5e?.weaponCriticalThreshold - 3) : (20 - 3)) : (flags?.dnd5e?.weaponCriticalThreshold ? (flags?.dnd5e?.weaponCriticalThreshold - 2) : (20 - 2))",
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -275,7 +271,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!fJgpyLzIwSH4Ox87.dB8JqVuRW2YroKII"
+      "_key": "!items.effects!fJgpyLzIwSH4Ox87.dB8JqVuRW2YroKII",
+      "start": null
     }
   ],
   "folder": "bX8XDLjtdwvTXwGH",

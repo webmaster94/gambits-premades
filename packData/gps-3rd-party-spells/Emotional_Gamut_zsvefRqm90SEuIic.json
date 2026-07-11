@@ -207,40 +207,36 @@
     {
       "origin": "Actor.qCpb5H6vLrBeOWAO.Item.sThpi5EmN1Xud6vZ",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Emotional Gamut",
       "img": "icons/magic/control/hypnosis-mesmerism-eye.webp",
       "_id": "tRBWoyAIFXz3MkXY",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.attributes.movement.all",
-          "mode": 0,
-          "value": "-10",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "@actorUuid",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.OverTime",
-          "mode": 0,
-          "value": "turn=end,\nname=Emotional Gamut Damage,\ndamageRoll=1d4,\ndamageType=psychic,\nsaveRemove=true,\nsaveDC=@attributes.spelldc,\nsaveAbility=wis,\nsaveDamage=nodamage,\nkillAnim=true,\nfastForwardDamage=true",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.movement.all",
+            "value": -10,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "@actorUuid",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.OverTime",
+            "value": "turn=end,\nname=Emotional Gamut Damage,\ndamageRoll=1d4,\ndamageType=psychic,\nsaveRemove=true,\nsaveDC=@attributes.spelldc,\nsaveAbility=wis,\nsaveDamage=nodamage,\nkillAnim=true,\nfastForwardDamage=true",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -280,7 +276,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!zsvefRqm90SEuIic.tRBWoyAIFXz3MkXY"
+      "_key": "!items.effects!zsvefRqm90SEuIic.tRBWoyAIFXz3MkXY",
+      "start": null
     }
   ],
   "flags": {

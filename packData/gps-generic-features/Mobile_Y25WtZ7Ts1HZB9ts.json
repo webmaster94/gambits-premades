@@ -111,38 +111,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-generic-features.Item.dV0FzUTUxfvhGWVj",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Mobile",
       "_id": "ayGBoPfqCMspbtky",
-      "changes": [
-        {
-          "key": "system.attributes.movement.walk",
-          "mode": 2,
-          "value": "+ 10",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.mobile, preWaitForAttackRoll",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.mobile",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -191,9 +163,31 @@
       "tint": "#ffffff",
       "img": "icons/skills/movement/feet-winged-boots-brown.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.movement.walk",
+            "value": "+ 10",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.mobile, preWaitForAttackRoll",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.mobile",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!Y25WtZ7Ts1HZB9ts.ayGBoPfqCMspbtky"
+      "_key": "!items.effects!Y25WtZ7Ts1HZB9ts.ayGBoPfqCMspbtky",
+      "start": null
     }
   ],
   "folder": null,

@@ -71,7 +71,7 @@ export async function confusion({ speaker, actor, token, character, item, args, 
             const randomSelection = rangeCheck[Math.floor(Math.random() * rangeCheck.length)];
             content = game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Confusion.MustMoveAndMeleeAttack", { targetName: randomSelection.actor.name });
             let target = randomSelection;
-            new Sequence()
+            new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
             .copySprite(target)
             .belowTokens()
@@ -133,7 +133,7 @@ export async function confusion({ speaker, actor, token, character, item, args, 
             let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
             const { animEnabled } = cprConfig;
             if(animEnabled) {
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
     
                 .effect()
                 .atLocation(token)
@@ -155,7 +155,7 @@ export async function confusion({ speaker, actor, token, character, item, args, 
             let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
             const { animEnabled } = cprConfig;
             if(animEnabled) {
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                 .atLocation(canvas.scene.regions.get(template.id)?.object ?? template.object ?? template)
                 .file("jaamod.misc.qm")

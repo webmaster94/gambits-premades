@@ -40,29 +40,22 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-monster-features.Item.1x4B0hcL3DTej6q0",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Freeze",
       "img": "icons/commodities/gems/gem-rough-rectangular-teal.webp",
       "_id": "aCt9V5pEjTYigv2S",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, isDamaged",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -99,7 +92,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!1x4B0hcL3DTej6q0.aCt9V5pEjTYigv2S"
+      "_key": "!items.effects!1x4B0hcL3DTej6q0.aCt9V5pEjTYigv2S",
+      "start": null
     }
   ],
   "flags": {

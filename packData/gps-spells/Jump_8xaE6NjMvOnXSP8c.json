@@ -247,21 +247,17 @@
     {
       "origin": "Compendium.world.gps-spells.Item.pHaMJBTQHtVHh9RF",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Jump",
       "img": "icons/magic/control/debuff-energy-hold-levitate-teal-blue.webp",
       "_id": "3IzgEJNHEPFgnFlg",
       "type": "base",
-      "system": {},
-      "changes": [],
+      "system": {
+        "changes": []
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -301,7 +297,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!8xaE6NjMvOnXSP8c.3IzgEJNHEPFgnFlg"
+      "_key": "!items.effects!8xaE6NjMvOnXSP8c.3IzgEJNHEPFgnFlg",
+      "start": null
     }
   ],
   "img": "icons/magic/control/debuff-energy-hold-levitate-teal-blue.webp",

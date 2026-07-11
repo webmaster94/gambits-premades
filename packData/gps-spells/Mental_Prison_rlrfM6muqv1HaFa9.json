@@ -208,28 +208,24 @@
     {
       "origin": "Actor.61bbjJUkASXmxxcU.Item.ddbMentalPrison1",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Mental Prison",
       "img": "icons/magic/control/debuff-chains-ropes-purple.webp",
       "_id": "ALD0yIwzOKUYORqW",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.mentalPrison",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.mentalPrison",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -508,7 +504,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!rlrfM6muqv1HaFa9.ALD0yIwzOKUYORqW"
+      "_key": "!items.effects!rlrfM6muqv1HaFa9.ALD0yIwzOKUYORqW",
+      "start": null
     }
   ],
   "name": "Mental Prison",

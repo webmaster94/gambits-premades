@@ -396,64 +396,64 @@
     {
       "origin": "Compendium.world.gps-spells.Item.SVQPFoVwzAnLLhQy",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Holy Aura",
       "img": "icons/magic/holy/barrier-shield-winged-cross.webp",
       "_id": "lztTCZ8yyn1WN8tv",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.advantage.save.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.grants.disadvantage.attack.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "ATL.light.dim",
-          "mode": 5,
-          "value": "5",
-          "priority": 20
-        },
-        {
-          "key": "ATL.light.color",
-          "mode": 5,
-          "value": "#ffffff",
-          "priority": 20
-        },
-        {
-          "key": "ATL.light.alpha",
-          "mode": 5,
-          "value": "0.25",
-          "priority": 20
-        },
-        {
-          "key": "ATL.light.animation",
-          "mode": 5,
-          "value": "{\"type\": \"starlight\", \"speed\": 2,\"intensity\": 4}",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.holyAura,isDamaged",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.advantage.save.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.grants.disadvantage.attack.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "ATL.light.dim",
+            "value": 5,
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "ATL.light.color",
+            "value": "#ffffff",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "ATL.light.alpha",
+            "value": 0.25,
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "ATL.light.animation",
+            "value": {
+              "type": "starlight",
+              "speed": 2,
+              "intensity": 4
+            },
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.holyAura,isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -502,7 +502,8 @@
           }
         }
       },
-      "_key": "!items.effects!sI3nFbNebL8C4pYC.lztTCZ8yyn1WN8tv"
+      "_key": "!items.effects!sI3nFbNebL8C4pYC.lztTCZ8yyn1WN8tv",
+      "start": null
     }
   ],
   "folder": null,

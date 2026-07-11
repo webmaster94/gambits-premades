@@ -1,5 +1,6 @@
 export async function command2024({ speaker, actor, token, character, item, args, scope, workflow, options }) {
-    if(args[0].macroPass === "postSave" && workflow.failedSaves) {
+    const macroPass = args?.[0]?.macroPass;
+    if(["postSave", "postSavesComplete"].includes(macroPass) && workflow.failedSaves?.size) {
         let targets = workflow.failedSaves;
 
         await foundry.applications.api.DialogV2.wait({
@@ -70,7 +71,7 @@ export async function command2024({ speaker, actor, token, character, item, args
         const delayIncrement = 500;
 
         wordInput.split('').forEach((char, index) => {
-            new Sequence()
+            new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                 .atLocation(token, {
                     offset: { x: index * 0.35 - (wordInput.length - 1) * 0.18, y: -0.7 * token.document.height },

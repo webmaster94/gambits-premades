@@ -65,13 +65,13 @@ export async function instinctiveCharm({workflowData,workflowType,workflowCombat
         let result;
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
-            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser.id, notificationId: notificationMessage._id };
+            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser, notificationId: notificationMessage._id };
             
             let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: "gm",type: "multiDialog", notificationId: notificationMessage._id };
         
-            result = await game.gps.socket.executeAsGM("handleDialogPromises", userDialogArgs, gmDialogArgs);
+            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
         } else {
-            result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser.id, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
+            result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
         }
 
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, source, type } = result || {};
@@ -101,6 +101,7 @@ export async function instinctiveCharm({workflowData,workflowType,workflowCombat
 
             const spellDC = validTokenPrimary.actor.system.attributes.spell.dc;
             let saveAbility = "wis";
+            const saveActivityId = "instCharmSave001";
 
             const itemData = {
                 name: `${itemProperName} Save`,
@@ -115,23 +116,110 @@ export async function instinctiveCharm({workflowData,workflowType,workflowCombat
                     },
                     "midiProperties": {
                         magiceffect: true
-                    },
-                    "autoanimations": {
-                        killAnim: true
                     }
 
                 },
                 system: {
-                    equipped: true,
-                    actionType: "save",
-                    save: { dc: spellDC, ability: saveAbility, scaling: "flat" },
-                    components: { concentration: false, material: false, ritual: false, somatic: false, value: "", vocal: false },
-                    duration: { units: "inst", value: undefined }
+                    activities: {
+                        [saveActivityId]: {
+                            _id: saveActivityId,
+                            type: "save",
+                            activation: {
+                                type: "special",
+                                value: null,
+                                override: false
+                            },
+                            consumption: {
+                                targets: [],
+                                scaling: {
+                                    allowed: false,
+                                    max: ""
+                                },
+                                spellSlot: false
+                            },
+                            description: {
+                                // This synthetic save has no visual component. The opt-out also
+                                // prevents Autoanimations from trying to migrate an unsaved Item.
+                                chatFlavor: "[noaa]"
+                            },
+                            duration: {
+                                units: "inst",
+                                concentration: false,
+                                override: false
+                            },
+                            effects: [],
+                            range: {
+                                override: false,
+                                units: "any"
+                            },
+                            target: {
+                                prompt: false,
+                                template: {
+                                    contiguous: false,
+                                    units: "ft"
+                                },
+                                affects: {
+                                    choice: false,
+                                    count: "1",
+                                    type: "creature"
+                                },
+                                override: true
+                            },
+                            uses: {
+                                spent: 0,
+                                max: "",
+                                recovery: []
+                            },
+                            damage: {
+                                onSave: "none",
+                                parts: [],
+                                critical: {
+                                    allow: false
+                                }
+                            },
+                            save: {
+                                ability: [saveAbility],
+                                dc: {
+                                    calculation: "",
+                                    formula: `${spellDC}`
+                                }
+                            },
+                            midiProperties: {
+                                identifier: "instinctiveCharmSave",
+                                automationOnly: false,
+                                triggeredActivityId: "none",
+                                triggeredActivityTargets: "targets",
+                                triggeredActivityRollAs: "self",
+                                autoConsume: false,
+                                confirmTargets: "default",
+                                autoTargetType: "any",
+                                autoTargetAction: "default",
+                                otherActivityCompatible: false,
+                                otherActivityAsParentType: true
+                            },
+                            name: `${itemProperName} Save`
+                        }
+                    }
                 },
             };
             const itemUpdateTarget = new CONFIG.Item.documentClass(itemData, {parent: validTokenPrimary.actor});
-            const optionsTarget = { showFullCard: false, createWorkflow: true, versatile: false, configureDialog: false, targetUuids: [target.document.uuid], workflowOptions: {autoRollDamage: 'always', autoFastDamage: true} };
-            const saveResult = await MidiQOL.completeItemUse(itemUpdateTarget, {}, optionsTarget);
+            const optionsTarget = {
+                midiOptions: {
+                    targetUuids: [target.document.uuid],
+                    noOnUseMacro: true,
+                    configureDialog: false,
+                    showFullCard: false,
+                    ignoreUserTargets: true,
+                    checkGMStatus: true,
+                    autoRollAttack: true,
+                    autoRollDamage: "always",
+                    fastForwardAttack: true,
+                    fastForwardDamage: true,
+                    workflowData: true
+                }
+            };
+            const saveResult = await MidiQOL.completeItemUse(itemUpdateTarget, optionsTarget, {}, {});
+            if(!saveResult) continue;
             const hasCharmImmunity = target.actor.system.traits.ci.value.has("charmed");
             if (saveResult.failedSaves.size !== 0 && !hasCharmImmunity) {
                 let dialogContentTarget = `
@@ -169,9 +257,12 @@ export async function instinctiveCharm({workflowData,workflowType,workflowCombat
                     
                     let gmDialogArgsTarget = { dialogTitle:dialogTitleGM,dialogContent: dialogContentTarget,dialogId: dialogIdTarget,initialTimeLeft,validTokenPrimaryUuid: target.document.uuid,source: "gm",type: "multiDialog", notificationId: notificationMessage._id };
                 
-                    resultTarget = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgsTarget, gmDialogArgsTarget});
+                    resultTarget = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {
+                        userDialogArgs: userDialogArgsTarget,
+                        gmDialogArgs: gmDialogArgsTarget
+                    });
                 } else {
-                    resultTarget = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUserTarget.id, {dialogTitle:dialogTitlePrimary,dialogContent: dialogContentTarget,dialogId: dialogIdTarget,initialTimeLeft,validTokenPrimaryUuid: target.document.uuid,source: gmUser === browserUserTarget ? "gm" : "user",type:"singleDialog"});
+                    resultTarget = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUserTarget, {dialogTitle:dialogTitlePrimary,dialogContent: dialogContentTarget,dialogId: dialogIdTarget,initialTimeLeft,validTokenPrimaryUuid: target.document.uuid,source: gmUser === browserUserTarget ? "gm" : "user",type:"singleDialog"});
                 }
         
                 const { enemyTokenUuid } = resultTarget;

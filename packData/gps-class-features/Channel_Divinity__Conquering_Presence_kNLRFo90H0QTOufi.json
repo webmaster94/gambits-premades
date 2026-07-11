@@ -173,34 +173,30 @@
     {
       "origin": "Compendium.world.gps-class-features.Item.kNLRFo90H0QTOufi",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Channel Divinity: Conquering Presence",
       "img": "icons/magic/control/control-influence-crown-yellow.webp",
       "_id": "eAmrp3t0nbjRDhVd",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "frightened",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.OverTime",
-          "mode": 0,
-          "value": "turn=end,saveAbility=wis,saveDC=@attributes.spelldc,saveMagic=true,killAnim=true,label=Channel Divinity: Conquering Presence",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.StatusEffect",
+            "value": "frightened",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.OverTime",
+            "value": "turn=end,saveAbility=wis,saveDC=@attributes.spelldc,saveMagic=true,killAnim=true,label=Channel Divinity: Conquering Presence",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -235,7 +231,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!kNLRFo90H0QTOufi.eAmrp3t0nbjRDhVd"
+      "_key": "!items.effects!kNLRFo90H0QTOufi.eAmrp3t0nbjRDhVd",
+      "start": null
     }
   ],
   "flags": {

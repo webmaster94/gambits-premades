@@ -184,32 +184,10 @@
   "effects": [
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.FwXNOmBcFUT2Ls9w",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Drayfn’s Bane of Excellence",
       "_id": "1aZUiRZIU4tPRa8I",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.drafynsBaneOfExcellence,preAttackRollComplete",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.drafynsBaneOfExcellence",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": false,
       "statuses": [],
@@ -263,9 +241,25 @@
       "tint": "#ffffff",
       "img": "icons/magic/unholy/strike-beam-blood-large-red-blue.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.drafynsBaneOfExcellence,preAttackRollComplete",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.drafynsBaneOfExcellence",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!F9e121MhU4llxGyT.1aZUiRZIU4tPRa8I"
+      "_key": "!items.effects!F9e121MhU4llxGyT.1aZUiRZIU4tPRa8I",
+      "start": null
     }
   ],
   "flags": {

@@ -208,34 +208,30 @@
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.6BDRx5MzIdbcnMfn",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 12,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 12,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Ominous Shadow",
       "img": "icons/creatures/magical/humanoid-silhouette-dashing-blue.webp",
       "_id": "oPIJGfVwcV2Ld5LV",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.disadvantage.attack.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.disadvantage.save.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.disadvantage.attack.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.disadvantage.save.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -424,7 +420,8 @@
           }
         }
       },
-      "_key": "!items.effects!vtqlE2dhGGC5SVMQ.oPIJGfVwcV2Ld5LV"
+      "_key": "!items.effects!vtqlE2dhGGC5SVMQ.oPIJGfVwcV2Ld5LV",
+      "start": null
     }
   ],
   "flags": {

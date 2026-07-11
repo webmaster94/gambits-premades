@@ -185,35 +185,28 @@
   "effects": [
     {
       "origin": "Compendium.gambits-premades.gps-3rd-party-spells.Item.4SkGLI2AL3ndOpwl",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Contagious Healing",
       "img": "icons/magic/life/heart-hand-gold-green-light.webp",
       "_id": "o0bHY6SZCra2Ov5v",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.contagiousHealing,isDamaged",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.contagiousHealing",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.contagiousHealing,isDamaged",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.contagiousHealing",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -267,7 +260,8 @@
           "gpsUuid": "dabf704f-a59b-43b4-8552-9aa18734a362"
         }
       },
-      "_key": "!items.effects!WGKG4HlYIWFNhVMO.o0bHY6SZCra2Ov5v"
+      "_key": "!items.effects!WGKG4HlYIWFNhVMO.o0bHY6SZCra2Ov5v",
+      "start": null
     }
   ],
   "flags": {

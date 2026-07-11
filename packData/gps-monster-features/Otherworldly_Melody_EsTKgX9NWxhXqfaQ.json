@@ -203,34 +203,30 @@
     {
       "origin": "Compendium.world.gps-monster-features.Item.EsTKgX9NWxhXqfaQ",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Otherworldly Melody",
       "img": "icons/skills/trades/academics-astronomy-navigation-purple.webp",
       "_id": "LRmBdBBDFtzfZjew",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "frightened",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.OverTime",
-          "mode": 0,
-          "value": "turn=end,rollType=save,saveAbility=wis,saveDC=16,saveDamage=nodamage,saveRemove=true",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.StatusEffect",
+            "value": "frightened",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.OverTime",
+            "value": "turn=end,rollType=save,saveAbility=wis,saveDC=16,saveDamage=nodamage,saveRemove=true",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -265,7 +261,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!EsTKgX9NWxhXqfaQ.LRmBdBBDFtzfZjew"
+      "_key": "!items.effects!EsTKgX9NWxhXqfaQ.LRmBdBBDFtzfZjew",
+      "start": null
     }
   ],
   "flags": {

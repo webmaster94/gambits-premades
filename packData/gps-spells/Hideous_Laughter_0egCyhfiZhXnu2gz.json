@@ -312,40 +312,36 @@
     {
       "origin": "Compendium.world.gps-spells.Item.lKFOLNRRdLIBS3Xc",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Hideous Laughter",
       "img": "icons/sundries/misc/teeth-dentures.webp",
       "_id": "0DQgdtRDzoHvkedJ",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.hideousLaughter,isDamaged",
-          "priority": 20
-        },
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "incapacitated",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.hideousLaughter @actorUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.hideousLaughter,isDamaged",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.StatusEffect",
+            "value": "incapacitated",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.hideousLaughter @actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -385,7 +381,8 @@
           "overlay": false
         }
       },
-      "_key": "!items.effects!0egCyhfiZhXnu2gz.0DQgdtRDzoHvkedJ"
+      "_key": "!items.effects!0egCyhfiZhXnu2gz.0DQgdtRDzoHvkedJ",
+      "start": null
     }
   ],
   "flags": {

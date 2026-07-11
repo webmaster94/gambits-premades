@@ -2,7 +2,7 @@ export function stinkingCloud({template, itemUuid}) {
     let cprConfig = game.gps.getCprConfig({itemUuid});
     if(!cprConfig.animEnabled) return;
 
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
             .atLocation(canvas.scene.regions.get(template.id)?.object ?? template.object ?? template)
             .file("jb2a.fog_cloud.02.green")

@@ -102,7 +102,7 @@ export async function defileGround({ speaker, actor, token, character, item, arg
         let itemCheck = actor.items.some(i => i.flags["gambits-premades"]?.gpsUuid === "f3bca81e-885d-4f45-aac4-c817eba4efc2");
         if (!itemCheck) await actor.createEmbeddedDocuments("Item", itemData);
         
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
             .attachTo(template)
             .persist()
@@ -114,10 +114,9 @@ export async function defileGround({ speaker, actor, token, character, item, arg
 
     if (args[0].macroPass === "isDamaged") {
         if(workflow.flavor === 'Blighted Ground Damage') return;
-        const currentRound = game.combat.round;
-        const currentTurn = game.combat.turn;
+        const combatTurn = game.combat ? `${game.combat.round}-${game.combat.turn}` : null;
         let defileGroundTurnDamage = await token.actor.getFlag("midi-qol", "defileGroundTurnDamage");
-        if(defileGroundTurnDamage && defileGroundTurnDamage === `${currentRound}${currentTurn}`) return;
+        if(combatTurn && defileGroundTurnDamage === combatTurn) return;
         const dieAmount = item.parent.classes.druid?.system.levels >= 14 ? "1d8" : (item.parent.classes.druid?.system.levels >= 10 ? "1d6" : "1d4")
         let damageRoll = await new CONFIG.Dice.DamageRoll(`${dieAmount}`, {}, {type: "necrotic", properties: ["mgc"]}).evaluate();
         await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll')
@@ -129,7 +128,7 @@ export async function defileGround({ speaker, actor, token, character, item, arg
         }
 
         new MidiQOL.DamageOnlyWorkflow(workflow.actor, workflow.token, damageRoll.total, "necrotic", token ? [token] : [], damageRoll, {itemData: itemData, flavor: "Defile Ground - Damage (Necrotic)"});
-        await MidiQOL.socket().executeAsGM('_gmSetFlag', { actorUuid : token.actor.uuid, base : 'midi-qol', key : 'defileGroundTurnDamage', value : `${currentRound}${currentTurn}` });
+        if(combatTurn) await MidiQOL.socket().executeAsGM('_gmSetFlag', { actorUuid : token.actor.uuid, base : 'midi-qol', key : 'defileGroundTurnDamage', value : combatTurn });
         return;
     }
 

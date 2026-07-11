@@ -88,8 +88,9 @@ export async function indomitable2024({workflowData,workflowType,workflowCombat}
             if(itemRoll.aborted === true) continue;
             let chatContent;
             let indomitableHomebrew = MidiQOL.safeGetGameSetting('gambits-premades', 'enableAutoSucceedIndomitable');
-            let saveDC = workflow?.saveActivity?.save.dc?.value;
-            let saveAbility = workflow?.saveActivity?.ability;
+            const saveDetails = game.gps.getWorkflowSaveDetails(workflow);
+            let saveDC = saveDetails?.dc?.value;
+            let saveAbility = saveDetails?.ability?.first?.() ?? saveDetails?.ability;
             let reroll;
 
             if(!indomitableHomebrew) {

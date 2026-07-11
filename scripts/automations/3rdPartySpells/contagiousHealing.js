@@ -45,7 +45,7 @@ export async function contagiousHealing({ speaker, actor, token, character, item
         let spellMod = actor.system.abilities[spellcasting].mod;
         let castLevel = workflow.castData.castLevel - 1;
         
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .file("jb2a.particle_burst.01.circle.green")
                 .attachTo(target)
@@ -83,7 +83,7 @@ export async function contagiousHealing({ speaker, actor, token, character, item
 
         await new MidiQOL.DamageOnlyWorkflow(effectOriginToken.actor, effectOriginToken.object, healRoll.total, "healing", token ? [token] : [], healRoll, {itemData: itemData, flavor: "Contagious Healing"});
         
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .file("jb2a.particle_burst.01.circle.green")
                 .attachTo(token)

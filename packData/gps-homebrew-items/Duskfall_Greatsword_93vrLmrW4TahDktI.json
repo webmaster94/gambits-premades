@@ -380,26 +380,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-homebrew-items.Item.9OZieXqZdYtNnKoa",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Duskfall Greatsword - Guardless",
       "_id": "zUqTzPi3G3Hwkhek",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, isAttacked",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -436,9 +420,19 @@
       "tint": "#ffffff",
       "img": "icons/weapons/swords/greatsword-crossguard-embossed-gold.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, isAttacked",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!93vrLmrW4TahDktI.zUqTzPi3G3Hwkhek"
+      "_key": "!items.effects!93vrLmrW4TahDktI.zUqTzPi3G3Hwkhek",
+      "start": null
     }
   ],
   "img": "icons/weapons/swords/greatsword-crossguard-embossed-gold.webp",

@@ -1,9 +1,8 @@
 export async function graspingArrow({ speaker, actor, token, character, item, args, scope, workflow, options }) {
-    if(!game.modules.get("jaamod")?.active) return ui.notifications.error(game.i18n.localize("GAMBITSPREMADES.Notifications.ClassFeatures.Fighter.ArcaneArcher.GraspingArrow.MissingDependency"));
     if(args?.[0].macroPass === "postPreambleComplete") {
         let target = workflow.targets.first();
 
-        let seq0 = new Sequence()
+        let seq0 = new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
             .name(`${target.id}.GraspingArrow`)
             .file("jaamod.spells_effects.vines4")
@@ -137,10 +136,9 @@ export async function graspingArrow({ speaker, actor, token, character, item, ar
     if(args[0]=== "off" && args[3]["expiry-reason"] === "midi-qol:isMoved") {
         const effectOriginActor = await fromUuid(args[2]);
         let effectOriginToken = await MidiQOL.tokenForActor(effectOriginActor.uuid);
-        let currentRound = game.combat.round;
-        let currentTurn = game.combat.turn;
+        const combatTurn = game.combat ? `${game.combat.round}-${game.combat.turn}` : null;
         let damageTurn = await actor.getFlag('gambits-premades', `graspingArrowTurnDamage`);
-        if(damageTurn === `${currentRound}${currentTurn}`) {
+        if(combatTurn && damageTurn === combatTurn) {
             let effectData = [{
             "origin": `${item.uuid}`,
             "duration": {
@@ -187,7 +185,7 @@ export async function graspingArrow({ speaker, actor, token, character, item, ar
         }
 
         await new MidiQOL.DamageOnlyWorkflow(effectOriginActor, effectOriginToken, damageRoll.total, 'slashing', token ? [token] : [], damageRoll, { itemData: itemData, flavor: "Grasping Arrow - Damage (Slashing)" });
-        await actor.setFlag("gambits-premades", 'graspingArrowTurnDamage', `${currentRound}${currentTurn}`);
+        if(combatTurn) await actor.setFlag("gambits-premades", 'graspingArrowTurnDamage', combatTurn);
 
         let effectData = [{
             "origin": `${item.uuid}`,

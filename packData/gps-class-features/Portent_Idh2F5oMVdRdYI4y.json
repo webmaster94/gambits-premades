@@ -354,26 +354,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-class-features.Item.Idh2F5oMVdRdYI4y",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Portent",
       "_id": "doLtf6tw0EYdGPXs",
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.portent",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -420,9 +404,19 @@
       "tint": "#ffffff",
       "img": "icons/sundries/gaming/dice-runed-brown.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.portent",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!Idh2F5oMVdRdYI4y.doLtf6tw0EYdGPXs"
+      "_key": "!items.effects!Idh2F5oMVdRdYI4y.doLtf6tw0EYdGPXs",
+      "start": null
     }
   ],
   "img": "icons/sundries/gaming/dice-runed-brown.webp",

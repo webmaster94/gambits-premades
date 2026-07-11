@@ -28,8 +28,10 @@ export async function biohazard({speaker, actor, character, item, args, scope, w
 
     let chosenItem = await fromUuid(region.flags["region-attacher"].itemUuid);
     let castLevel = template.getFlag("gambits-premades", "biohazardCastLevel");
+    const combatRound = game.combat?.round;
+    const biohazardRoundKey = Number.isInteger(combatRound) ? `${token.id}_${combatRound}` : null;
     const damagedThisTurn = await region.getFlag("gambits-premades", "checkBiohazardRound");
-    if(damagedThisTurn && damagedThisTurn === `${token.id}_${game.combat.round}`) return;
+    if(biohazardRoundKey && damagedThisTurn === biohazardRoundKey) return;
 
     let resumeMovement;
     if(regionScenario === "tokenEnter") resumeMovement = await tokenDocument.pauseMovement();
@@ -41,6 +43,8 @@ export async function biohazard({speaker, actor, character, item, args, scope, w
     await game.gps.socket.executeAsUser("gpsActivityUpdate", gmUser, { activityUuid: activityToUpdate.uuid, updates: {"damage.parts": damageParts} });
     await game.gps.gpsActivityUse({itemUuid: chosenItem.uuid, identifier: "syntheticSave", targetUuid: token.document.uuid});
     
-    await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkBiohazardRound", value: `${token.id}_${game.combat.round}` });
+    if (biohazardRoundKey) {
+        await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkBiohazardRound", value: biohazardRoundKey });
+    }
     if(regionScenario === "tokenEnter") await resumeMovement();
 }

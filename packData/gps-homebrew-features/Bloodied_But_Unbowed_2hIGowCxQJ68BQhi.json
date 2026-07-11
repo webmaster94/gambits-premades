@@ -178,26 +178,10 @@
     {
       "name": "Bloodied But Unbowed",
       "origin": "Actor.GYQSLDNGWKsLCTOE.Item.B3WvqeJyAw8jd5Qi",
-      "duration": {
-        "startTime": 47433171441,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": 1,
-        "startTurn": 1
-      },
+      "duration": {},
       "transfer": true,
       "disabled": false,
       "_id": "8WG0SZAhfHd9JSCL",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro,isDamaged",
-          "priority": 20
-        }
-      ],
       "description": "",
       "statuses": [],
       "flags": {
@@ -235,9 +219,24 @@
       "tint": "#ffffff",
       "img": "icons/skills/wounds/injury-eyes-blood-red.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro,isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!2hIGowCxQJ68BQhi.8WG0SZAhfHd9JSCL"
+      "_key": "!items.effects!2hIGowCxQJ68BQhi.8WG0SZAhfHd9JSCL",
+      "start": {
+        "combat": null,
+        "round": 1,
+        "time": 47433171441,
+        "turn": 1
+      }
     }
   ],
   "folder": "4OzV9QdsPgTyK99q",
@@ -491,7 +490,7 @@
         "img": "icons/skills/wounds/injury-eyes-blood-red.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"isDamaged\") {\n    if(MidiQOL.hasUsedReaction(actor)) return;\n    if(macroItem.system.uses.value === 0) return;\n    if ((actor.system.attributes.hp.value - workflow.damageTotal) > (actor.system.attributes.hp.max / 2)) return console.log(\"Bloodied but Unbowed: Actor has more than half their max HP.\");\n    async function wait(ms) { return new Promise(resolve => { setTimeout(resolve, ms); }); }\n    if(!actor.classes.pugilist) return console.log(\"Bloodied but Unbowed: Actor does not have a pugilist class.\");\n    const tempHp = actor.classes.pugilist.system.levels + actor.system.abilities.con.mod;\n    const moxie = actor.items.getName(\"Moxie\");\n    const moxieMax = moxie.system.uses.max;\n\n    let initialTimeLeft = 15;\n    let dialogId = \"bloodiedbutunbowed\";\n    const dialogTitlePrimary = `${actor.name} | ${macroItem.name}`;\n    const dialogTitleGM = `Waiting for ${actor.name}'s selection | ${macroItem.name}`;\n    let browserUser = game.gps.getBrowserUser({ actorUuid: actor.uuid });\n    let gmUser = game.gps.getPrimaryGM();\n    let result;\n\n    let dialogContent = `\n        <div class=\"gps-dialog-container\">\n            <div class=\"gps-dialog-section\">\n                <div class=\"gps-dialog-content\">\n                    <div>\n                        <div class=\"gps-dialog-flex\">\n                            <p class=\"gps-dialog-paragraph\">Would you like to use ${macroItem.name} to gain Temporary Hit Points and reset your Moxie charges?</p>\n                            <div id=\"image-container\" class=\"gps-dialog-image-container\">\n                                <img id=\"img_${dialogId}\" src=\"${macroItem.img}\" class=\"gps-dialog-image\">\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"gps-dialog-button-container\">\n                <button id=\"pauseButton_${dialogId}\" type=\"button\" class=\"gps-dialog-button\">\n                    <i class=\"fas fa-pause\" id=\"pauseIcon_${dialogId}\" style=\"margin-right: 5px;\"></i>Pause\n                </button>\n            </div>\n        </div>\n    `;\n\n    if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {\n    let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: \"user\",type: \"multiDialog\", browserUser: browserUser };\n\n    let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: \"gm\",type: \"multiDialog\" };\n\n    result = await game.gps.socket.executeAsUser(\"handleDialogPromises\", gmUser, {userDialogArgs, gmDialogArgs});\n    } else {\n    result = await game.gps.socket.executeAsUser(\"process3rdPartyReactionDialog\", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? \"gm\" : \"user\",type:\"singleDialog\"});\n    }\n            \n    const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result;\n\n    if (userDecision) {\n        await actor.update({\"system.attributes.hp.temp\": tempHp});\n        await moxie.update({\"system.uses.value\": moxieMax});\n        await macroItem.update({\"system.uses.value\": itemData.system.uses.value - 1});\n\n        let actorPlayer = MidiQOL.playerForActor(actor);\n        let chatData = {\n            user: actorPlayer.id,\n            speaker: ChatMessage.getSpeaker({ token: token }),\n            content: `${actor.name} used Bloodied But Unbowed which gave them ${tempHp} temporary hit points and reset their Moxie charges to ${moxieMax}.`\n        };\n        ChatMessage.create(chatData);\n\n        if (!MidiQOL.hasUsedReaction(actor)) {\n            await game.gps.socket.executeAsUser(\"addReaction\", gmUser, {actorUuid: actor.uuid})\n        }\n    }\n}",
+        "command": "if(args[0].macroPass === \"isDamaged\") {\n    if(MidiQOL.hasUsedReaction(actor)) return;\n    if(macroItem.system.uses.value === 0) return;\n    if ((actor.system.attributes.hp.value - workflow.damageTotal) > (actor.system.attributes.hp.max / 2)) return console.log(\"Bloodied but Unbowed: Actor has more than half their max HP.\");\n    async function wait(ms) { return new Promise(resolve => { setTimeout(resolve, ms); }); }\n    if(!actor.classes.pugilist) return console.log(\"Bloodied but Unbowed: Actor does not have a pugilist class.\");\n    const tempHp = actor.classes.pugilist.system.levels + actor.system.abilities.con.mod;\n    const moxie = actor.items.getName(\"Moxie\");\n    const moxieMax = moxie.system.uses.max;\n\n    let initialTimeLeft = 15;\n    let dialogId = \"bloodiedbutunbowed\";\n    const dialogTitlePrimary = `${actor.name} | ${macroItem.name}`;\n    const dialogTitleGM = `Waiting for ${actor.name}'s selection | ${macroItem.name}`;\n    let browserUser = game.gps.getBrowserUser({ actorUuid: actor.uuid });\n    let gmUser = game.gps.getPrimaryGM();\n    let result;\n\n    let dialogContent = `\n        <div class=\"gps-dialog-container\">\n            <div class=\"gps-dialog-section\">\n                <div class=\"gps-dialog-content\">\n                    <div>\n                        <div class=\"gps-dialog-flex\">\n                            <p class=\"gps-dialog-paragraph\">Would you like to use ${macroItem.name} to gain Temporary Hit Points and reset your Moxie charges?</p>\n                            <div id=\"image-container\" class=\"gps-dialog-image-container\">\n                                <img id=\"img_${dialogId}\" src=\"${macroItem.img}\" class=\"gps-dialog-image\">\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"gps-dialog-button-container\">\n                <button id=\"pauseButton_${dialogId}\" type=\"button\" class=\"gps-dialog-button\">\n                    <i class=\"fas fa-pause\" id=\"pauseIcon_${dialogId}\" style=\"margin-right: 5px;\"></i>Pause\n                </button>\n            </div>\n        </div>\n    `;\n\n    if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {\n    let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: \"user\",type: \"multiDialog\", browserUser: browserUser };\n\n    let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: \"gm\",type: \"multiDialog\" };\n\n    result = await game.gps.socket.executeAsUser(\"handleDialogPromises\", gmUser, {userDialogArgs, gmDialogArgs});\n    } else {\n    result = await game.gps.socket.executeAsUser(\"process3rdPartyReactionDialog\", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? \"gm\" : \"user\",type:\"singleDialog\"});\n    }\n            \n    const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result;\n\n    if (userDecision) {\n        await actor.update({\"system.attributes.hp.temp\": tempHp});\n        await moxie.update({\"system.uses.value\": moxieMax});\n        await macroItem.update({\"system.uses.value\": itemData.system.uses.value - 1});\n\n        let actorPlayer = MidiQOL.playerForActor(actor);\n        let chatData = {\n            author: actorPlayer.id,\n            speaker: ChatMessage.getSpeaker({ token: token }),\n            content: `${actor.name} used Bloodied But Unbowed which gave them ${tempHp} temporary hit points and reset their Moxie charges to ${moxieMax}.`\n        };\n        ChatMessage.create(chatData);\n\n        if (!MidiQOL.hasUsedReaction(actor)) {\n            await game.gps.socket.executeAsUser(\"addReaction\", gmUser, {actorUuid: actor.uuid})\n        }\n    }\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3

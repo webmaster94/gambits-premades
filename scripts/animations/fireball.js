@@ -21,7 +21,7 @@ export function fireball({type, token, templateData, color = "orange", sound = {
         const particles03 = _getPath("jb2a.particles.outward", color) + ".01.03";
         const particles04 = _getPath("jb2a.particles.outward", color) + ".01.04";
 
-        return new Sequence()
+        return new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .attachTo(token)
                 .file(magicCircle)
@@ -109,7 +109,7 @@ export function fireball({type, token, templateData, color = "orange", sound = {
             default: break;
         }
 
-        return new Sequence()
+        return new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .file(preBeam)
                 .filter("ColorMatrix", { hue: hue })

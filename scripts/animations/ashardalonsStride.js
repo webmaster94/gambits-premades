@@ -3,7 +3,7 @@ export function ashardalonsStride({type, token, itemUuid}) {
     if(!cprConfig.animEnabled) return;
 
     if(type === "use") {
-        return new Sequence()
+        return new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .attachTo(token, {offset:{x: 0, y: -30}, local: true})
                 .file("animated-spell-effects-cartoon.fire.30")
@@ -14,7 +14,7 @@ export function ashardalonsStride({type, token, itemUuid}) {
             .play()
     }
     else if(type === "damage") {
-        return new Sequence()
+        return new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .atLocation(token)
                 .file("animated-spell-effects-cartoon.fire.16")

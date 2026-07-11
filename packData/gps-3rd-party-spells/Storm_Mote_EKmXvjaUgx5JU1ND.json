@@ -179,40 +179,36 @@
     {
       "origin": "Compendium.world.gps-3rd-party-spells.Item.9KWfBkDgBdjg7UOD",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Storm Mote",
       "img": "icons/magic/lightning/projectiles-tendril-salvo-pink.webp",
       "_id": "h7ZazoVGpBsd1FDM",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.disadvantage.attack.all",
-          "mode": 0,
-          "value": "targetId === '@token'",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.stormMote,postAttackRollComplete",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.stormMote",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.disadvantage.attack.all",
+            "value": "targetId === '@token'",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.stormMote,postAttackRollComplete",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.stormMote",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -263,7 +259,8 @@
           ]
         }
       },
-      "_key": "!items.effects!EKmXvjaUgx5JU1ND.h7ZazoVGpBsd1FDM"
+      "_key": "!items.effects!EKmXvjaUgx5JU1ND.h7ZazoVGpBsd1FDM",
+      "start": null
     }
   ],
   "flags": {

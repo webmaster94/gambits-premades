@@ -173,46 +173,42 @@
     {
       "origin": "Item.qF9vXMhSs72yB8lx",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Toxic Shield",
       "img": "icons/magic/defensive/shield-barrier-glowing-triangle-green.webp",
       "_id": "1qXUy5XyTuXH4e3T",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.traits.dr.value",
-          "mode": 0,
-          "value": "poison",
-          "priority": 20
-        },
-        {
-          "key": "flags.chris-premades.CR.poisoned",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, isHit",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.traits.dr.value",
+            "value": "poison",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.chris-premades.CR.poisoned",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, isHit",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -252,7 +248,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!OYyZKc0Knk7fnEgX.1qXUy5XyTuXH4e3T"
+      "_key": "!items.effects!OYyZKc0Knk7fnEgX.1qXUy5XyTuXH4e3T",
+      "start": null
     }
   ],
   "folder": null,
@@ -483,7 +480,7 @@
         "img": "icons/magic/defensive/shield-barrier-glowing-triangle-green.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"isHit\") {\n    let target = workflow.token;\n    if(MidiQOL.computeDistance(token,target, {wallsBlock: true, includeCover: true}) > 5 || (workflow.item.system.actionType !== \"mwak\" && workflow.item.system.actionType !== \"msak\")) return;\n    let effectData = actor.appliedEffects.find(e => e.name === macroItem.name);\n    let castLevel = await effectData.getFlag(\"gambits-premades\", \"toxicShieldCastLevel\");\n    let numDice = 1 + Math.floor((castLevel - 1) / 2);\n    let damageRoll = await new CONFIG.Dice.DamageRoll(`${numDice}d8`).evaluate();\n    await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll');\n\n    const itemData = {\n        name: \"Toxic Shield - Damage (Poison)\",\n        type: \"feat\",\n        img: macroItem.img\n    }\n\n    await new MidiQOL.DamageOnlyWorkflow(actor, token, damageRoll.total, \"poison\", target ? [target] : [], damageRoll, {itemData: itemData});\n\n    new Sequence()\n    .effect()\n        .atLocation(token)\n        .rotateTowards(target)\n        .file(\"animated-spell-effects-cartoon.cantrips.poison_spray.green\")\n        .filter(\"ColorMatrix\", { hue: 50 })\n        .scaleToObject()\n    .play()\n}\n\nif(args[0].macroPass === \"postActiveEffects\") {\n    let effectData = actor.appliedEffects.find(e => e.name === macroItem.name);\n    await effectData.setFlag(\"gambits-premades\", \"toxicShieldCastLevel\", workflow.castData.castLevel);\n    new Sequence()\n    .effect()\n        .attachTo(token,{bindVisibility: true})\n        .file(\"jb2a.markers.shield_rampart.loop.01.orange\")\n        .filter(\"ColorMatrix\", { hue: 70,brightness: 1 })\n        .filter(\"Glow\", {color: 0x006400, knockout: false})\n        .scaleToObject(1.8)\n        .persist()\n        .name(`${token.document.id}_ToxicShield`)\n    .play()\n}\n\nif(args[0] === \"off\") {\n    Sequencer.EffectManager.endEffects({ name: `${token.document.id}_ToxicShield` });\n}",
+        "command": "if(args[0].macroPass === \"isHit\") {\n    let target = workflow.token;\n    if(MidiQOL.computeDistance(token,target, {wallsBlock: true, includeCover: true}) > 5 || (workflow.item.system.actionType !== \"mwak\" && workflow.item.system.actionType !== \"msak\")) return;\n    let effectData = actor.appliedEffects.find(e => e.name === macroItem.name);\n    let castLevel = await effectData.getFlag(\"gambits-premades\", \"toxicShieldCastLevel\");\n    let numDice = 1 + Math.floor((castLevel - 1) / 2);\n    let damageRoll = await new CONFIG.Dice.DamageRoll(`${numDice}d8`).evaluate();\n    await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll');\n\n    const itemData = {\n        name: \"Toxic Shield - Damage (Poison)\",\n        type: \"feat\",\n        img: macroItem.img\n    }\n\n    await new MidiQOL.DamageOnlyWorkflow(actor, token, damageRoll.total, \"poison\", target ? [target] : [], damageRoll, {itemData: itemData});\n\n    new Sequence({moduleName: \"gambits-premades\", softFail: true})\n    .effect()\n        .atLocation(token)\n        .rotateTowards(target)\n        .file(\"animated-spell-effects-cartoon.cantrips.poison_spray.green\")\n        .filter(\"ColorMatrix\", { hue: 50 })\n        .scaleToObject()\n    .play()\n}\n\nif(args[0].macroPass === \"postActiveEffects\") {\n    let effectData = actor.appliedEffects.find(e => e.name === macroItem.name);\n    await effectData.setFlag(\"gambits-premades\", \"toxicShieldCastLevel\", workflow.castData.castLevel);\n    new Sequence({moduleName: \"gambits-premades\", softFail: true})\n    .effect()\n        .attachTo(token,{bindVisibility: true})\n        .file(\"jb2a.markers.shield_rampart.loop.01.orange\")\n        .filter(\"ColorMatrix\", { hue: 70,brightness: 1 })\n        .filter(\"Glow\", {color: 0x006400, knockout: false})\n        .scaleToObject(1.8)\n        .persist()\n        .name(`${token.document.id}_ToxicShield`)\n    .play()\n}\n\nif(args[0] === \"off\") {\n    Sequencer.EffectManager.endEffects({ name: `${token.document.id}_ToxicShield` });\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3

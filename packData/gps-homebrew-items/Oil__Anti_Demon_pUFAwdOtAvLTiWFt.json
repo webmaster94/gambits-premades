@@ -201,40 +201,36 @@
     {
       "origin": "Compendium.world.gps-homebrew-items.Item.Qvxs1MZOMavh2nQ1",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Oil, Anti-Demon",
       "img": "icons/consumables/potions/potion-tube-corked-bat-gold-red.webp",
       "_id": "sPbS18OFzyix9Nsf",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, preDamageApplication",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, preWaitForAttackRoll",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, preDamageApplication",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, preWaitForAttackRoll",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -269,7 +265,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!pUFAwdOtAvLTiWFt.sPbS18OFzyix9Nsf"
+      "_key": "!items.effects!pUFAwdOtAvLTiWFt.sPbS18OFzyix9Nsf",
+      "start": null
     }
   ],
   "folder": null,

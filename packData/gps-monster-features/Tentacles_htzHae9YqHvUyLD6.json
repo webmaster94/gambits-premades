@@ -246,28 +246,24 @@
     {
       "origin": "Compendium.world.gps-monster-features.Item.htzHae9YqHvUyLD6",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Tentacles",
       "img": "icons/commodities/biological/tentacle-purple-white.webp",
       "_id": "b3OjzPWvIMChk5t4",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -302,7 +298,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!htzHae9YqHvUyLD6.b3OjzPWvIMChk5t4"
+      "_key": "!items.effects!htzHae9YqHvUyLD6.b3OjzPWvIMChk5t4",
+      "start": null
     }
   ],
   "flags": {

@@ -89,7 +89,7 @@ export async function interception({workflowData,workflowType,workflowCombat}) {
 
             let fileToPlay = Sequencer.Database.getEntry(primaryFile) ? primaryFile : Sequencer.Database.getEntry(alternateFile) ? alternateFile : "";
 
-            new Sequence()
+            new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                 .file(fileToPlay)
                 .atLocation(validTokenPrimary)

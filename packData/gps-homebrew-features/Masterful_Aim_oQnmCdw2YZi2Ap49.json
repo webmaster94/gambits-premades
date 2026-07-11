@@ -159,25 +159,12 @@
     {
       "origin": "Item.LcFCXCB2IPHvKlKm",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 6,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 6,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Masterful Aim",
       "_id": "hPR9ii2vho7FqWlZ",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro,preCheckHits",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": false,
       "statuses": [],
@@ -216,9 +203,19 @@
       "tint": "#ffffff",
       "img": "icons/skills/ranged/projectile-spiral-gray.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro,preCheckHits",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!oQnmCdw2YZi2Ap49.hPR9ii2vho7FqWlZ"
+      "_key": "!items.effects!oQnmCdw2YZi2Ap49.hPR9ii2vho7FqWlZ",
+      "start": null
     }
   ],
   "folder": null,

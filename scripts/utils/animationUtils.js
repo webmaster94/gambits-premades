@@ -1,6 +1,6 @@
 export async function animateLightMovement({ tokenData, actor, effectName, filePath, animType }) {
   if(animType === "torch") {
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
       .effect()
         .name(`${effectName}_ip`)
         .file(game.modules.get("jb2a_patreon")?.active ? "jb2a.impact.002.orange" : "")
@@ -41,7 +41,7 @@ export async function animateLightMovement({ tokenData, actor, effectName, fileP
   const position = await Sequencer.Crosshair.show(config);
   if (!position) return null;
 
-  new Sequence()
+  new Sequence({moduleName: "gambits-premades", softFail: true})
     .animation()
       .on(tokenData)
       .opacity(0)
@@ -85,7 +85,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
     const torchOffsetX = offsets.torchOffsetX ?? 0.35 * tokenData.document.width;
     const flameOffsetX = offsets.flameOffsetX ?? 0.5 * tokenData.document.width;
 
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
       .effect()
         .delay(150)
         .name(effectName)
@@ -137,7 +137,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
     return;
   }
   else if(animType === "lamp") {
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
       .effect()
         .name(effectName)
         .file(filePath)
@@ -159,7 +159,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
     return;
   }
   else if(animType === "lanternBullseye") {
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
       .effect()
         .name(effectName)
         .file(filePath)
@@ -182,7 +182,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
   }
   else if(animType === "lanternHooded") {
     if(!filePathDim) {
-      new Sequence()
+      new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
           .name(effectName)
           .file(filePath)
@@ -204,7 +204,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
       return;
     }
     else {
-      new Sequence()
+      new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
           .name(effectName)
           .file(filePathDim)
@@ -230,7 +230,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
     const torchOffsetX = offsets.torchOffsetX ?? 0.35 * tokenData.document.width;
     const flameOffsetX = offsets.flameOffsetX ?? 0.43 * tokenData.document.width;
 
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
       .effect()
         .delay(150)
         .name(effectName)
@@ -303,7 +303,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
           const interval = 50;
           const easeOption = "easeInOutSine";
 
-          new Sequence()
+          new Sequence({moduleName: "gambits-premades", softFail: true})
 
               .effect()
               .copySprite(source)
@@ -439,7 +439,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
           const interval = 50;
           const easeOption = "easeInOutSine";
 
-          new Sequence()
+          new Sequence({moduleName: "gambits-premades", softFail: true})
 
               .sound()
               .file(soundFileRange)

@@ -233,32 +233,10 @@
   "effects": [
     {
       "origin": "Scene.1mkVNeOdyVIlDdH7.Token.Ct9wAPpQAERU5Bng.Actor.SNZJsEKbROB1q6bT.Item.A8Qn5ngfARIJp0R6",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Reckless",
       "_id": "WlySPDKKWMIOowHi",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, preAttackRoll",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "turnStart",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -306,9 +284,25 @@
       "tint": "#ffffff",
       "img": "icons/skills/social/intimidation-impressing.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, preAttackRoll",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "turnStart",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!p4g1lIZk3QBtbsW7.WlySPDKKWMIOowHi"
+      "_key": "!items.effects!p4g1lIZk3QBtbsW7.WlySPDKKWMIOowHi",
+      "start": null
     }
   ],
   "folder": "q2YGLvNv1vSMxbum",

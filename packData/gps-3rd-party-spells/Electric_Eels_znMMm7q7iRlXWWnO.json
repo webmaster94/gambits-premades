@@ -177,28 +177,24 @@
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.bRNDK6dWXpSAg2qt",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 3600,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 3600,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Electric Eels",
       "img": "icons/magic/lightning/bolt-strike-sparks-teal.webp",
       "_id": "sC8LPNOsmlare51n",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -238,7 +234,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!znMMm7q7iRlXWWnO.sC8LPNOsmlare51n"
+      "_key": "!items.effects!znMMm7q7iRlXWWnO.sC8LPNOsmlare51n",
+      "start": null
     }
   ],
   "flags": {
@@ -253,7 +250,7 @@
         "img": "icons/magic/lightning/barrier-wall-shield-gray.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(!game.modules.get(\"portal-lib\")?.active) return ui.notifications.error(\"You must install the Portal module to use the Scatter automation.\");\n\nif (args[0].macroPass === \"postActiveEffects\") {\n\n    const electricEel1 = await new Portal()\n        .color(\"#ff0000\")\n        .origin(token)\n        .addCreature(\"Electric Eel\", {count: 1})\n        .range(60)\n        .spawn();\n\n    if (!electricEel1) {\n        console.error(\"No valid location picked.\");\n        return;\n    }\n    \n    new Sequence()\n        .effect()\n        .file('jb2a.lightning_bolt.wide.green')\n        .atLocation(token)\n        .stretchTo(electricEel1[0].object)\n    .play()\n\n    const electricEel2 = await new Portal()\n        .color(\"#ff0000\")\n        .origin(token)\n        .addCreature(\"Electric Eel\", {count: 1})\n        .range(60)\n        .spawn();\n\n    if (!electricEel2) {\n        console.error(\"No valid location picked.\");\n        return;\n    }\n\n    new Sequence()\n        .effect()\n        .file('jb2a.lightning_bolt.wide.green')\n        .duration(1200)\n        .fadeOut(500)\n        .fadeIn(200)\n        .atLocation(token)\n        .stretchTo(electricEel2[0].object)\n    .play()\n\n    let params = [{\n        filterType: \"electric\",\n        filterId: \"myElectric\",\n        color: 0xFFFFFF,\n        time: 0,\n        blend: 1,\n        intensity: 5,\n        animated: {\n        time: { \n            active: true, \n            speed: 0.0020, \n            animType: \"move\" \n        }\n        }\n    }];\n\n    await TokenMagic.addUpdateFilters(electricEel1[0].object, params);\n    await TokenMagic.addUpdateFilters(electricEel2[0].object, params);\n}\n\nif(args[0].macroPass === \"preActiveEffects\") {\n  const actorData = game.actors.find(a => a.name === \"Electric Eel\");\n  if(!actorData) return;\n  const spellcastingAbility = actor.system.attributes.spellcasting;\n  const spellCastingTotal = actor.system.abilities[spellcastingAbility].value;\n  let updateData = {\n    [`system.attributes.spellcasting`]: spellcastingAbility,\n    [`system.abilities.${spellcastingAbility}.value`]: spellCastingTotal\n};\n  await actorData.update(updateData)\n}\n\nif(args[0] === \"off\") {\n    const effectOriginActor = await fromUuid(args[1].efData.flags.dae.actor);\n    if(effectOriginActor.uuid === actor.uuid) {\n        const tokensToDelete = canvas.tokens.placeables.filter(token => token.name === \"Electric Eel\").map(token => token.id);\n\n        if (tokensToDelete.length > 0) {\n            canvas.scene.deleteEmbeddedDocuments(\"Token\", tokensToDelete);\n        }\n    }\n    else {\n        let diValues = effectOriginActor.system.traits.di.value.has(\"lightning\");\n        let drValues = effectOriginActor.system.traits.dr.value.has(\"lightning\");\n\n        if (actor.name === \"Electric Eel\") {\n            if (diValues) { \n                effectOriginActor.system.traits.di.value.delete('lightning');\n                effectOriginActor.system.traits.dr.value.add('lightning');\n            } \n            else if(drValues) {\n                effectOriginActor.system.traits.dr.value.delete('lightning');\n            }\n        }\n    }\n}\n\nif(args[0] === \"on\") {\n    console.log(arguments)\n    console.log(args)\n    console.log(effect)\n    console.log(item)\n    const effectOriginActor = await fromUuid(args[1].efData.flags.dae.actor);\n\n    let drValues = effectOriginActor.system.traits.dr.value.has(\"lightning\");\n\n    if (actor.name === \"Electric Eel\") {\n        if (!drValues) {\n            effectOriginActor.system.traits.dr.value.add('lightning');\n        } \n        else {\n            effectOriginActor.system.traits.di.value.add('lightning');\n            effectOriginActor.system.traits.dr.value.delete('lightning');\n        }\n    }\n}",
+        "command": "if(!game.modules.get(\"portal-lib\")?.active) return ui.notifications.error(\"You must install the Portal module to use the Scatter automation.\");\n\nif (args[0].macroPass === \"postActiveEffects\") {\n\n    const electricEel1 = await new Portal()\n        .color(\"#ff0000\")\n        .origin(token)\n        .addCreature(\"Electric Eel\", {count: 1})\n        .range(60)\n        .spawn();\n\n    if (!electricEel1) {\n        console.error(\"No valid location picked.\");\n        return;\n    }\n    \n    new Sequence({moduleName: \"gambits-premades\", softFail: true})\n        .effect()\n        .file('jb2a.lightning_bolt.wide.green')\n        .atLocation(token)\n        .stretchTo(electricEel1[0].object)\n    .play()\n\n    const electricEel2 = await new Portal()\n        .color(\"#ff0000\")\n        .origin(token)\n        .addCreature(\"Electric Eel\", {count: 1})\n        .range(60)\n        .spawn();\n\n    if (!electricEel2) {\n        console.error(\"No valid location picked.\");\n        return;\n    }\n\n    new Sequence({moduleName: \"gambits-premades\", softFail: true})\n        .effect()\n        .file('jb2a.lightning_bolt.wide.green')\n        .duration(1200)\n        .fadeOut(500)\n        .fadeIn(200)\n        .atLocation(token)\n        .stretchTo(electricEel2[0].object)\n    .play()\n\n    let params = [{\n        filterType: \"electric\",\n        filterId: \"myElectric\",\n        color: 0xFFFFFF,\n        time: 0,\n        blend: 1,\n        intensity: 5,\n        animated: {\n        time: { \n            active: true, \n            speed: 0.0020, \n            animType: \"move\" \n        }\n        }\n    }];\n\n    await TokenMagic.addUpdateFilters(electricEel1[0].object, params);\n    await TokenMagic.addUpdateFilters(electricEel2[0].object, params);\n}\n\nif(args[0].macroPass === \"preActiveEffects\") {\n  const actorData = game.actors.find(a => a.name === \"Electric Eel\");\n  if(!actorData) return;\n  const spellcastingAbility = actor.system.attributes.spellcasting;\n  const spellCastingTotal = actor.system.abilities[spellcastingAbility].value;\n  let updateData = {\n    [`system.attributes.spellcasting`]: spellcastingAbility,\n    [`system.abilities.${spellcastingAbility}.value`]: spellCastingTotal\n};\n  await actorData.update(updateData)\n}\n\nif(args[0] === \"off\") {\n    const effectOriginActor = await fromUuid(args[1].efData.flags.dae.actor);\n    if(effectOriginActor.uuid === actor.uuid) {\n        const tokensToDelete = canvas.tokens.placeables.filter(token => token.name === \"Electric Eel\").map(token => token.id);\n\n        if (tokensToDelete.length > 0) {\n            canvas.scene.deleteEmbeddedDocuments(\"Token\", tokensToDelete);\n        }\n    }\n    else {\n        let diValues = effectOriginActor.system.traits.di.value.has(\"lightning\");\n        let drValues = effectOriginActor.system.traits.dr.value.has(\"lightning\");\n\n        if (actor.name === \"Electric Eel\") {\n            if (diValues) { \n                effectOriginActor.system.traits.di.value.delete('lightning');\n                effectOriginActor.system.traits.dr.value.add('lightning');\n            } \n            else if(drValues) {\n                effectOriginActor.system.traits.dr.value.delete('lightning');\n            }\n        }\n    }\n}\n\nif(args[0] === \"on\") {\n    console.log(arguments)\n    console.log(args)\n    console.log(effect)\n    console.log(item)\n    const effectOriginActor = await fromUuid(args[1].efData.flags.dae.actor);\n\n    let drValues = effectOriginActor.system.traits.dr.value.has(\"lightning\");\n\n    if (actor.name === \"Electric Eel\") {\n        if (!drValues) {\n            effectOriginActor.system.traits.dr.value.add('lightning');\n        } \n        else {\n            effectOriginActor.system.traits.di.value.add('lightning');\n            effectOriginActor.system.traits.dr.value.delete('lightning');\n        }\n    }\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3

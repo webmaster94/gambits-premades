@@ -303,29 +303,7 @@
   },
   "effects": [
     {
-      "changes": [
-        {
-          "key": "system.bonuses.spell.attack",
-          "mode": 2,
-          "value": "3",
-          "priority": 18
-        },
-        {
-          "key": "system.bonuses.spell.dc",
-          "mode": 2,
-          "value": "3",
-          "priority": 18
-        }
-      ],
-      "duration": {
-        "startTime": 1697159940,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": 3,
-        "startTurn": 0
-      },
+      "duration": {},
       "tint": "#ffffff",
       "transfer": true,
       "disabled": false,
@@ -384,9 +362,30 @@
       "origin": "Compendium.world.gps-items.Item.41wGFu4yVsPILIHE",
       "img": "icons/equipment/neck/amulet-carved-stone-cross.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.spell.attack",
+            "value": 3,
+            "priority": 18,
+            "type": "add"
+          },
+          {
+            "key": "system.bonuses.spell.dc",
+            "value": 3,
+            "priority": 18,
+            "type": "add"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!rtkpLuINuuCLaOWv.FkEgvkCsiORT8TdU"
+      "_key": "!items.effects!rtkpLuINuuCLaOWv.FkEgvkCsiORT8TdU",
+      "start": {
+        "combat": null,
+        "round": 3,
+        "time": 1697159940,
+        "turn": 0
+      }
     }
   ],
   "img": "icons/equipment/neck/amulet-carved-stone-cross.webp",

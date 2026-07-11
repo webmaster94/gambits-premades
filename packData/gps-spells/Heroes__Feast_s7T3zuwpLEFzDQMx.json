@@ -292,46 +292,9 @@
       "img": "icons/containers/kitchenware/goblet-jeweled-red.webp",
       "name": "Heroes' Feast",
       "statuses": [],
-      "changes": [
-        {
-          "key": "system.attributes.hp.tempmax",
-          "mode": 2,
-          "value": "[[2d10]]",
-          "priority": 20
-        },
-        {
-          "key": "system.traits.ci.value",
-          "mode": 2,
-          "value": "frightened",
-          "priority": 20
-        },
-        {
-          "key": "system.traits.ci.value",
-          "mode": 2,
-          "value": "poisoned",
-          "priority": 20
-        },
-        {
-          "key": "system.traits.di.value",
-          "mode": 2,
-          "value": "poison",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.save.wis",
-          "mode": 5,
-          "value": "1",
-          "priority": 20
-        }
-      ],
       "duration": {
-        "seconds": 86400,
-        "startTime": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null,
-        "combat": null
+        "value": 86400,
+        "units": "seconds"
       },
       "tint": "#ffffff",
       "transfer": false,
@@ -395,10 +358,44 @@
       "description": "",
       "_id": "guYbniQzjSBEbDyB",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.hp.tempmax",
+            "value": "[[2d10]]",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.traits.ci.value",
+            "value": "frightened",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.traits.ci.value",
+            "value": "poisoned",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.traits.di.value",
+            "value": "poison",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "flags.midi-qol.advantage.save.wis",
+            "value": 1,
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "origin": null,
       "sort": 0,
-      "_key": "!items.effects!s7T3zuwpLEFzDQMx.guYbniQzjSBEbDyB"
+      "_key": "!items.effects!s7T3zuwpLEFzDQMx.guYbniQzjSBEbDyB",
+      "start": null
     }
   ],
   "name": "Heroes' Feast",

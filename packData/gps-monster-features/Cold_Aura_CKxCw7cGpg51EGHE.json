@@ -40,26 +40,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-monster-features.Item.CKxCw7cGpg51EGHE",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Cold Aura",
       "_id": "KlWCEzJ2sd6ZJQjJ",
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "@actorUuid",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -127,10 +111,19 @@
         "overrideName": "",
         "script": "",
         "stashedChanges": [],
-        "stashedStatuses": []
+        "stashedStatuses": [],
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "@actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
       },
       "sort": 0,
-      "_key": "!items.effects!CKxCw7cGpg51EGHE.KlWCEzJ2sd6ZJQjJ"
+      "_key": "!items.effects!CKxCw7cGpg51EGHE.KlWCEzJ2sd6ZJQjJ",
+      "start": null
     }
   ],
   "flags": {

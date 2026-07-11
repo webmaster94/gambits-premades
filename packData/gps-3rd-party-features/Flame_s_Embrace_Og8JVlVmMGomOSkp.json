@@ -302,34 +302,30 @@
     {
       "origin": "Compendium.world.gps-3rd-party-features.Item.Og8JVlVmMGomOSkp",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Flame's Embrace",
       "img": "icons/magic/fire/projectile-smoke-swirl-red.webp",
       "_id": "bqZNMz63jS3CJsgl",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.traits.dv.value",
-          "mode": 0,
-          "value": "fire",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.flamesEmbrace, isDamaged",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.traits.dv.value",
+            "value": "fire",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.flamesEmbrace, isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -378,7 +374,8 @@
           "gpsUuid": "c87befde-c36f-4237-b645-e98e1526de42"
         }
       },
-      "_key": "!items.effects!Og8JVlVmMGomOSkp.bqZNMz63jS3CJsgl"
+      "_key": "!items.effects!Og8JVlVmMGomOSkp.bqZNMz63jS3CJsgl",
+      "start": null
     }
   ],
   "flags": {

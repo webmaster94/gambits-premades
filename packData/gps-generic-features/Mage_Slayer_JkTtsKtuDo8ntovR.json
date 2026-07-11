@@ -113,29 +113,22 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-generic-features.Item.iuUGS62pqYBuo1U0",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Mage Slayer",
       "img": "icons/weapons/polearms/halberd-crescent-glowing.webp",
       "_id": "A2TnuwjVXETHP1rO",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, preDamageRollComplete",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, preDamageRollComplete",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -170,7 +163,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!JkTtsKtuDo8ntovR.A2TnuwjVXETHP1rO"
+      "_key": "!items.effects!JkTtsKtuDo8ntovR.A2TnuwjVXETHP1rO",
+      "start": null
     }
   ],
   "folder": null,

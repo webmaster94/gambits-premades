@@ -699,23 +699,7 @@
   },
   "effects": [
     {
-      "changes": [
-        {
-          "key": "system.traits.di.value",
-          "value": "cold",
-          "mode": 2,
-          "priority": 1
-        }
-      ],
-      "duration": {
-        "seconds": null,
-        "startTime": 1697162070,
-        "rounds": null,
-        "turns": null,
-        "startRound": 30,
-        "startTurn": 0,
-        "combat": null
-      },
+      "duration": {},
       "tint": "#ffffff",
       "transfer": true,
       "disabled": false,
@@ -766,9 +750,24 @@
       "origin": "Compendium.world.gps-items.Item.00BEt1vQuZSpjfzy",
       "img": "icons/weapons/hammers/hammer-double-steel.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.traits.di.value",
+            "value": "cold",
+            "priority": 1,
+            "type": "add"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!8IPK8M8iHUj4WMAg.FucY0WBSTGcRtTnC"
+      "_key": "!items.effects!8IPK8M8iHUj4WMAg.FucY0WBSTGcRtTnC",
+      "start": {
+        "combat": null,
+        "round": 30,
+        "time": 1697162070,
+        "turn": 0
+      }
     }
   ],
   "img": "icons/weapons/hammers/hammer-double-steel.webp",

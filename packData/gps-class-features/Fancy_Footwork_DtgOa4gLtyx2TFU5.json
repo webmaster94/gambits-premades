@@ -116,32 +116,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-class-features.Item.DtgOa4gLtyx2TFU5",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Fancy Footwork",
       "_id": "MKnb2Fy2BWJPLI5r",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.fancyFootwork, preWaitForAttackRoll",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.fancyFootwork",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -184,9 +162,25 @@
       "tint": "#ffffff",
       "img": "icons/equipment/feet/shoes-simple-leaf-green.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.fancyFootwork, preWaitForAttackRoll",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.fancyFootwork",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!DtgOa4gLtyx2TFU5.MKnb2Fy2BWJPLI5r"
+      "_key": "!items.effects!DtgOa4gLtyx2TFU5.MKnb2Fy2BWJPLI5r",
+      "start": null
     }
   ],
   "folder": "SwLnJgSodyHN3SI2",

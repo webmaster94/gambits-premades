@@ -186,48 +186,44 @@
       "transfer": false,
       "_id": "YHKgdj2KIbQRBZWW",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.attributes.movement.walk",
-          "mode": 2,
-          "value": "-10",
-          "priority": 20
-        },
-        {
-          "key": "system.attributes.movement.burrow",
-          "mode": 2,
-          "value": "-10",
-          "priority": 20
-        },
-        {
-          "key": "system.attributes.movement.climb",
-          "mode": 2,
-          "value": "-10",
-          "priority": 20
-        },
-        {
-          "key": "system.attributes.movement.fly",
-          "mode": 2,
-          "value": "-10",
-          "priority": 20
-        },
-        {
-          "key": "system.attributes.movement.swim",
-          "mode": 2,
-          "value": "-10",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.movement.walk",
+            "value": -10,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.attributes.movement.burrow",
+            "value": -10,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.attributes.movement.climb",
+            "value": -10,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.attributes.movement.fly",
+            "value": -10,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.attributes.movement.swim",
+            "value": -10,
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "disabled": false,
       "duration": {
-        "startTime": null,
-        "seconds": 10,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 10,
+        "units": "seconds"
       },
       "description": "",
       "tint": "#ffffff",
@@ -275,33 +271,27 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!RlUSwec1E7MuK6YB.YHKgdj2KIbQRBZWW"
+      "_key": "!items.effects!RlUSwec1E7MuK6YB.YHKgdj2KIbQRBZWW",
+      "start": null
     },
     {
       "name": "Frost's Chill",
       "origin": "Compendium.world.gps-race-features-2024.Item.RlUSwec1E7MuK6YB",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "img": "icons/magic/water/heart-ice-freeze.webp",
       "_id": "xIHCGomLrpyg1Nh0",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.frostsChill2024,postDamageRollComplete",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.frostsChill2024,postDamageRollComplete",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -343,7 +333,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!RlUSwec1E7MuK6YB.xIHCGomLrpyg1Nh0"
+      "_key": "!items.effects!RlUSwec1E7MuK6YB.xIHCGomLrpyg1Nh0",
+      "start": null
     }
   ],
   "folder": "jlez19aJPCu4ecFC",

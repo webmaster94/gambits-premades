@@ -38,23 +38,7 @@
           "wallsBlock": "system"
         }
       },
-      "changes": [
-        {
-          "key": "system.bonuses.mwak.damage",
-          "mode": 0,
-          "value": "1d8[radiant]",
-          "priority": 0
-        }
-      ],
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "transfer": true,
       "disabled": false,
       "origin": "Compendium.world.gps-class-features.Item.3FmvwTPtpkDxpjIh",
@@ -64,9 +48,19 @@
       "statuses": [],
       "img": "icons/magic/symbols/rune-sigil-red-orange.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.mwak.damage",
+            "value": "1d8[radiant]",
+            "priority": 0,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!3FmvwTPtpkDxpjIh.9fxlvxN5rkcl9fvW"
+      "_key": "!items.effects!3FmvwTPtpkDxpjIh.9fxlvxN5rkcl9fvW",
+      "start": null
     }
   ],
   "flags": {

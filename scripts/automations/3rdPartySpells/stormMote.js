@@ -139,7 +139,7 @@ export async function stormMote({ speaker, actor, token, character, item, args, 
                 let offset = offsets[i % offsets.length];
 
                 if(animEnabled) {
-                    new Sequence()
+                    new Sequence({moduleName: "gambits-premades", softFail: true})
                         .effect()
                             .attachTo(target)
                             .tieToDocuments(effectData)
@@ -163,7 +163,7 @@ export async function stormMote({ speaker, actor, token, character, item, args, 
                     let offset = offsets[i % offsets.length];
 
                     if(animEnabled) {
-                        new Sequence()
+                        new Sequence({moduleName: "gambits-premades", softFail: true})
                             .effect()
                                 .attachTo(target)
                                 .tieToDocuments(effectData)

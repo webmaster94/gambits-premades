@@ -11,9 +11,9 @@ function gpsEscapeHTML(value) {
 async function createLegendaryResistanceChatCard({ validTokenPrimary, itemProperName, remainingUses, maxUses, gmUser, gpsUuid }) {
     const actorName = gpsEscapeHTML(validTokenPrimary.actor.name);
     const itemName = gpsEscapeHTML(itemProperName);
-    const outcomeKey = "GAMBITSPREMADES.ChatMessages.Automations.MonsterFeatures.LegendaryResistance.Outcome";
-    const usedKey = "GAMBITSPREMADES.ChatMessages.Automations.MonsterFeatures.LegendaryResistance.Used";
-    const remainingKey = "GAMBITSPREMADES.ChatMessages.Automations.MonsterFeatures.LegendaryResistance.RemainingUses";
+    const outcomeKey = "GAMBITSPREMADES.Dialogs.Automations.MonsterFeatures.LegendaryResistance.Outcome";
+    const usedKey = "GAMBITSPREMADES.Dialogs.Automations.MonsterFeatures.LegendaryResistance.Used";
+    const remainingKey = "GAMBITSPREMADES.Dialogs.Automations.MonsterFeatures.LegendaryResistance.RemainingUses";
     const outcomeLocalized = game.i18n.localize(outcomeKey);
     const usedLocalized = game.i18n.format(usedKey, { actorName, itemName });
     const remainingLocalized = game.i18n.format(remainingKey, { remaining: remainingUses, max: maxUses });

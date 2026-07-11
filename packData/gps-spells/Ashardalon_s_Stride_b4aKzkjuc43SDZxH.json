@@ -326,25 +326,20 @@
         "overrideName": "Ashardalon's Stride Aura",
         "script": "",
         "stashedChanges": [],
-        "stashedStatuses": []
+        "stashedStatuses": [],
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.ashardalonsStride @itemUuid @actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
       },
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.ashardalonsStride @itemUuid @actorUuid",
-          "priority": 20
-        }
-      ],
       "disabled": false,
       "duration": {
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "description": "",
       "tint": "#ffffff",
@@ -614,7 +609,8 @@
         }
       },
       "_id": "PQ3LSgzaiBaCAJoK",
-      "_key": "!items.effects!b4aKzkjuc43SDZxH.PQ3LSgzaiBaCAJoK"
+      "_key": "!items.effects!b4aKzkjuc43SDZxH.PQ3LSgzaiBaCAJoK",
+      "start": null
     }
   ],
   "name": "Ashardalon's Stride",

@@ -96,12 +96,16 @@ export async function powerWordRebound({workflowData,workflowType,workflowCombat
             let newItemData = workflow.item;
 
             const optionsNew = {
+                targetUuids: [workflow.token.document.uuid],
+                ignoreUserTargets: true,
                 showFullCard: false,
-                createWorkflow: false,
                 versatile: false,
                 configureDialog: true,
-                targetUuids: [workflow.token.document.uuid],
-                workflowOptions: {autoRollDamage: 'always', autoFastDamage: true, autoRollAttack: true, autoFastAttack: true}
+                checkGMStatus: true,
+                autoRollDamage: "always",
+                fastForwardDamage: true,
+                autoRollAttack: true,
+                fastForwardAttack: true
             };
 
             workflow.aborted = true;
@@ -110,7 +114,7 @@ export async function powerWordRebound({workflowData,workflowType,workflowCombat
                 await workflow.setAttackRoll(rerollNew);
             });
             
-            await MidiQOL.completeItemUse(newItemData, {}, optionsNew);
+            await MidiQOL.completeItemUse(newItemData, {midiOptions: optionsNew}, {}, {});
         }
     }
 }

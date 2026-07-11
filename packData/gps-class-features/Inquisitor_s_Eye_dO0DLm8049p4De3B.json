@@ -229,40 +229,36 @@
     {
       "origin": "Actor.vybaOfSojIBNixqp.Item.bjzcUiwQLnnJn47S",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 600,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 600,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Inquisitor's Eye",
       "img": "icons/magic/unholy/hand-marked-pink.webp",
       "_id": "Cu36e1fVZhmr56qx",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.advantage.skill.inv",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.skill.ins",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.skill.prc",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.advantage.skill.inv",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.skill.ins",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.skill.prc",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -302,7 +298,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!dO0DLm8049p4De3B.Cu36e1fVZhmr56qx"
+      "_key": "!items.effects!dO0DLm8049p4De3B.Cu36e1fVZhmr56qx",
+      "start": null
     }
   ],
   "img": "icons/magic/unholy/hand-marked-pink.webp",

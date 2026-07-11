@@ -115,26 +115,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-class-features.Item.4FIlEdNlAY78XCap",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Scornful Rebuke",
       "_id": "dNyVYLbGpztKomkw",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.scornfulRebuke,isHit",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -176,9 +160,19 @@
       "tint": "#ffffff",
       "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.scornfulRebuke,isHit",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!4FIlEdNlAY78XCap.dNyVYLbGpztKomkw"
+      "_key": "!items.effects!4FIlEdNlAY78XCap.dNyVYLbGpztKomkw",
+      "start": null
     }
   ],
   "folder": "Rr6FA73OqipfG65M",

@@ -239,40 +239,36 @@
     {
       "origin": "Scene.mcZYI9W1Hd4rVznC.Token.RqizWjONLB6d6jFd.Actor.VuEOZY2vgy6qxOin.Item.LSMvlnXNLVMdoV1Z",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 99999,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 99999,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Web Strand",
       "img": "icons/commodities/materials/material-webbing.webp",
       "_id": "4k9NUNFKsNboMaPi",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "grappled",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, isAttacked",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.StatusEffect",
+            "value": "grappled",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, isAttacked",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -455,7 +451,8 @@
           "version": 5
         }
       },
-      "_key": "!items.effects!ctFaouP3K7HEUAlw.4k9NUNFKsNboMaPi"
+      "_key": "!items.effects!ctFaouP3K7HEUAlw.4k9NUNFKsNboMaPi",
+      "start": null
     }
   ],
   "flags": {
@@ -514,7 +511,7 @@
         "img": "icons/commodities/materials/material-webbing.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"postActiveEffects\") {\n    let target = workflow.hitTargets.first();\n    if(!target) return;\n\n    let webItem = await target.actor.appliedEffects.find(e => e.name === item.name);\n    await webItem.setFlag(\"gambits-premades\", \"webHP\", 20);\n    \n    new Sequence()\n    .effect()\n        .file(\"jb2a.energy_beam.normal.dark_greenpurple.03\")\n        .persist()\n        .name(`${target.id}_webStrand`)\n        .fadeIn(500)\n        .fadeOut(500)\n        .attachTo(token, {offset: { x: -125, y: 35 }})\n        .filter(\"ColorMatrix\", { hue: 0, saturate: -1 })\n        .stretchTo(target,{ attachTo: true })\n    .play()\n\n    new Sequence()\n        .effect()\n        .file(\"jb2a.shield_themed.below.eldritch_web.02.dark_green\")\n        .persist()\n        .name(`${target.id}_web`)\n        .fadeIn(500)\n        .fadeOut(500)\n        .scaleToObject(1.5)\n        .attachTo(target)\n        .filter(\"ColorMatrix\", { hue: 0, saturate: -1 })\n    .play()\n}\n\nif(args[0] === \"off\") {\n    Sequencer.EffectManager.endEffects({ name: `${token.id}_webStrand` });\n    Sequencer.EffectManager.endEffects({ name: `${token.id}_web` });\n}\n\nif(args[0].macroPass === \"isAttacked\") {\n    let attacker = workflow.token;\n    if(token.document.disposition !== attacker.document.disposition) return;\n\n    const damageTypeImmunity = [\"Bludgeoning\", \"Poison\", \"Psychic\"];\n    const damageImmunity = damageTypeImmunity.some(type => workflow.item.labels.damageTypes.includes(type));\n    if(damageImmunity) return;\n\n    let webItem = await token.actor.appliedEffects.find(e => e.name === item.name);\n    if(!webItem) return;\n\n    if(workflow.attackTotal < 12) return;\n\n    const damageTypeVulnerability = [\"Fire\"];\n    const damageVulnerability = damageTypeVulnerability.some(type => workflow.item.labels.damageTypes.includes(type));\n    let webHP = await webItem.getFlag(\"gambits-premades\", \"webHP\");\n\n    const damageFormula = workflow.item.system.damage.parts\n        .map(damagePart => `${damagePart[0]}`)\n        .join(\" + \");\n\n    let damageRoll = await new CONFIG.Dice.DamageRoll(`${damageFormula} + ${actor.system.attributes.prof}`).evaluate();\n    await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll');\n\n    let damageTotal = damageVulnerability ? damageRoll.total * 2 : damageRoll.total;\n\n    let hpRemaining = webHP - damageTotal;\n    let chatContent;\n\n    if (hpRemaining > 0) {\n        await webItem.setFlag(\"gambits-premades\", \"webHP\", hpRemaining);\n        chatContent = `<span style='text-wrap: wrap;'>${attacker.document.name} hit the web strands surrounding you dealing ${damageTotal} points of damage. <img src=\"${attacker.actor.img}\" width=\"30\" height=\"30\" style=\"border:0px\"></span>`;\n    } else {\n        await webItem.delete();\n        chatContent = `<span style='text-wrap: wrap;'>${attacker.document.name} hit the web strands surrounding you dealing ${damageTotal} points of damage and destroyed the web. <img src=\"${attacker.actor.img}\" width=\"30\" height=\"30\" style=\"border:0px\"></span>`;\n    }\n\n    await game.gps.replaceChatCard({actorUuid: token.actor.uuid, itemUuid: item.uuid, chatContent: chatContent, rollData: damageRoll});\n\n    workflow.aborted = true;\n}",
+        "command": "if(args[0].macroPass === \"postActiveEffects\") {\n    let target = workflow.hitTargets.first();\n    if(!target) return;\n\n    let webItem = await target.actor.appliedEffects.find(e => e.name === item.name);\n    await webItem.setFlag(\"gambits-premades\", \"webHP\", 20);\n    \n    new Sequence({moduleName: \"gambits-premades\", softFail: true})\n    .effect()\n        .file(\"jb2a.energy_beam.normal.dark_greenpurple.03\")\n        .persist()\n        .name(`${target.id}_webStrand`)\n        .fadeIn(500)\n        .fadeOut(500)\n        .attachTo(token, {offset: { x: -125, y: 35 }})\n        .filter(\"ColorMatrix\", { hue: 0, saturate: -1 })\n        .stretchTo(target,{ attachTo: true })\n    .play()\n\n    new Sequence({moduleName: \"gambits-premades\", softFail: true})\n        .effect()\n        .file(\"jb2a.shield_themed.below.eldritch_web.02.dark_green\")\n        .persist()\n        .name(`${target.id}_web`)\n        .fadeIn(500)\n        .fadeOut(500)\n        .scaleToObject(1.5)\n        .attachTo(target)\n        .filter(\"ColorMatrix\", { hue: 0, saturate: -1 })\n    .play()\n}\n\nif(args[0] === \"off\") {\n    Sequencer.EffectManager.endEffects({ name: `${token.id}_webStrand` });\n    Sequencer.EffectManager.endEffects({ name: `${token.id}_web` });\n}\n\nif(args[0].macroPass === \"isAttacked\") {\n    let attacker = workflow.token;\n    if(token.document.disposition !== attacker.document.disposition) return;\n\n    const damageTypeImmunity = [\"Bludgeoning\", \"Poison\", \"Psychic\"];\n    const damageImmunity = damageTypeImmunity.some(type => workflow.item.labels.damageTypes.includes(type));\n    if(damageImmunity) return;\n\n    let webItem = await token.actor.appliedEffects.find(e => e.name === item.name);\n    if(!webItem) return;\n\n    if(workflow.attackTotal < 12) return;\n\n    const damageTypeVulnerability = [\"Fire\"];\n    const damageVulnerability = damageTypeVulnerability.some(type => workflow.item.labels.damageTypes.includes(type));\n    let webHP = await webItem.getFlag(\"gambits-premades\", \"webHP\");\n\n    const damageFormula = workflow.item.system.damage.parts\n        .map(damagePart => `${damagePart[0]}`)\n        .join(\" + \");\n\n    let damageRoll = await new CONFIG.Dice.DamageRoll(`${damageFormula} + ${actor.system.attributes.prof}`).evaluate();\n    await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll');\n\n    let damageTotal = damageVulnerability ? damageRoll.total * 2 : damageRoll.total;\n\n    let hpRemaining = webHP - damageTotal;\n    let chatContent;\n\n    if (hpRemaining > 0) {\n        await webItem.setFlag(\"gambits-premades\", \"webHP\", hpRemaining);\n        chatContent = `<span style='text-wrap: wrap;'>${attacker.document.name} hit the web strands surrounding you dealing ${damageTotal} points of damage. <img src=\"${attacker.actor.img}\" width=\"30\" height=\"30\" style=\"border:0px\"></span>`;\n    } else {\n        await webItem.delete();\n        chatContent = `<span style='text-wrap: wrap;'>${attacker.document.name} hit the web strands surrounding you dealing ${damageTotal} points of damage and destroyed the web. <img src=\"${attacker.actor.img}\" width=\"30\" height=\"30\" style=\"border:0px\"></span>`;\n    }\n\n    await game.gps.replaceChatCard({actorUuid: token.actor.uuid, itemUuid: item.uuid, chatContent: chatContent, rollData: damageRoll});\n\n    workflow.aborted = true;\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3

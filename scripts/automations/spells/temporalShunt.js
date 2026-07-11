@@ -156,7 +156,7 @@ export async function temporalShunt({ workflowData,workflowType,workflowCombat }
                     for(let target of targets) {
                         target = await fromUuid(target);
                         target = target.object;
-                        new Sequence()
+                        new Sequence({moduleName: "gambits-premades", softFail: true})
                         .effect()
                             .file("jb2a.portals.horizontal.vortex.black")
                             .fadeIn(500)

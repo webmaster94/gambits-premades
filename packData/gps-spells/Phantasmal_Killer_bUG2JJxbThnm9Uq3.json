@@ -253,28 +253,9 @@
   "effects": [
     {
       "img": "icons/magic/death/skull-horned-white-purple.webp",
-      "changes": [
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "frightened",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.OverTime",
-          "mode": 5,
-          "value": "label=Phantasmal Killer (End of Turn),turn=end,saveAbility=wis,saveDC=@attributes.spell.dc,saveMagic=true,damageRoll=(4+(@scaling-1))d10,damageType=psychic,savingThrow=true,damageBeforeSave=false,killAnim=true",
-          "priority": 20
-        }
-      ],
       "duration": {
-        "seconds": null,
-        "startTime": null,
-        "rounds": 10,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null,
-        "combat": null
+        "value": 10,
+        "units": "rounds"
       },
       "tint": "#ffffff",
       "transfer": false,
@@ -330,11 +311,27 @@
       "statuses": [],
       "_id": "Dc6XCuIlDfpSxju0",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "macro.StatusEffect",
+            "value": "frightened",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.OverTime",
+            "value": "label=Phantasmal Killer (End of Turn),turn=end,saveAbility=wis,saveDC=@attributes.spell.dc,saveMagic=true,damageRoll=(4+(@scaling-1))d10,damageType=psychic,savingThrow=true,damageBeforeSave=false,killAnim=true",
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "description": "",
       "origin": null,
       "sort": 0,
-      "_key": "!items.effects!bUG2JJxbThnm9Uq3.Dc6XCuIlDfpSxju0"
+      "_key": "!items.effects!bUG2JJxbThnm9Uq3.Dc6XCuIlDfpSxju0",
+      "start": null
     }
   ],
   "img": "icons/magic/death/undead-ghosts-trio-blue.webp",

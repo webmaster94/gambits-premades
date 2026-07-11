@@ -28,7 +28,7 @@ export function web({template, token, itemUuid}) {
         scaleMagicSign2 = 0.5;
     }
     
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
             .atLocation(token)
             .file(`jb2a.magic_signs.circle.02.conjuration.loop.yellow`)

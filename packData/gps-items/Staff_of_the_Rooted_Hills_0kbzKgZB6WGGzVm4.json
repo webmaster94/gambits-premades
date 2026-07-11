@@ -468,26 +468,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-items.Item.rPLED9VTdrxEzpRX",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Staff of the Rooted Hills",
       "_id": "gCMcWr5UW0b0GirN",
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.staffOfTheRootedHills",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -530,9 +514,19 @@
       "tint": "#ffffff",
       "img": "icons/weapons/staves/staff-engraved-wood.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.staffOfTheRootedHills",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!0kbzKgZB6WGGzVm4.gCMcWr5UW0b0GirN"
+      "_key": "!items.effects!0kbzKgZB6WGGzVm4.gCMcWr5UW0b0GirN",
+      "start": null
     }
   ],
   "img": "icons/weapons/staves/staff-engraved-wood.webp",

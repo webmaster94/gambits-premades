@@ -60,13 +60,13 @@ if (fs.existsSync(NOTES_FILE)) {
   console.warn(`⚠️  ${path.basename(NOTES_FILE)} not found—skipping CHANGELOG update`);
 }
 
-// ─── 4) Unpack packs ─────────────────────
+// ─── 4) Compile canonical packData ─────────────────────
 try {
-  console.log('🧰  Running unpackData to refresh packData from packs/');
-  execSync('npm run unpackData', { stdio: 'inherit' });
-  console.log('✅  Unpacked packs into packData/');
+  console.log('🧰  Compiling canonical packData into packs/');
+  execSync('npm run packData', { stdio: 'inherit' });
+  console.log('✅  Compiled packs from canonical packData/');
 } catch (err) {
-  console.error('❌  unpackData failed', err);
+  console.error('❌  packData compilation failed', err);
   process.exit(1);
 }
 
@@ -74,7 +74,7 @@ try {
 try {
   execSync(`git add .`, { stdio: 'inherit' });
   execSync(`git commit -m "${version}"`, { stdio: 'inherit' });
-  console.log('💾  Committed module.json, CHANGELOG.md, and packData/');
+  console.log('💾  Committed module.json, CHANGELOG.md, and canonical packData/');
 } catch {
   console.log('ℹ️  Nothing to commit');
 }

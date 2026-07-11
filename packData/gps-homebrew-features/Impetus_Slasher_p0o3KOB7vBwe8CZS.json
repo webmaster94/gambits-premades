@@ -176,41 +176,34 @@
   "effects": [
     {
       "origin": "Actor.4rgwJtcvBFEmAQ4A.Item.93rhOp07dHSQtJOr",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Impetus Slasher",
       "img": "icons/weapons/swords/swords-cutlasses-white.webp",
       "_id": "vhj7xJmCiTIagALN",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, preAttackRoll",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, preDamageRoll",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, postDamageRollComplete",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, preAttackRoll",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, preDamageRoll",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, postDamageRollComplete",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -247,7 +240,8 @@
         },
         "gambits-premades": {}
       },
-      "_key": "!items.effects!p0o3KOB7vBwe8CZS.vhj7xJmCiTIagALN"
+      "_key": "!items.effects!p0o3KOB7vBwe8CZS.vhj7xJmCiTIagALN",
+      "start": null
     }
   ],
   "folder": null,

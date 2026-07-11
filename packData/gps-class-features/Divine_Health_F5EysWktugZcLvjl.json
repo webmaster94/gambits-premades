@@ -91,29 +91,22 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-class-features.Item.F5EysWktugZcLvjl",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Divine Health",
       "img": "icons/magic/life/cross-worn-green.webp",
       "_id": "JdqqSYmmv9DHxxj1",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.traits.ci.value",
-          "mode": 2,
-          "value": "diseased",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.traits.ci.value",
+            "value": "diseased",
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -155,7 +148,8 @@
           }
         }
       },
-      "_key": "!items.effects!F5EysWktugZcLvjl.JdqqSYmmv9DHxxj1"
+      "_key": "!items.effects!F5EysWktugZcLvjl.JdqqSYmmv9DHxxj1",
+      "start": null
     }
   ],
   "folder": "Rr6FA73OqipfG65M",

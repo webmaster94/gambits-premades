@@ -280,46 +280,42 @@
     {
       "origin": "Compendium.world.gps-spells.Item.mVClsljdgiSF9oL7",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 3600,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 3600,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Intellect Fortress",
       "img": "icons/magic/control/control-influence-rally-purple.webp",
       "_id": "1x0dmzyNA4DM8YwN",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.traits.dr.value",
-          "mode": 0,
-          "value": "psychic",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.save.int",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.save.wis",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.save.cha",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.traits.dr.value",
+            "value": "psychic",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.save.int",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.save.wis",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.save.cha",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -364,7 +360,8 @@
           }
         }
       },
-      "_key": "!items.effects!DEJrLlbplsT2KW8N.1x0dmzyNA4DM8YwN"
+      "_key": "!items.effects!DEJrLlbplsT2KW8N.1x0dmzyNA4DM8YwN",
+      "start": null
     }
   ],
   "img": "icons/magic/control/control-influence-rally-purple.webp",

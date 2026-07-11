@@ -174,28 +174,24 @@
     {
       "origin": "Compendium.world.gps-homebrew-features.Item.SNhQurj879SJIs1a",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Life Absorption",
       "img": "icons/magic/unholy/orb-hands-pink.webp",
       "_id": "C05Eou5Snf4u9O4B",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -230,7 +226,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!xNe2ghMwU8IvI6hG.C05Eou5Snf4u9O4B"
+      "_key": "!items.effects!xNe2ghMwU8IvI6hG.C05Eou5Snf4u9O4B",
+      "start": null
     }
   ],
   "folder": null,

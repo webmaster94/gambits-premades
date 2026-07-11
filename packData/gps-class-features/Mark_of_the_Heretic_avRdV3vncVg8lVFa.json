@@ -292,28 +292,24 @@
     {
       "origin": "Actor.vybaOfSojIBNixqp.Item.v3otNgsRBHDBQm96",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Mark of the Heretic",
       "img": "icons/magic/unholy/orb-stone-pink.webp",
       "_id": "8CiXpIuTA3ibBGsT",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.grants.criticalThreshold",
-          "mode": 0,
-          "value": "tokenId === '@token' ? 19 : 20",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.grants.criticalThreshold",
+            "value": "tokenId === '@token' ? 19 : 20",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -354,7 +350,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!avRdV3vncVg8lVFa.8CiXpIuTA3ibBGsT"
+      "_key": "!items.effects!avRdV3vncVg8lVFa.8CiXpIuTA3ibBGsT",
+      "start": null
     }
   ],
   "img": "icons/magic/unholy/orb-stone-pink.webp",

@@ -13,7 +13,7 @@ export function biohazard({template, itemUuid}) {
         scaleDecision = 0.6;
     }
 
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
             .file("jb2a.plant_growth.01.square.4x4.loop.bluepurple")
             .attachTo(template, alignmentDecision)

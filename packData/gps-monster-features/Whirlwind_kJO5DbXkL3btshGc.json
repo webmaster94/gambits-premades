@@ -204,27 +204,23 @@
       "name": "Whirlwind",
       "origin": "Actor.jVx2qtZIUf21vlbC.Item.DZQgrQSrcjrzaFpv",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "combat": null,
-        "seconds": 1,
-        "turns": 1,
-        "startRound": null,
-        "startTurn": null
+        "value": 1,
+        "units": "seconds"
       },
       "disabled": false,
       "img": "icons/magic/air/wind-tornado-cyclone-white.webp",
       "_id": "PtIaYxHZWbXQvzCf",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.gambits-premades.oaImmunity",
-          "mode": 5,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.gambits-premades.oaImmunity",
+            "value": 1,
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -258,7 +254,8 @@
           "overlay": false
         }
       },
-      "_key": "!items.effects!kJO5DbXkL3btshGc.PtIaYxHZWbXQvzCf"
+      "_key": "!items.effects!kJO5DbXkL3btshGc.PtIaYxHZWbXQvzCf",
+      "start": null
     }
   ],
   "flags": {

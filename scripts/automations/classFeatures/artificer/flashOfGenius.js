@@ -105,7 +105,7 @@ export async function flashOfGenius({workflowData,workflowType,workflowCombat}) 
 
             if(itemRoll.aborted === true) continue;
             await game.gps.addReaction({actorUuid: `${validTokenPrimary.actor.uuid}`});
-            let rollFound = workflow ? workflow.saveRolls.find(roll => roll.data.actorUuid === target.actor.uuid) : workflowData.roll;
+            let rollFound = workflow ? Object.values(workflow.tokenSaves ?? {}).find(roll => roll.data.actorUuid === target.actor.uuid) : workflowData.roll;
 
             let saveBonus = await new CONFIG.Dice.DamageRoll(`${intMod}`).evaluate();
             let newRoll = await MidiQOL.addRollTo(rollFound, saveBonus);

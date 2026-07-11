@@ -304,35 +304,28 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-items.Item.rBWijIqDnfXvLWBg",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Amulet of the Devout, +1",
       "img": "icons/equipment/neck/amulet-carved-stone-cross.webp",
       "_id": "W8gOp16Ls6nszHdY",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.bonuses.spell.attack",
-          "mode": 2,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "system.bonuses.spell.dc",
-          "mode": 2,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.spell.attack",
+            "value": 1,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.bonuses.spell.dc",
+            "value": 1,
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -374,7 +367,8 @@
           "overlay": false
         }
       },
-      "_key": "!items.effects!TnTZkvxXX7fuddqd.W8gOp16Ls6nszHdY"
+      "_key": "!items.effects!TnTZkvxXX7fuddqd.W8gOp16Ls6nszHdY",
+      "start": null
     }
   ],
   "img": "icons/equipment/neck/amulet-carved-stone-cross.webp",

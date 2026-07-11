@@ -35,7 +35,7 @@ export async function poetryInMisery({workflowData,workflowType,workflowCombat})
         if (workflowType === "save") {
             if(workflow) {
                 if(initiatingToken.document.disposition === validTokenPrimary.document.disposition) continue;
-                const fumbleRoll = workflow.saveRolls.find(roll => roll.isFumble && roll.data.token.document.disposition === validTokenPrimary.document.disposition);
+                const fumbleRoll = Object.values(workflow.tokenSaves ?? {}).find(roll => roll.isFumble && roll.data.token.document.disposition === validTokenPrimary.document.disposition);
                 if(!fumbleRoll) return;
                 chatActor = fumbleRoll.data.token.actor;
             }

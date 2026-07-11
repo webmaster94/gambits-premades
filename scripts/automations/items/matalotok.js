@@ -23,7 +23,7 @@ export async function matalotok({ speaker, actor, token, character, item, args, 
     
         let initialTarget = workflow.hitTargets.first();
 
-        await new Sequence()
+        await new Sequence({moduleName: "gambits-premades", softFail: true})
     
         .effect()
         .atLocation(initialTarget)

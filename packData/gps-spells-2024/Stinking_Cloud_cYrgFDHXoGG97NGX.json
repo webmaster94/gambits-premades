@@ -319,20 +319,16 @@
       "name": "Poisoned: No Action/Bonus Action",
       "origin": "Compendium.world.gps-spells-2024.Item.cYrgFDHXoGG97NGX",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "combat": null,
-        "seconds": null,
-        "turns": 1,
-        "startRound": null,
-        "startTurn": null
+        "value": 1,
+        "units": "turns"
       },
       "disabled": false,
       "img": "icons/commodities/materials/glass-orb-green.webp",
       "_id": "Hsy2PlDGxUG8ryB1",
       "type": "base",
-      "system": {},
-      "changes": [],
+      "system": {
+        "changes": []
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -363,7 +359,8 @@
           "overlay": false
         }
       },
-      "_key": "!items.effects!cYrgFDHXoGG97NGX.Hsy2PlDGxUG8ryB1"
+      "_key": "!items.effects!cYrgFDHXoGG97NGX.Hsy2PlDGxUG8ryB1",
+      "start": null
     }
   ],
   "folder": null,

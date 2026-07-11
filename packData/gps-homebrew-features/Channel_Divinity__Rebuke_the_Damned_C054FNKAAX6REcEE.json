@@ -185,26 +185,10 @@
   "effects": [
     {
       "origin": "Actor.YUmZSq6NsdZkLNi9.Item.sYaxvhLRDdM4ljOQ",
-      "duration": {
-        "startTime": 1697162658,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": 2,
-        "startTurn": 0
-      },
+      "duration": {},
       "disabled": false,
       "name": "Channel Divinity: Rebuke the Damned",
       "_id": "xDcTo3iw6U2atIsE",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, isDamaged",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -240,9 +224,24 @@
       "tint": "#ffffff",
       "img": "icons/creatures/birds/corvid-flying-wings-purple.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!C054FNKAAX6REcEE.xDcTo3iw6U2atIsE"
+      "_key": "!items.effects!C054FNKAAX6REcEE.xDcTo3iw6U2atIsE",
+      "start": {
+        "combat": null,
+        "round": 2,
+        "time": 1697162658,
+        "turn": 0
+      }
     }
   ],
   "folder": "hZHmMlQMwcouSKoR",
@@ -257,7 +256,7 @@
         "img": "icons/creatures/birds/corvid-flying-wings-purple.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"isDamaged\") {\n    let itemName = macroItem.name;\n    let target = workflow.token;\n    let gpsUuid = \"7c352bfb-613c-46d7-91df-ac3d3a50c0c5\";\n    \n    let findValidToken = game.gps.findValidToken({initiatingTokenUuid: target.document.uuid, targetedTokenUuid: token.document.uuid, itemName: itemName, itemType: \"feature\", itemChecked: [\"channel divinity\"], reactionCheck: true, sightCheck: false, rangeCheck: true, rangeTotal: 30, dispositionCheck: true, dispositionCheckType: \"enemy\", workflowType: \"attack\", workflowCombat: \"true\", gpsUuid: gpsUuid});\n\n    if(!findValidToken) return;\n\n    let dialogId = gpsUuid;\n\n    let initialTimeLeft = 15;\n    const dialogTitlePrimary = `${actor.name} | ${macroItem.name}`;\n    const dialogTitleGM = `Waiting for ${actor.name}'s selection | ${macroItem.name}`;\n    let browserUser = game.gps.getBrowserUser({ actorUuid: actor.uuid });\n    let gmUser = game.gps.getPrimaryGM();\n    let result;\n\n    let dialogContent = `\n\t\t<div class=\"gps-dialog-container\">\n\t\t\t<div class=\"gps-dialog-section\">\n\t\t\t\t<div class=\"gps-dialog-content\">\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div class=\"gps-dialog-flex\">\n\t\t\t\t\t\t\t<p class=\"gps-dialog-paragraph\">You have been damaged, would you like to use ${macroItem.name} to inflict cold damage on the attacker?</p>\n\t\t\t\t\t\t\t<div id=\"image-container\" class=\"gps-dialog-image-container\">\n\t\t\t\t\t\t\t\t<img id=\"img_${dialogId}\" src=\"${macroItem.img}\" class=\"gps-dialog-image\">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"gps-dialog-button-container\">\n\t\t\t\t<button id=\"pauseButton_${dialogId}\" type=\"button\" class=\"gps-dialog-button\">\n\t\t\t\t\t<i class=\"fas fa-pause\" id=\"pauseIcon_${dialogId}\" style=\"margin-right: 5px;\"></i>Pause\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t</div>\n\t`;\n\n    if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {\n    let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: \"user\",type: \"multiDialog\", browserUser: browserUser };\n    \n    let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: \"gm\",type: \"multiDialog\" };\n\n    result = await game.gps.socket.executeAsUser(\"handleDialogPromises\", gmUser, {userDialogArgs, gmDialogArgs});\n} else {\n    result = await game.gps.socket.executeAsUser(\"process3rdPartyReactionDialog\", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? \"gm\" : \"user\",type:\"singleDialog\"});\n    }\n\t\t\t\n\tconst { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result;\n\n    if (userDecision) {\n        let activityToUpdate = macroItem.system.activities.find(a => a.identifier === \"syntheticSave\");\n        let damageParts = foundry.utils.duplicate(activityToUpdate.damage.parts);\n        damageParts[0].custom.formula = target.actor.system.details.type.value === \"undead\" ? `1d6 + ${workflow.damageTotal}` : workflow.damageTotal\n\n        await game.gps.socket.executeAsUser(\"gpsActivityUpdate\", gmUser, { activityUuid: activityToUpdate.uuid, updates: {\"damage.parts\": damageParts} });\n        await game.gps.gpsActivityUse({itemUuid: macroItem.uuid, identifier: \"syntheticSave\", targetUuid: target.document.uuid});\n\n        let cprConfig = game.gps.getCprConfig({itemUuid: macroItem.uuid});\n        const { animEnabled } = cprConfig;\n        if(animEnabled) {\n            new Sequence()\n                .effect()\n                    .file(\"animated-spell-effects-cartoon.fire.118\")\n                    .fadeIn(500)\n                    .fadeOut(500)\n                    .atLocation(target, {offset:{x: 0, y: -10}})\n                    .scaleToObject(3)\n                    .filter(\"ColorMatrix\", { brightness: 0, contrast: 1 })\n                .play()\n        }\n    }\n}",
+        "command": "if(args[0].macroPass === \"isDamaged\") {\n    let itemName = macroItem.name;\n    let target = workflow.token;\n    let gpsUuid = \"7c352bfb-613c-46d7-91df-ac3d3a50c0c5\";\n    \n    let findValidToken = game.gps.findValidToken({initiatingTokenUuid: target.document.uuid, targetedTokenUuid: token.document.uuid, itemName: itemName, itemType: \"feature\", itemChecked: [\"channel divinity\"], reactionCheck: true, sightCheck: false, rangeCheck: true, rangeTotal: 30, dispositionCheck: true, dispositionCheckType: \"enemy\", workflowType: \"attack\", workflowCombat: \"true\", gpsUuid: gpsUuid});\n\n    if(!findValidToken) return;\n\n    let dialogId = gpsUuid;\n\n    let initialTimeLeft = 15;\n    const dialogTitlePrimary = `${actor.name} | ${macroItem.name}`;\n    const dialogTitleGM = `Waiting for ${actor.name}'s selection | ${macroItem.name}`;\n    let browserUser = game.gps.getBrowserUser({ actorUuid: actor.uuid });\n    let gmUser = game.gps.getPrimaryGM();\n    let result;\n\n    let dialogContent = `\n\t\t<div class=\"gps-dialog-container\">\n\t\t\t<div class=\"gps-dialog-section\">\n\t\t\t\t<div class=\"gps-dialog-content\">\n\t\t\t\t\t<div>\n\t\t\t\t\t\t<div class=\"gps-dialog-flex\">\n\t\t\t\t\t\t\t<p class=\"gps-dialog-paragraph\">You have been damaged, would you like to use ${macroItem.name} to inflict cold damage on the attacker?</p>\n\t\t\t\t\t\t\t<div id=\"image-container\" class=\"gps-dialog-image-container\">\n\t\t\t\t\t\t\t\t<img id=\"img_${dialogId}\" src=\"${macroItem.img}\" class=\"gps-dialog-image\">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<div class=\"gps-dialog-button-container\">\n\t\t\t\t<button id=\"pauseButton_${dialogId}\" type=\"button\" class=\"gps-dialog-button\">\n\t\t\t\t\t<i class=\"fas fa-pause\" id=\"pauseIcon_${dialogId}\" style=\"margin-right: 5px;\"></i>Pause\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t</div>\n\t`;\n\n    if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {\n    let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: \"user\",type: \"multiDialog\", browserUser: browserUser };\n    \n    let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: \"gm\",type: \"multiDialog\" };\n\n    result = await game.gps.socket.executeAsUser(\"handleDialogPromises\", gmUser, {userDialogArgs, gmDialogArgs});\n} else {\n    result = await game.gps.socket.executeAsUser(\"process3rdPartyReactionDialog\", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? \"gm\" : \"user\",type:\"singleDialog\"});\n    }\n\t\t\t\n\tconst { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result;\n\n    if (userDecision) {\n        let activityToUpdate = macroItem.system.activities.find(a => a.identifier === \"syntheticSave\");\n        let damageParts = foundry.utils.duplicate(activityToUpdate.damage.parts);\n        damageParts[0].custom.formula = target.actor.system.details.type.value === \"undead\" ? `1d6 + ${workflow.damageTotal}` : workflow.damageTotal\n\n        await game.gps.socket.executeAsUser(\"gpsActivityUpdate\", gmUser, { activityUuid: activityToUpdate.uuid, updates: {\"damage.parts\": damageParts} });\n        await game.gps.gpsActivityUse({itemUuid: macroItem.uuid, identifier: \"syntheticSave\", targetUuid: target.document.uuid});\n\n        let cprConfig = game.gps.getCprConfig({itemUuid: macroItem.uuid});\n        const { animEnabled } = cprConfig;\n        if(animEnabled) {\n            new Sequence({moduleName: \"gambits-premades\", softFail: true})\n                .effect()\n                    .file(\"animated-spell-effects-cartoon.fire.118\")\n                    .fadeIn(500)\n                    .fadeOut(500)\n                    .atLocation(target, {offset:{x: 0, y: -10}})\n                    .scaleToObject(3)\n                    .filter(\"ColorMatrix\", { brightness: 0, contrast: 1 })\n                .play()\n        }\n    }\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3

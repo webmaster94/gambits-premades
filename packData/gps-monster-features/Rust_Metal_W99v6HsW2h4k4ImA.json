@@ -123,26 +123,10 @@
     {
       "name": "Rust Metal",
       "origin": "Compendium.world.gps-monster-features.Item.OViIIfcfXLb8lv6C",
-      "duration": {
-        "startTime": 1697165136,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "transfer": true,
       "disabled": false,
       "_id": "UCzjVUEiQr310D2P",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro,isDamaged",
-          "priority": 20
-        }
-      ],
       "description": "",
       "statuses": [],
       "flags": {
@@ -180,9 +164,24 @@
       "tint": "#ffffff",
       "img": "icons/skills/melee/shield-damaged-broken-gold.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro,isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!W99v6HsW2h4k4ImA.UCzjVUEiQr310D2P"
+      "_key": "!items.effects!W99v6HsW2h4k4ImA.UCzjVUEiQr310D2P",
+      "start": {
+        "combat": null,
+        "round": null,
+        "time": 1697165136,
+        "turn": null
+      }
     }
   ],
   "folder": "KXFmyecWVGyjMN4Y",

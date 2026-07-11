@@ -13,7 +13,7 @@ export async function entangle({template, itemUuid, targets, token}) {
         scaleDecision = 0.65;
     }
 
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
 
         .effect()
             .atLocation(token)
@@ -142,7 +142,7 @@ export async function entangle({template, itemUuid, targets, token}) {
 
     targets.forEach(target => {
 
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
 
             .effect()
                 .delay(100)

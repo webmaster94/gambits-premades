@@ -19,7 +19,7 @@ export async function shroomOfDoom({ speaker, actor, token, character, item, arg
         await MidiQOL.socket().executeAsGM('_gmSetFlag', { actorUuid : target.actor.uuid, base : 'midi-qol', key : 'shroomTotal', value : shroomTotal });
         let castLevel = workflow.castData.castLevel - 1;
 
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .name(`${target.id}.ShroomOfDoom`)
                 .file("jb2a.plant_growth.01.round.2x2.loop.bluepurple")

@@ -189,31 +189,12 @@
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.dg5SYqeguJEwCHJi",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 999999,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 999999,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Shroom of Doom",
       "_id": "MyjBrB8jaaHpbHnl",
-      "changes": [
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "poisoned",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.shroomOfDoom",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": false,
       "statuses": [],
@@ -262,9 +243,25 @@
       "tint": "#ffffff",
       "img": "icons/consumables/mushrooms/ovate-blue.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "macro.StatusEffect",
+            "value": "poisoned",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.shroomOfDoom",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!CtkWDZZjzQBH19Sm.MyjBrB8jaaHpbHnl"
+      "_key": "!items.effects!CtkWDZZjzQBH19Sm.MyjBrB8jaaHpbHnl",
+      "start": null
     }
   ],
   "flags": {

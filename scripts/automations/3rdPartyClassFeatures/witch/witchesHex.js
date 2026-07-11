@@ -151,7 +151,7 @@ export async function witchesHex({workflowData,workflowType,workflowCombat}) {
             if(!itemRoll) continue;
 
             if(animEnabled) {
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                     .file("animated-spell-effects-cartoon.misc.all seeing eye")
                     .fadeIn(250)
@@ -174,7 +174,7 @@ export async function witchesHex({workflowData,workflowType,workflowCombat}) {
 
                 if(saveResult.failedSaves.size !== 0) {
                     if(animEnabled) {
-                        new Sequence()
+                        new Sequence({moduleName: "gambits-premades", softFail: true})
                         .effect()
                             .name(`${target.id}.FlamesEmbrace`)
                             .file("animated-spell-effects-cartoon.fire.18")
@@ -192,12 +192,12 @@ export async function witchesHex({workflowData,workflowType,workflowCombat}) {
             if(workflowType === "save") {
                 const saveSetting = workflow.workflowOptions.noOnUseMacro;
                 workflow.workflowOptions.noOnUseMacro = true;
-                let saveDC = workflow?.saveActivity?.save.dc?.value;
+                let saveDC = game.gps.getWorkflowSaveDetails(workflow)?.dc?.value;
                 
 
                 if(source && source === "user") reroll = await game.gps.socket.executeAsUser("rollAsUser", browserUser, { rollParams: `1${hexDie}`, type: workflowType });
                 if(source && source === "gm") reroll = await game.gps.socket.executeAsUser("rollAsUser", gmUser, { rollParams: `1${hexDie}`, type: workflowType });
-                let rollFound = workflow.saveRolls.find(roll => roll.data.tokenUuid === enemyTokenUuid);
+                let rollFound = Object.values(workflow.tokenSaves ?? {}).find(roll => roll.data.tokenUuid === enemyTokenUuid);
                 let rollTotal = rollFound.total;
                 let modifiedRoll = await new Roll(`${rollTotal} - ${reroll.total}`).evaluate();
 

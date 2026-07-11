@@ -605,43 +605,12 @@
     {
       "origin": "Actor.6kguFcZvUgTJzCvS.Item.bDnC8h9XbLrI9TJo",
       "duration": {
-        "startTime": null,
-        "seconds": 3600,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 3600,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Wickerbone Behemoth",
       "_id": "kE7T0D7E6CnMvjvr",
-      "changes": [
-        {
-          "key": "system.attributes.ac.formula",
-          "mode": 5,
-          "value": "16",
-          "priority": 20
-        },
-        {
-          "key": "system.attributes.ac.calc",
-          "mode": 5,
-          "value": "custom",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, isDamaged",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": false,
       "statuses": [],
@@ -682,9 +651,37 @@
       "tint": "#ffffff",
       "img": "icons/creatures/magical/spirit-undead-ghost-tan-teal.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.ac.formula",
+            "value": 16,
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "system.attributes.ac.calc",
+            "value": "custom",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, isDamaged",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!G2IDv711EWrOF7ef.kE7T0D7E6CnMvjvr"
+      "_key": "!items.effects!G2IDv711EWrOF7ef.kE7T0D7E6CnMvjvr",
+      "start": null
     }
   ],
   "_id": "G2IDv711EWrOF7ef",

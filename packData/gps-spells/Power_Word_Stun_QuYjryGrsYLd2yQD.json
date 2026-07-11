@@ -497,34 +497,30 @@
     {
       "origin": "Item.PvD4sCpjbcc6hJIg",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 99999,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 99999,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Power Word Stun",
       "img": "icons/magic/sonic/scream-wail-shout-teal.webp",
       "_id": "YNLL7EqvJIny51tK",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.OverTime",
-          "mode": 0,
-          "value": "turn=end,rollType=save,saveAbility=con,saveDC=@attributes.spelldc,saveMagic=true,name=Power Word Stun",
-          "priority": 20
-        },
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "stunned",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.OverTime",
+            "value": "turn=end,rollType=save,saveAbility=con,saveDC=@attributes.spelldc,saveMagic=true,name=Power Word Stun",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.StatusEffect",
+            "value": "stunned",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -706,7 +702,8 @@
           "version": 5
         }
       },
-      "_key": "!items.effects!QuYjryGrsYLd2yQD.YNLL7EqvJIny51tK"
+      "_key": "!items.effects!QuYjryGrsYLd2yQD.YNLL7EqvJIny51tK",
+      "start": null
     }
   ],
   "img": "icons/magic/sonic/scream-wail-shout-teal.webp",

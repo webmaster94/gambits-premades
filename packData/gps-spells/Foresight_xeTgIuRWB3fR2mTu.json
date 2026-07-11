@@ -250,52 +250,48 @@
     {
       "origin": "Item.ZZ3xwEyunmyHPt0c",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 28800,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 28800,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Foresight",
       "img": "icons/magic/perception/hand-eye-fire-blue.webp",
       "_id": "DaQYicerrenqjSbA",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.advantage.attack.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.grants.disadvantage.attack.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.check.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.save.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.skill.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.advantage.attack.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.grants.disadvantage.attack.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.check.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.save.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.skill.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -340,7 +336,8 @@
           "overlay": false
         }
       },
-      "_key": "!items.effects!xeTgIuRWB3fR2mTu.DaQYicerrenqjSbA"
+      "_key": "!items.effects!xeTgIuRWB3fR2mTu.DaQYicerrenqjSbA",
+      "start": null
     }
   ],
   "img": "icons/magic/perception/hand-eye-fire-blue.webp",

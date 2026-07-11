@@ -167,26 +167,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-3rd-party-spells.Item.6SoCOKad4lvhmgSx",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Smolder",
       "_id": "oxzWSYduqkFWENzC",
-      "changes": [
-        {
-          "key": "flags.midi-qol.advantage.skill.itm",
-          "mode": 2,
-          "value": "['beast', 'humanoid'].includes(typeOrRace) ? 1 : 0",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -235,9 +219,19 @@
       "tint": "#ffffff",
       "img": "icons/magic/fire/elemental-fire-humanoid.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.advantage.skill.itm",
+            "value": "['beast', 'humanoid'].includes(typeOrRace) ? 1 : 0",
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!DMbWJuA83dZ1ilyX.oxzWSYduqkFWENzC"
+      "_key": "!items.effects!DMbWJuA83dZ1ilyX.oxzWSYduqkFWENzC",
+      "start": null
     }
   ],
   "flags": {

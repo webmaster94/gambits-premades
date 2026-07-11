@@ -315,29 +315,7 @@
   "effects": [
     {
       "img": "icons/equipment/feet/boots-collared-simple-leather.webp",
-      "changes": [
-        {
-          "key": "system.attributes.movement.walk",
-          "mode": 2,
-          "value": "0",
-          "priority": 9
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.bootsOfSpeed",
-          "priority": 20
-        }
-      ],
-      "duration": {
-        "seconds": null,
-        "startTime": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null,
-        "combat": null
-      },
+      "duration": {},
       "tint": "#ffffff",
       "transfer": true,
       "disabled": false,
@@ -397,10 +375,26 @@
       "description": "",
       "_id": "mQ2DXY5DjK9G1zht",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.movement.walk",
+            "value": 0,
+            "priority": 9,
+            "type": "add"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.bootsOfSpeed",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "origin": "Compendium.world.gps-items.Item.SJnbBcljW2paqvIY",
       "sort": 0,
-      "_key": "!items.effects!xK6xZUX7XOpqXmat.mQ2DXY5DjK9G1zht"
+      "_key": "!items.effects!xK6xZUX7XOpqXmat.mQ2DXY5DjK9G1zht",
+      "start": null
     },
     {
       "name": "Boots of Speed",
@@ -408,36 +402,32 @@
       "origin": "Actor.Q7GcFBwAbXgQX9Yv.Item.HnQ6v8eSDRNROLQT",
       "_id": "4MWaqwin1ny5WN8B",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.bootsOfSpeed",
-          "priority": 20
-        },
-        {
-          "key": "system.attributes.movement.walk",
-          "mode": 1,
-          "value": "2",
-          "priority": 20
-        },
-        {
-          "key": "flags.gambits-premades.oaDisadvantage",
-          "mode": 5,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.bootsOfSpeed",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "system.attributes.movement.walk",
+            "value": 2,
+            "priority": 20,
+            "type": "multiply"
+          },
+          {
+            "key": "flags.gambits-premades.oaDisadvantage",
+            "value": 1,
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "disabled": false,
       "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": 100,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 100,
+        "units": "rounds"
       },
       "description": "",
       "tint": "#ffffff",
@@ -487,7 +477,8 @@
           }
         }
       },
-      "_key": "!items.effects!xK6xZUX7XOpqXmat.4MWaqwin1ny5WN8B"
+      "_key": "!items.effects!xK6xZUX7XOpqXmat.4MWaqwin1ny5WN8B",
+      "start": null
     }
   ],
   "img": "icons/equipment/feet/boots-collared-simple-leather.webp",

@@ -268,28 +268,24 @@
     {
       "origin": "Compendium.world.gps-spells.Item.jt1v6lCIvtTqYJ64",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 12,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 12,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Temporal Shunt: Vanish",
       "img": "icons/tools/navigation/hourglass-yellow.webp",
       "_id": "rdC3uUBNsljBstEx",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "ATL.hidden",
-          "mode": 0,
-          "value": "true",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "ATL.hidden",
+            "value": true,
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -337,7 +333,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!nWMHG3NrwtqX7bHK.rdC3uUBNsljBstEx"
+      "_key": "!items.effects!nWMHG3NrwtqX7bHK.rdC3uUBNsljBstEx",
+      "start": null
     }
   ],
   "img": "icons/tools/navigation/hourglass-yellow.webp",

@@ -1,7 +1,7 @@
 import { executeWorkflow, updateRegionPosition, hideTemplateElements, applyRegionAttachment, updateSettings, daeAddFlags, arcaneShotValidActivities } from "./hookUtils.js";
 
 export function registerHooks() {
-    const isSaveWorkflow = workflow => workflow?.saveActivity || workflow?.activity?.type === "save";
+    const isSaveWorkflow = workflow => !!game.gps.getWorkflowSaveActivity(workflow);
     Hooks.on("preUpdateToken", async (token, updateData, options, userId) => {
         if(!options?.teleport || !updateData?.x || !game.gpsSettings.magicUsersNemesisEnabled) return;
 

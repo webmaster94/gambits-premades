@@ -5,32 +5,10 @@
   "effects": [
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.q4yCFb4aLYYzuxMt",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Weaver's Hoop",
       "_id": "UNiU6zoPTpbrxoIA",
-      "changes": [
-        {
-          "key": "system.attributes.ac.bonus",
-          "mode": 2,
-          "value": "+1",
-          "priority": 20
-        },
-        {
-          "key": "system.attributes.movement.climb",
-          "mode": 5,
-          "value": "@attributes.movement.walk",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -67,9 +45,25 @@
       "tint": "#ffffff",
       "img": "modules/abyssal-brews-magical-kompendium-vol1/artwork/Weaver%27s%20Hoop.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.ac.bonus",
+            "value": "+1",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.attributes.movement.climb",
+            "value": "@attributes.movement.walk",
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!ntDZHgxnpeDq2TUL.UNiU6zoPTpbrxoIA"
+      "_key": "!items.effects!ntDZHgxnpeDq2TUL.UNiU6zoPTpbrxoIA",
+      "start": null
     }
   ],
   "flags": {

@@ -225,29 +225,22 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-homebrew-spells.Item.iVqgFn89rGOnPTK4",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Mind Blast",
       "img": "icons/magic/sonic/explosion-shock-sound-wave.webp",
       "_id": "Ka4crf96KPf0p7Uc",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "stunned",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.StatusEffect",
+            "value": "stunned",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -284,7 +277,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!Oc2Fl4SwU4VxEFrH.Ka4crf96KPf0p7Uc"
+      "_key": "!items.effects!Oc2Fl4SwU4VxEFrH.Ka4crf96KPf0p7Uc",
+      "start": null
     }
   ],
   "folder": null,

@@ -46,7 +46,7 @@ export async function divineSense({ speaker, actor, token, character, item, args
     const { animEnabled } = cprConfig;
 
     if(animEnabled) {
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
 
         .effect()
         .file("jb2a.detect_magic.circle.yellow")
@@ -94,7 +94,7 @@ export async function divineSense({ speaker, actor, token, character, item, args
             const gridDistance = distance/canvas.grid.size
 
             if(animEnabled) {
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
 
                 .effect()
                 .delay(gridDistance*125)

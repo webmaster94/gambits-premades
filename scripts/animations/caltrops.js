@@ -13,7 +13,7 @@ export function caltrops({template, itemUuid}) {
         scaleDecision = 0.5;
     }
 
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
             .file("jb2a.caltrops.endframe.01.grey")
             .attachTo(template, alignmentDecision)

@@ -185,34 +185,27 @@
     {
       "name": "Shield Bash",
       "origin": "Compendium.world.gps-generic-features-2024.Item.p5OWhH4jIoazsS79",
-      "duration": {
-        "startTime": null,
-        "combat": null,
-        "seconds": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "img": "icons/magic/defensive/shield-barrier-deflect-gold.webp",
       "_id": "XyI4nE0eHeDIWriN",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.shieldMaster2024, postAttackRollComplete",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.shieldMaster2024 @itemUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.shieldMaster2024, postAttackRollComplete",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.shieldMaster2024 @itemUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -258,33 +251,27 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!p5OWhH4jIoazsS79.XyI4nE0eHeDIWriN"
+      "_key": "!items.effects!p5OWhH4jIoazsS79.XyI4nE0eHeDIWriN",
+      "start": null
     },
     {
       "name": "Interpose Shield Check",
       "origin": "Compendium.world.gps-generic-features-2024.Item.y87qKpfKMUPfX4sP",
-      "duration": {
-        "startTime": null,
-        "combat": null,
-        "seconds": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "img": "icons/magic/defensive/shield-barrier-deflect-gold.webp",
       "_id": "1ix3sc5lJ8lbQnj5",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.shieldMaster2024, preTargetSave",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.shieldMaster2024, preTargetSave",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -327,33 +314,27 @@
         },
         "gambits-premades": {}
       },
-      "_key": "!items.effects!p5OWhH4jIoazsS79.1ix3sc5lJ8lbQnj5"
+      "_key": "!items.effects!p5OWhH4jIoazsS79.1ix3sc5lJ8lbQnj5",
+      "start": null
     },
     {
       "name": "Interpose Shield",
       "origin": "Compendium.world.gps-generic-features-2024.Item.y87qKpfKMUPfX4sP",
-      "duration": {
-        "startTime": null,
-        "combat": null,
-        "seconds": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": true,
       "img": "icons/magic/defensive/shield-barrier-deflect-gold.webp",
       "_id": "yorReGW7J0hIBYux",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.semiSuperSaver.dex",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.semiSuperSaver.dex",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -401,7 +382,8 @@
           "gpsUuid": "2109c2b7-7640-4649-ad3c-26b5a84d5646"
         }
       },
-      "_key": "!items.effects!p5OWhH4jIoazsS79.yorReGW7J0hIBYux"
+      "_key": "!items.effects!p5OWhH4jIoazsS79.yorReGW7J0hIBYux",
+      "start": null
     }
   ],
   "folder": null,

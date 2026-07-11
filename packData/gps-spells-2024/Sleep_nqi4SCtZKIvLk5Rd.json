@@ -347,27 +347,23 @@
       "name": "Sleep: Incapacitated",
       "origin": "Compendium.world.gps-spells-2024.Item.c956MGw4Jt1pALIZ",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 12,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 12,
+        "units": "seconds"
       },
       "disabled": false,
       "img": "icons/magic/light/light-candles-lit-white.webp",
       "_id": "NQLLac7vAxeaoUOx",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.sleep2024 @itemUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.sleep2024 @itemUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -422,26 +418,23 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!nqi4SCtZKIvLk5Rd.NQLLac7vAxeaoUOx"
+      "_key": "!items.effects!nqi4SCtZKIvLk5Rd.NQLLac7vAxeaoUOx",
+      "start": null
     },
     {
       "name": "Sleep: Unconscious",
       "origin": "Compendium.world.gps-spells-2024.Item.c956MGw4Jt1pALIZ",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "img": "icons/magic/light/light-candles-lit-white.webp",
       "_id": "uYzQNfTFL7dNlQRM",
       "type": "base",
-      "system": {},
-      "changes": [],
+      "system": {
+        "changes": []
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -491,7 +484,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!nqi4SCtZKIvLk5Rd.uYzQNfTFL7dNlQRM"
+      "_key": "!items.effects!nqi4SCtZKIvLk5Rd.uYzQNfTFL7dNlQRM",
+      "start": null
     }
   ],
   "folder": null,

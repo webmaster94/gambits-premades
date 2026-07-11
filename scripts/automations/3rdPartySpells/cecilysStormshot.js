@@ -4,7 +4,7 @@ export async function cecilysStormshot({ speaker, actor, token, character, item,
         let missTarget = workflow.targets.first();
 
         if(!target) {
-            let fire = new Sequence()
+            let fire = new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
             .file("animated-spell-effects-cartoon.electricity.shockwave.blue")
             .scaleIn(0, 500, {ease: "easeOutQuint"})
@@ -36,7 +36,7 @@ export async function cecilysStormshot({ speaker, actor, token, character, item,
             let damageRoll = hasMatchingEquipment ? await new CONFIG.Dice.DamageRoll(`${numDice}d10`, {}, {type: damageType, properties: ["mgc"]}).evaluate() : await new CONFIG.Dice.DamageRoll(`${numDice}d8`, {}, {type: damageType, properties: ["mgc"]}).evaluate();
 
             if(damageRoll) {
-                let fire = new Sequence()
+                let fire = new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                 .file("animated-spell-effects-cartoon.electricity.shockwave.blue")
                 .scaleIn(0, 500, {ease: "easeOutQuint"})

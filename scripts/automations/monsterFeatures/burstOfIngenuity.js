@@ -99,12 +99,12 @@ export async function burstOfIngenuity({ workflowData,workflowType,workflowComba
 
             if(!itemRoll.baseLevel && !itemRoll.castLevel && !itemRoll.checkHits && !itemRoll.itemType) continue;
 
-            let rollFound = workflow.saveRolls.find(roll => roll.data.actorUuid === allyToken.actor.uuid);
+            let rollFound = Object.values(workflow.tokenSaves ?? {}).find(roll => roll.data.actorUuid === allyToken.actor.uuid);
 
             let saveBonus = await new CONFIG.Dice.DamageRoll(`2`).evaluate();
             let newRoll;
             if(rollFound) newRoll = await MidiQOL.addRollTo(rollFound, saveBonus);
-            let saveDC = workflow?.saveActivity?.save.dc?.value;
+            let saveDC = game.gps.getWorkflowSaveDetails(workflow)?.dc?.value;
             let chatContent;
             if(newRoll.total >= saveDC && rollFound.total < saveDC) {
                 workflow.failedSaves.delete(allyToken);

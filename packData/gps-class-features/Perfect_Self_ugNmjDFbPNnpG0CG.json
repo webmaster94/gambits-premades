@@ -118,26 +118,10 @@
     {
       "name": "Perfect Self",
       "origin": "Compendium.world.gps-class-features.Item.ugNmjDFbPNnpG0CG",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": 84,
-        "startTurn": 1
-      },
+      "duration": {},
       "transfer": true,
       "disabled": false,
       "_id": "Z6aK5JHacSpklffP",
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.perfectSelf",
-          "priority": 20
-        }
-      ],
       "description": "",
       "statuses": [],
       "flags": {
@@ -183,9 +167,19 @@
       "tint": "#ffffff",
       "img": "icons/magic/perception/third-eye-blue-red.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.perfectSelf",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!ugNmjDFbPNnpG0CG.Z6aK5JHacSpklffP"
+      "_key": "!items.effects!ugNmjDFbPNnpG0CG.Z6aK5JHacSpklffP",
+      "start": null
     }
   ],
   "folder": "QgRUG7AmY7FhONve",

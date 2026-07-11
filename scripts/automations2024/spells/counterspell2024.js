@@ -152,7 +152,7 @@ export async function counterspell2024({ workflowData,workflowType,workflowComba
                 let cprConfig = game.gps.getCprConfig({itemUuid: chosenItem.uuid});
                 const { animEnabled } = cprConfig;
                 if(animEnabled) {
-                    new Sequence()
+                    new Sequence({moduleName: "gambits-premades", softFail: true})
                     .effect()
                         .file("animated-spell-effects-cartoon.energy.beam.01")
                         .fadeIn(500)
@@ -292,7 +292,7 @@ export async function counterspell2024({ workflowData,workflowType,workflowComba
                 let cprConfig = game.gps.getCprConfig({itemUuid: chosenItem.uuid});
                 const { animEnabled } = cprConfig;
                 if(animEnabled) {
-                    new Sequence()
+                    new Sequence({moduleName: "gambits-premades", softFail: true})
                     .effect()
                         .file("animated-spell-effects-cartoon.energy.beam.01")
                         .fadeIn(500)

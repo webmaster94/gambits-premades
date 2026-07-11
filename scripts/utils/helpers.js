@@ -144,8 +144,7 @@ export async function gmUpdateTemplateSize({ templateUuid, templateSize }) {
 }
 
 function findDialogById(dialogId) {
-    if (ui.activeWindow?.dialogState?.dialogId === dialogId) return ui.activeWindow;
-    // v14: ui.windows only tracked AppV1; DialogV2 instances live in foundry.applications.instances
+    // v14: DialogV2 instances live in foundry.applications.instances.
     return [...foundry.applications.instances.values()].find(d => d.dialogState?.dialogId === dialogId);
 }
 
@@ -1515,7 +1514,7 @@ export function getBrowserUser({ actorUuid }) {
     let player = MidiQOL.playerForActor(actor);
     let playerId;
     
-    if(!player.active) playerId = getPrimaryGM();
+    if(!player?.active) playerId = getPrimaryGM();
     else playerId = player.id;
     return playerId;
 }
@@ -1649,6 +1648,21 @@ export async function remoteAbilityTest({spellcasting, actorUuid}) {
     return {skillRoll: rollId};
 }
 
+export function getWorkflowSaveActivity(workflow) {
+    const activity = workflow?.activity;
+    if(activity?.type === "save" || activity?.save || activity?.check) return activity;
+
+    const otherActivity = workflow?.otherActivity;
+    if(otherActivity?.type === "save" || otherActivity?.save || otherActivity?.check) return otherActivity;
+
+    return workflow?.saveActivity;
+}
+
+export function getWorkflowSaveDetails(workflow) {
+    const activity = getWorkflowSaveActivity(workflow);
+    return activity?.save ?? activity?.check ?? workflow?.saveActivityDetails;
+}
+
 export async function gpsActivityUse({itemUuid, identifier, targetUuid}) {
     const item = await fromUuid(itemUuid);
     if(!item) return game.gps.logInfo(`Shame you didn't pass me an itemUuid`);
@@ -1658,8 +1672,9 @@ export async function gpsActivityUse({itemUuid, identifier, targetUuid}) {
 
     const options = { midiOptions: { targetUuids: targetUuids, noOnUseMacro: true, configureDialog: false, showFullCard: false, ignoreUserTargets: true, checkGMStatus: true, autoRollAttack: true, autoRollDamage: "always", fastForwardAttack: true, fastForwardDamage: true, workflowData: true } };
     let activityUse = await MidiQOL.completeActivityUse(activity.uuid, options, {}, {});
+    const saveRolls = Object.values(activityUse?.tokenSaves ?? {});
 
-    return { saveRolls: activityUse?.saveRolls?.[0], failedSaves: { size: activityUse?.failedSaves?.size }, failedSavesObject: activityUse?.failedSaves, utilityRolls: activityUse?.utilityRolls?.[0] };
+    return { saveRolls: saveRolls[0], failedSaves: { size: activityUse?.failedSaves?.size }, failedSavesObject: activityUse?.failedSaves, utilityRolls: activityUse?.utilityRolls?.[0] };
 }
 
 export async function gpsActivityUpdate({activityUuid, updates}) {

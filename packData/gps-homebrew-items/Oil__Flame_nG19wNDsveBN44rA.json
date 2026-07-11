@@ -201,40 +201,36 @@
     {
       "origin": "Compendium.world.gps-homebrew-items.Item.Is9DYlDciZcXRo55",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Oil, Flame",
       "img": "icons/consumables/potions/potion-flask-corked-orange.webp",
       "_id": "pdLI8545fAY1YBAM",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.bonuses.rwak.damage",
-          "mode": 0,
-          "value": "1d6[fire]",
-          "priority": 20
-        },
-        {
-          "key": "system.bonuses.mwak.damage",
-          "mode": 0,
-          "value": "1d6[fire]",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.rwak.damage",
+            "value": "1d6[fire]",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "system.bonuses.mwak.damage",
+            "value": "1d6[fire]",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -269,7 +265,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!nG19wNDsveBN44rA.pdLI8545fAY1YBAM"
+      "_key": "!items.effects!nG19wNDsveBN44rA.pdLI8545fAY1YBAM",
+      "start": null
     }
   ],
   "folder": null,

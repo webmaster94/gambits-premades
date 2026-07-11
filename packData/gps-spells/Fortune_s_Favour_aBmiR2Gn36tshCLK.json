@@ -185,65 +185,58 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-spells.Item.PMm4SHDlDfIZWORG",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Fortune's Favour",
       "img": "icons/commodities/flowers/clover.webp",
       "_id": "dWYd1mYma7EktYDd",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.optional.fortunesfavour.label",
-          "mode": 5,
-          "value": "Fortune's Favor",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.fortunesfavour.save.all",
-          "mode": 5,
-          "value": "reroll-query",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.fortunesfavour.attack.all",
-          "mode": 5,
-          "value": "reroll-query",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.fortunesfavour.check.all",
-          "mode": 5,
-          "value": "reroll-query",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.fortunesfavour.skill.all",
-          "mode": 5,
-          "value": "reroll-query",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.optional.fortunesfavour.count",
-          "mode": 5,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.fortunesFavor,isAttacked",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.optional.fortunesfavour.label",
+            "value": "Fortune's Favor",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.fortunesfavour.save.all",
+            "value": "reroll-query",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.fortunesfavour.attack.all",
+            "value": "reroll-query",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.fortunesfavour.check.all",
+            "value": "reroll-query",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.fortunesfavour.skill.all",
+            "value": "reroll-query",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.optional.fortunesfavour.count",
+            "value": 1,
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.fortunesFavor,isAttacked",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -283,7 +276,8 @@
           "overlay": false
         }
       },
-      "_key": "!items.effects!aBmiR2Gn36tshCLK.dWYd1mYma7EktYDd"
+      "_key": "!items.effects!aBmiR2Gn36tshCLK.dWYd1mYma7EktYDd",
+      "start": null
     }
   ],
   "folder": null,

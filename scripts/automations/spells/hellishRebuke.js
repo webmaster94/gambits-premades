@@ -63,7 +63,7 @@ export async function hellishRebuke({ speaker, actor, token, character, item, ar
             let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
             const { animEnabled } = cprConfig;
             if(animEnabled) {
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                     .file("jaamod.misc.hell_portal")
                     .fadeIn(500)
@@ -73,7 +73,7 @@ export async function hellishRebuke({ speaker, actor, token, character, item, ar
                     .belowTokens()
                 .play()
                 
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                     .file("jb2a.energy_strands.overlay.dark_red.01")
                     .fadeIn(500)

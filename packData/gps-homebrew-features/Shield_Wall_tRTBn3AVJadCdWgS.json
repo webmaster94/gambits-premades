@@ -37,38 +37,10 @@
   "effects": [
     {
       "origin": "Scene.1mkVNeOdyVIlDdH7.Token.ZLoub4dgPCiXbC4u.Actor.SNZJsEKbROB1q6bT.Item.BDnpAwgLhzynIyKp",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Shield Wall",
       "_id": "m9blhJJyD0sqfkNB",
-      "changes": [
-        {
-          "key": "system.attributes.ac.bonus",
-          "mode": 2,
-          "value": "+1",
-          "priority": 20
-        },
-        {
-          "key": "system.abilities.dex.bonuses.save",
-          "mode": 2,
-          "value": "+1",
-          "priority": 20
-        },
-        {
-          "key": "system.abilities.str.bonuses.save",
-          "mode": 2,
-          "value": "+1",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -105,9 +77,31 @@
       "tint": "#ffffff",
       "img": "icons/equipment/shield/heater-steel-boss-red.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.ac.bonus",
+            "value": "+1",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.abilities.dex.bonuses.save",
+            "value": "+1",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.abilities.str.bonuses.save",
+            "value": "+1",
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!tRTBn3AVJadCdWgS.m9blhJJyD0sqfkNB"
+      "_key": "!items.effects!tRTBn3AVJadCdWgS.m9blhJJyD0sqfkNB",
+      "start": null
     }
   ],
   "folder": null,

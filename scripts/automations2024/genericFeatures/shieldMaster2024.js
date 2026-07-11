@@ -4,7 +4,7 @@ export async function shieldMaster2024({ speaker, actor, token, character, item,
         if(!game.combat) return;
         let meleeAttack = ((workflow.activity?.actionType === 'mwak' && !workflow.item.system?.properties?.has('thr')) || (workflow.activity?.actionType === 'mwak' && MidiQOL.findNearby('Hostile',workflow.targets.first(), game.gps.convertFromFeet({range:6})).length > 0 && workflow.item.system?.properties?.has('thr'))) ? true : false;
         if (!meleeAttack) return;
-        if(game.combat?.current.tokenId !== token.id) {
+        if(game.combat?.current?.tokenId !== token.id) {
             if(debugEnabled) game.gps.logInfo(`Shield Bash for ${actor.name} failed due to not tokens turn in combat`);
             return;
         }
@@ -124,7 +124,8 @@ export async function shieldMaster2024({ speaker, actor, token, character, item,
         let debugEnabled = MidiQOL.safeGetGameSetting('gambits-premades', 'debugEnabled');
         item = await actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === "b32e3d48-034b-4a56-95b4-f392a525f299");
 
-        if(workflow.saveActivityDetails?.ability?.first() !== "dex") {
+        const saveAbility = game.gps.getWorkflowSaveDetails(workflow)?.ability;
+        if((saveAbility?.first?.() ?? saveAbility) !== "dex") {
             if(debugEnabled) game.gps.logInfo(`${item.name} Interpose Shield for ${actor.name} failed because save is not dex`);
             return;
         }

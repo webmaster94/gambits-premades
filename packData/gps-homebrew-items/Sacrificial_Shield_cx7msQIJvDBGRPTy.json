@@ -164,29 +164,22 @@
   "effects": [
     {
       "origin": "Scene.1mkVNeOdyVIlDdH7.Token.hNrKazdOP5s1UYSb.Actor.SNZJsEKbROB1q6bT.Item.U9Zr63GqKyeI5jnK",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Sacrificial Shield",
       "img": "icons/equipment/shield/oval-wooden-boss-steel.webp",
       "_id": "rdCztK1Tsmy0bGcC",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, isHit",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, isHit",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -222,7 +215,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!cx7msQIJvDBGRPTy.rdCztK1Tsmy0bGcC"
+      "_key": "!items.effects!cx7msQIJvDBGRPTy.rdCztK1Tsmy0bGcC",
+      "start": null
     }
   ],
   "img": "icons/equipment/shield/oval-wooden-boss-steel.webp",

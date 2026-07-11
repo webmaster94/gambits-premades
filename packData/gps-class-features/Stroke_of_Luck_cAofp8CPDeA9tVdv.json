@@ -258,32 +258,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-class-features.Item.cAofp8CPDeA9tVdv",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Stroke of Luck",
       "_id": "Qqa7ujwE5Jd9KTtG",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.strokeOfLuck,preCheckHits",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.strokeOfLuck",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -331,9 +309,25 @@
       "tint": "#ffffff",
       "img": "icons/commodities/flowers/clover.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.strokeOfLuck,preCheckHits",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.strokeOfLuck",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!cAofp8CPDeA9tVdv.Qqa7ujwE5Jd9KTtG"
+      "_key": "!items.effects!cAofp8CPDeA9tVdv.Qqa7ujwE5Jd9KTtG",
+      "start": null
     }
   ],
   "folder": "SwLnJgSodyHN3SI2",

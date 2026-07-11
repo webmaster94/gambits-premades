@@ -114,29 +114,22 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-monster-features.Item.nZq0NjfB2Jcpp09K",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Blood Frenzy",
       "img": "icons/skills/wounds/blood-spurt-spray-red.webp",
       "_id": "zCueqccwXCi7HCfj",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, preAttackRoll",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, preAttackRoll",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -172,7 +165,8 @@
           "overlay": false
         }
       },
-      "_key": "!items.effects!nZq0NjfB2Jcpp09K.zCueqccwXCi7HCfj"
+      "_key": "!items.effects!nZq0NjfB2Jcpp09K.zCueqccwXCi7HCfj",
+      "start": null
     }
   ],
   "folder": "97L4tbDR4Da8GuaT",

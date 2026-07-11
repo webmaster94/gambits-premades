@@ -76,7 +76,7 @@ export async function rainOfCinders({workflowData,workflowType,workflowCombat}) 
         else if (userDecision) {
             if(animEnabled) {
                 for (let i = 0; i < 5; i++) {
-                    new Sequence()
+                    new Sequence({moduleName: "gambits-premades", softFail: true})
                         .effect()
                             .file("jaamod.fire.fuse_new")
                             .fadeIn(250)
@@ -111,7 +111,7 @@ export async function rainOfCinders({workflowData,workflowType,workflowCombat}) 
                     if (highestIndex !== -1) {
                         Sequencer.EffectManager.endEffects({name: `DrawingTheHearth_${validTokenPrimary.actor.id}_${highestIndex}`, source: validTokenPrimary});
 
-                        new Sequence()
+                        new Sequence({moduleName: "gambits-premades", softFail: true})
                         .effect()
                             .atLocation(validTokenPrimary)
                             .file("animated-spell-effects-cartoon.fire.ball.05")
@@ -150,7 +150,7 @@ export async function rainOfCinders({workflowData,workflowType,workflowCombat}) 
                     }
                 }
                 else {
-                    new Sequence()
+                    new Sequence({moduleName: "gambits-premades", softFail: true})
                     .effect()
                         .atLocation(validTokenPrimary)
                         .file("animated-spell-effects-cartoon.fire.ball.05")

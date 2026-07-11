@@ -212,25 +212,12 @@
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.t4OyiaPhW814t6PU",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 1,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 1,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Disengage",
       "_id": "NcYMpQ7B3RwBuLC7",
-      "changes": [
-        {
-          "key": "flags.gambits-premades.oaImmunity",
-          "mode": 5,
-          "value": "1",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": false,
       "statuses": [],
@@ -277,9 +264,19 @@
       "tint": "#ffffff",
       "img": "icons/equipment/feet/boots-armored-green.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.gambits-premades.oaImmunity",
+            "value": 1,
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!20mWH34DNe7oze62.NcYMpQ7B3RwBuLC7"
+      "_key": "!items.effects!20mWH34DNe7oze62.NcYMpQ7B3RwBuLC7",
+      "start": null
     }
   ],
   "img": "icons/equipment/feet/boots-armored-green.webp",

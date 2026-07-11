@@ -567,29 +567,22 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-spells.Item.rHuOtkCKlGkCw9xt",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Hellish Rebuke",
       "img": "icons/magic/control/fear-fright-shadow-monster-red.webp",
       "_id": "dzKosJ14E0fEgQZ5",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.hellishRebuke, isDamaged",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.hellishRebuke, isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -625,7 +618,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!mSw2KdZIGIY7cNJa.dzKosJ14E0fEgQZ5"
+      "_key": "!items.effects!mSw2KdZIGIY7cNJa.dzKosJ14E0fEgQZ5",
+      "start": null
     }
   ],
   "img": "icons/magic/control/fear-fright-shadow-monster-red.webp",

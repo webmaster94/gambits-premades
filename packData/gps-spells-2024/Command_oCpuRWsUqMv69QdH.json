@@ -5,23 +5,10 @@
   "effects": [
     {
       "_id": "ReM07pjSJKdkTJFE",
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.command2024",
-          "priority": 20
-        }
-      ],
       "disabled": false,
       "duration": {
-        "startTime": null,
-        "seconds": 12,
-        "combat": null,
-        "rounds": 1,
-        "turns": 1,
-        "startRound": null,
-        "startTurn": null
+        "value": 12,
+        "units": "seconds"
       },
       "transfer": false,
       "flags": {
@@ -73,9 +60,19 @@
       "statuses": [],
       "img": "icons/skills/social/wave-halt-stop.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.command2024",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!oCpuRWsUqMv69QdH.ReM07pjSJKdkTJFE"
+      "_key": "!items.effects!oCpuRWsUqMv69QdH.ReM07pjSJKdkTJFE",
+      "start": null
     }
   ],
   "flags": {

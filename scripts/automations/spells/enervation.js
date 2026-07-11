@@ -32,7 +32,7 @@ export async function enervation({ speaker, actor, token, character, item, args,
             };
             ChatMessage.create(chatData);
 
-            new Sequence()
+            new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .file("jb2a.energy_beam.reverse.dark_green")
                 .persist()

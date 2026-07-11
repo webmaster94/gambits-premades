@@ -168,8 +168,9 @@ export async function chronalShift({workflowData,workflowType,workflowCombat}) {
             await game.gps.addReaction({actorUuid: `${validTokenPrimary.actor.uuid}`});
 
             if(workflowType === "save") {
-                let saveDC = workflow?.saveActivity?.save.dc?.value;
-                let saveAbility = workflow.saveActivity?.ability;
+                const saveDetails = game.gps.getWorkflowSaveDetails(workflow);
+                let saveDC = saveDetails?.dc?.value;
+                let saveAbility = saveDetails?.ability?.first?.() ?? saveDetails?.ability;
                 let workflowTarget = enemyTokenUuid ? Array.from(workflow.saves).find(t => t.document.uuid === targetUuid) : Array.from(workflow.failedSaves).find(t => t.document.uuid === targetUuid);
 
                 let activity = chosenItem.system.activities.find(a => a.identifier === "syntheticSave");

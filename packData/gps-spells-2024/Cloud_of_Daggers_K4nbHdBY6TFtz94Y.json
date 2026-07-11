@@ -627,27 +627,23 @@
       "name": "Cloud of Daggers",
       "origin": "Compendium.world.gps-spells-2024.Item.eDJIU9cOb1iEWhuE",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "img": "icons/skills/ranged/daggers-thrown-salvo-green.webp",
       "_id": "pCcWkTZ9j8Yp7gN9",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.cloudOfDaggers2024 @actorUuid",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.cloudOfDaggers2024 @actorUuid",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -881,7 +877,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!K4nbHdBY6TFtz94Y.pCcWkTZ9j8Yp7gN9"
+      "_key": "!items.effects!K4nbHdBY6TFtz94Y.pCcWkTZ9j8Yp7gN9",
+      "start": null
     }
   ],
   "img": "icons/skills/ranged/daggers-thrown-salvo-green.webp",

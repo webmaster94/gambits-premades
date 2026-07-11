@@ -40,7 +40,7 @@ export async function drafynsBaneOfExcellence({ speaker, actor, token, character
     if(workflowType && workflowType === "save") {
         const workflow = await MidiQOL.Workflow.getWorkflow(workflowData);
         let workflowTargets = Array.from(workflow.saves).filter(t => t.document.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "e6e24759-a9d3-4993-b0f2-6328010a6520" && !e.duration?.expired));
-        let validTargets = workflowTargets.filter(t => workflow.saveRolls.find(roll => roll.data.actorUuid === t.actor.uuid && roll.dice[0].total === 20));
+        let validTargets = workflowTargets.filter(t => Object.values(workflow.tokenSaves ?? {}).find(roll => roll.data.actorUuid === t.actor.uuid && roll.dice[0].total === 20));
         if(validTargets <= 0) return;
 
         for (const target of validTargets) {

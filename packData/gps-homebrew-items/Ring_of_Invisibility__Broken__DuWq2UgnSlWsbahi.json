@@ -301,35 +301,28 @@
   "effects": [
     {
       "origin": "Item.8ADBVWf0UI2nXHaQ",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Ring of Invisibility",
       "img": "icons/equipment/finger/ring-band-engraved-teal.webp",
       "_id": "fRzfKB7OFT8zJ2aH",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "invisible",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.StatusEffect",
+            "value": "invisible",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -372,7 +365,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!DuWq2UgnSlWsbahi.fRzfKB7OFT8zJ2aH"
+      "_key": "!items.effects!DuWq2UgnSlWsbahi.fRzfKB7OFT8zJ2aH",
+      "start": null
     }
   ],
   "img": "icons/equipment/finger/ring-band-engraved-teal.webp",

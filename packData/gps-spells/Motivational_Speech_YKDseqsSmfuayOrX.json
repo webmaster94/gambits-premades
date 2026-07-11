@@ -311,40 +311,36 @@
     {
       "origin": "Compendium.world.gps-spells.Item.0gEfNrgZuAxvnL5H",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 3600,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 3600,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Motivational Speech",
       "img": "icons/skills/social/peace-luck-insult.webp",
       "_id": "X2DULn5BEfgIp6tO",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.advantage.save.wis",
-          "mode": 2,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.motivationalSpeech,isHit",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.motivationalSpeech",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.advantage.save.wis",
+            "value": 1,
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.motivationalSpeech,isHit",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.motivationalSpeech",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -393,7 +389,8 @@
           }
         }
       },
-      "_key": "!items.effects!YKDseqsSmfuayOrX.X2DULn5BEfgIp6tO"
+      "_key": "!items.effects!YKDseqsSmfuayOrX.X2DULn5BEfgIp6tO",
+      "start": null
     }
   ],
   "img": "icons/skills/social/peace-luck-insult.webp",

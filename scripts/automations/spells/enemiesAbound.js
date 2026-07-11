@@ -1,5 +1,4 @@
 export async function enemiesAbound({ speaker, actor, token, character, item, macroItem, args, scope, workflow, options }) {
-    if(!game.modules.get("jaamod")?.active) return ui.notifications.error(game.i18n.localize("GAMBITSPREMADES.Notifications.ClassFeatures.Fighter.ArcaneArcher.GraspingArrow.MissingDependency"));
     if(args[0].macroPass === "postActiveEffects") {
         const targets = workflow.failedSaves;
         for(let target of targets) {
@@ -32,7 +31,7 @@ export async function enemiesAbound({ speaker, actor, token, character, item, ma
             let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
             const { animEnabled } = cprConfig;
             if(animEnabled) {            
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                     .atLocation(token)
                     .stretchTo(target)

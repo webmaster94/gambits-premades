@@ -188,25 +188,12 @@
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.ZhAZPQ43IVYrTyy8",
       "duration": {
-        "rounds": 1,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 1,
+        "units": "rounds"
       },
       "disabled": false,
       "name": "Memento Mori",
       "_id": "aTdVZ7BfVtRpnHyR",
-      "changes": [
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "stunned",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": false,
       "statuses": [],
@@ -245,9 +232,19 @@
       "tint": "#ffffff",
       "img": "icons/magic/death/skull-humanoid-worn-teal.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "macro.StatusEffect",
+            "value": "stunned",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!nZ1BaCElvMKYCgXj.aTdVZ7BfVtRpnHyR"
+      "_key": "!items.effects!nZ1BaCElvMKYCgXj.aTdVZ7BfVtRpnHyR",
+      "start": null
     }
   ],
   "flags": {

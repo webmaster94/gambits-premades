@@ -7,7 +7,7 @@ export async function drawingTheHearth({ speaker, actor, token, character, item,
         
         let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "2300dad6-8de1-4fa5-9878-40cec8ee37aa" && !e.duration?.expired);
         if(animEnabled) {
-            new Sequence()
+            new Sequence({moduleName: "gambits-premades", softFail: true})
             .effect()
                 .attachTo(token)
                 .tieToDocuments(effectData)
@@ -33,7 +33,7 @@ export async function drawingTheHearth({ speaker, actor, token, character, item,
 
             for (let i = 0; i < numMotes; i++) {
                 let offset = offsets[i % offsets.length];
-                    new Sequence()
+                    new Sequence({moduleName: "gambits-premades", softFail: true})
                         .effect()
                             .attachTo(token)
                             .tieToDocuments(effectData)

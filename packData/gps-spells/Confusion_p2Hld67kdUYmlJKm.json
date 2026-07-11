@@ -671,34 +671,30 @@
     {
       "origin": "Compendium.world.gps-spells.Item.SGoFEo5oFEf8lkhe",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Confusion",
       "img": "icons/magic/air/air-burst-spiral-teal-green.webp",
       "_id": "ZhbfaYrtnhrdTaNL",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.confusion @itemUuid @actorUuid",
-          "priority": 20
-        },
-        {
-          "key": "flags.gambits-premades.oaSuppression",
-          "mode": 5,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.confusion @itemUuid @actorUuid",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.gambits-premades.oaSuppression",
+            "value": 1,
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -744,7 +740,8 @@
           }
         }
       },
-      "_key": "!items.effects!p2Hld67kdUYmlJKm.ZhbfaYrtnhrdTaNL"
+      "_key": "!items.effects!p2Hld67kdUYmlJKm.ZhbfaYrtnhrdTaNL",
+      "start": null
     }
   ],
   "img": "icons/magic/air/air-burst-spiral-teal-green.webp",

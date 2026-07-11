@@ -319,29 +319,7 @@
   },
   "effects": [
     {
-      "changes": [
-        {
-          "key": "system.bonuses.spell.attack",
-          "mode": 2,
-          "value": "1",
-          "priority": 18
-        },
-        {
-          "key": "system.bonuses.spell.dc",
-          "mode": 2,
-          "value": "1",
-          "priority": 18
-        }
-      ],
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "tint": "#ffffff",
       "transfer": true,
       "disabled": false,
@@ -400,9 +378,25 @@
       "statuses": [],
       "img": "icons/commodities/tech/pipe-metal.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.spell.attack",
+            "value": 1,
+            "priority": 18,
+            "type": "add"
+          },
+          {
+            "key": "system.bonuses.spell.dc",
+            "value": 1,
+            "priority": 18,
+            "type": "add"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!N8y54yrD9NFu9Kdg.ZrTNMwai89gqFKJo"
+      "_key": "!items.effects!N8y54yrD9NFu9Kdg.ZrTNMwai89gqFKJo",
+      "start": null
     }
   ],
   "img": "icons/commodities/tech/pipe-metal.webp",

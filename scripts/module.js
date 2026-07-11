@@ -17,10 +17,10 @@ Hooks.once('init', async function() {
     if(game.settings.get('gambits-premades', 'enableTokenMovementSpeed') && !isNaN(game.settings.get('gambits-premades', 'tokenMovementSpeed'))) CONFIG.Token.movement.defaultSpeed = game.settings.get('gambits-premades', 'tokenMovementSpeed');
 
     Hooks.on("dae.modifySpecials", (specKey, specials) => {
-        specials["flags.gambits-premades.oaImmunity"] = [new foundry.data.fields.StringField(), 5];
-        specials["flags.gambits-premades.oaSuppression"] = [new foundry.data.fields.StringField(), 5];
-        specials["flags.gambits-premades.oaDisadvantage"] = [new foundry.data.fields.StringField(), 5];
-        specials["flags.gambits-premades.oaDisadvantageSource"] = [new foundry.data.fields.StringField(), 5];
+        specials["flags.gambits-premades.oaImmunity"] = [new foundry.data.fields.StringField(), "override"];
+        specials["flags.gambits-premades.oaSuppression"] = [new foundry.data.fields.StringField(), "override"];
+        specials["flags.gambits-premades.oaDisadvantage"] = [new foundry.data.fields.StringField(), "override"];
+        specials["flags.gambits-premades.oaDisadvantageSource"] = [new foundry.data.fields.StringField(), "override"];
     });
 
     registerWrapping();

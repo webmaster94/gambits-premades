@@ -325,34 +325,30 @@
     {
       "origin": "Actor.PpeGTVYvVoFsdZZD.Item.3Nq3cMB6xymzv3e1",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Enemies Abound",
       "img": "icons/magic/control/fear-fright-monster-red.webp",
       "_id": "Z0VUoc72t335ye47",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.enemiesAbound,isDamaged",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.enemiesAbound",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.enemiesAbound,isDamaged",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.enemiesAbound",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -395,7 +391,8 @@
           "gpsUuid": "4ad56aaf-b9b4-40ce-9869-ff62b999b7be"
         }
       },
-      "_key": "!items.effects!pqtD79Rxet5ixIk2.Z0VUoc72t335ye47"
+      "_key": "!items.effects!pqtD79Rxet5ixIk2.Z0VUoc72t335ye47",
+      "start": null
     }
   ],
   "flags": {

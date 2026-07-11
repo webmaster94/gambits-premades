@@ -26,8 +26,14 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
     let dialogId = "blacktentacles";
     let dialogTitlePrimary = `${token.actor.name} | ${itemProperName}`;
     const hasEffectApplied = token.document.hasStatusEffect("restrained");
+    const combatRound = game.combat?.round;
+    const blackTentaclesRoundKey = Number.isInteger(combatRound) ? `${token.id}_${combatRound}` : null;
+    const markBlackTentaclesRound = async () => {
+        if (!blackTentaclesRoundKey) return;
+        await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkBlackTentacleRound", value: blackTentaclesRoundKey });
+    };
     const damagedThisTurn = await region.getFlag("gambits-premades", "checkBlackTentacleRound");
-    if(damagedThisTurn && damagedThisTurn === `${token.id}_${game.combat.round}`) return;
+    if(blackTentaclesRoundKey && damagedThisTurn === blackTentaclesRoundKey) return;
     let browserUser = game.gps.getBrowserUser({ actorUuid: token.actor.uuid });
 
     let resumeMovement;
@@ -56,7 +62,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result || {};
 
         if (!userDecision) {
-            await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkBlackTentacleRound", value: `${token.id}_${game.combat.round}` });
+            await markBlackTentaclesRound();
             return;
         }
         else if (userDecision) {
@@ -66,7 +72,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
             if (skillCheck.failedSaves.size === 0) {
                 await game.gps.socket.executeAsUser("gmToggleStatus", gmUser, {tokenUuid: `${token.document.uuid}`, status: "restrained", active: false });
                 let chatData = {
-                author: browserUser.id,
+                author: browserUser,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: `You successfully escape from Black Tentacles!`
                 };
@@ -74,7 +80,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
             }
             else {
                 let chatData = {
-                author: browserUser.id,
+                author: browserUser,
                 speaker: ChatMessage.getSpeaker({ token: token }),
                 content: `You are unable to escape Black Tentacles this turn.`
                 };
@@ -82,7 +88,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
             }
         }
     
-        await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkBlackTentacleRound", value: `${token.id}_${game.combat.round}` });
+        await markBlackTentaclesRound();
     }
 
     else if (!hasEffectApplied) {
@@ -91,7 +97,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
         if(!saveResult) return;
         
         if (saveResult.failedSaves.size !== 0) {
-            await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkBlackTentacleRound", value: `${token.id}_${game.combat.round}` });
+            await markBlackTentaclesRound();
             const hasEffectApplied = token.document.hasStatusEffect("restrained");
 
             if (!hasEffectApplied) {
@@ -131,7 +137,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
                 if (skillCheck.failedSaves.size === 0) {
                     await game.gps.socket.executeAsUser("gmToggleStatus", gmUser, {tokenUuid: `${token.document.uuid}`, status: "restrained", active: false });
                     let chatData = {
-                    author: browserUser.id,
+                    author: browserUser,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `<span style='text-wrap: wrap;'>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.Spells.BlackTentacles.EscapeSucceeded")}</span>`
                     };
@@ -140,7 +146,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
                 }
                 else {
                     let chatData = {
-                    author: browserUser.id,
+                    author: browserUser,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: `<span style='text-wrap: wrap;'>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.Spells.BlackTentacles.EscapeFailed")}</span>`
                     };
@@ -155,7 +161,7 @@ export async function blackTentacles2024({speaker, actor, character, item, args,
         }
         
         if(saveResult) {
-            await game.gps.socket.executeAsUser("gmSetFlag", gmUser, { flagDocumentUuid: region.uuid, key: "checkBlackTentacleRound", value: `${token.id}_${game.combat.round}` });
+            await markBlackTentaclesRound();
         }
     }
 }

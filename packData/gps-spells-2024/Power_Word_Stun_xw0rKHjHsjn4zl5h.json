@@ -613,34 +613,30 @@
     {
       "origin": "Item.PvD4sCpjbcc6hJIg",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 99999,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 99999,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Power Word Stun",
       "img": "icons/magic/sonic/scream-wail-shout-teal.webp",
       "_id": "YNLL7EqvJIny51tK",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.OverTime",
-          "mode": 0,
-          "value": "turn=end,rollType=save,saveAbility=con,saveDC=@attributes.spelldc,saveMagic=true,name=Power Word Stun",
-          "priority": 20
-        },
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "stunned",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.OverTime",
+            "value": "turn=end,rollType=save,saveAbility=con,saveDC=@attributes.spelldc,saveMagic=true,name=Power Word Stun",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.StatusEffect",
+            "value": "stunned",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -822,33 +818,30 @@
           "version": 5
         }
       },
-      "_key": "!items.effects!xw0rKHjHsjn4zl5h.YNLL7EqvJIny51tK"
+      "_key": "!items.effects!xw0rKHjHsjn4zl5h.YNLL7EqvJIny51tK",
+      "start": null
     },
     {
       "name": "Power Word Stun: Movement Removal",
       "origin": "Compendium.world.gps-spells-2024.Item.xw0rKHjHsjn4zl5h",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "combat": null,
-        "seconds": 12,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 12,
+        "units": "seconds"
       },
       "disabled": false,
       "img": "icons/magic/sonic/scream-wail-shout-teal.webp",
       "_id": "EYJVcmGjQGi2BdxB",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.attributes.movement.all",
-          "mode": 0,
-          "value": "0",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.attributes.movement.all",
+            "value": 0,
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -879,7 +872,8 @@
           "overlay": false
         }
       },
-      "_key": "!items.effects!xw0rKHjHsjn4zl5h.EYJVcmGjQGi2BdxB"
+      "_key": "!items.effects!xw0rKHjHsjn4zl5h.EYJVcmGjQGi2BdxB",
+      "start": null
     }
   ],
   "img": "icons/magic/sonic/scream-wail-shout-teal.webp",

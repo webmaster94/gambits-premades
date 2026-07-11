@@ -82,7 +82,7 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
 
                 Sequencer.EffectManager.endEffects({ name: \`\${currentTarget.id}.FizbansPlatinumShield\`\ });
                 
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
 
                 .effect()
                     .name(\`\${returnedToken.id}.FizbansPlatinumShield\`\)
@@ -160,7 +160,7 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
     
         await actor.createEmbeddedDocuments("Item", [itemData]);
     
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
     
         .effect()
         .name(`${target.document.id}.FizbansPlatinumShield`)

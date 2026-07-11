@@ -297,28 +297,24 @@
     {
       "origin": "Compendium.world.gps-3rd-party-features.Item.F4WlBlrL1aHesheL",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Drawing the Hearth",
       "img": "icons/magic/fire/flame-burning-earth-orange.webp",
       "_id": "7bC6w7uSbAJQ7nTZ",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.drawingTheHearth, isAttacked",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.drawingTheHearth, isAttacked",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -509,7 +505,8 @@
           "gpsUuid": "2300dad6-8de1-4fa5-9878-40cec8ee37aa"
         }
       },
-      "_key": "!items.effects!F4WlBlrL1aHesheL.7bC6w7uSbAJQ7nTZ"
+      "_key": "!items.effects!F4WlBlrL1aHesheL.7bC6w7uSbAJQ7nTZ",
+      "start": null
     }
   ],
   "flags": {

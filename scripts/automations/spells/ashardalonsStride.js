@@ -75,10 +75,10 @@ export async function ashardalonsStride({ speaker, actor, token, character, item
         if(originActor.uuid === targetActor.uuid) return;
         let effectData = originActor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "ef27f042-ba6d-4ff4-ac2b-4ca6ff611c17" && !e.duration?.expired);
 
-        let turn = game.combat.round + '-' + game.combat.turn;
+        const turn = game.combat ? `${game.combat.round}-${game.combat.turn}` : null;
         let lastTurn = await effectData?.getFlag('gambits-premades', 'ashardalonsStrideTurn.' + targetToken.id + '.turn');
-        if (turn === lastTurn) return;
-        await effectData.setFlag('gambits-premades', 'ashardalonsStrideTurn.' + targetToken.id + '.turn', turn);
+        if (turn && turn === lastTurn) return;
+        if (turn) await effectData.setFlag('gambits-premades', 'ashardalonsStrideTurn.' + targetToken.id + '.turn', turn);
     
         let castLevel = await effectData?.getFlag('gambits-premades', 'asCastLevel');
         let numDie = (castLevel - 2) * 1;
@@ -102,10 +102,10 @@ export async function ashardalonsStride({ speaker, actor, token, character, item
         const rangeCheck = MidiQOL.findNearby(null, token, 5, { includeToken: false });
         if (rangeCheck.length > 0) {
             for(let target of rangeCheck) {
-                let turn = game.combat.round + '-' + game.combat.turn;
+                const turn = game.combat ? `${game.combat.round}-${game.combat.turn}` : null;
                 let lastTurn = await effectData?.getFlag('gambits-premades', 'ashardalonsStrideTurn.' + target.id + '.turn');
-                if (turn === lastTurn) continue;
-                await effectData.setFlag('gambits-premades', 'ashardalonsStrideTurn.' + target.id + '.turn', turn);
+                if (turn && turn === lastTurn) continue;
+                if (turn) await effectData.setFlag('gambits-premades', 'ashardalonsStrideTurn.' + target.id + '.turn', turn);
 
                 let numDie = (castLevel - 2) * 1;
                 let activityToUpdate = item.system.activities.find(a => a.identifier === "syntheticDamage");

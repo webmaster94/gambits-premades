@@ -115,26 +115,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-class-features.Item.Xl37AbQBAfskMUBm",
-      "duration": {
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": 0
-      },
+      "duration": {},
       "disabled": false,
       "name": "Armor of Hexes",
       "_id": "hABxNuY8XpmEFhvJ",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.armorOfHexes, isAttacked",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -175,9 +159,19 @@
       "tint": "#ffffff",
       "img": "icons/skills/toxins/poison-bottle-corked-fire-green.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.armorOfHexes, isAttacked",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!Xl37AbQBAfskMUBm.hABxNuY8XpmEFhvJ"
+      "_key": "!items.effects!Xl37AbQBAfskMUBm.hABxNuY8XpmEFhvJ",
+      "start": null
     }
   ],
   "folder": "UjKBC9LbTe1zYrAB",

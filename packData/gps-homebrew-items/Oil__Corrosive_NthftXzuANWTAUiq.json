@@ -201,46 +201,42 @@
     {
       "origin": "Compendium.world.gps-homebrew-items.Item.KCEyqsO077X1A1cg",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Oil, Corrosive",
       "img": "icons/consumables/potions/bottle-corked-green.webp",
       "_id": "eQudwYP9NznzaSiV",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.bonuses.rwak.damage",
-          "mode": 0,
-          "value": "1d6[acid]",
-          "priority": 20
-        },
-        {
-          "key": "system.bonuses.mwak.damage",
-          "mode": 0,
-          "value": "1d6[acid]",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, preDamageRoll",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "ItemMacro, postActiveEffects",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonuses.rwak.damage",
+            "value": "1d6[acid]",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "system.bonuses.mwak.damage",
+            "value": "1d6[acid]",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, preDamageRoll",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "ItemMacro, postActiveEffects",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -275,7 +271,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!NthftXzuANWTAUiq.eQudwYP9NznzaSiV"
+      "_key": "!items.effects!NthftXzuANWTAUiq.eQudwYP9NznzaSiV",
+      "start": null
     }
   ],
   "folder": null,

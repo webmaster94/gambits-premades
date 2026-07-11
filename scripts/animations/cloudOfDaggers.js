@@ -16,7 +16,7 @@ export function cloudOfDaggers({template, itemUuid}) {
 
     const animFileType = game.modules.get("jb2a_patreon")?.active ? "kunai" : "daggers";
 
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
             .attachTo(template, alignmentDecision)
             .file(`jb2a.cloud_of_daggers.${animFileType}.${animColor}`)

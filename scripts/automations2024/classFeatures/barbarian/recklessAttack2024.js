@@ -1,13 +1,14 @@
 export async function recklessAttack2024({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "preAttackRollConfig") {
-        if(!game.combat) return;
+        const currentTokenId = game.combat?.current?.tokenId;
+        if(!currentTokenId) return;
         let meleeAttack = (workflow.activity?.ability === 'str') ? true : false;
         if (!meleeAttack) return;
         let recklessCheck = await actor.getFlag("midi-qol", "checkRecklessAttack2024");
         if(recklessCheck === false || recklessCheck === true) return;
 
-        let currentCombatant = canvas.tokens.get(game.combat.current.tokenId);
-        if (currentCombatant.id !== token.id) return;
+        let currentCombatant = canvas.tokens.get(currentTokenId);
+        if (currentCombatant?.id !== token.id) return;
 
         let dialogId = "recklessattack2024";
         let dialogTitlePrimary = `${token.actor.name} | ${item.name}`;

@@ -192,7 +192,7 @@ export async function cuttingWords({workflowData,workflowType,workflowCombat}) {
             }
 
             if(animEnabled) {
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                     .effect()
                         .atLocation(workflow.token)
                         .file("jb2a.melee_generic.slashing.two_handed")
@@ -201,7 +201,7 @@ export async function cuttingWords({workflowData,workflowType,workflowCombat}) {
                         .filter("ColorMatrix", { saturate: 1.5, hue: hue })
                     .play()
 
-                    new Sequence()
+                    new Sequence({moduleName: "gambits-premades", softFail: true})
                     .effect()
                         .atLocation(workflow.token)
                         .file("jb2a.melee_generic.slashing.two_handed")

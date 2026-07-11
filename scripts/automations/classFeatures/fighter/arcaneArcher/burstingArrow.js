@@ -4,7 +4,7 @@ export async function burstingArrow({ speaker, actor, token, character, item, ar
         const rangeCheck = MidiQOL.findNearby(null, initialTarget, 10, { includeToken: true });
         if (rangeCheck.length === 0) return;
 
-        await new Sequence()
+        await new Sequence({moduleName: "gambits-premades", softFail: true})
 
         .effect()
         .atLocation(initialTarget)

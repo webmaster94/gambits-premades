@@ -1131,28 +1131,24 @@
     {
       "origin": "Compendium.world.gps-race-features.Item.q6X0joVOtZNM2cRO",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 1,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 1,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Rabbit Hop",
       "img": "icons/creatures/mammals/rabbit-movement-glowing-green.webp",
       "_id": "5ZnPYNdlzPTAmN6J",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.gambits-premades.oaImmunity",
-          "mode": 5,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.gambits-premades.oaImmunity",
+            "value": 1,
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -1198,7 +1194,8 @@
           }
         }
       },
-      "_key": "!items.effects!3Z05Y1zhwl6rlv7m.5ZnPYNdlzPTAmN6J"
+      "_key": "!items.effects!3Z05Y1zhwl6rlv7m.5ZnPYNdlzPTAmN6J",
+      "start": null
     }
   ],
   "img": "icons/creatures/mammals/rabbit-movement-glowing-green.webp",

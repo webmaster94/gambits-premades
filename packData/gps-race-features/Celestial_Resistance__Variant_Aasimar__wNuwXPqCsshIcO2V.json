@@ -88,35 +88,28 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-race-features.Item.wNuwXPqCsshIcO2V",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Celestial Resistance (Variant Aasimar)",
       "img": "icons/skills/wounds/blood-cells-disease-green.webp",
       "_id": "nGhKXGlzLbZGIsKu",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.traits.dr.value",
-          "mode": 2,
-          "value": "necrotic",
-          "priority": 20
-        },
-        {
-          "key": "system.traits.dr.value",
-          "mode": 2,
-          "value": "radiant",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "system.traits.dr.value",
+            "value": "necrotic",
+            "priority": 20,
+            "type": "add"
+          },
+          {
+            "key": "system.traits.dr.value",
+            "value": "radiant",
+            "priority": 20,
+            "type": "add"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -158,7 +151,8 @@
           }
         }
       },
-      "_key": "!items.effects!wNuwXPqCsshIcO2V.nGhKXGlzLbZGIsKu"
+      "_key": "!items.effects!wNuwXPqCsshIcO2V.nGhKXGlzLbZGIsKu",
+      "start": null
     }
   ],
   "folder": "62e2gLQ8cttarHZ8",

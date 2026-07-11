@@ -266,26 +266,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-generic-features.Item.VXdRNRLMZVjJyAFz",
-      "duration": {
-        "startTime": 1697160834,
-        "seconds": null,
-        "combat": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": 80,
-        "startTurn": 0
-      },
+      "duration": {},
       "disabled": false,
       "name": "Gift of the Gem Dragon",
       "_id": "UQqm78qcCZGVhbxw",
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.giftOfTheGemDragon, isDamaged",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": true,
       "statuses": [],
@@ -326,9 +310,24 @@
       "tint": "#ffffff",
       "img": "icons/commodities/gems/pearl-storm.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.giftOfTheGemDragon, isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!wTVnjSFogRLahRkn.UQqm78qcCZGVhbxw"
+      "_key": "!items.effects!wTVnjSFogRLahRkn.UQqm78qcCZGVhbxw",
+      "start": {
+        "combat": null,
+        "round": 80,
+        "time": 1697160834,
+        "turn": 0
+      }
     }
   ],
   "folder": null,

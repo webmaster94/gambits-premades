@@ -40,7 +40,7 @@ export async function rabbitHop({ speaker, actor, token, character, item, args, 
     const { animEnabled } = cprConfig;
 
     if(animEnabled) {
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
 
         .animation()
         .on(token)

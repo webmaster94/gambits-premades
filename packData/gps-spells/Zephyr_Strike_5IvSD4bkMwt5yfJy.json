@@ -275,28 +275,24 @@
     {
       "origin": "Compendium.world.ddb-spelljammer-adventures-in-space-ddb-spells.Item.uGk4urvP5vEO2MV6",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Zephyr Strike",
       "img": "icons/skills/melee/maneuver-greatsword-yellow.webp",
       "_id": "uqNgDBSdJHG7c5h6",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.gambits-premades.oaImmunity",
-          "mode": 5,
-          "value": "1",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.gambits-premades.oaImmunity",
+            "value": 1,
+            "priority": 20,
+            "type": "override"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -342,39 +338,33 @@
           }
         }
       },
-      "_key": "!items.effects!5IvSD4bkMwt5yfJy.uqNgDBSdJHG7c5h6"
+      "_key": "!items.effects!5IvSD4bkMwt5yfJy.uqNgDBSdJHG7c5h6",
+      "start": null
     },
     {
       "origin": "Actor.Q7GcFBwAbXgQX9Yv.Item.X9OHWkBN7PLeoeUL",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Zephyr Strike - Advantage",
       "img": "icons/skills/melee/maneuver-greatsword-yellow.webp",
       "_id": "BeFDaWKaZDHf7rdZ",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.zephyrStrike,preAttackRoll",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.zephyrStrike,preDamageRollComplete",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.zephyrStrike,preAttackRoll",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.zephyrStrike,preDamageRollComplete",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -423,7 +413,8 @@
           }
         }
       },
-      "_key": "!items.effects!5IvSD4bkMwt5yfJy.BeFDaWKaZDHf7rdZ"
+      "_key": "!items.effects!5IvSD4bkMwt5yfJy.BeFDaWKaZDHf7rdZ",
+      "start": null
     }
   ],
   "img": "icons/skills/melee/maneuver-greatsword-yellow.webp",

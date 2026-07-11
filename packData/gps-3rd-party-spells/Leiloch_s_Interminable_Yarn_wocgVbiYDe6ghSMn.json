@@ -185,46 +185,42 @@
     {
       "origin": "Compendium.world.gps-3rd-party-spells.Item.bntrnUZ7NRmWduPG",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 3600,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 3600,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Leiloch’s Interminable Yarn",
       "img": "icons/skills/trades/music-singing-voice-blue.webp",
       "_id": "Nl1fac5sPmrnI9rj",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "flags.midi-qol.fail.skill.inv",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.fail.skill.ins",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.fail.skill.prc",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.fail.skill.inv",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.fail.skill.ins",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.fail.skill.prc",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.itemMacro",
+            "value": "",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": false,
@@ -259,7 +255,8 @@
           "wallsBlock": "system"
         }
       },
-      "_key": "!items.effects!wocgVbiYDe6ghSMn.Nl1fac5sPmrnI9rj"
+      "_key": "!items.effects!wocgVbiYDe6ghSMn.Nl1fac5sPmrnI9rj",
+      "start": null
     }
   ],
   "flags": {

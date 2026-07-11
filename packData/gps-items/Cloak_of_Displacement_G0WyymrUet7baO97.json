@@ -194,35 +194,7 @@
   "effects": [
     {
       "img": "icons/equipment/back/cloak-plain-blue.webp",
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.cloakOfDisplacement",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.grants.disadvantage.attack.all",
-          "mode": 0,
-          "value": "1",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.onUseMacroName",
-          "mode": 0,
-          "value": "function.game.gps.cloakOfDisplacement, isDamaged",
-          "priority": 20
-        }
-      ],
-      "duration": {
-        "seconds": null,
-        "startTime": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null,
-        "combat": null
-      },
+      "duration": {},
       "tint": "#ffffff",
       "transfer": true,
       "disabled": false,
@@ -274,37 +246,52 @@
       "statuses": [],
       "_id": "5el2lHipVzj3rUVC",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.cloakOfDisplacement",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.grants.disadvantage.attack.all",
+            "value": 1,
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.onUseMacroName",
+            "value": "function.game.gps.cloakOfDisplacement, isDamaged",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "origin": "Compendium.world.gps-items.Item.EU01knV1iWL0qUwq",
       "sort": 0,
-      "_key": "!items.effects!G0WyymrUet7baO97.5el2lHipVzj3rUVC"
+      "_key": "!items.effects!G0WyymrUet7baO97.5el2lHipVzj3rUVC",
+      "start": null
     },
     {
       "origin": "Compendium.world.gps-items.Item.EU01knV1iWL0qUwq",
-      "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": null,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
+      "duration": {},
       "disabled": false,
       "name": "Cloak of Displacement: Start-End",
       "img": "icons/equipment/back/cloak-plain-blue.webp",
       "_id": "ldOYJlb9eTpZAfJj",
       "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "macro.itemMacro",
-          "mode": 0,
-          "value": "function.game.gps.cloakOfDisplacement startEnd",
-          "priority": 20
-        }
-      ],
+      "system": {
+        "changes": [
+          {
+            "key": "macro.itemMacro",
+            "value": "function.game.gps.cloakOfDisplacement startEnd",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "description": "",
       "tint": "#ffffff",
       "transfer": true,
@@ -344,7 +331,8 @@
           "statuses": []
         }
       },
-      "_key": "!items.effects!G0WyymrUet7baO97.ldOYJlb9eTpZAfJj"
+      "_key": "!items.effects!G0WyymrUet7baO97.ldOYJlb9eTpZAfJj",
+      "start": null
     }
   ],
   "img": "icons/equipment/back/cloak-plain-blue.webp",

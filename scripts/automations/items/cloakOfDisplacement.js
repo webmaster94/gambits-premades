@@ -60,7 +60,7 @@ export async function cloakOfDisplacement({ speaker, actor, token, character, it
         const { animEnabled } = cprConfig;
         if(!animEnabled) return;
 
-        new Sequence()
+        new Sequence({moduleName: "gambits-premades", softFail: true})
 
         .animation()
         .on(token)

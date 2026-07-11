@@ -293,31 +293,12 @@
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.l58sU09dGO3XVN15",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 60,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 60,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Cause Fear",
       "_id": "SeG9nKb7onKepWFE",
-      "changes": [
-        {
-          "key": "flags.midi-qol.OverTime",
-          "mode": 0,
-          "value": "turn=end,rollType=save,saveAbility=wis,saveDC=@attributes.spelldc,saveDamage=nodamage,saveMagic=true,damageType=none,name=\"Cause Fear Save\"",
-          "priority": 20
-        },
-        {
-          "key": "macro.StatusEffect",
-          "mode": 0,
-          "value": "frightened",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": false,
       "statuses": [],
@@ -354,9 +335,25 @@
       "tint": "#ffffff",
       "img": "icons/magic/control/fear-fright-monster-green.webp",
       "type": "base",
-      "system": {},
+      "system": {
+        "changes": [
+          {
+            "key": "flags.midi-qol.OverTime",
+            "value": "turn=end,rollType=save,saveAbility=wis,saveDC=@attributes.spelldc,saveDamage=nodamage,saveMagic=true,damageType=none,name=\"Cause Fear Save\"",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "macro.StatusEffect",
+            "value": "frightened",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
+      },
       "sort": 0,
-      "_key": "!items.effects!jrfU4qVqkBaEby1m.SeG9nKb7onKepWFE"
+      "_key": "!items.effects!jrfU4qVqkBaEby1m.SeG9nKb7onKepWFE",
+      "start": null
     }
   ],
   "img": "icons/magic/control/fear-fright-monster-green.webp",

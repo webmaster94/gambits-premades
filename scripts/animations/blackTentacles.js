@@ -13,7 +13,7 @@ export function blackTentacles({template, itemUuid}) {
         scaleDecision = 0.65;
     }
 
-    new Sequence()
+    new Sequence({moduleName: "gambits-premades", softFail: true})
         .effect()
             .file("jb2a.darkness.black") //assets/animations/animated_spells/black_tentacles_border.webm
             .attachTo(template, alignmentDecision)

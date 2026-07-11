@@ -505,31 +505,12 @@
     {
       "origin": "Compendium.world.gps-spells.Item.bM5mY6X8ziNqBrfU",
       "duration": {
-        "rounds": null,
-        "startTime": null,
-        "seconds": 3600,
-        "combat": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
+        "value": 3600,
+        "units": "seconds"
       },
       "disabled": false,
       "name": "Circle of Power",
       "_id": "e8PUC4mtW1UlZngp",
-      "changes": [
-        {
-          "key": "flags.midi-qol.superSaver.all",
-          "mode": 0,
-          "value": "item?.type === \"spell\" || item?.flags?.midiProperties?.magiceffect",
-          "priority": 20
-        },
-        {
-          "key": "flags.midi-qol.advantage.save.all",
-          "mode": 0,
-          "value": "item?.type === \"spell\" || item?.flags?.midiProperties?.magiceffect",
-          "priority": 20
-        }
-      ],
       "description": "",
       "transfer": false,
       "statuses": [],
@@ -739,10 +720,25 @@
         "overrideName": "",
         "script": "",
         "stashedChanges": [],
-        "stashedStatuses": []
+        "stashedStatuses": [],
+        "changes": [
+          {
+            "key": "flags.midi-qol.superSaver.all",
+            "value": "item?.type === \"spell\" || item?.flags?.midiProperties?.magiceffect",
+            "priority": 20,
+            "type": "custom"
+          },
+          {
+            "key": "flags.midi-qol.advantage.save.all",
+            "value": "item?.type === \"spell\" || item?.flags?.midiProperties?.magiceffect",
+            "priority": 20,
+            "type": "custom"
+          }
+        ]
       },
       "sort": 0,
-      "_key": "!items.effects!f5K18wOjvdx0vBQU.e8PUC4mtW1UlZngp"
+      "_key": "!items.effects!f5K18wOjvdx0vBQU.e8PUC4mtW1UlZngp",
+      "start": null
     }
   ],
   "img": "icons/magic/light/explosion-star-glow-blue-purple.webp",

@@ -9,7 +9,7 @@ export async function dissonantWhispers2024({ speaker, actor, token, character, 
             let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
             const { animEnabled } = cprConfig;
             if(animEnabled) {
-                new Sequence()
+                new Sequence({moduleName: "gambits-premades", softFail: true})
                 .effect()
                     .file("jb2a.spell_projectile.music_note.greenyellow")
                     .atLocation(token)

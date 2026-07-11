@@ -67,8 +67,8 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
             let targetAllies = Array.from(workflow.targets).filter(t => t.document.disposition === validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && MidiQOL.computeDistance(validTokenPrimary, t, {wallsBlock: true, includeCover: true}) <= 60);
             let targetEnemies = Array.from(workflow.targets).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && MidiQOL.computeDistance(validTokenPrimary, t, {wallsBlock: true, includeCover: true}) <= 60);
             
-            targetAllies = targetAllies.filter(t => workflow.saveRolls?.find(roll => roll.data.actorId === t.actor.id && roll.formula.includes("kl") && !roll.formula.includes("kh")) !== undefined);
-            targetEnemies = targetEnemies.filter(t => workflow.saveRolls?.find(roll => roll.data.actorId === t.actor.id && !roll.formula.includes("kl") && roll.formula.includes("kh")) !== undefined);
+            targetAllies = targetAllies.filter(t => Object.values(workflow.tokenSaves ?? {}).find(roll => roll.data.actorId === t.actor.id && roll.formula.includes("kl") && !roll.formula.includes("kh")) !== undefined);
+            targetEnemies = targetEnemies.filter(t => Object.values(workflow.tokenSaves ?? {}).find(roll => roll.data.actorId === t.actor.id && !roll.formula.includes("kl") && roll.formula.includes("kh")) !== undefined);
 
             if((!targetAllies || targetAllies?.length === 0) && (!targetEnemies || targetEnemies?.length === 0)) {
                 if(debugEnabled) game.gps.logInfo(`${itemProperName} for ${validTokenPrimary.actor.name} failed at token disposition check`);
@@ -210,8 +210,8 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
             }
 
             let targetAC = target?.actor.system.attributes.ac.value;
-            let saveDC = workflow.saveActivity?.save?.dc?.value;
-            let saveDice = workflow.saveRolls?.find(dice => dice.data.actorId === target.actor.id);
+            let saveDC = game.gps.getWorkflowSaveDetails(workflow)?.dc?.value;
+            let saveDice = Object.values(workflow.tokenSaves ?? {}).find(dice => dice.data.actorId === target.actor.id);
             let saveResult = saveDice?.dice[0].results[0].result + (saveDice?.total - saveDice?.dice[0].total);
             let baseAttack = workflow.attackRoll?.dice[0].results[0].result;
             let bonusAttack = workflow.attackRoll?.total - workflow.attackRoll?.dice[0].total;
