@@ -1,7 +1,7 @@
 # Changelog
 
-## [v3.0.1] - Unreleased
-- Requires D&D 6.0.6 and Foundry VTT 14.367. The supported D&D range is now 6.0.x.
+## [v3.0.1] - 2026-10-10
+- Requires D&D 6.0.0 or later in the 6.0.x series and Foundry VTT 14.367. The compatibility target is D&D 6.0.6; D&D 6.0.5 is also allowed.
 - Chat-history lookup reads the item snapshot from `message.system.item`, with a fallback for legacy messages.
 - Counterspell refunds spell slots from the new `system.deltas` consumption data, preserving the actual consumed amount.
 - Wickerbone Behemoth's armor-class effect adds to `ac.calcs` and `ac.formulas`.
