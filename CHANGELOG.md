@@ -1,5 +1,13 @@
 # Changelog
 
+## [v3.0.1] - Unreleased
+- Requires D&D 6.0.6 and Foundry VTT 14.367. The supported D&D range is now 6.0.x.
+- Chat-history lookup reads the item snapshot from `message.system.item`, with a fallback for legacy messages.
+- Counterspell refunds spell slots from the new `system.deltas` consumption data, preserving the actual consumed amount.
+- Wickerbone Behemoth's armor-class effect adds to `ac.calcs` and `ac.formulas`.
+- Reviewed the [D&D 6.0 breaking changes](https://github.com/foundryvtt/dnd5e/releases/tag/release-6.0.0) and patch notes through [6.0.6](https://github.com/foundryvtt/dnd5e/releases/tag/release-6.0.6). The patches add fixes and improvements without further announced API breaks. GPS does not use the other affected activity-effect, sense configuration, bloodied threshold, actor preparation, sheet mode, chat-card override, or death-save APIs. Its generated item cards use Midi-QOL templates.
+- Validation is static only. This update has not been tested in a running Foundry world.
+
 ## [v2.1.43] - 2026-05-27
 - Bugfixes:
   - Removed some oopsies console logs

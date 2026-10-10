@@ -654,16 +654,16 @@
       "system": {
         "changes": [
           {
-            "key": "system.attributes.ac.formula",
-            "value": 16,
+            "key": "system.attributes.ac.formulas",
+            "value": "16",
             "priority": 20,
-            "type": "override"
+            "type": "add"
           },
           {
-            "key": "system.attributes.ac.calc",
+            "key": "system.attributes.ac.calcs",
             "value": "custom",
             "priority": 20,
-            "type": "override"
+            "type": "add"
           },
           {
             "key": "flags.midi-qol.onUseMacroName",

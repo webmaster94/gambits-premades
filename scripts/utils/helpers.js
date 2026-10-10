@@ -1405,7 +1405,7 @@ export async function replaceChatCard({ actorUuid, itemUuid, chatContent, rollDa
 
     let msgHistory = [];
     game.messages.reduce((list, message) => {
-        if (message.flags.dnd5e?.item?.id === item?._id && message.speaker.token === token.document.id) msgHistory.push(message.id);
+        if ((message.system?.item?.id ?? message.flags.dnd5e?.item?.id) === item?._id && message.speaker.token === token.document.id) msgHistory.push(message.id);
     }, msgHistory);
     let itemCard = msgHistory[msgHistory?.length - 1];
     let chatMessage = false;

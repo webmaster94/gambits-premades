@@ -338,15 +338,15 @@ function getSubtleSpell({validToken}) {
 }
 
 async function refundSpellSlot({itemCardUuid, selectedToken}) {
-    const useFlag = MidiQOL.getCachedChatMessage(itemCardUuid)?.getFlag("dnd5e", "use") ?? {};
-    const consumed = useFlag.consumed;
+    const message = MidiQOL.getCachedChatMessage(itemCardUuid);
+    const consumed = message?.system?.deltas ?? message?.getFlag("dnd5e", "use")?.consumed;
 
     if (consumed && Array.isArray(consumed.actor)) {
         for (const usage of consumed.actor) {
             const path = usage.keyPath;
             if (path?.startsWith("system.spells.")) {
                 const current = foundry.utils.getProperty(selectedToken.actor, path) ?? 0;
-                await selectedToken.actor.update({ [path]: current + 1 });
+                await selectedToken.actor.update({ [path]: current - (usage.delta ?? -1) });
             }
         }
     }
