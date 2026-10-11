@@ -1,3 +1,4 @@
+import { catDialog } from '../../utils/catDialog.js';
 export async function identify({ speaker, actor, token, character, item, args, scope, workflow, options, dialog, usage }) {
     dialog.configure = false;
     usage.consume = usage.consume || {};
@@ -5,7 +6,7 @@ export async function identify({ speaker, actor, token, character, item, args, s
     const items = actor.items.contents.filter(i => i.system.identified === false);
     if (items.length === 0) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.Identify.NoUnidentifiedItems"));
 
-    await foundry.applications.api.DialogV2.wait({
+    await catDialog.wait({
         window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Spells.Identify.Windowtitle") },
         content: `<p>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.Spells.Identify.PromptRitualCast")}</p>`,
         buttons: [{
@@ -102,7 +103,7 @@ export async function identify({ speaker, actor, token, character, item, args, s
         });
         content += "</ul>";
 
-        await foundry.applications.api.DialogV2.wait({
+        await catDialog.wait({
             window: { title: ritual ? game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Spells.Identify.WindowTitleRitual") : game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Spells.Identify.WindowTitle") },
             content: content,
             buttons: [{

@@ -1,3 +1,4 @@
+import { catSettingsMenu } from './catSettings.js';
 const Base = foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.api.ApplicationV2);
 
 export function registerSettings() {
@@ -853,6 +854,7 @@ export class BaseSettingsMenu extends Base {
       }
     } catch (_err) {
     }
+    if (globalThis.cat?.applications?.DialogApp) return catSettingsMenu(this);
   }
 
   static PARTS =

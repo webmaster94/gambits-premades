@@ -1,3 +1,4 @@
+import { catDialog } from '../../utils/catDialog.js';
 export async function stormMote({ speaker, actor, token, character, item, args, scope, workflow, options, macroItem }) {
     if (args[0].macroPass === "postPreambleComplete") {
         let numMotes = (actor.system.details.level >= 17) ? 4 : (actor.system.details.level >= 11) ? 3 : (actor.system.details.level >= 5) ? 2 : 1;
@@ -38,7 +39,7 @@ export async function stormMote({ speaker, actor, token, character, item, args, 
         </div>
         `;
 
-        await foundry.applications.api.DialogV2.wait({
+        await catDialog.wait({
             window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ThirdPartySpells.StormMote.Windowtitle") },
             content: content,
             buttons: [{

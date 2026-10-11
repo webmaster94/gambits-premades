@@ -2,7 +2,9 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
     const aseCartoonActive = game.modules.get("animated-spell-effects-cartoon")?.active === true;
     if (args[0].macroPass === "preActiveEffects") {
         if (workflow.targets.size > 1) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.CanOnlySelectOne"));
-        let target = workflow.targets.first() ?? null;
+        const traveler = await game.gps.chooseTeleportTraveler({token, item, target: workflow.targets.first()});
+        if (traveler.cancelled) return;
+        let target = traveler.token ?? null;
         if(target) {
             let targetDistance = MidiQOL.computeDistance(target,token, {wallsBlock: true, includeCover: true})
             if(targetDistance > game.gps.convertFromFeet({range:6})) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.MustBeWithin5Feet"));
@@ -79,33 +81,7 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
             if(target) await magicSign3.play();
         }
 
-        let config = {
-            gridHighlight: true,
-            icon: {
-                texture: token.document.texture.src,
-                borderVisible: true
-            },
-            location: {
-                obj: token,
-                limitMaxRange: item.system.range.value,
-                showRange: true
-            }
-        };
-          
-        let callbacks = aseAnimationsEnabled ? {
-            [Sequencer.Crosshair.CALLBACKS.MOUSE_MOVE]: (crosshair) => {
-                new Sequence({moduleName: "gambits-premades", softFail: true})
-                    .effect()
-                        .file(`animated-spell-effects-cartoon.magic.portal.${animColor}`)
-                        .atLocation({ x: crosshair.x, y: crosshair.y })
-                        .scale(0.25)
-                        .duration(500)
-                        .fadeOut(500)
-                .play();
-            }
-        } : {};
-          
-        let position = await Sequencer.Crosshair.show(config, callbacks);
+        let position = await game.gps.chooseTeleportDestination({token, item, range: item.system.range.value});
 
         if(animEnabled) {
             if(aseAnimationsEnabled) Sequencer.EffectManager.endEffects({ name: `${token.document.name}_DimensionDoor1` });
@@ -173,9 +149,9 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
 
         if(target) {
             const tokenSize = target.w;
-            const offsetX = tokenSize + 10;
+            const offsetX = (token.w + target.w) / 2;
 
-            const offsetLocation = {
+            offsetLocation = {
                 x: position.x + offsetX,
                 y: position.y 
             };

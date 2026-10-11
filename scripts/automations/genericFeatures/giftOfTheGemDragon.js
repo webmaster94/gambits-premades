@@ -1,3 +1,4 @@
+import { catDialog } from '../../utils/catDialog.js';
 export async function giftOfTheGemDragon({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "isDamaged") {
         if(MidiQOL.hasUsedReaction(actor)) return;
@@ -11,7 +12,7 @@ export async function giftOfTheGemDragon({ speaker, actor, token, character, ite
         let activity = item.system.activities.find(a => a.identifier === "syntheticSave");
 
         if(!activity.save?.dc?.calculation && !activity.save?.dc?.formula) {
-            await foundry.applications.api.DialogV2.wait({
+            await catDialog.wait({
                 window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.GenericFeatures.GiftOfTheGemDragon.Windowtitle") },
                 content: `
                     <div class="gps-dialog-container">

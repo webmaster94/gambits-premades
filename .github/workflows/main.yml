@@ -45,6 +45,9 @@ jobs:
           NODE
 
       # Build packs from packData -> packs
+      - name: Test CAT migration and dialog compatibility
+        run: npm test
+
       - name: Compile packs (packData -> packs)
         run: npm run packData
 

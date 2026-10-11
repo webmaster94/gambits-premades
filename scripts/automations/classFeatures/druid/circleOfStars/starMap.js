@@ -1,9 +1,10 @@
+import { catDialog } from '../../../../utils/catDialog.js';
 export async function starMap({ item }) {
     let freeUses = item.system.uses.max - item.system.uses.spent;
 
     if(freeUses === 0) return false;
 
-    let result = await foundry.applications.api.DialogV2.wait({
+    let result = await catDialog.wait({
         window: { title: game.i18n.format("GAMBITSPREMADES.Dialogs.Common.FreeUse", { itemName: item.name }) },
         content: `
             <div class="gps-dialog-container">

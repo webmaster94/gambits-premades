@@ -1,3 +1,4 @@
+import { catDialog } from '../../utils/catDialog.js';
 export async function viciousMockery({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "prePreambleComplete") {
         const targets = workflow.targets;
@@ -139,7 +140,7 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
                 `
             }
 
-            await foundry.applications.api.DialogV2.wait({
+            await catDialog.wait({
                 window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Spells.ViciousMockery.Windowtitle") },
                 content: content,
                 buttons: [{

@@ -1404,6 +1404,19 @@
       "EnableSpells": "Enable Spells",
       "GeneralSettings": "General Settings",
       "PatreonSupport": "Patreon Support"
+    },
+    "Teleport": {
+      "Traveler": "Choose traveler",
+      "Alone": "Just me",
+      "Destination": "Choose destination for {name}"
+    },
+    "CAT": {
+      "PlayAnimation": "Play animation",
+      "Color": "Animation color",
+      "CustomDice": "Use custom dice",
+      "DiceNumber": "Number of dice",
+      "DiceSize": "Die size",
+      "DamageType": "Damage type"
     }
   }
 }

@@ -1,8 +1,6 @@
+import { catDialog } from './catDialog.js';
 export async function showDialog({ title, message, image, buttons = [] }) {
-  return new Promise((resolve) => {
-    let dialogRef;
-
-    dialogRef = new foundry.applications.api.DialogV2({
+    return await catDialog.wait({
       window: { title },
       content: `
         <div class="gps-dialog-container">
@@ -23,19 +21,15 @@ export async function showDialog({ title, message, image, buttons = [] }) {
       buttons: buttons.map((btn) => ({
         ...btn,
         callback: async () => {
-          dialogRef.close();
-
           if (btn.callback) {
             await btn.callback();
           }
 
-          resolve(btn.action || btn.label);
+          return btn.action || btn.label;
         },
       })),
-      close: () => resolve(null),
+      close: () => null,
       rejectClose: false,
     });
 
-    dialogRef.render(true);
-  });
 }

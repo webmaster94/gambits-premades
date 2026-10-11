@@ -1,4 +1,5 @@
 <h1 style="text-align: center;">Gambit's Premades</h1>
+<p>The V14 fork requires CAT 0.1.1+, D&D 6.0.x, Midi-QOL 14.6.0+, and DAE 14.6.0+. Existing item configuration migrates automatically for the active GM. See <a href="docs/cat-migration.md">CAT migration and verification</a>.</p>
 <p style="text-align: center;"><i>Gambit&rsquo;s Premades delivers a curated library of automated spells, items, and feats that slot straight into your Foundry VTT world. Leveraging MidiQOL, focus on storytelling&mdash;premades handle the mechanics so you don&rsquo;t have to.</i></p>
 <p style="text-align: center;"><img src="https://img.shields.io/github/v/release/gambit07/gambits-premades?style=for-the-badge" alt="GitHub release" /> <img src="https://img.shields.io/github/downloads/gambit07/gambits-premades/total?style=for-the-badge" alt="GitHub all releases" /> <a href="https://discord.gg/YNquuTzcJB" target="_blank" rel="nofollow noopener"><img src="https://dcbadge.limes.pink/api/server/BA7SQKqMpa" alt="Discord" /></a></p>
 <h2 style="text-align: center;">Supporting The Module</h2>

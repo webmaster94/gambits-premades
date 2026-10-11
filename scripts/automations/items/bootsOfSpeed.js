@@ -1,8 +1,9 @@
+import { catDialog } from '../../utils/catDialog.js';
 export async function bootsOfSpeed({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if (args[0].macroPass === "preItemRoll") {
         if(!actor.appliedEffects.some(e => e.name === "Boots of Speed" && !e.duration?.expired)) return;
 
-        await foundry.applications.api.DialogV2.wait({
+        await catDialog.wait({
             window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Items.BootsOfSpeed.Windowtitle") },
             content: `
                 <div class="gps-dialog-container">

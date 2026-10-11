@@ -1,9 +1,10 @@
+import { catDialog } from '../../utils/catDialog.js';
 export async function command({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     const macroPass = args?.[0]?.macroPass;
     if(["postSave", "postSavesComplete"].includes(macroPass) && workflow.failedSaves?.size) {
         let targets = workflow.failedSaves;
 
-        await foundry.applications.api.DialogV2.wait({
+        await catDialog.wait({
             window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Spells.Command.WindowTitle") },
             content: `
                 <div class="gps-dialog-container">

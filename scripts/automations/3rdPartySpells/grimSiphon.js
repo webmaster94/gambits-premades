@@ -1,3 +1,4 @@
+import { catDialog } from '../../utils/catDialog.js';
 export async function grimSiphon({ speaker, actor, token, character, item, args, scope, workflow, options, macroItem }) {
     if(args[0].macroPass === "postActiveEffects") {
         let target = workflow.failedSaves.first();
@@ -7,7 +8,7 @@ export async function grimSiphon({ speaker, actor, token, character, item, args,
         if(validFriendlies.length === 0) return;
         let damageTotal = workflow.damageTotal;
     
-        await foundry.applications.api.DialogV2.wait({
+        await catDialog.wait({
         window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ThirdPartySpells.GrimSiphon.Windowtitle") },
         content: `
             <div class="gps-dialog-container">

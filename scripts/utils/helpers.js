@@ -1,3 +1,5 @@
+import { catDialog } from './catDialog.js';
+import { gpsItemConfig } from './catIntegration.js';
 export async function deleteChatMessage({ chatId }) {
     if(!chatId) return;
     let chatMessage = await game.messages.get(chatId);
@@ -66,7 +68,7 @@ export async function freeSpellUse({ item, actor, activity }) {
 
     const remainingText = isCounterMode ? (remaining > 1 ? game.i18n.format("GAMBITSPREMADES.ChatMessages.Utils.Helpers.UsesRemaining", { remaining: remaining }) : remaining === 1 ? game.i18n.format("GAMBITSPREMADES.ChatMessages.Utils.Helpers.Remaining", { remaining: remaining }) : ``) : game.i18n.format("GAMBITSPREMADES.Dialogs.Utils.Helpers.ThisGrantsOneFreeUse", { restModeText: isDaily ? restModeNameLocalized : game.i18n.format("GAMBITSPREMADES.ChatMessages.Utils.Helpers.Per", { restModeName: restModeNameLocalized }) });
 
-    const result = await foundry.applications.api.DialogV2.wait({
+    const result = await catDialog.wait({
         window: { title: game.i18n.format("GAMBITSPREMADES.Dialogs.Common.FreeUse", { itemName: item.name }) },
         content: `
         <div class="gps-dialog-container">
@@ -633,7 +635,7 @@ export async function process3rdPartyReactionDialog({
 
   function attachEventListeners(dialog) {
     const dialogElement = dialog?.element;
-    const windowTitle = dialogElement?.querySelector(".window-title");
+    const windowTitle = dialogElement?.querySelector(".window-title, header .title");
     const pauseButton = dialogElement?.querySelector(`#pauseButton_${dialogId}`);
     const itemSelect = dialogElement?.querySelector(`#item-select_${dialogId}`);
     const weaponImg = dialogElement?.querySelector(`#weapon-img_${dialogId}`);
@@ -797,7 +799,7 @@ export async function process3rdPartyReactionDialog({
     }
   }
 
-  await foundry.applications.api.DialogV2.wait({
+  await catDialog.wait({
     window: { title: dialogTitle },
     content: dialogContent,
     buttons: [
@@ -909,8 +911,8 @@ export async function process3rdPartyReactionDialog({
         dialog._closing = false;
 
         const root = dialog.element;
-        const titleEl = root?.querySelector(".window-title");
-        const headerEl = root?.querySelector(".window-header");
+        const titleEl = root?.querySelector(".window-title, header .title");
+        const headerEl = root?.querySelector(".window-header, header");
         const pauseIcon = root?.querySelector(`#pauseIcon_${dialogId}`);
         const pauseBtn = root?.querySelector(`#pauseButton_${dialogId}`);
 
@@ -1458,7 +1460,7 @@ export async function ritualSpellUse({ workflowUuid }) {
     if(workflow.macroPass !== "preItemRoll") return;
     if(!workflow.item.system.properties.has("ritual")) return;
 
-    await foundry.applications.api.DialogV2.wait({
+    await catDialog.wait({
         window: { title: game.i18n.format("GAMBITSPREMADES.Dialogs.Utils.Helpers.RitualUse", { itemName: workflow.item.name }) },
         content: `
             <div class="gps-dialog-container">
@@ -1544,10 +1546,10 @@ export async function gmDeleteItem({itemUuid}) {
 
 export function getCprConfig({itemUuid, type = "anim"}) {
     if(type === "anim") {
-        if(!game.modules.get("chris-premades")?.active) return {animEnabled: true, animColor: null};
+
         let itemData = fromUuidSync(itemUuid);
         if(!itemData) return {animEnabled: true, animColor: null};
-        let cprConfig = itemData.getFlag("chris-premades", "config");
+        let cprConfig = gpsItemConfig(itemData);
         if(!cprConfig) return {animEnabled: true, animColor: null};
         let animEnabled = cprConfig?.playAnimation;
         let animColor = cprConfig?.color ?? null;
@@ -1555,10 +1557,10 @@ export function getCprConfig({itemUuid, type = "anim"}) {
         else return {animEnabled: true, animColor: animColor};
     }
     else if(type === "homebrewDice") {
-        if(!game.modules.get("chris-premades")?.active) return {homebrewDiceEnabled: false};
+
         let itemData = fromUuidSync(itemUuid);
         if(!itemData) return {homebrewDiceEnabled: false};
-        let cprConfig = itemData.getFlag("chris-premades", "config");
+        let cprConfig = gpsItemConfig(itemData);
         if(!cprConfig) return {homebrewDiceEnabled: false};
         let homebrewDiceEnabled = cprConfig?.enableCustomDice;
         let dieNumber = cprConfig?.customDiceNum;
@@ -1567,10 +1569,10 @@ export function getCprConfig({itemUuid, type = "anim"}) {
         else return {homebrewDiceEnabled: false};
     }
     else if(type === "damageType") {
-        if(!game.modules.get("chris-premades")?.active) return {damageType: false};
+
         let itemData = fromUuidSync(itemUuid);
         if(!itemData) return {damageType: false};
-        let cprConfig = itemData.getFlag("chris-premades", "config");
+        let cprConfig = gpsItemConfig(itemData);
         if(!cprConfig) return {damageType: false};
         let dType = cprConfig?.damageType;
         if(dType) return {dType};

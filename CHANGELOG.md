@@ -1,5 +1,15 @@
 # Changelog
 
+## [v3.1.0] - 2026-10-11
+- Requires CAT 0.1.1+, Foundry 14.368+, D&D 6.0.x, Midi-QOL 14.6.0+, and DAE 14.6.0+.
+- Registers GPS's existing compendiums in CAT. Supported item animation and homebrew options, module settings menus, and callback-based dialogs use CAT's interface.
+- Automatically migrates existing configuration without overwriting CAT choices. World settings retain their original keys and values. Covers unlinked NPCs and off-scene tokens; see [migration details](docs/cat-migration.md).
+- Reaction dialogs retain timers, pause synchronization, mirrored decisions, and form selections.
+- Dimension Door uses compact traveler and destination prompts above the hotbar. Dimension Door and Scatter have contrasting destination rings independent of animation assets. Invalid positions remain open with a red ring; cancellation cleans up the markers.
+- Placement uses the clicked position even without a preceding mouse move. Dimension Door correctly places companions with different dimensions, and its 2024 outro only requests cartoon assets when that module is active.
+- Guards overlapping compendium index fields under Foundry 14.369. Parsed Midi-QOL macro objects on unrelated items do not break migration.
+- Local checks used Foundry 14.369, D&D 6.0.6, CAT 0.1.1, Midi-QOL 14.6.0, DAE 14.6.0, and Sequencer 4.2.2. Migration, CAT configuration, reaction form and pause handling, traveler selection, destination confirmation, invalid range, cancellation, and two-token Dimension Door movement were checked. Individual automations were not all played through.
+
 ## [v3.0.1] - 2026-10-10
 - Requires D&D 6.0.0 or later in the 6.0.x series and Foundry VTT 14.367. The compatibility target is D&D 6.0.6; D&D 6.0.5 is also allowed.
 - Chat-history lookup reads the item snapshot from `message.system.item`, with a fallback for legacy messages.

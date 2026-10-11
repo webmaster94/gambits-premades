@@ -38,7 +38,7 @@ export async function scatter({ speaker, actor, token, character, item, args, sc
                 location: {obj: token, limitMaxRange: 120, showRange: true, wallBehavior: Sequencer.Crosshair.PLACEMENT_RESTRICTIONS.NO_COLLIDABLES}
             }
 
-            let position = await Sequencer.Crosshair.show(config)
+            let position = await game.gps.chooseTeleportDestination({token, target, item, range: 120, checkWalls: true});
 
             Sequencer.EffectManager.endEffects({ name: `${target.document.name}_Scatter` });
             if(!position) return;

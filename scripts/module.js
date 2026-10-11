@@ -7,9 +7,12 @@ import { refreshTemplateVisibility, registerWrapping, updateSettings } from "./u
 import * as helpers from "./utils/helpers.js";
 import { weaponAnimations } from "./utils/animationUtils.js";
 import { animation } from './animations/_index.js';
+import { initCAT } from './utils/catIntegration.js';
+import { chooseTeleportDestination, chooseTeleportTraveler } from './utils/teleport.js';
 
 Hooks.once('init', async function() {
     registerSettings();
+    initCAT();
     game.gpsSettings = game.gpsSettings || {};
     updateSettings();
     daeInitFlags();
@@ -95,7 +98,9 @@ Hooks.once('ready', async function() {
         weaponAnimations,
         disableRegionTeleport: false,
         animation,
-        logInfo: helpers.logInfo
+        logInfo: helpers.logInfo,
+        chooseTeleportDestination,
+        chooseTeleportTraveler
     };
 
     refreshTemplateVisibility();

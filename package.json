@@ -6,7 +6,8 @@
     "prepare": "husky install",
     "packData": "node --experimental-top-level-await ./packData/packData.mjs",
     "unpackData": "node --experimental-top-level-await ./packData/unpackData.mjs",
-    "get-version": "node ./.github/workflows/get-version.js"
+    "get-version": "node ./.github/workflows/get-version.js",
+    "test": "node --experimental-vm-modules --test tests/*.test.mjs"
   },
   "dependencies": {
     "terser-webpack-plugin": "^5.3.9",
