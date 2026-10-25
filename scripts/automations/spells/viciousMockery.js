@@ -1,6 +1,5 @@
-import { catDialog } from '../../utils/catDialog.js';
 export async function viciousMockery({ speaker, actor, token, character, item, args, scope, workflow, options }) {
-    if(args[0].macroPass === "prePreambleComplete") {
+    if(args[0].macroPass === "prePreambleComplete" && item.system.source.rules === "2014") {
         const targets = workflow.targets;
         for(let target of targets) {
             const hasEffectApplied = target.document.hasStatusEffect("deafened");
@@ -13,11 +12,9 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
         if(workflow.targets.size === 0) return workflow.aborted = true;
     }
 
-    if(["postSave", "postSavesComplete"].includes(args?.[0]?.macroPass)) {
+    if(args[0].macroPass === "postSavesComplete") {
         let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
         const { animEnabled } = cprConfig;
-
-        const gmInputType = "freeform";
 
         const targets = workflow.failedSaves;
         if(targets.size === 0) return;
@@ -28,26 +25,19 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
             const uuid = targetActor.uuid;
 
             const effectDisadv = [{
-                system: { changes: [{ key: "flags.midi-qol.disadvantage.attack.all", type: "custom", value: 1, priority: 20 }] },
-                flags: { "dae": { "token": targetUuid, "specialDuration": ["1Attack","turnEnd"] } },
+                system: { changes: [{ key: "attack", type: "dnd5e.advantage", value: "-1", priority: 100 }] },
+                flags: { "dae": { "token": targetUuid, "specialDuration": ["1Attack"] } },
                 disabled: false,
                 name: item.name,
                 img: item.img,
-                duration: {
-                    value: 12,
-                    units: "seconds"
-                },
-                start: {
-                    time: game.time?.worldTime ?? 0
-                }
+                duration: { expiry: "targetEnd", value: 12, units: "seconds" }
             }];
-            const checkEffect = targetActor.appliedEffects.find(i => i.name ===  item.name && !i.duration?.expired);
+            const checkEffect = targetActor.appliedEffects.find(i => i.name ===  item.name);
             if(!checkEffect) await MidiQOL.socket().executeAsGM("createEffects", { actorUuid: uuid, effects: effectDisadv });
 
-            if((gmInputType !== "dropdown" && gmInputType !== "freeform") || !gmInputType) return;
-            if(!animEnabled) return;
+            if(!animEnabled) continue;
 
-            new Sequence({moduleName: "gambits-premades", softFail: true})
+            new Sequence()
 
             .effect()
             .name("Casting")
@@ -95,31 +85,8 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
 
             .play()
 
-            let word = [];
-            let content;
-            if(gmInputType === "dropdown") {
-                content = `
-                    <div class="gps-dialog-container">
-                        <div class="gps-dialog-section">
-                            <div class="gps-dialog-content">
-                                <p class="gps-dialog-paragraph">${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Spells.ViciousMockery.WhatDoYouSay")}</p>
-                                <div>
-                                    <div class="gps-dialog-flex">
-                                        <select id="wordSelect" class="gps-dialog-select" style="background-color: rgba(181, 99, 69, 0.2);">
-                                            ${gmInputText.map((name) => `<option class="gps-dialog-option" value="${name}">${name}</option>`).join('')}
-                                        </select>
-                                        <div id="image-container" class="gps-dialog-image-container">
-                                            <img src="${item.img}" class="gps-dialog-image">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `
-            }
-            else if(gmInputType === "freeform") {
-                content = `
+            let word = "";
+            const content = `
                     <div class="gps-dialog-container">
                         <div class="gps-dialog-section">
                             <div class="gps-dialog-content">
@@ -138,9 +105,8 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
                         </div>
                     </div>
                 `
-            }
-
-            await catDialog.wait({
+            await game.gps.showAutomationDialog({
+                focusTokenUuid: targetUuid,
                 window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.Spells.ViciousMockery.Windowtitle") },
                 content: content,
                 buttons: [{
@@ -148,10 +114,8 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
                     label: game.i18n.localize("GAMBITSPREMADES.Dialogs.Common.Cast"),
                     default: true,
                     callback: async (event, button, dialog) => {
-                        let wordInput = document.querySelector('#wordInput');
+                        let wordInput = button.form.elements.wordInput;
                         if(wordInput) word = wordInput.value;
-                        let wordSelect = document.querySelector('#wordSelect');
-                        if(wordSelect) word = wordSelect.options[wordSelect.selectedIndex].value;
                     }
                 }],
                 close: async () => {
@@ -167,19 +131,14 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
                 fontWeight: "bold"
             }
 
-            new Sequence({moduleName: "gambits-premades", softFail: true})
-
-            .sound()
-                .file("modules/dnd5e-animations/assets/sounds/Creatures/laughter.mp3")
-                .fadeInAudio(500)
-                .fadeOutAudio(500)
+            new Sequence()
 
             .effect()
             .atLocation(target, {offset: {x: -0.25*target.document.width, y:-0.3*target.document.width}, randomOffset: 0.1, gridUnits: true})
-            .file(`animated-spell-effects-cartoon.level 01.healing word.purple`)
+            .file(`jb2a.extras.tmfx.outpulse.circle.02.fast`)
             .fadeOut(250)
             .zIndex(1)
-            .scale(0.25*target.width)
+            .scaleToObject(1.5)
             .scaleIn(0, 500, {ease: "easeOutBack"})
             .zIndex(0)
             .animateProperty("sprite", "position.x", { from: -0.6, to:0, duration: 600, gridUnits: true, ease: "easeInExpo" })
@@ -223,7 +182,7 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
                         isMask:true,
                         name: "test"
                     })
-                    
+
             .effect()
             .delay(600)
             .file("jb2a.impact.010.purple")
@@ -245,7 +204,7 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
 
             .effect()
             .delay(1200)
-            .file("animated-spell-effects-cartoon.misc.demon")
+            .file("eskie.symbol.evil_face.01.orange")
             .atLocation(target, {offset: {x: -0, y:-0.5*target.document.width},gridUnits: true})
             .scaleToObject(0.75)
             .playbackRate(1.5)
@@ -254,7 +213,7 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
 
             .effect()
             .delay(1500)
-            .file("animated-spell-effects-cartoon.misc.demon")
+            .file("eskie.symbol.evil_face.01.orange")
             .atLocation(target, {offset: {x: -0.5*target.document.width, y:-0},gridUnits: true})
             .scaleToObject(0.75)
             .playbackRate(1.5)

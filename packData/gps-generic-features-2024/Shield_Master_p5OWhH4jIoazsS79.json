@@ -4,13 +4,13 @@
   "system": {
     "description": {
       "value": "",
-      "chat": "<div class=\"ddb\">\nIf you take the Attack action on your turn, you can use a bonus action to try to shove a creature within 5 ft. of you with your shield. If you aren't incapacitated, you can add your shield's AC bonus to any DEX saving throw you make against effects that target only you, and if an effect allows half damage on success, you can use your reaction to take no damage.\n\n\n</div>"
+      "chat": ""
     },
     "source": {
       "book": "Player’s Handbook (2024)",
       "page": "170",
       "license": "",
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2024",
       "revision": 1
     },
@@ -155,18 +155,6 @@
     "properties": []
   },
   "flags": {
-    "ddbimporter": {
-      "featId": 43,
-      "version": "5.2.36",
-      "prerequisites": [],
-      "effectsApplied": true,
-      "chrisEffectsApplied": true,
-      "chrisPreEffectName": "Shield Master"
-    },
-    "scene-packer": {
-      "sourceId": "Item.",
-      "hash": "2c9f1998514b6b5c85fa0a2408acaa5a52e805ce"
-    },
     "midi-qol": {
       "onUseMacroName": ""
     },
@@ -178,6 +166,26 @@
     },
     "gambits-premades": {
       "gpsUuid": "b32e3d48-034b-4a56-95b4-f392a525f299"
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "8XcwaTfeUxz3KH5P": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "img": "icons/magic/defensive/shield-barrier-deflect-gold.webp",
@@ -220,7 +228,6 @@
         "dae": {
           "disableCondition": "",
           "stackable": "noneName",
-          "showIcon": false,
           "disableIncapacitated": false,
           "durationExpression": "",
           "macroRepeat": "endEveryTurn",
@@ -233,26 +240,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "All",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!p5OWhH4jIoazsS79.XyI4nE0eHeDIWriN",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!p5OWhH4jIoazsS79.XyI4nE0eHeDIWriN"
     },
     {
       "name": "Interpose Shield Check",
@@ -286,7 +280,6 @@
         "dae": {
           "disableCondition": "",
           "stackable": "noneName",
-          "showIcon": false,
           "disableIncapacitated": false,
           "durationExpression": "",
           "macroRepeat": "none",
@@ -295,27 +288,14 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "All",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
-        "gambits-premades": {}
+        "gambits-premades": {},
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
+        }
       },
-      "_key": "!items.effects!p5OWhH4jIoazsS79.1ix3sc5lJ8lbQnj5",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!p5OWhH4jIoazsS79.1ix3sc5lJ8lbQnj5"
     },
     {
       "name": "Interpose Shield",
@@ -349,7 +329,6 @@
         "dae": {
           "disableCondition": "",
           "stackable": "noneName",
-          "showIcon": false,
           "disableIncapacitated": true,
           "durationExpression": "",
           "macroRepeat": "none",
@@ -361,29 +340,16 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "All",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "gambits-premades": {
           "gpsUuid": "2109c2b7-7640-4649-ad3c-26b5a84d5646"
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!p5OWhH4jIoazsS79.yorReGW7J0hIBYux",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!p5OWhH4jIoazsS79.yorReGW7J0hIBYux"
     }
   ],
   "folder": null,

@@ -9,7 +9,7 @@
     "source": {
       "book": "Journeys through the Radiant Citadel",
       "page": "221",
-      "custom": "1.0.0",
+      "custom": "",
       "license": "",
       "revision": 1,
       "rules": "2014"
@@ -91,7 +91,7 @@
           },
           "affects": {
             "count": "",
-            "type": "",
+            "type": "creature",
             "choice": false,
             "special": ""
           },
@@ -221,7 +221,7 @@
           },
           {
             "key": "flags.midi-qol.OverTime",
-            "value": "turn=end,rollType=save,saveAbility=wis,saveDC=16,saveDamage=nodamage,saveRemove=true",
+            "value": "turn=end,rollType=save,saveAbility=wis,saveDC=16,saveDamage=nodamage,saveCount=1",
             "priority": 20,
             "type": "custom"
           }
@@ -239,43 +239,20 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!EsTKgX9NWxhXqfaQ.LRmBdBBDFtzfZjew",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!EsTKgX9NWxhXqfaQ.LRmBdBBDFtzfZjew"
     }
   ],
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {},
-      "parentId": "vl1VO6jx82F0y4iM"
-    },
-    "monsterMunch": {
-      "titleHTML": "<strong>Otherworldly Melody (Recharge 5–6).</strong>",
-      "fullName": "Otherworldly Melody (Recharge 5–6).",
-      "actionCopy": false,
-      "type": "action"
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "rollAttackPerTarget": "default",
@@ -286,29 +263,7 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "saveDamage": "default",
-      "bonusSaveDamage": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "core": {},
-    "scene-packer": {
-      "sourceId": "Scene.1mkVNeOdyVIlDdH7.Token.IN9g3OfNajtRsfi1.Actor.xY4y0YufiTyf14Xo.Item.qDvvQBetZvuZtpqR",
-      "hash": "4af927fe6d93a29d62c05f73581569eff8f7814e"
-    },
     "rest-recovery": {
       "data": {
         "recovery": {
@@ -325,6 +280,26 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "img": "icons/skills/trades/academics-astronomy-navigation-purple.webp",

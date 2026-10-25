@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014"
     },
@@ -124,11 +124,11 @@
           },
           "affects": {
             "count": "",
-            "type": "",
+            "type": "self",
             "choice": false,
             "special": ""
           },
-          "prompt": true,
+          "prompt": false,
           "override": false
         },
         "uses": {
@@ -229,26 +229,13 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -271,8 +258,8 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!1sTnzvZ7IfUl9NJI.A1LsjG1ZxIxFP2ry",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!1sTnzvZ7IfUl9NJI.A1LsjG1ZxIxFP2ry"
     },
     {
       "origin": "Item.N03FRmkwKxlC2OkO",
@@ -294,26 +281,13 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -330,30 +304,12 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!1sTnzvZ7IfUl9NJI.SShn5byLnHvn6yE7",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!1sTnzvZ7IfUl9NJI.SShn5byLnHvn6yE7"
     }
   ],
   "flags": {
-    "midiProperties": {
-      "confirmTargets": "never",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "core": {},
-    "scene-packer": {
-      "hash": "64855b713673e27dddc4fb4fc9ecc7cc3397a0e2",
-      "sourceId": "Compendium.world.gps-homebrew-items.Item.qpoK4mUNzZjx60x2"
-    },
     "midi-qol": {
       "effectActivation": false,
       "itemCondition": "",
@@ -365,6 +321,26 @@
     "dnd5e": {
       "riders": {
         "activity": []
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
       }
     }
   },

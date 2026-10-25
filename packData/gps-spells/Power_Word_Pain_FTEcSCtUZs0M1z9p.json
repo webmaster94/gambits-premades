@@ -25,11 +25,7 @@
           "concentration": false,
           "override": false
         },
-        "effects": [
-          {
-            "_id": "5ctJpMbwjfk2QCGN"
-          }
-        ],
+        "effects": [],
         "range": {
           "units": "self",
           "override": false
@@ -242,7 +238,7 @@
       "book": "XGtE",
       "page": "",
       "license": "",
-      "custom": "2.1.11",
+      "custom": "",
       "rules": "2014",
       "revision": 1
     },
@@ -293,52 +289,42 @@
   "effects": [],
   "name": "Power Word Pain",
   "flags": {
-    "ddbimporter": {
-      "id": 138210,
-      "definitionId": 14520,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "generic",
-        "lookupName": "generic",
-        "level": null,
-        "castAtLevel": null,
-        "homebrew": false
-      },
-      "originalName": "Power Word Pain",
-      "sources": [
-        {
-          "sourceId": 27,
-          "pageNumber": 163,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Debuff"
-      ],
-      "version": "6.0.54",
-      "is2014": false,
-      "is2024": true,
-      "addSpellEffects": false,
-      "legacy": false,
-      "effectsApplied": true
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "onUseMacroName": "[postPreambleComplete]function.game.gps.powerWordPain"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "magicdam": true,
-      "magiceffect": true
-    },
-    "scene-packer": {
-      "sourceId": "Item.PowerWordPainIII",
-      "hash": "311143d1f44ef0ad26ff6b8cb06a162693e21a93"
     },
     "dnd5e": {
       "riders": {
         "activity": [],
         "effect": []
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "Xv7ExfsdTuPR1yqS": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      },
+      "16LugPNkQs8G0qWF": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
       }
     }
   },

@@ -10,7 +10,7 @@
       "book": "Baldur’s Gate: Descent into Avernus",
       "page": "",
       "license": "",
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014"
     },
@@ -365,45 +365,6 @@
     "equipped": true
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Warhammer",
-        "damage": {
-          "parts": []
-        },
-        "classFeatures": [],
-        "restrictions": [
-          "30-foot-radius sphere"
-        ],
-        "avatarUrl": "https://www.dndbeyond.com/avatars/6757/62/637006868113141825.jpeg",
-        "largeAvatarUrl": "https://www.dndbeyond.com/avatars/6757/63/637006868114343045.jpeg",
-        "filterType": "Weapon",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": null,
-        "tags": [],
-        "sources": [
-          {
-            "sourceId": 48,
-            "pageNumber": null,
-            "sourceType": 1
-          }
-        ],
-        "pictureUrl": "https://www.dndbeyond.com/avatars/6757/63/637006868114343045.jpeg"
-      },
-      "id": 0,
-      "entityTypeId": 0,
-      "definitionEntityTypeId": 112130694,
-      "definitionId": 842273,
-      "originalName": "Matalotok",
-      "version": "5.0.1",
-      "effectsApplied": true,
-      "keepIcon": true
-    },
     "dae": {
       "alwaysActive": false,
       "activeEquipped": true,
@@ -443,26 +404,6 @@
       "otherCondition": "",
       "onUseMacroName": "[preDamageRollComplete]function.game.gps.matalotok",
       "reactionCondition": ""
-    },
-    "scene-packer": {
-      "sourceId": "Actor.YUmZSq6NsdZkLNi9.Item.bz5TxkYwr74aZr06",
-      "hash": "f6ee65cd1be13d921766877b25fdd960dc4bbd28"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
     },
     "core": {},
     "autoanimations": {
@@ -695,6 +636,71 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "gambits-premades": {
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        },
+        "regionVisibility": {
+          "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Name",
+          "type": "select",
+          "default": "LAYER",
+          "category": "animations",
+          "options": [
+            {
+              "value": "LAYER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Layer"
+            },
+            {
+              "value": "LAYER_UNLOCKED",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.LayerUnlocked"
+            },
+            {
+              "value": "GAMEMASTER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Gamemaster"
+            },
+            {
+              "value": "OBSERVER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Observer"
+            },
+            {
+              "value": "ALWAYS",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Always"
+            }
+          ]
+        }
+      },
+      "animationModules": [
+        "JB2APatreon"
+      ]
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Attack",
+        "activityType": "attack",
+        "version": 2
+      },
+      "WgLhjmc2Hyowfc3Y": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Damage: Automation",
+        "activityType": "damage",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -708,16 +714,10 @@
           "transfer": true,
           "stackable": "noneName",
           "disableIncapacitated": false,
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
           "disableCondition": ""
-        },
-        "ddbimporter": {
-          "disabled": false,
-          "itemId": 0,
-          "itemEntityTypeId": 0
         },
         "midi-qol": {
           "forceCEOff": true
@@ -725,22 +725,9 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "name": "Matalotok - Constant",
@@ -761,13 +748,13 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!8IPK8M8iHUj4WMAg.FucY0WBSTGcRtTnC",
       "start": {
-        "combat": null,
-        "round": 30,
         "time": 1697162070,
-        "turn": 0
-      }
+        "round": 30,
+        "turn": 0,
+        "combat": null
+      },
+      "_key": "!items.effects!8IPK8M8iHUj4WMAg.FucY0WBSTGcRtTnC"
     }
   ],
   "img": "icons/weapons/hammers/hammer-double-steel.webp",

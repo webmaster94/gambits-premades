@@ -10,6 +10,31 @@ async function subject(filename, context = {}) {
     return module.namespace;
 }
 
+test('published GPS UUID aliases remain usable without duplicate CAT catalog entries', async () => {
+    const entries = [];
+    for (const [name, ids] of [['Interception', ['qwN919OhLSsMzKML', 'aziVWzS0jSSzLJvq']], ['Protection', ['HN65dwh9JzRZTlpk', '2s6EFimlyDlcddn9']]]) {
+        for (const id of ids) {
+            const item = JSON.parse(readFileSync(new URL('../packData/gps-class-features/Fighting_Style__' + name + '_' + id + '.json', import.meta.url), 'utf8'));
+            assert.equal(item._id, id);
+            item.uuid = 'Compendium.gambits-premades.gps-class-features.Item.' + id;
+            entries.push(item);
+        }
+    }
+    let registered;
+    const {registerCatConfig} = await subject('catUtils.js', {
+        game: {
+            modules: new Map([['cat', {active: true}], ['gambits-premades', {title: 'GPS'}]]),
+            settings: {get: () => ({})}, i18n: {localize: key => key, format: key => key},
+            packs: [{metadata: {packageName: 'gambits-premades', type: 'Item'}, getIndex: async () => entries}]
+        },
+        foundry: {utils: {deepClone: structuredClone}},
+        cat: {api: {registerSourceName() {}, registerAutomations: data => {registered = data;}}}
+    });
+    await registerCatConfig();
+    assert.equal(registered.length, 2);
+    assert.equal(registered.every(entry => !entries.find(item => item.uuid === entry.uuid).flags['gambits-premades'].catalogAlias), true);
+});
+
 test('GPS migrates explicit animation and homebrew settings without losing false or zero', async () => {
     const {buildGPSMigration} = await subject('catIntegration.js');
     const item = {flags: {'midi-qol': {onUseMacroName: '[preActiveEffects]function.game.gps.dimensionDoor'}, 'chris-premades': {config: {playAnimation: false, color: '', customDiceNum: 0, enableCustomDice: true}}}, system: {source: {custom: '2.1.24'}}};

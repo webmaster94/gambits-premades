@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -208,7 +208,10 @@
   "effects": [
     {
       "origin": "Compendium.world.gps-3rd-party-spells.Item.nVVby1Jb2eweB2RR",
-      "duration": {},
+      "duration": {
+        "expiry": "targetEnd",
+        "value": null
+      },
       "disabled": false,
       "name": "Dream Shear",
       "img": "icons/magic/unholy/orb-stone-pink.webp",
@@ -217,16 +220,16 @@
       "system": {
         "changes": [
           {
-            "key": "flags.midi-qol.disadvantage.attack.all",
-            "value": 1,
-            "priority": 20,
-            "type": "custom"
+            "key": "attack",
+            "value": "-1",
+            "priority": 100,
+            "type": "dnd5e.advantage"
           },
           {
-            "key": "flags.midi-qol.disadvantage.save.all",
-            "value": 1,
-            "priority": 20,
-            "type": "custom"
+            "key": "save",
+            "value": "-1",
+            "priority": 100,
+            "type": "dnd5e.advantage"
           }
         ]
       },
@@ -242,30 +245,11 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
-          "specialDuration": [
-            "turnEnd"
-          ],
+          "specialDuration": [],
           "enableCondition": "",
           "disableCondition": ""
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
         },
         "dnd5e": {
           "riders": {
@@ -274,10 +258,14 @@
         },
         "core": {
           "overlay": false
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!eXuzJWvb1n2Wvrjh.6FU01X1VTpdrcmw8",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!eXuzJWvb1n2Wvrjh.6FU01X1VTpdrcmw8"
     }
   ],
   "flags": {
@@ -288,21 +276,6 @@
       }
     },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "default",
-      "saveDamage": "halfdam",
-      "bonusSaveDamage": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default",
@@ -310,10 +283,6 @@
       "effectCondition": "",
       "reactionCondition": "",
       "otherCondition": ""
-    },
-    "scene-packer": {
-      "hash": "ff250b12fca7d1d59e1eee567c384475d00e0ac2",
-      "sourceId": "Compendium.world.gps-spells.Item.Hh5F3K3tYIh68ich"
     },
     "rest-recovery": {
       "data": {
@@ -325,6 +294,26 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "folder": null,

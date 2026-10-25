@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -219,57 +219,35 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
           "enableCondition": "",
           "disableCondition": ""
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "dnd5e": {
           "riders": {
             "statuses": []
           },
-          "dependents": [
-            {
-              "uuid": "Actor.W3Y25gWfToeQU9zT.ActiveEffect.WFTpgawY22C0dykk"
-            }
-          ]
+          "dependents": []
         },
         "core": {
           "overlay": false
         },
         "gambits-premades": {
           "gpsUuid": "dabf704f-a59b-43b4-8552-9aa18734a362"
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!WGKG4HlYIWFNhVMO.o0bHY6SZCra2Ov5v",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!WGKG4HlYIWFNhVMO.o0bHY6SZCra2Ov5v"
     }
   ],
   "flags": {
     "core": {},
-    "scene-packer": {
-      "hash": "4de78a189b2f129e568848d90dc3d414d01ecb3d",
-      "sourceId": "Compendium.world.gps-homebrew-spells.Item.npIog4jAEUFz5c5r"
-    },
     "dae": {
       "macro": {
         "name": "Contagious Healing",
@@ -296,23 +274,6 @@
           "duplicateSource": null
         }
       }
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "critOther": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
     },
     "midi-qol": {
       "rollAttackPerTarget": "default",
@@ -346,6 +307,39 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "gambits-premades": {
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        }
+      },
+      "animationModules": [
+        "JB2APatreon"
+      ]
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Heal",
+        "activityType": "heal",
+        "version": 2
+      }
     }
   },
   "folder": null,

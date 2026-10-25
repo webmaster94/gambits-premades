@@ -150,7 +150,7 @@
       "max": "@prof"
     },
     "description": {
-      "value": "",
+      "value": "<p><strong>GPS setup:</strong> Offered after Midi computes damage for the hit target, including immunity and reduction. Damage cards set to manual application still require the GM to apply the calculated damage.</p>",
       "chat": ""
     },
     "source": {
@@ -158,7 +158,7 @@
       "rules": "2024",
       "book": "",
       "page": "",
-      "custom": "1.0.40",
+      "custom": "",
       "license": ""
     },
     "enchant": {},
@@ -189,31 +189,31 @@
       "system": {
         "changes": [
           {
-            "key": "system.attributes.movement.walk",
+            "key": "system.attributes.movement.speeds.walk",
             "value": -10,
             "priority": 20,
             "type": "add"
           },
           {
-            "key": "system.attributes.movement.burrow",
+            "key": "system.attributes.movement.speeds.burrow",
             "value": -10,
             "priority": 20,
             "type": "add"
           },
           {
-            "key": "system.attributes.movement.climb",
+            "key": "system.attributes.movement.speeds.climb",
             "value": -10,
             "priority": 20,
             "type": "add"
           },
           {
-            "key": "system.attributes.movement.fly",
+            "key": "system.attributes.movement.speeds.fly",
             "value": -10,
             "priority": 20,
             "type": "add"
           },
           {
-            "key": "system.attributes.movement.swim",
+            "key": "system.attributes.movement.speeds.swim",
             "value": -10,
             "priority": 20,
             "type": "add"
@@ -222,8 +222,9 @@
       },
       "disabled": false,
       "duration": {
-        "value": 10,
-        "units": "seconds"
+        "value": null,
+        "units": "seconds",
+        "expiry": "sourceStart"
       },
       "description": "",
       "tint": "#ffffff",
@@ -238,12 +239,9 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
-          "specialDuration": [
-            "turnStartSource"
-          ]
+          "specialDuration": []
         },
         "dnd5e": {
           "riders": {
@@ -253,26 +251,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!RlUSwec1E7MuK6YB.YHKgdj2KIbQRBZWW",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!RlUSwec1E7MuK6YB.YHKgdj2KIbQRBZWW"
     },
     {
       "name": "Frost's Chill",
@@ -286,7 +271,7 @@
         "changes": [
           {
             "key": "flags.midi-qol.onUseMacroName",
-            "value": "function.game.gps.frostsChill2024,postDamageRollComplete",
+            "value": "function.game.gps.frostsChill2024,postActiveEffects",
             "priority": 20,
             "type": "custom"
           }
@@ -302,7 +287,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
@@ -315,26 +299,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!RlUSwec1E7MuK6YB.xIHCGomLrpyg1Nh0",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!RlUSwec1E7MuK6YB.xIHCGomLrpyg1Nh0"
     }
   ],
   "folder": "jlez19aJPCu4ecFC",
@@ -345,9 +316,6 @@
         "effect": []
       }
     },
-    "crux": {
-      "trayVisibility": "default"
-    },
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default",
@@ -356,14 +324,25 @@
       "otherCondition": "",
       "effectCondition": ""
     },
-    "midiProperties": {
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "6goWQaWLexUqgig8": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Damage",
+        "activityType": "damage",
+        "version": 2
+      }
     }
   },
   "_id": "RlUSwec1E7MuK6YB",

@@ -1,13 +1,12 @@
 export async function recklessAttack({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "preAttackRollConfig") {
-        const currentTokenId = game.combat?.current?.tokenId;
-        if(!currentTokenId) return;
+        if(!game.combat) return;
         let meleeAttack = (workflow.activity?.ability === 'str' && workflow.activity?.actionType === 'mwak' && ((!workflow.item.system?.properties?.has('thr')) || MidiQOL.checkDistance(token, workflow.targets.first(), game.gps.convertFromFeet({ range: 6 })))) ? true : false;
         if (!meleeAttack) return;
         let recklessCheck = await actor.getFlag("midi-qol", "checkRecklessAttack");
         if(recklessCheck === false || recklessCheck === true) return;
 
-        let currentCombatant = canvas.tokens.get(currentTokenId);
+        let currentCombatant = canvas.tokens.get(game.combat.current?.tokenId);
         if (currentCombatant?.id !== token.id) return;
 
         let dialogId = "recklessattack";
@@ -42,14 +41,14 @@ export async function recklessAttack({ speaker, actor, token, character, item, a
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
             let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser };
-            
+
             let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "gm",type: "multiDialog" };
 
-            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
+            result = await game.gps.handleDialogPromises({userDialogArgs, gmDialogArgs});
         } else {
-        result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
+        result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
         }
-                
+
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result || {};
 
         if (!userDecision) {
@@ -60,49 +59,44 @@ export async function recklessAttack({ speaker, actor, token, character, item, a
             workflow.tracker.advantage.add(userDecision, "Reckless Attack");
             await actor.setFlag("midi-qol", "checkRecklessAttack", true);
 
-            let effectData = [{
-                "system": {
-                    "changes": [
-                        {
-                            "key": "flags.midi-qol.grants.advantage.attack.all",
-                            "value": "1",
-                            "type": "custom",
-                            "priority": 20
-                        },
-                        {
-                            "key": "flags.midi-qol.advantage.attack.all",
-                            "value": "activity?.ability === 'str' && activity?.actionType === 'mwak'",
-                            "type": "custom",
-                            "priority": 20
-                        },
-                        {
-                            "key": "macro.itemMacro",
-                            "type": "custom",
-                            "value": "function.game.gps.recklessAttack",
-                            "priority": 20
-                        },
-                    ]
-                },
+            let effectData = [{ duration: { expiry: "sourceStart" },
+                system: { changes: [
+                    {
+                        "key": "flags.midi-qol.grants.advantage.attack.all",
+                        "value": 1,
+                        type: "custom",
+                        "priority": 20
+                    },
+                    {
+                        "key": "flags.midi-qol.advantage.attack.all",
+                        "value": "activity?.ability === 'str' && activity?.actionType === 'mwak'",
+                        type: "custom",
+                        "priority": 20
+                    },
+                    {
+                        "key": "macro.itemMacro",
+                        type: "custom",
+                        "value": "function.game.gps.recklessAttack",
+                        "priority": 20
+                    },
+                ] },
                 "transfer": false,
                 "disabled": false,
                 "flags": {
                     "dae": {
                         "transfer": false,
                         "stackable": "noneName",
-                        "specialDuration": [
-                            "turnStartSource",
-                            "combatEnd"
-                        ]
+                        "specialDuration": []
                     },
                     "midi-qol": {
                         "forceCEOff": true
                     },
-                    "gambits-premades": {
+                    "gambits-premades": { expireOnCombatEnd: true,
                         "gpsUuid": "872c2cfd-5f58-4e64-a804-2b0db2c65900"
                     }
                 },
                 "name": "Reckless Attack - Effects",
-                "img": item.img,
+                img: item.img,
                 "origin": item.uuid
             }];
 
@@ -116,10 +110,10 @@ export async function recklessAttack({ speaker, actor, token, character, item, a
     }
 
     if(args?.[0] === "each" && args?.[2].turn === "endTurn") {
-        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "872c2cfd-5f58-4e64-a804-2b0db2c65900" && !e.duration?.expired);
+        let effectData = actor.appliedEffects.find(e => e.flags["gambits-premades"]?.gpsUuid === "872c2cfd-5f58-4e64-a804-2b0db2c65900");
         if(effectData) {
             let removeAdv = effectData.system.changes.filter(change => change.key !== "flags.midi-qol.advantage.attack.all");
-            await MidiQOL.socket().executeAsGM("updateEffects",{actorUuid:actor.uuid,updates:[{_id: effectData.id,"system.changes": removeAdv}]});
+            await MidiQOL.socket().executeAsGM("updateEffects",{actorUuid:actor.uuid,updates:[{_id: effectData.id,system: { changes: removeAdv }}]});
         }
     }
 

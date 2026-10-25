@@ -1,5 +1,4 @@
 export async function dimensionDoor({ speaker, actor, token, character, item, args, scope, workflow, options }) {
-    const aseCartoonActive = game.modules.get("animated-spell-effects-cartoon")?.active === true;
     if (args[0].macroPass === "preActiveEffects") {
         if (workflow.targets.size > 1) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.CanOnlySelectOne"));
         const traveler = await game.gps.chooseTeleportTraveler({token, item, target: workflow.targets.first()});
@@ -7,7 +6,7 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
         let target = traveler.token ?? null;
         if(target) {
             let targetDistance = MidiQOL.computeDistance(target,token, {wallsBlock: true, includeCover: true})
-            if(targetDistance > game.gps.convertFromFeet({range:6})) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.MustBeWithin5Feet"));
+            if(targetDistance < 0 || targetDistance > game.gps.convertFromFeet({range:5})) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.MustBeWithin5Feet"));
 
             const sizeMap = {
                 tiny: 1,
@@ -19,7 +18,7 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
             };
             let targetValue = sizeMap[target.actor.system.traits.size];
             let initiatingValue = sizeMap[actor.system.traits.size];
-            if(targetValue > (initiatingValue + 1)) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.TooLarge"));
+            if(targetValue > initiatingValue) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.TooLarge"));
         }
         const portalScale = token?.w / canvas.grid.size * 0.7;
 
@@ -40,22 +39,20 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
 
         let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
         let { animEnabled, animColor } = cprConfig;
-        const aseAnimationsEnabled = animEnabled && aseCartoonActive;
-        if(!animColor) animColor = "red";
+        if(animColor === "orange") animColor = "yellow";
+        if(!["green", "purple", "yellow"].includes(animColor)) animColor = "green";
+        animEnabled &&= Sequencer.Database.entryExists(`eskie.environment.portal.doorway.01.side.one_shot.no_base.${animColor}`);
 
         if(animEnabled) {
-            let magicSign;
-            if(aseAnimationsEnabled) {
-                magicSign = new Sequence({moduleName: "gambits-premades", softFail: true}).effect()
-                    .file(`animated-spell-effects-cartoon.magic.portal.${animColor}`)
-                    .atLocation({ x: midpointX, y: midpointY })
-                    .scale(portalScale * 1.5)
-                    .opacity(1)
-                    .name(`${token.document.name}_DimensionDoor1`)
-                    .persist();
-            }
+            const magicSign = new Sequence().effect()
+                .file(`eskie.environment.portal.doorway.01.side.one_shot.no_base.${animColor}`)
+                .atLocation({ x: midpointX, y: midpointY })
+                .scale(portalScale * 1.5)
+                .opacity(1)
+                .name(`${token.document.name}_DimensionDoor1`)
+                .persist();
 
-            const magicSign2 = new Sequence({moduleName: "gambits-premades", softFail: true}).effect()
+            const magicSign2 = new Sequence().effect()
                 .file(`jb2a.portals.horizontal.ring.dark_${animColor}`)
                 .belowTokens()
                 .atLocation(token)
@@ -66,7 +63,7 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
 
             let magicSign3;
             if(target) {
-                magicSign3 = new Sequence({moduleName: "gambits-premades", softFail: true}).effect()
+                magicSign3 = new Sequence().effect()
                     .file(`jb2a.portals.horizontal.ring.dark_${animColor}`)
                     .belowTokens()
                     .atLocation(target)
@@ -76,7 +73,7 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
                     .persist();
             }
 
-            if(magicSign) await magicSign.play();
+            await magicSign.play();
             await magicSign2.play();
             if(target) await magicSign3.play();
         }
@@ -84,42 +81,32 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
         let position = await game.gps.chooseTeleportDestination({token, item, range: item.system.range.value});
 
         if(animEnabled) {
-            if(aseAnimationsEnabled) Sequencer.EffectManager.endEffects({ name: `${token.document.name}_DimensionDoor1` });
+            Sequencer.EffectManager.endEffects({ name: `${token.document.name}_DimensionDoor1` });
             Sequencer.EffectManager.endEffects({ name: `${token.document.name}_DimensionDoor2` });
             if(target) Sequencer.EffectManager.endEffects({ name: `${token.document.name}_DimensionDoor3` });
         }
 
         if(!position) return;
 
-        const outroSequence = new Sequence({moduleName: "gambits-premades", softFail: true});
+        const outroSequence = new Sequence();
         if(animEnabled) {
             let hue;
             let file;
             switch (animColor) {
-                case "blue":
-                    hue = 0;
-                    file = "jb2a.energy_conduit.bluepurple.square.01"
-                    break;
                 case "green":
                     hue = 0;
                     file = "jb2a.energy_conduit.greenyellow.square"
                     break;
-                // Additional cases
                 case "purple":
                     hue = 30;
                     file = "jb2a.energy_conduit.bluepurple.square.01"
-                    break;
-                case "red":
-                    hue = 280;
-                    file = "jb2a.energy_conduit.greenyellow.square"
                     break;
                 case "yellow":
                     hue = 60;
                     file = "jb2a.energy_conduit.greenyellow.square"
                     break;
-                default: hue = 280;
             }
-            
+
             outroSequence.effect()
                 .file(file)
                 .scale(portalScale * 0.5)
@@ -149,14 +136,14 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
 
         if(target) {
             const tokenSize = target.w;
-            const offsetX = (token.w + target.w) / 2;
+            const offsetX = (token.w + tokenSize) / 2;
 
             offsetLocation = {
                 x: position.x + offsetX,
-                y: position.y 
+                y: position.y
             };
 
-            const outroSequence2 = new Sequence({moduleName: "gambits-premades", softFail: true});
+            const outroSequence2 = new Sequence();
             outroSequence2.animation()
                 .on(target)
                 .teleportTo(offsetLocation, { relativeToCenter: true })
@@ -164,9 +151,9 @@ export async function dimensionDoor({ speaker, actor, token, character, item, ar
 
             await outroSequence2.play();
         }
-        if(aseAnimationsEnabled) {
-            const outroSequence3 = new Sequence({moduleName: "gambits-premades", softFail: true}).effect()
-            .file(`animated-spell-effects-cartoon.magic.portal.${animColor}`)
+        if(animEnabled) {
+            const outroSequence3 = new Sequence().effect()
+            .file(`eskie.environment.portal.doorway.01.side.one_shot.no_base.${animColor}`)
             .atLocation(offsetLocation)
             .scale(portalScale * 1.5)
             .opacity(1);

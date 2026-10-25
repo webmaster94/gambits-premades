@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2024",
       "book": "",
@@ -180,46 +180,6 @@
     "equipped": false
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Adventuring Gear",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": null,
-        "tags": [
-          "Damage",
-          "Utility",
-          "Exploration",
-          "Combat"
-        ],
-        "sources": [
-          {
-            "sourceId": 1,
-            "pageNumber": null,
-            "sourceType": 2
-          },
-          {
-            "sourceId": 2,
-            "pageNumber": null,
-            "sourceType": 1
-          }
-        ],
-        "stackable": true
-      },
-      "id": 976664155,
-      "entityTypeId": 1439493548,
-      "containerEntityId": 976664150,
-      "containerEntityTypeId": 1439493548,
-      "definitionEntityTypeId": 2103445194,
-      "definitionId": 91,
-      "originalName": "Torch",
-      "version": "3.6.0",
-      "importId": "LqcaPoeCikRHYH6K"
-    },
     "dae": {
       "macro": {
         "name": "Candle",
@@ -259,24 +219,6 @@
       "effectCondition": "",
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default"
-    },
-    "scene-packer": {
-      "hash": "5059d02a4bb80ff81a038c57df5581471214dd94",
-      "sourceId": "Item.k1Xsuy6O9DL6VXhs"
-    },
-    "midiProperties": {
-      "confirmTargets": "never",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
     },
     "core": {},
     "autoanimations": {
@@ -499,15 +441,8 @@
       "fromAmmo": false,
       "version": 5
     },
-    "universalAnimations": {
-      "override": "neverPlay"
-    },
     "dnd5e": {
-      "dependents": [
-        {
-          "uuid": "Actor.edtGqNIYfHYowUUr.ActiveEffect.CIj66Tun0q6e027F"
-        }
-      ],
+      "dependents": [],
       "riders": {
         "activity": [],
         "effect": []
@@ -518,7 +453,35 @@
       "actionSection": ""
     },
     "gambits-premades": {
-      "gpsUuid": "3c2adfee-50c0-4393-8ed3-b6ac53a53fe2"
+      "gpsUuid": "3c2adfee-50c0-4393-8ed3-b6ac53a53fe2",
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        }
+      },
+      "animationModules": [
+        "JB2AFree"
+      ],
+      "animationModuleNote": "OptionalImpact"
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [],

@@ -135,7 +135,7 @@
       "rules": "2014",
       "book": "",
       "page": "",
-      "custom": "1.0.51",
+      "custom": "",
       "license": ""
     },
     "advancement": [],
@@ -169,25 +169,25 @@
       "system": {
         "changes": [
           {
-            "key": "system.bonuses.All-Attacks",
+            "key": "system.rolls.attack.bonus",
             "value": -1,
             "priority": 20,
             "type": "add"
           },
           {
-            "key": "system.bonuses.abilities.save",
+            "key": "system.rolls.ability.save.bonus",
             "value": -1,
             "priority": 20,
             "type": "add"
           },
           {
-            "key": "system.bonuses.abilities.check",
+            "key": "system.rolls.ability.check.bonus",
             "value": -1,
             "priority": 20,
             "type": "add"
           },
           {
-            "key": "system.bonuses.All-Damage",
+            "key": "system.rolls.damage.all.bonus",
             "value": -1,
             "priority": 20,
             "type": "add"
@@ -204,7 +204,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "countDeleteDecrement",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
@@ -217,47 +216,21 @@
           "riders": {
             "statuses": []
           },
-          "dependents": [
-            {
-              "uuid": "Actor.P9e99TZAALedT5cy.ActiveEffect.7Ua3MxyRS8fJbd0x"
-            },
-            {
-              "uuid": "Actor.P9e99TZAALedT5cy.ActiveEffect.IYJDMnpgewm9m86i"
-            },
-            {
-              "uuid": "Actor.P9e99TZAALedT5cy.ActiveEffect.hqcX63F8VIi5h62o"
-            },
-            {
-              "uuid": "Actor.P9e99TZAALedT5cy.ActiveEffect.ik9LALUDobGeL93f"
-            }
-          ]
+          "dependents": []
         },
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "gambits-premades": {
           "gpsUuid": "7186eac1-010a-4fb4-bd22-699d06839162"
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!caYyWnXvYjgsJnQd.PyTbYhpx8qAUSYhr",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!caYyWnXvYjgsJnQd.PyTbYhpx8qAUSYhr"
     },
     {
       "name": "Wound Applicator",
@@ -287,7 +260,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
@@ -300,26 +272,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!caYyWnXvYjgsJnQd.5lN7yVKA5sdsrcMN",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!caYyWnXvYjgsJnQd.5lN7yVKA5sdsrcMN"
     },
     {
       "name": "Wound Checker",
@@ -349,7 +308,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "noneNameOnly",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "endEveryTurn",
           "specialDuration": [],
@@ -366,36 +324,20 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "gambits-premades": {
           "gpsUuid": "a6e73d28-8fac-4aad-a30a-4d992217a710"
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!caYyWnXvYjgsJnQd.aXetKSabQ5JW5gEu",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!caYyWnXvYjgsJnQd.aXetKSabQ5JW5gEu"
     }
   ],
   "folder": null,
   "flags": {
-    "crux": {
-      "trayVisibility": "default"
-    },
     "dnd5e": {
       "riders": {
         "activity": [],
@@ -445,14 +387,25 @@
       "effectCondition": "",
       "onUseMacroName": ""
     },
-    "midiProperties": {
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "W3l6nhWFGtZetGt9": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "_id": "caYyWnXvYjgsJnQd",

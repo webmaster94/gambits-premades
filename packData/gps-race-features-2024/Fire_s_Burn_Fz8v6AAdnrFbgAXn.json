@@ -146,7 +146,7 @@
       "max": "@prof"
     },
     "description": {
-      "value": "",
+      "value": "<p><strong>GPS setup:</strong> Offered after Midi computes damage for the hit target, including immunity and reduction. Damage cards set to manual application still require the GM to apply the calculated damage.</p>",
       "chat": ""
     },
     "source": {
@@ -154,7 +154,7 @@
       "rules": "2024",
       "book": "",
       "page": "",
-      "custom": "1.0.40",
+      "custom": "",
       "license": ""
     },
     "enchant": {},
@@ -187,7 +187,7 @@
         "changes": [
           {
             "key": "flags.midi-qol.onUseMacroName",
-            "value": "function.game.gps.firesBurn2024,postDamageRollComplete",
+            "value": "function.game.gps.firesBurn2024,postActiveEffects",
             "priority": 20,
             "type": "custom"
           }
@@ -203,7 +203,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
@@ -220,26 +219,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!Fz8v6AAdnrFbgAXn.mCCptcgKbDeuSNeC",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!Fz8v6AAdnrFbgAXn.mCCptcgKbDeuSNeC"
     }
   ],
   "folder": "jlez19aJPCu4ecFC",
@@ -250,9 +236,6 @@
         "effect": []
       }
     },
-    "crux": {
-      "trayVisibility": "default"
-    },
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default",
@@ -261,14 +244,25 @@
       "otherCondition": "",
       "effectCondition": ""
     },
-    "midiProperties": {
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "002cv19dj8WGzSl2": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Damage",
+        "activityType": "damage",
+        "version": 2
+      }
     }
   },
   "_id": "Fz8v6AAdnrFbgAXn",

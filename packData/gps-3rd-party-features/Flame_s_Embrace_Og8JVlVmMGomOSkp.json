@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -336,7 +336,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
@@ -353,49 +352,21 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "gambits-premades": {
           "gpsUuid": "c87befde-c36f-4237-b645-e98e1526de42"
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!Og8JVlVmMGomOSkp.bqZNMz63jS3CJsgl",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!Og8JVlVmMGomOSkp.bqZNMz63jS3CJsgl"
     }
   ],
   "flags": {
     "midi-qol": {
       "effectActivation": false
-    },
-    "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
     },
     "dnd5e": {
       "sourceId": "Compendium.kp-deep-magic-volume-2.deep-magic-2-subclass-features.Item.8m2fwOObtveUWkpw",
@@ -404,9 +375,6 @@
         "activity": [],
         "effect": []
       }
-    },
-    "scene-packer": {
-      "hash": "2084e027d2153bf809cf9ba58313d7af1ca4669f"
     },
     "tidy5e-sheet": {
       "actionSection": "Other",
@@ -440,6 +408,34 @@
           "compendiumSource": null,
           "duplicateSource": null
         }
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      },
+      "XlPgKZcLDzD5xUyN": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
       }
     }
   },

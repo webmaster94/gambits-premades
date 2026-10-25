@@ -4,7 +4,7 @@ export async function shieldMaster2024({ speaker, actor, token, character, item,
         if(!game.combat) return;
         let meleeAttack = ((workflow.activity?.actionType === 'mwak' && !workflow.item.system?.properties?.has('thr')) || (workflow.activity?.actionType === 'mwak' && MidiQOL.findNearby('Hostile',workflow.targets.first(), game.gps.convertFromFeet({range:6})).length > 0 && workflow.item.system?.properties?.has('thr'))) ? true : false;
         if (!meleeAttack) return;
-        if(game.combat?.current?.tokenId !== token.id) {
+        if(game.combat?.current.tokenId !== token.id) {
             if(debugEnabled) game.gps.logInfo(`Shield Bash for ${actor.name} failed due to not tokens turn in combat`);
             return;
         }
@@ -92,15 +92,15 @@ export async function shieldMaster2024({ speaker, actor, token, character, item,
         `;
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
-            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser };
-            
-            let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "gm",type: "multiDialog" };
+            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid, focusTokenUuid: target.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser };
 
-            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
+            let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid, focusTokenUuid: target.document.uuid,source: "gm",type: "multiDialog" };
+
+            result = await game.gps.handleDialogPromises({userDialogArgs, gmDialogArgs});
         } else {
-        result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
+        result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid, focusTokenUuid: target.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
         }
-                
+
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result || {};
 
         if (!userDecision) {
@@ -113,8 +113,8 @@ export async function shieldMaster2024({ speaker, actor, token, character, item,
             const saveResult = await game.gps.gpsActivityUse({itemUuid: item.uuid, identifier: "syntheticSave", targetUuid: target.document.uuid});
 
             if (saveResult.failedSaves.size !== 0) {
-                if(abilityCheck === "prone") await game.gps.socket.executeAsGM("gmToggleStatus", {tokenUuid: `${target.document.uuid}`, status: "prone", active: true });
-                else if(abilityCheck === "push") await MidiQOL.moveTokenAwayFromPoint(target, pushRange, token, true, true);
+                if(abilityCheck === "prone") await game.gps.queryGM("gmToggleStatus", {tokenUuid: `${target.document.uuid}`, status: "prone", active: true });
+                else if(abilityCheck === "push") await MidiQOL.moveTokenAwayFromPoint(target, pushRange, token.center, { animate: true });
                 else return;
             }
         }
@@ -124,8 +124,7 @@ export async function shieldMaster2024({ speaker, actor, token, character, item,
         let debugEnabled = MidiQOL.safeGetGameSetting('gambits-premades', 'debugEnabled');
         item = await actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === "b32e3d48-034b-4a56-95b4-f392a525f299");
 
-        const saveAbility = game.gps.getWorkflowSaveDetails(workflow)?.ability;
-        if((saveAbility?.first?.() ?? saveAbility) !== "dex") {
+        if(workflow.saveActivityDetails?.ability?.first() !== "dex") {
             if(debugEnabled) game.gps.logInfo(`${item.name} Interpose Shield for ${actor.name} failed because save is not dex`);
             return;
         }
@@ -171,17 +170,17 @@ export async function shieldMaster2024({ speaker, actor, token, character, item,
                 </div>
             </div>
         `;
-        
+
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
             let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser };
-            
+
             let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "gm",type: "multiDialog" };
-        
-            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
+
+            result = await game.gps.handleDialogPromises({userDialogArgs, gmDialogArgs});
         } else {
-            result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
+            result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
         }
-                
+
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result || {};
 
         if (!userDecision) {

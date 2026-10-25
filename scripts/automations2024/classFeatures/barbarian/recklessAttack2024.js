@@ -1,13 +1,12 @@
 export async function recklessAttack2024({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "preAttackRollConfig") {
-        const currentTokenId = game.combat?.current?.tokenId;
-        if(!currentTokenId) return;
+        if(!game.combat) return;
         let meleeAttack = (workflow.activity?.ability === 'str') ? true : false;
         if (!meleeAttack) return;
         let recklessCheck = await actor.getFlag("midi-qol", "checkRecklessAttack2024");
         if(recklessCheck === false || recklessCheck === true) return;
 
-        let currentCombatant = canvas.tokens.get(currentTokenId);
+        let currentCombatant = canvas.tokens.get(game.combat.current?.tokenId);
         if (currentCombatant?.id !== token.id) return;
 
         let dialogId = "recklessattack2024";
@@ -42,14 +41,14 @@ export async function recklessAttack2024({ speaker, actor, token, character, ite
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
             let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser };
-            
+
             let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "gm",type: "multiDialog" };
 
-            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
+            result = await game.gps.handleDialogPromises({userDialogArgs, gmDialogArgs});
         } else {
-        result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
+        result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
         }
-                
+
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result || {};
 
         if (!userDecision) {
@@ -60,54 +59,47 @@ export async function recklessAttack2024({ speaker, actor, token, character, ite
             workflow.tracker.advantage.add(userDecision, "Reckless Attack");
             await actor.setFlag("midi-qol", "checkRecklessAttack2024", true);
 
-            let effectData = [{
-                "system": {
-                    "changes": [
-                        {
-                            "key": "flags.midi-qol.grants.advantage.attack.all",
-                            "value": "1",
-                            "type": "custom",
-                            "priority": 20
-                        },
-                        {
-                            "key": "flags.midi-qol.advantage.attack.all",
-                            "value": "activity?.ability === 'str'",
-                            "type": "custom",
-                            "priority": 20
-                        },
-                        {
-                            "key": "macro.itemMacro",
-                            "type": "custom",
-                            "value": "function.game.gps.recklessAttack2024",
-                            "priority": 20
-                        },
-                    ]
-                },
+            let effectData = [{ duration: { expiry: "sourceStart" },
+                system: { changes: [
+                    {
+                        "key": "flags.midi-qol.grants.advantage.attack.all",
+                        "value": 1,
+                        type: "custom",
+                        "priority": 20
+                    },
+                    {
+                        "key": "system.abilities.str.attack.roll.mode",
+                        "value": 1,
+                        type: "add",
+                        "priority": 20
+                    },
+                    {
+                        "key": "macro.itemMacro",
+                        type: "custom",
+                        "value": "function.game.gps.recklessAttack2024",
+                        "priority": 20
+                    },
+                ] },
                 "transfer": false,
                 "disabled": false,
                 "flags": {
                     "dae": {
                         "transfer": false,
                         "stackable": "noneName",
-                        "specialDuration": [
-                            "turnStartSource",
-                            "combatEnd"
-                        ]
+                        "specialDuration": []
                     },
                     "midi-qol": {
                         "forceCEOff": true
                     },
-                    "gambits-premades": {
+                    "gambits-premades": { expireOnCombatEnd: true,
                         "gpsUuid": "872c2cfd-5f58-4e64-a804-2b0db2c65900"
                     },
-                    "chris-premades": {
-                        "info": {
-                            "identifier": "recklessAttackEffect"
-                        }
+                    "cat": {
+                        "identifier": "recklessAttackEffect"
                     }
                 },
                 "name": "Reckless Attack - Effects",
-                "img": item.img,
+                img: item.img,
                 "origin": item.uuid
             }];
 

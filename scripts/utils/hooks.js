@@ -1,9 +1,32 @@
-import { executeWorkflow, updateRegionPosition, hideTemplateElements, applyRegionAttachment, updateSettings, daeAddFlags, arcaneShotValidActivities } from "./hookUtils.js";
+import { registerWickerboneHooks } from "../automations/3rdPartyClassFeatures/druid/wickerboneBehemoth.js";
+import { registerFuryOfTheSmallHooks } from "../automations/raceFeatures/furyOfTheSmall.js";
+import { executeWorkflow, updateSettings, daeAddFlags, arcaneShotValidActivities } from "./hookUtils.js";
+import { expireCombatEffects } from "./effectUtils.js";
+import { getRegionVisibility } from "./regionUtils.js";
+import {isAttackForcedMiss, registerAttackOutcomeHandling} from "./attackOutcomeUtils.js";
+
+import { checkEnervationMovement, checkEnervationWalls } from "../automations/spells/enervation.js";
 
 export function registerHooks() {
-    const isSaveWorkflow = workflow => !!game.gps.getWorkflowSaveActivity(workflow);
-    Hooks.on("preUpdateToken", async (token, updateData, options, userId) => {
-        if(!options?.teleport || !updateData?.x || !game.gpsSettings.magicUsersNemesisEnabled) return;
+    registerWickerboneHooks();
+    registerFuryOfTheSmallHooks();
+    registerAttackOutcomeHandling();
+    Hooks.on("moveToken", document => checkEnervationMovement(document));
+    Hooks.on("deleteToken", document => checkEnervationMovement(document, {deleted: true}));
+    Hooks.on("createWall", checkEnervationWalls);
+    Hooks.on("updateWall", checkEnervationWalls);
+    Hooks.on("deleteWall", checkEnervationWalls);
+    Hooks.on("deleteRegion", region => game.gps.cleanupRegionStatuses(region));
+    Hooks.on("dnd5e.renderChatMessage", (message, element) => game.gps.renderChatResults(message, element));
+
+    Hooks.on("dnd5e.preUseActivity", (activity, usage) => {
+        if (usage.midiOptions?.workflowOptions?.gps?.opportunityAttack && usage.workflow) usage.workflow.AoO = true;
+    });
+
+    Hooks.on("preMoveToken", async (token, movement) => {
+        if(game.gps.disableRegionTeleport || !game.gpsSettings.magicUsersNemesisEnabled) return;
+        const action = movement.passed.waypoints.at(-1)?.action;
+        if(!CONFIG.Token.movement.actions[action]?.teleport) return;
 
         const originX = token._source.x;
         const originY = token._source.y;
@@ -44,7 +67,7 @@ export function registerHooks() {
 
     Hooks.on("midi-qol.prePreambleComplete", async (workflow) => {
         let workflowItemUuid = workflow.itemCardUuid;
-        let workflowType = isSaveWorkflow(workflow) ? "save" : (workflow.activity?.hasAttack) ? "attack" : "item";
+        let workflowType = (workflow.saveActivity || workflow.activity?.type === "save") ? "save" : (workflow.activity?.hasAttack) ? "attack" : "item";
         if (game.gpsSettings.counterspellEnabled && workflow.item.type === "spell") await executeWorkflow({ workflowItem: "counterspell", workflowData: workflowItemUuid, workflowType: workflowType, workflowCombat: true });
         if (game.gpsSettings.counterspellEnabled && workflow?.item?.type === "spell") await executeWorkflow({ workflowItem: "counterspell2024", workflowData: workflowItemUuid, workflowType: workflowType, workflowCombat: true });
         if (game.gpsSettings.temporalShuntEnabled && (workflow.item.type === "spell" || workflow.activity.hasAttack)) await executeWorkflow({ workflowItem: "temporalShunt", workflowData: workflowItemUuid, workflowType: workflowType, workflowCombat: true });
@@ -54,6 +77,7 @@ export function registerHooks() {
 
     Hooks.on("midi-qol.preCheckHits", async (workflow) => {
         if(!workflow.activity.hasAttack) return;
+        if(isAttackForcedMiss(workflow) || (workflow.targets.size > 0 && [...workflow.targets].every(target => isAttackForcedMiss(workflow, target)))) return;
         let workflowItemUuid = workflow.itemCardUuid;
         if (game.gpsSettings.silveryBarbsEnabled) await executeWorkflow({ workflowItem: "silveryBarbs", workflowData: workflowItemUuid, workflowType: "attack", workflowCombat: true });
         if (game.gpsSettings.cuttingWordsEnabled) await executeWorkflow({ workflowItem: "cuttingWords", workflowData: workflowItemUuid, workflowType: "attack", workflowCombat: true });
@@ -88,13 +112,13 @@ export function registerHooks() {
     });
 
     Hooks.on("midi-qol.preWaitForSaves", async (workflow) => {
-        if(!isSaveWorkflow(workflow)) return;
+        if(!workflow.saveActivity) return;
         let workflowItemUuid = workflow.itemCardUuid;
         if (game.gpsSettings.mageSlayerEnabled) await executeWorkflow({ workflowItem: "mageSlayer", workflowData: workflowItemUuid, workflowType: "save", workflowCombat: true });
     });
 
-    Hooks.on("midi-qol.postCheckSaves", async (workflow) => {
-        if(!isSaveWorkflow(workflow)) return;
+    Hooks.on("midi-qol.preSavesComplete", async (workflow) => {
+        if(!workflow.saveActivity) return;
         let workflowItemUuid = workflow.itemCardUuid;
         const hasDrafynsBaneOfExcellence = Array.from(workflow.saves).some(t => t.document.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "e6e24759-a9d3-4993-b0f2-6328010a6520"));
         if (hasDrafynsBaneOfExcellence) await executeWorkflow({ workflowItem: "drafynsBaneOfExcellence", workflowData: workflowItemUuid, workflowType: "save", workflowCombat: true });
@@ -111,20 +135,11 @@ export function registerHooks() {
     });
 
     Hooks.on("midi-qol.postSavesComplete", async (workflow) => {
-        if(!isSaveWorkflow(workflow)) return;
+        if(!workflow.saveActivity) return;
         let workflowItemUuid = workflow.itemCardUuid;
         if (game.gpsSettings.restoreBalanceEnabled) await executeWorkflow({ workflowItem: "restoreBalance", workflowData: workflowItemUuid, workflowType: "savePost", workflowCombat: true });
         if (game.gpsSettings.poetryInMiseryEnabled) await executeWorkflow({ workflowItem: "poetryInMisery", workflowData: workflowItemUuid, workflowType: "save", workflowCombat: true });
     });
-
-    if(!game.modules.get("gambitsIdentificationInhibitor")?.active) {
-        Hooks.on("preUpdateItem", (item, update, options) => {
-            if (!game.user.isGM && !item.system?.identified && "identified" in (update.system ?? {}) && game.gpsSettings.identifyRestrictionEnabled && !options?.isAdvancement) {
-                ui.notifications.error(game.i18n.format("GAMBITSPREMADES.Notifications.Hooks.Msg", { message: game.gpsSettings.identifyRestrictionMessage }));
-                return false;
-            }
-        });
-    }
 
     Hooks.on("midi-qol.preDamageRollComplete", async (workflow) => {
         if(!workflow.activity.hasDamage) return;
@@ -135,7 +150,7 @@ export function registerHooks() {
 
     Hooks.on("midi-qol.preCompleted", async (workflow) => {
         let workflowItemUuid = workflow.itemCardUuid;
-        if (game.gpsSettings.mageSlayerEnabled && workflow.activity.type === "spell") await executeWorkflow({ workflowItem: "mageSlayer", workflowData: workflowItemUuid, workflowType: "spell", workflowCombat: true });
+        if (game.gpsSettings.mageSlayerEnabled && workflow.item.type === "spell") await executeWorkflow({ workflowItem: "mageSlayer", workflowData: workflowItemUuid, workflowType: "spell", workflowCombat: true });
         if (game.gpsSettings.sentinelEnabled && workflow.activity.type === "attack") await executeWorkflow({ workflowItem: "sentinel", workflowData: workflowItemUuid, workflowType: "attack", workflowCombat: true });
         if (game.gpsSettings.sentinelEnabled && workflow.activity.type === "attack") await executeWorkflow({ workflowItem: "sentinel2024", workflowData: workflowItemUuid, workflowType: "attack", workflowCombat: true });
     });
@@ -144,21 +159,18 @@ export function registerHooks() {
         let actor = data.subject;
         let abilityId = data.ability;
         if (game.gpsSettings.poetryInMiseryEnabled) await executeWorkflow({ workflowItem: "poetryInMisery", workflowData: { actor: actor, roll: rolls[0], abilityId: abilityId }, workflowType: "save", workflowCombat: false });
-        if (game.gpsSettings.flashOfGeniusEnabled) await executeWorkflow({ workflowItem: "flashOfGenius", workflowData: { actor: actor, roll: rolls[0], abilityId: abilityId }, workflowType: "save", workflowCombat: false });
     });
 
     Hooks.on("dnd5e.rollAbilityCheck", async (rolls, data) => {
         let actor = data.subject;
         let abilityId = data.ability;
         if (game.gpsSettings.poetryInMiseryEnabled) await executeWorkflow({ workflowItem: "poetryInMisery", workflowData: { actor: actor, roll: rolls[0], abilityId: abilityId }, workflowType: "ability", workflowCombat: false });
-        if (game.gpsSettings.flashOfGeniusEnabled) await executeWorkflow({ workflowItem: "flashOfGenius", workflowData: { actor: actor, roll: rolls[0], abilityId: abilityId }, workflowType: "ability", workflowCombat: false });
     });
 
-    Hooks.on("dnd5e.rollSkillV2", async (rolls, data) => {
+    Hooks.on("dnd5e.rollSkill", async (rolls, data) => {
         let actor = data.subject;
         let abilityId = data.skill;
         if (game.gpsSettings.poetryInMiseryEnabled) await executeWorkflow({ workflowItem: "poetryInMisery", workflowData: { actor: actor, roll: rolls[0], abilityId: abilityId }, workflowType: "skill", workflowCombat: false });
-        if (game.gpsSettings.flashOfGeniusEnabled) await executeWorkflow({ workflowItem: "flashOfGenius", workflowData: { actor: actor, roll: rolls[0], abilityId: abilityId }, workflowType: "skill", workflowCombat: false });
     });
 
     Hooks.on("preUpdateCombat", (combat, update, options) => {
@@ -167,7 +179,9 @@ export function registerHooks() {
         const prevStarted = combat.started;
         foundry.utils.setProperty(options, startedPath, prevStarted);
     });
-    
+
+    Hooks.on("combatTurnChange", combat => game.gps.syncOpportunityAttackRegions(combat));
+
     Hooks.on("updateCombat", async (combat, update, options) => {
         if(game.user.id !== game.gps.getPrimaryGM()) return;
         const combatStarted = combat.started && !foundry.utils.getProperty(options, `gambits-premades.started`);
@@ -177,78 +191,49 @@ export function registerHooks() {
             await game.gps.enableOpportunityAttack(combat, "startCombat");
         }
     });
-    
+
     Hooks.on("createCombatant", async (combatant, options, userId) => {
         if(game.user.id !== game.gps.getPrimaryGM()) return;
-        let combat = game.combat;
+        const combat = combatant.parent;
         if (combat && combat.started && game.gpsSettings.opportunityAttackEnabled) {
             await game.gps.enableOpportunityAttack(combatant, "enterCombat");
         }
     });
-    
+
     Hooks.on('deleteCombat', async (combat) => {
         if(game.user.id !== game.gps.getPrimaryGM()) return;
+        await expireCombatEffects(combat);
         await game.gps.disableOpportunityAttack(combat, "endCombat");
     });
-    
+
     Hooks.on("deleteCombatant", async (combatant, options, userId) => {
         if(game.user.id !== game.gps.getPrimaryGM()) return;
-        let combat = game.combat;
+        const combat = combatant.parent;
         if (combat && combat.started) {
             await game.gps.disableOpportunityAttack(combatant, "exitCombat");
         }
     });
 
-    // v14: placed templates are Region documents (flags.core.MeasuredTemplate); MeasuredTemplate CRUD/refresh hooks no longer fire
-    const isTemplateRegion = (doc) => !!doc?.getFlag?.('core', 'MeasuredTemplate');
-    Hooks.on('createRegion', (regionDocument) => {
-        if (!isTemplateRegion(regionDocument)) return;
-        const region = regionDocument.object;
-        if (region && (game.gpsSettings.hideTemplates || regionDocument.getFlag('gambits-premades', 'templateHiddenOA'))) {
-            hideTemplateElements(region);
+    Hooks.on("dnd5e.createMeasuredTemplate", (activity, regions) => {
+        if (!activity.item?.getFlag("gambits-premades", "gpsUuid") && !activity.item?.getFlag("gambits-premades", "regionBehaviors") && !activity.item?.getFlag("midi-qol", "onUseMacroName")?.includes("function.game.gps.")) return;
+        const visibility = getRegionVisibility(activity.item);
+        for (const region of regions) {
+            foundry.utils.setProperty(region, "flags.gambits-premades.area", true);
+            region.visibility = visibility;
         }
     });
 
-    Hooks.on('updateRegion', (regionDocument) => {
-        if (!isTemplateRegion(regionDocument)) return;
-        const region = regionDocument.object;
-        if (region && (game.gpsSettings.hideTemplates || regionDocument.getFlag('gambits-premades', 'templateHiddenOA'))) {
-            hideTemplateElements(region);
+    Hooks.on("createRegion", region => {
+        if (game.user.id === game.gps.getPrimaryGM()) {
+            void game.gps.prepareRegion({ regionUuid: region.uuid }).catch(error => console.error("Gambit's Premades | Region preparation failed", error));
         }
     });
 
-    Hooks.on('refreshRegion', (region) => {
-        if (!isTemplateRegion(region.document)) return;
-        if (game.gpsSettings.hideTemplates || region.document.getFlag('gambits-premades', 'templateHiddenOA')) {
-            hideTemplateElements(region);
-        }
-    });
+    Hooks.on("midi-qol.preTemplatePlaced", workflow => game.gps.prepareWorkflowRegions(workflow));
 
-    // v14 replacement for the region-attacher module: the template's backing Region IS the region,
-    // so apply the item's configured region behaviors + flag contract directly to it.
-    Hooks.on('createRegion', async (regionDocument, options, userId) => {
-        if (game.user.id !== game.gps.getPrimaryGM()) return;
-        if (!isTemplateRegion(regionDocument)) return;
-        await applyRegionAttachment(regionDocument);
-    });
-
-    Hooks.on('updateToken', async (tokenDocument, updateData, options, userId) => {
-        if(game.user.id !== game.gps.getPrimaryGM()) return;
-        if(!game.gpsSettings.opportunityAttackEnabled) return;
-        if(!game.combat) return;
-    
-        const regions = tokenDocument.actor.getFlag('gambits-premades', 'attachedRegions') || [];
-    
-        for (const regionUuid of regions) {
-            const region = fromUuidSync(regionUuid);
-            if (region) {
-                updateRegionPosition(region, tokenDocument, updateData?.elevation, updateData?.x, updateData?.y);
-            }
-        }
-    });
+    Hooks.on("canvasReady", () => game.gps.syncOpportunityAttackRegions());
 
     Hooks.on('updateSetting', (setting) => {
-        if (!game.user.isGM) return;
         if (setting.config?.namespace === "gambits-premades") {
             updateSettings(setting.config.key);
         }
@@ -262,31 +247,26 @@ export function registerHooks() {
 
     Hooks.on('dae.setFieldData', daeAddFlags);
 
-    Hooks.on('createActiveEffect', async (effect) => {
-        if (effect.target?.system?.attributes?.movement?.walk !== 0 && effect.name !== "Incapacitated") return;
-        if (!effect.target?.appliedEffects.some(e => e.name === "Cloak of Displacement")) return;
-        await game.gps.cloakOfDisplacement({ actor: effect?.target, token: effect?.target.getActiveTokens()?.[0], args: "effectSuppression" });
-    });
-
-    let codPreDeletePassed = false;
-    Hooks.on('preDeleteActiveEffect', async (effect) => {
-        if (effect.target?.system?.attributes?.movement?.walk !== 0 && effect.name !== "Incapacitated") return;
-        if (!effect.target?.appliedEffects.some(e => e.name === "Cloak of Displacement: Start-End")) return;
-        if (effect.target?.getFlag("gambits-premades", "codTurnSuppressed")) return;
-        codPreDeletePassed = true;
-    });
-
-    Hooks.on('deleteActiveEffect', async (effect) => {
-        if (effect.target?.system?.attributes?.movement?.walk === 0) return;
-        if(!codPreDeletePassed) return;
-        codPreDeletePassed = false;
-        await game.gps.cloakOfDisplacement({ actor: effect?.target, args: "effectActivation" });
-    });
+    const syncCloak = effect => {
+        if(game.user.id !== game.gps.getPrimaryGM() || effect.target?.documentName !== "Actor") return;
+        if(effect.flags?.["gambits-premades"]?.cloakOfDisplacement || effect.system?.changes?.some(change => change.value?.includes?.("function.game.gps.cloakOfDisplacement"))) return;
+        return game.gps.cloakOfDisplacement({actor: effect.target, args: "effectState"});
+    };
+    Hooks.on("createActiveEffect", syncCloak);
+    Hooks.on("updateActiveEffect", syncCloak);
+    Hooks.on("deleteActiveEffect", syncCloak);
 
     Hooks.on('updateActor', async (actor, diff, options, userID) => {
+        if(game.user.id !== game.gps.getPrimaryGM()) return;
+        if(foundry.utils.hasProperty(diff, "system.attributes.hp.value")) await game.gps.wound({actor, args: "woundRemovalFullHeal", options: diff});
         if (!foundry.utils.hasProperty(diff, 'system.attributes.hp.temp')) return;
-      
-        const hpTemp = diff.system.attributes.hp.temp;
+
+        const hpTemp = foundry.utils.getProperty(diff, 'system.attributes.hp.temp');
+        const claim = actor.getFlag("gambits-premades", "motivationalSpeechTempHp");
+        if(claim && !options?.gpsMotivationalSpeechGrant) {
+            if(hpTemp <= 0 || hpTemp > claim.amount) await actor.unsetFlag("gambits-premades", "motivationalSpeechTempHp");
+            else if(hpTemp !== claim.amount) await actor.setFlag("gambits-premades", "motivationalSpeechTempHp", {...claim, amount: hpTemp});
+        }
         let effectData = actor.appliedEffects?.some(e => e.flags["gambits-premades"]?.gpsUuid === "32cabdaf-560e-48ea-8980-37cf5ad242c0");
         if(hpTemp > 0 || !effectData) return;
         await game.gps.motivationalSpeech({ actor: actor, args: "effectRemoval" });

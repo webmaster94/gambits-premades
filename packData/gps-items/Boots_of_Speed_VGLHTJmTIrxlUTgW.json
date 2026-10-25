@@ -10,7 +10,7 @@
       "book": "Player’s Handbook (2014)",
       "page": "155",
       "license": "",
-      "custom": "1.0.52",
+      "custom": "",
       "revision": 1,
       "rules": "2014"
     },
@@ -188,52 +188,6 @@
     "equipped": true
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Clothing",
-        "avatarUrl": "https://www.dndbeyond.com/avatars/18/916/636381772747258603.jpeg",
-        "largeAvatarUrl": "https://www.dndbeyond.com/avatars/7/136/636284714256851023.jpeg",
-        "filterType": "Wondrous item",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": 14,
-        "tags": [
-          "Buff",
-          "Movement",
-          "Utility",
-          "Footwear"
-        ],
-        "sources": [
-          {
-            "sourceId": 1,
-            "pageNumber": null,
-            "sourceType": 2
-          },
-          {
-            "sourceId": 2,
-            "pageNumber": 155,
-            "sourceType": 1
-          }
-        ],
-        "pictureUrl": "ddb-images/other/item/equipment/boots-of-speed-large.webp",
-        "isLegacy": false
-      },
-      "id": 0,
-      "entityTypeId": 0,
-      "definitionEntityTypeId": 112130694,
-      "definitionId": 4589,
-      "originalName": "Boots of Speed",
-      "version": "5.2.36",
-      "effectsApplied": true,
-      "keepIcon": true,
-      "isLegacy": false,
-      "chrisEffectsApplied": true,
-      "chrisPreEffectName": "Boots of Speed"
-    },
     "dae": {
       "alwaysActive": false,
       "activeEquipped": true,
@@ -273,32 +227,8 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "scene-packer": {
-      "sourceId": "Actor.edtGqNIYfHYowUUr.Item.bggT4B6y6ERVW98x",
-      "hash": "09e2ad33f3bc0577bbae0871a63808624bfcc563"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "dnd5e": {
-      "dependents": [
-        {
-          "uuid": "Actor.edtGqNIYfHYowUUr.ActiveEffect.L9SsD4GtLwTX4OG5"
-        }
-      ],
+      "dependents": [],
       "riders": {
         "activity": [],
         "effect": []
@@ -310,12 +240,34 @@
     },
     "gambits-premades": {
       "gpsUuid": "6274a76f-2c25-4f80-8cc0-70e02f8d880c"
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [
     {
       "img": "icons/equipment/feet/boots-collared-simple-leather.webp",
-      "duration": {},
+      "duration": {
+        "expiry": "combatEnd"
+      },
       "tint": "#ffffff",
       "transfer": true,
       "disabled": false,
@@ -325,41 +277,17 @@
           "stackable": "noneName",
           "disableCondition": "",
           "disableIncapacitated": false,
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [
-            "longRest",
-            "combatEnd"
+            "longRest"
           ]
-        },
-        "ddbimporter": {
-          "disabled": false,
-          "itemId": 0,
-          "itemEntityTypeId": 0
         },
         "midi-qol": {
           "forceCEOff": true
         },
         "core": {
           "overlay": false
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "gambits-premades": {
           "gpsUuid": "61bf2fcd-bc81-4b38-a4bb-41bc2159c9cf"
@@ -368,6 +296,10 @@
           "riders": {
             "statuses": []
           }
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "name": "Boots of Speed - Passive",
@@ -378,7 +310,7 @@
       "system": {
         "changes": [
           {
-            "key": "system.attributes.movement.walk",
+            "key": "system.attributes.movement.speeds.walk",
             "value": 0,
             "priority": 9,
             "type": "add"
@@ -393,8 +325,8 @@
       },
       "origin": "Compendium.world.gps-items.Item.SJnbBcljW2paqvIY",
       "sort": 0,
-      "_key": "!items.effects!VGLHTJmTIrxlUTgW.mQ2DXY5DjK9G1zht",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!VGLHTJmTIrxlUTgW.mQ2DXY5DjK9G1zht"
     },
     {
       "name": "Boots of Speed",
@@ -411,7 +343,7 @@
             "type": "custom"
           },
           {
-            "key": "system.attributes.movement.walk",
+            "key": "system.attributes.movement.speeds.walk",
             "value": 2,
             "priority": 20,
             "type": "multiply"
@@ -443,30 +375,12 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
         },
         "core": {
           "overlay": false
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "gambits-premades": {
           "gpsUuid": "6274a76f-2c25-4f80-8cc0-70e02f8d880c"
@@ -475,10 +389,14 @@
           "riders": {
             "statuses": []
           }
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!VGLHTJmTIrxlUTgW.4MWaqwin1ny5WN8B",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!VGLHTJmTIrxlUTgW.4MWaqwin1ny5WN8B"
     }
   ],
   "img": "icons/equipment/feet/boots-collared-simple-leather.webp",

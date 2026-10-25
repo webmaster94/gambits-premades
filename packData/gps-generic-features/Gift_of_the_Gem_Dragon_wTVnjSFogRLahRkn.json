@@ -4,10 +4,10 @@
   "system": {
     "description": {
       "value": "",
-      "chat": "When you take damage from a creature within 10 ft. of you, you can use your reaction to force that creature to make a STR saving throw (DC equals {{8+proficiency#unsigned}} + the ability modifier of the score increased by this feat). On a failure, the creature takes <strong>2d8</strong> force damage and is pushed up to 10 ft. away from you. On a success, the creature takes half as much damage and isn’t pushed. You can use this reaction {{proficiency#unsigned}} times per long rest."
+      "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -183,15 +183,6 @@
     "advancement": []
   },
   "flags": {
-    "ddbimporter": {
-      "featId": 766450,
-      "version": "3.4.63",
-      "prerequisites": []
-    },
-    "scene-packer": {
-      "sourceId": "Item.akTa9czz5Ax2W1JX",
-      "hash": "ef714853ec57738b444c18cf79ca8613f85f35a2"
-    },
     "midi-qol": {
       "onUseMacroName": "[all]ItemMacro",
       "rollAttackPerTarget": "default",
@@ -202,18 +193,6 @@
       "otherCondition": ""
     },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "dae": {
       "macro": {
         "name": "Gift of the Gem Dragon",
@@ -260,6 +239,26 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "qqRLvVeIMhGeAWqN": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "img": "icons/commodities/gems/pearl-storm.webp",
@@ -280,31 +279,17 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
           "disableCondition": ""
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "core": {
           "overlay": false
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -321,13 +306,13 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!wTVnjSFogRLahRkn.UQqm78qcCZGVhbxw",
       "start": {
-        "combat": null,
-        "round": 80,
         "time": 1697160834,
-        "turn": 0
-      }
+        "round": 80,
+        "turn": 0,
+        "combat": null
+      },
+      "_key": "!items.effects!wTVnjSFogRLahRkn.UQqm78qcCZGVhbxw"
     }
   ],
   "folder": null,

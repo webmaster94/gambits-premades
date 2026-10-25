@@ -9,7 +9,7 @@
     "source": {
       "book": "Storm King's Thunder",
       "page": "128",
-      "custom": "2.1.38",
+      "custom": "",
       "license": "",
       "revision": 1,
       "rules": "2014"
@@ -54,28 +54,10 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "startEveryTurn",
           "specialDuration": [],
           "disableCondition": ""
-        },
-        "ActiveAuras": {
-          "isAura": true,
-          "aura": "Enemy",
-          "nameOverride": "",
-          "radius": "5",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": true,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "effectmacro": {},
         "dnd5e": {
@@ -88,6 +70,10 @@
         },
         "auraeffects": {
           "originalType": "base"
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -122,21 +108,11 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!CKxCw7cGpg51EGHE.KlWCEzJ2sd6ZJQjJ",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!CKxCw7cGpg51EGHE.KlWCEzJ2sd6ZJQjJ"
     }
   ],
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {},
-      "parentId": "Fy41piBbWSU2KTwI"
-    },
-    "monsterMunch": {
-      "titleHTML": "<em><strong>Cold Aura.</strong></em>",
-      "fullName": "Cold Aura.",
-      "actionCopy": false,
-      "type": "special"
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "rollAttackPerTarget": "default",
@@ -147,35 +123,14 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "core": {},
-    "scene-packer": {
-      "hash": "7d7ef37f600ca598f6aaaa9ea41842f7ff7f36ea",
-      "sourceId": "Item.jAkC7rjZAdhta1Sh"
-    },
     "dae": {
       "macro": {
         "name": "Cold Aura",
         "img": "icons/magic/water/snowflake-ice-snow-white.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0] === \"each\") {\n    let effectOriginActor = await fromUuid(args[1]);\n    let effectOriginToken = await MidiQOL.tokenForActor(effectOriginActor.uuid);\n    if(effectOriginActor.uuid === actor.uuid) return;\n    let damageRoll = await new CONFIG.Dice.DamageRoll(`2d4`, {}, {type: \"cold\", properties: [\"mgc\"]}).evaluate();\n    await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll');\n\n    const itemData = {\n        name: \"Cold Aura - Damage (Cold)\",\n        type: \"feat\",\n        img: item.img,\n    }\n\n    await new MidiQOL.DamageOnlyWorkflow(effectOriginActor, effectOriginToken, damageRoll.total, \"cold\", token ? [token] : [], damageRoll, {itemData: itemData, flavor: \"Cold Aura - Damage (Cold)\"});\n}",
+        "command": "if(args[0] === \"each\") {\n    let effectOriginActor = await fromUuid(args[1]);\n    let effectOriginToken = await MidiQOL.tokenForActor(effectOriginActor.uuid);\n    if(effectOriginActor.uuid === actor.uuid) return;\n    let damageRoll = await new CONFIG.Dice.DamageRoll(`2d4`, {}, {type: \"cold\", properties: [\"mgc\"]}).evaluate();\n    await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll');\n\n    const itemData = {\n        flags: {autoanimations: {isEnabled: false, version: 5}},\n        name: \"Cold Aura - Damage (Cold)\",\n        type: \"feat\",\n        img: item.img,\n    }\n\n    await new MidiQOL.DamageOnlyWorkflow(effectOriginActor, effectOriginToken, damageRoll.total, \"cold\", token ? [token] : [], damageRoll, {itemData: itemData, flavor: \"Cold Aura - Damage (Cold)\"});\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3
@@ -205,6 +160,16 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "img": "icons/magic/water/snowflake-ice-snow-white.webp",

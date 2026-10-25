@@ -979,23 +979,31 @@
       "folder": null,
       "sort": 0,
       "flags": {
-        "scene-packer": {
-          "hash": "6a44a0e6061423c1f30c2b78d3711a462aefc811"
+        "dnd5e": {},
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         },
-        "walledtemplates": {
-          "wallsBlock": "globalDefault",
-          "wallRestriction": "globalDefault"
-        },
-        "dnd5e": {}
+        "boss-loot-assets-premium": {
+          "dnd5eactivity000": {
+            "autoRec": {
+              "enabled": false
+            },
+            "activityName": "Attack",
+            "activityType": "attack",
+            "version": 2
+          }
+        }
       },
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": "roRDywD19pu2VxlC",
+        "modifiedTime": 1776232259525
       },
       "ownership": {
         "default": 0
@@ -1059,6 +1067,10 @@
               "durationExpression": "",
               "macroRepeat": "none",
               "specialDuration": []
+            },
+            "autoanimations": {
+              "isEnabled": false,
+              "version": 5
             }
           },
           "tint": "#ffffff",
@@ -1084,29 +1096,27 @@
             ]
           },
           "sort": 0,
-          "_key": "!actors.items.effects!whWeB4x80BpWy1tv.icorevoMIkBVXL37.jFKhp34XZd32ryYT",
-          "start": null
+          "start": null,
+          "_key": "!actors.items.effects!whWeB4x80BpWy1tv.icorevoMIkBVXL37.jFKhp34XZd32ryYT"
         }
       ],
       "folder": null,
       "flags": {
         "core": {},
-        "scene-packer": {
-          "hash": "a1b19dd53b220497bfc297fe86d3a5137d15a816"
-        },
-        "walledtemplates": {
-          "wallsBlock": "globalDefault",
-          "wallRestriction": "globalDefault"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "5.1.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": "roRDywD19pu2VxlC",
+        "modifiedTime": 1776232259534
       },
       "_id": "icorevoMIkBVXL37",
       "sort": 1700000,
@@ -1138,6 +1148,10 @@
           "macroRepeat": "none",
           "specialDuration": [],
           "transfer": true
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -1163,21 +1177,17 @@
         ]
       },
       "sort": 0,
-      "_key": "!actors.effects!whWeB4x80BpWy1tv.qCjN9FyOPXNWukms",
       "start": {
-        "combat": null,
-        "round": null,
         "time": 1697159634,
-        "turn": null
-      }
+        "round": null,
+        "turn": null,
+        "combat": null
+      },
+      "_key": "!actors.effects!whWeB4x80BpWy1tv.qCjN9FyOPXNWukms"
     }
   ],
   "folder": null,
   "flags": {
-    "scene-packer": {
-      "hash": "96cb68050034f0b969cf466235d24393de46761b",
-      "sourceId": "Actor.WtxYMcamQptpNnjX"
-    },
     "midi-qol": {
       "concentration-damage": 0
     },

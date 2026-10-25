@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "book": "",
       "page": "",
       "license": "",
@@ -16,7 +16,7 @@
       "rules": "2014"
     },
     "activation": {
-      "type": "action",
+      "type": "minute",
       "condition": "",
       "value": 1
     },
@@ -65,8 +65,8 @@
         "_id": "dnd5eactivity000",
         "type": "utility",
         "activation": {
-          "type": "action",
-          "value": null,
+          "type": "minute",
+          "value": 1,
           "override": false
         },
         "consumption": {
@@ -173,76 +173,6 @@
   "effects": [],
   "folder": null,
   "flags": {
-    "ddbimporter": {
-      "id": 138343,
-      "definitionId": 2152,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "classSpell",
-        "class": "Wizard",
-        "level": 6,
-        "characterClassId": 129265972,
-        "spellLevel": 1,
-        "ability": "int",
-        "mod": 3,
-        "dc": 14,
-        "cantripBoost": false,
-        "overrideDC": false,
-        "id": 138343,
-        "entityTypeId": 435869154,
-        "healingBoost": 0,
-        "usesSpellSlot": true
-      },
-      "originalName": "Identify",
-      "sources": [
-        {
-          "sourceId": 1,
-          "pageNumber": null,
-          "sourceType": 2
-        },
-        {
-          "sourceId": 2,
-          "pageNumber": 252,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Detection"
-      ],
-      "version": "3.4.19",
-      "effectsApplied": true,
-      "importId": "kD5jKJ2VZdbe0WwE",
-      "overrideId": "NONE",
-      "ignoreIcon": false,
-      "ignoreItemImport": true,
-      "ignoreItemForChrisPremades": false,
-      "retainResourceConsumption": false
-    },
-    "midiProperties": {
-      "magicdam": true,
-      "magiceffect": true,
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "concentration": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "noConcentrationCheck": false,
-      "confirmTargets": "never",
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "scene-packer": {
-      "hash": "9781a13e113a47b0a2ba5937fcc1a911c63e6c08",
-      "sourceId": "Actor.edtGqNIYfHYowUUr.Item.HBZ7dcOKHDAkAGjf"
-    },
     "midi-qol": {
       "effectActivation": false,
       "onUseMacroName": "",
@@ -254,9 +184,6 @@
       "removeAttackDamageButtons": "default",
       "reactionCondition": "",
       "otherCondition": ""
-    },
-    "character-actions-list-5e": {
-      "filter-override": true
     },
     "core": {},
     "rest-recovery": {
@@ -293,9 +220,6 @@
         }
       }
     },
-    "tidy5e-sheet-kgar": {
-      "action-filter-override": true
-    },
     "dnd5e": {
       "riders": {
         "activity": [],
@@ -318,6 +242,26 @@
     },
     "gambits-premades": {
       "gpsUuid": "2cc1f50d-cdb8-4f17-a532-2532f74440ae"
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "_id": "Z5SH6Ds8iVagW225",

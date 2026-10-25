@@ -6,7 +6,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "book": "",
       "page": "",
       "license": "",
@@ -63,9 +63,9 @@
         "_id": "5fOhrxvmARa497YY",
         "sort": 0,
         "activation": {
-          "type": "action",
-          "value": null,
-          "override": true,
+          "type": "bonus",
+          "value": 1,
+          "override": false,
           "condition": ""
         },
         "consumption": {
@@ -85,9 +85,6 @@
           "value": "1"
         },
         "effects": [
-          {
-            "_id": "1oEvffyjGNgLw4lh"
-          },
           {
             "_id": "PQ3LSgzaiBaCAJoK"
           }
@@ -574,30 +571,12 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
         },
         "core": {
           "overlay": false
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "All",
-          "nameOverride": "",
-          "radius": "5",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": true,
-          "height": false,
-          "hidden": false,
-          "displayTemp": true,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "dnd5e": {
           "riders": {
@@ -609,78 +588,12 @@
         }
       },
       "_id": "PQ3LSgzaiBaCAJoK",
-      "_key": "!items.effects!b4aKzkjuc43SDZxH.PQ3LSgzaiBaCAJoK",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!b4aKzkjuc43SDZxH.PQ3LSgzaiBaCAJoK"
     }
   ],
   "name": "Ashardalon's Stride",
   "flags": {
-    "ddbimporter": {
-      "id": 327,
-      "definitionId": 1183862,
-      "entityTypeId": 420821570,
-      "dndbeyond": {
-        "class": "Bard",
-        "lookup": "classFeature",
-        "lookupName": "Magical Secrets",
-        "lookupId": 592,
-        "level": 12,
-        "ability": "cha",
-        "mod": 4,
-        "dc": 16,
-        "overrideDC": false,
-        "id": 327,
-        "entityTypeId": 420821570,
-        "healingBoost": 0,
-        "cantripBoost": false,
-        "usesSpellSlot": true,
-        "forceMaterial": false,
-        "homebrew": false,
-        "forcePact": false
-      },
-      "originalName": "Ashardalon's Stride",
-      "sources": [
-        {
-          "sourceId": 81,
-          "pageNumber": 19,
-          "sourceType": 1
-        }
-      ],
-      "tags": [],
-      "version": "6.0.79",
-      "is2014": true,
-      "is2024": false,
-      "addSpellEffects": true,
-      "legacy": false,
-      "defaultAdditionalActivities": {
-        "enabled": true,
-        "data": {}
-      },
-      "effectsApplied": true,
-      "importId": "ba73cG5fIlErYVTQ",
-      "chrisEffectsApplied": true,
-      "chrisPreEffectName": "Ashardalon's Stride"
-    },
-    "midiProperties": {
-      "magicdam": true,
-      "magiceffect": true,
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "scene-packer": {
-      "sourceId": "Actor.qCpb5H6vLrBeOWAO.Item.iILheTQXE5lAlhQU",
-      "hash": "287798da9315ea058714300411e3271375900c88"
-    },
     "dnd5e": {
       "riders": {
         "activity": [],
@@ -742,15 +655,6 @@
       }
     },
     "chris-premades": {
-      "customConfig": [
-        {
-          "value": "playAnimation",
-          "label": "CHRISPREMADES.Config.PlayAnimation",
-          "type": "checkbox",
-          "default": true,
-          "category": "animation"
-        }
-      ],
       "info": {
         "source": "gambits-premades",
         "version": "1.0.52",
@@ -981,6 +885,43 @@
       "parentClass": "Bard",
       "section": "",
       "actionSection": ""
+    },
+    "gambits-premades": {
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        }
+      },
+      "animationModules": [
+        "GPS"
+      ]
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "5fOhrxvmARa497YY": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      },
+      "rEEgexfiIgtYlbMx": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Damage",
+        "activityType": "damage",
+        "version": 2
+      }
     }
   },
   "img": "icons/magic/fire/projectile-bolt-zigzag-orange.webp",

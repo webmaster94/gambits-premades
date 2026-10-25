@@ -3,11 +3,11 @@
   "type": "feat",
   "system": {
     "description": {
-      "value": "<p>You have resistance to necrotic damage and radia<span class=\"No-Break\" data-content-chunk-id=\"60f82fbd-a62a-4a76-a877-33f029c78876\">nt damage.</span></p>",
+      "value": "",
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "book": "",
       "page": "",
@@ -38,18 +38,6 @@
     "enchant": {}
   },
   "flags": {
-    "ddbimporter": {
-      "entityRaceId": 29,
-      "version": "3.4.63",
-      "baseName": "Celestial Resistance",
-      "spellListIds": [],
-      "definitionKey": "racial-trait:394003",
-      "race": "Variant Aasimar"
-    },
-    "scene-packer": {
-      "sourceId": "Item.",
-      "hash": "ed35bd694a7b516c10091139cf0b768de70042c2"
-    },
     "midi-qol": {
       "onUseMacroName": "",
       "AoETargetType": "any",
@@ -65,23 +53,20 @@
       "section": "",
       "actionSection": ""
     },
-    "midiProperties": {
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "dnd5e": {
       "riders": {
         "activity": []
       }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "img": "icons/skills/wounds/blood-cells-disease-green.webp",
@@ -120,7 +105,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
@@ -128,31 +112,18 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "dnd5e": {
           "riders": {
             "statuses": []
           }
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!wNuwXPqCsshIcO2V.nGhKXGlzLbZGIsKu",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!wNuwXPqCsshIcO2V.nGhKXGlzLbZGIsKu"
     }
   ],
   "folder": "62e2gLQ8cttarHZ8",

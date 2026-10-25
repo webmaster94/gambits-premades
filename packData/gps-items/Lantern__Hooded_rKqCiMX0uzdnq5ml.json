@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -83,11 +83,7 @@
           "special": "",
           "override": false
         },
-        "effects": [
-          {
-            "_id": "Y93pCASqy6g2P1y1"
-          }
-        ],
+        "effects": [],
         "range": {
           "units": "self",
           "special": "",
@@ -183,45 +179,6 @@
     "magicalBonus": null
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Adventuring Gear",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": null,
-        "tags": [
-          "Utility",
-          "Exploration"
-        ],
-        "sources": [
-          {
-            "sourceId": 1,
-            "pageNumber": null,
-            "sourceType": 2
-          },
-          {
-            "sourceId": 2,
-            "pageNumber": null,
-            "sourceType": 1
-          }
-        ],
-        "stackable": true
-      },
-      "id": 0,
-      "entityTypeId": 0,
-      "definitionEntityTypeId": 2103445194,
-      "definitionId": 57,
-      "originalName": "Lantern, Hooded",
-      "version": "3.5.7"
-    },
-    "scene-packer": {
-      "sourceId": "Item.asiKPjd6htu1ANLJ",
-      "hash": "bca30c22ae37870f62f96eaa886c4d939ef83b07"
-    },
     "midi-qol": {
       "onUseMacroName": "[preApplyDynamicEffects]function.game.gps.lanternHooded",
       "effectActivation": false,
@@ -233,20 +190,6 @@
       "removeAttackDamageButtons": "default"
     },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "never",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "dae": {
       "macro": {
         "name": "Lantern, Hooded",
@@ -494,9 +437,6 @@
       "fromAmmo": false,
       "version": 5
     },
-    "universalAnimations": {
-      "override": "neverPlay"
-    },
     "dnd5e": {
       "riders": {
         "activity": [],
@@ -508,7 +448,34 @@
       "actionSection": ""
     },
     "gambits-premades": {
-      "gpsUuid": "4d035518-5171-42fb-94e0-2f68f1208e55"
+      "gpsUuid": "4d035518-5171-42fb-94e0-2f68f1208e55",
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        }
+      },
+      "animationModules": [
+        "GPS"
+      ]
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [],

@@ -1,9 +1,6 @@
 {
   "name": "Skeletal Tail",
   "flags": {
-    "bkit": {
-      "anchorId": "cb6gypy5y6u"
-    },
     "dnd5e": {
       "sourceId": "Compendium.sgeh-monkeydm.sgeh-items.Item.wOJckT3oQ17uIcAh",
       "advancementOrigin": "Y4FR6LgAvko7MG0K.rGCTCzvns0WSnMUK",
@@ -21,22 +18,6 @@
       "itemCondition": "",
       "effectCondition": "",
       "onUseMacroName": "[templatePlaced]ItemMacro"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false
     },
     "dae": {
       "macro": {
@@ -64,9 +45,25 @@
       }
     },
     "core": {},
-    "scene-packer": {
-      "hash": "68a1a27429e21cb22ae45451735412db8fc5743f",
-      "sourceId": "Item.VBshr9debboY7kgo"
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "system": {
@@ -77,7 +74,7 @@
     "source": {
       "book": "SGEH",
       "page": "",
-      "custom": "2.1.38",
+      "custom": "",
       "license": "",
       "revision": 1,
       "rules": "2014"

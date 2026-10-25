@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "revision": 1
     },
@@ -52,26 +52,13 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
         },
-        "ActiveAuras": {
-          "isAura": true,
-          "aura": "Allies",
-          "nameOverride": "",
-          "radius": "5",
-          "alignment": "",
-          "type": "",
-          "customCheck": "token.actor.items.filter(i => i.name.toLowerCase().includes('shield') && i.system.equipped === true).length > 0 && !token.actor.effects.filter(e => e.name.toLowerCase().includes('blinded') || e.name.toLowerCase().includes('surprised')).length > 0 && auraEntity.document.actor.items.filter(i => i.name.toLowerCase().includes('shield') && i.system.equipped === true).length > 0 && !auraEntity.document.actor.effects.filter(e => e.name.toLowerCase().includes('blinded') || e.name.toLowerCase().includes('surprised')).length > 0",
-          "ignoreSelf": true,
-          "height": false,
-          "hidden": false,
-          "displayTemp": true,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -86,13 +73,13 @@
             "type": "add"
           },
           {
-            "key": "system.abilities.dex.bonuses.save",
+            "key": "system.abilities.dex.save.roll.bonus",
             "value": "+1",
             "priority": 20,
             "type": "add"
           },
           {
-            "key": "system.abilities.str.bonuses.save",
+            "key": "system.abilities.str.save.roll.bonus",
             "value": "+1",
             "priority": 20,
             "type": "add"
@@ -100,31 +87,13 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!tRTBn3AVJadCdWgS.m9blhJJyD0sqfkNB",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!tRTBn3AVJadCdWgS.m9blhJJyD0sqfkNB"
     }
   ],
   "folder": null,
   "flags": {
-    "scene-packer": {
-      "hash": "47dde1790a3372b9a7f8970147103a62ace9e387",
-      "sourceId": "Item.QTDQQ4BlzFhRfs6d"
-    },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "rollOther": false
-    },
     "midi-qol": {
       "effectActivation": false,
       "itemCondition": "token.actor.items.filter(i => i.name.toLowerCase().includes('shield') && i.system.equipped === true).length > 0",
@@ -138,6 +107,16 @@
       "riders": {
         "activity": []
       }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "_id": "tRTBn3AVJadCdWgS",

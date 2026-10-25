@@ -8,14 +8,14 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014"
     },
     "cover": null,
     "crewed": false,
     "uses": {
-      "max": "@prof",
+      "max": "1",
       "recovery": [
         {
           "period": "sr",
@@ -41,12 +41,19 @@
           "override": false
         },
         "consumption": {
-          "targets": [],
+          "targets": [
+            {
+              "type": "itemUses",
+              "target": "",
+              "value": "1",
+              "scaling": {}
+            }
+          ],
           "scaling": {
             "allowed": false,
             "max": ""
           },
-          "spellSlot": true
+          "spellSlot": false
         },
         "description": {
           "chatFlavor": ""
@@ -81,11 +88,11 @@
           },
           "affects": {
             "count": "",
-            "type": "",
+            "type": "self",
             "choice": false,
             "special": ""
           },
-          "prompt": true,
+          "prompt": false,
           "override": false
         },
         "uses": {
@@ -172,7 +179,7 @@
           "scaling": {
             "allowed": false
           },
-          "spellSlot": true,
+          "spellSlot": false,
           "targets": []
         },
         "description": {
@@ -329,27 +336,9 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "autoanimations": {
           "id": "75319998-ffff-4e0e-b529-645b72c968ca",
@@ -505,8 +494,8 @@
           "gpsUuid": "2300dad6-8de1-4fa5-9878-40cec8ee37aa"
         }
       },
-      "_key": "!items.effects!F4WlBlrL1aHesheL.7bC6w7uSbAJQ7nTZ",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!F4WlBlrL1aHesheL.7bC6w7uSbAJQ7nTZ"
     }
   ],
   "flags": {
@@ -520,37 +509,12 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "confirmTargets": "default",
-      "noConcentrationCheck": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "dnd5e": {
       "sourceId": "Compendium.kp-deep-magic-volume-2.deep-magic-2-subclass-features.Item.vHCdNgNKc8sxZ8uV",
       "advancementOrigin": "lQQ9pO1utfZk9ktz.zpcvNEANdLOmhVQJ",
       "riders": {
         "activity": []
       }
-    },
-    "scene-packer": {
-      "hash": "6842e3845842e911de4d28dd55deb23f89d7f247",
-      "sourceId": "Actor.1xFtQVMnMyuFm2w2.Item.ybDP18NjUAZt7IZZ"
     },
     "dae": {
       "macro": {
@@ -788,19 +752,44 @@
       "fromAmmo": false,
       "version": 5
     },
-    "chris-premades": {
-      "customConfig": [
-        {
-          "value": "playAnimation",
-          "label": "CHRISPREMADES.Config.PlayAnimation",
+    "gambits-premades": {
+      "gpsUuid": "2300dad6-8de1-4fa5-9878-40cec8ee37aa",
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
           "type": "checkbox",
           "default": true,
-          "category": "animation"
+          "category": "animations"
         }
+      },
+      "animationModules": [
+        "JB2APatreon",
+        "GPS"
       ]
     },
-    "gambits-premades": {
-      "gpsUuid": "2300dad6-8de1-4fa5-9878-40cec8ee37aa"
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      },
+      "buQa0bLMH4K9aWWb": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "folder": "rvG7tD4SnTeXT7ji",

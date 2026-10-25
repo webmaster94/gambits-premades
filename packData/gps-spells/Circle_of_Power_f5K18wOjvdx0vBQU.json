@@ -6,7 +6,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -181,53 +181,6 @@
   },
   "name": "Circle of Power",
   "flags": {
-    "ddbimporter": {
-      "id": 136206,
-      "definitionId": 2353,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "generic",
-        "lookupName": "generic",
-        "level": null,
-        "castAtLevel": null
-      },
-      "originalName": "Circle of Power",
-      "sources": [
-        {
-          "sourceId": 2,
-          "pageNumber": 221,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Buff",
-        "Warding"
-      ],
-      "version": "3.5.7",
-      "effectsApplied": true
-    },
-    "midiProperties": {
-      "magicdam": true,
-      "magiceffect": true,
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "rollOther": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "scene-packer": {
-      "sourceId": "Actor.4rgwJtcvBFEmAQ4A.Item.x09oyjOQPzBDQc1A",
-      "hash": "8fbe7c04510da81e4d339bd6114da586427c3122"
-    },
     "core": {},
     "midi-qol": {
       "AoETargetType": "any",
@@ -426,7 +379,7 @@
           "zIndex": 1
         }
       },
-      "isEnabled": true,
+      "isEnabled": false,
       "isCustomized": true,
       "fromAmmo": false,
       "version": 5,
@@ -497,7 +450,14 @@
           "enabled": false
         },
         "activityName": "Use",
-        "activityType": "utility"
+        "activityType": "utility",
+        "version": 2
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
       }
     }
   },
@@ -505,7 +465,7 @@
     {
       "origin": "Compendium.world.gps-spells.Item.bM5mY6X8ziNqBrfU",
       "duration": {
-        "value": 3600,
+        "value": 600,
         "units": "seconds"
       },
       "disabled": false,
@@ -521,29 +481,11 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
           "enableCondition": "",
           "disableCondition": ""
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "Allies",
-          "nameOverride": "",
-          "radius": "30",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": true,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "autoanimations": {
           "id": "f9feca38-6223-47c1-8049-08057627dabf",
@@ -724,21 +666,21 @@
         "changes": [
           {
             "key": "flags.midi-qol.superSaver.all",
-            "value": "item?.type === \"spell\" || item?.flags?.midiProperties?.magiceffect",
+            "value": "item?.type === \"spell\" || activity?.midiProperties?.magicEffect",
             "priority": 20,
             "type": "custom"
           },
           {
             "key": "flags.midi-qol.advantage.save.all",
-            "value": "item?.type === \"spell\" || item?.flags?.midiProperties?.magiceffect",
+            "value": "item?.type === \"spell\" || activity?.midiProperties?.magicEffect",
             "priority": 20,
             "type": "custom"
           }
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!f5K18wOjvdx0vBQU.e8PUC4mtW1UlZngp",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!f5K18wOjvdx0vBQU.e8PUC4mtW1UlZngp"
     }
   ],
   "img": "icons/magic/light/explosion-star-glow-blue-purple.webp",

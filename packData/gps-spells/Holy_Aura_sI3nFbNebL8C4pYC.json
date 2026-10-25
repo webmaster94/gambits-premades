@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "book": "PHB",
       "page": "",
       "license": "",
@@ -25,20 +25,19 @@
     },
     "target": {
       "affects": {
-        "type": "self",
-        "count": "30",
-        "choice": false,
-        "special": ""
+        "count": "",
+        "type": "creature",
+        "choice": true,
+        "special": "Chosen creatures within 30 feet"
       },
       "template": {
-        "units": "ft",
-        "contiguous": false,
-        "type": ""
+        "type": "",
+        "units": "ft"
       }
     },
     "range": {
-      "value": "0",
-      "units": "self",
+      "value": "30",
+      "units": "ft",
       "special": ""
     },
     "uses": {
@@ -296,15 +295,6 @@
   },
   "img": "icons/magic/holy/barrier-shield-winged-cross.webp",
   "flags": {
-    "plutonium": {
-      "page": "spells.html",
-      "source": "PHB",
-      "hash": "holy%20aura_phb",
-      "propDroppable": "spell"
-    },
-    "custom-character-sheet-sections": {
-      "sectionName": ""
-    },
     "rest-recovery": {
       "data": {
         "recovery": {
@@ -323,34 +313,10 @@
       "autoTarget": "default",
       "removeAttackDamageButtons": "default",
       "reactionCondition": "",
-      "otherCondition": ""
-    },
-    "midiProperties": {
-      "confirmTargets": "never",
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": true,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
+      "otherCondition": "",
+      "onUseMacroName": "[postActiveEffects]function.game.gps.holyAura"
     },
     "core": {},
-    "scene-packer": {
-      "hash": "2d9eab251a547f3e913256ee0c829f1aa4808a7b",
-      "sourceId": "Item.vS5boXojQAQy06pT"
-    },
     "dae": {
       "macro": {
         "name": "Holy Aura",
@@ -390,6 +356,34 @@
     },
     "gambits-premades": {
       "gpsUuid": "f506f316-4ffd-4fb1-9876-04a32c344450"
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      },
+      "tjCEavNMPfUgtZeL": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save: Automation",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -407,10 +401,10 @@
       "system": {
         "changes": [
           {
-            "key": "flags.midi-qol.advantage.save.all",
-            "value": 1,
-            "priority": 20,
-            "type": "custom"
+            "key": "save",
+            "value": "1",
+            "priority": 100,
+            "type": "dnd5e.advantage"
           },
           {
             "key": "flags.midi-qol.grants.disadvantage.attack.all",
@@ -419,36 +413,44 @@
             "type": "custom"
           },
           {
-            "key": "ATL.light.dim",
+            "key": "token.light.dim",
             "value": 5,
             "priority": 20,
             "type": "override"
           },
           {
-            "key": "ATL.light.color",
+            "key": "token.light.color",
             "value": "#ffffff",
             "priority": 20,
             "type": "override"
           },
           {
-            "key": "ATL.light.alpha",
-            "value": 0.25,
+            "key": "token.light.alpha",
+            "value": 0.0625,
             "priority": 20,
             "type": "override"
           },
           {
-            "key": "ATL.light.animation",
-            "value": {
-              "type": "starlight",
-              "speed": 2,
-              "intensity": 4
-            },
+            "key": "token.light.animation.type",
+            "value": "starlight",
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "token.light.animation.speed",
+            "value": 2,
+            "priority": 20,
+            "type": "override"
+          },
+          {
+            "key": "token.light.animation.intensity",
+            "value": 4,
             "priority": 20,
             "type": "override"
           },
           {
             "key": "flags.midi-qol.onUseMacroName",
-            "value": "function.game.gps.holyAura,isDamaged",
+            "value": "function.game.gps.holyAura,isHit",
             "priority": 20,
             "type": "custom"
           }
@@ -462,8 +464,7 @@
       "flags": {
         "dae": {
           "disableIncapacitated": false,
-          "stackable": "noneName",
-          "showIcon": false,
+          "stackable": "multi",
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
@@ -472,23 +473,6 @@
           "dontApply": false,
           "enableCondition": "",
           "disableCondition": ""
-        },
-        "ActiveAuras": {
-          "isAura": true,
-          "aura": "Allies",
-          "nameOverride": "",
-          "radius": "30",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": true,
-          "hidden": false,
-          "displayTemp": true,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "core": {
           "overlay": false
@@ -500,10 +484,14 @@
           "riders": {
             "statuses": []
           }
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!sI3nFbNebL8C4pYC.lztTCZ8yyn1WN8tv",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!sI3nFbNebL8C4pYC.lztTCZ8yyn1WN8tv"
     }
   ],
   "folder": null,

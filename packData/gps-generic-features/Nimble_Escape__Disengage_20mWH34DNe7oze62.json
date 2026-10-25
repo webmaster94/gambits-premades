@@ -4,10 +4,10 @@
   "system": {
     "description": {
       "value": "",
-      "chat": "You can take the Disengage action as a bonus action."
+      "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -60,8 +60,7 @@
           }
         ],
         "range": {
-          "value": "5",
-          "units": "ft",
+          "units": "self",
           "special": "",
           "override": false
         },
@@ -77,11 +76,11 @@
           },
           "affects": {
             "count": "",
-            "type": "",
+            "type": "self",
             "choice": false,
             "special": ""
           },
-          "prompt": true,
+          "prompt": false,
           "override": false
         },
         "uses": {
@@ -160,16 +159,6 @@
     "advancement": []
   },
   "flags": {
-    "ddbimporter": {
-      "id": "5119105",
-      "entityTypeId": "222216831",
-      "action": true,
-      "componentId": 8429478,
-      "componentTypeId": 1960452172,
-      "originalName": "Nimble Escape: Disengage",
-      "type": "race",
-      "importId": "hclqiLsJgMNH6l1x"
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "rollAttackPerTarget": "default",
@@ -178,23 +167,6 @@
       "effectCondition": "",
       "reactionCondition": "",
       "otherCondition": ""
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
-    "scene-packer": {
-      "hash": "27aade5b55ae9182eaf8130087e9f57160e2e4bc",
-      "sourceId": "Actor.1xFtQVMnMyuFm2w2.Item.t4OyiaPhW814t6PU"
     },
     "core": {},
     "dnd5e": {
@@ -206,14 +178,33 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.t4OyiaPhW814t6PU",
       "duration": {
-        "value": 1,
-        "units": "seconds"
+        "expiry": "turnEnd"
       },
       "disabled": false,
       "name": "Disengage",
@@ -229,28 +220,11 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
           "enableCondition": "",
           "disableCondition": ""
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
         },
         "dnd5e": {
           "riders": {
@@ -259,6 +233,10 @@
         },
         "core": {
           "overlay": false
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -275,8 +253,8 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!20mWH34DNe7oze62.NcYMpQ7B3RwBuLC7",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!20mWH34DNe7oze62.NcYMpQ7B3RwBuLC7"
     }
   ],
   "img": "icons/equipment/feet/boots-armored-green.webp",

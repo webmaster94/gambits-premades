@@ -1,9 +1,5 @@
 const SOURCE = 'gambits-premades';
 let migrationPromise;
-const config = {
-    playAnimation: {label: 'GAMBITSPREMADES.CAT.PlayAnimation', type: 'checkbox', default: true, category: 'animations'},
-    color: {label: 'GAMBITSPREMADES.CAT.Color', type: 'text', default: '', category: 'animations'}
-};
 
 export function buildGPSMigration(item) {
     const flags = item.flags ?? {};
@@ -95,27 +91,6 @@ export async function readyCAT() {
         globalThis[queueKey] = task.catch(() => {});
         await task;
     }
-    cat.api.registerSourceName(SOURCE, game.modules.get(SOURCE).title);
-    const metadata = new Map();
-    for (const pack of game.packs) {
-        if (pack.metadata.packageName !== SOURCE || pack.documentName !== 'Item') continue;
-        for (const item of await pack.getIndex({fields: ['system.source', 'flags.chris-premades', 'flags.gambits-premades', 'flags.midi-qol.onUseMacroName', 'type']})) {
-            const macroNames = Array.from(String(item.flags?.['midi-qol']?.onUseMacroName ?? '').matchAll(/function\.game\.gps\.(\w+)/g), match => match[1]);
-            const source = macroNames.map(name => game.gps[name]?.toString() ?? '').join('\n');
-            const options = {...config};
-            if (source.includes('homebrewDice')) Object.assign(options, {
-                enableCustomDice: {label: 'GAMBITSPREMADES.CAT.CustomDice', type: 'checkbox', default: false, category: 'homebrew'},
-                customDiceNum: {label: 'GAMBITSPREMADES.CAT.DiceNumber', type: 'number', default: 1, category: 'homebrew'},
-                customDiceFace: {label: 'GAMBITSPREMADES.CAT.DiceSize', type: 'select', default: 'd6', category: 'homebrew', options: [4, 6, 8, 10, 12, 20].map(size => ({value: 'd' + size, label: 'd' + size}))}
-            });
-            if (source.includes('type: "damageType"')) options.damageType = {
-                label: 'GAMBITSPREMADES.CAT.DamageType', type: 'select', default: '', category: 'homebrew',
-                options: [{value: '', label: 'DND5E.Default'}, ...Object.entries(CONFIG.DND5E.damageTypes).map(([value, data]) => ({value, label: data.label}))]
-            };
-            metadata.set(item.uuid, {version: item.flags?.['chris-premades']?.info?.version ?? item.system?.source?.custom ?? '0', config: options});
-        }
-    }
-    await cat.api.registerAutomationModule(SOURCE, {infoFetcherCallback: document => metadata.get(document.uuid) ?? {config}});
     const report = await migrateGPS({compendiums: game.settings.get(SOURCE, 'catMigrationVersion') < 1});
     game.gps.cat = {migrate: migrateGPS, migrateDocument: migrateGPSDocument};
     Hooks.callAll('gpsCatReady', report);

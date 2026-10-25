@@ -3,13 +3,13 @@ export async function dissonantWhispers2024({ speaker, actor, token, character, 
         const targets = workflow.hitTargets;
         const gmUser = game.gps.getPrimaryGM();
         for(let target of targets) {
-            const targetMovementSpeed = target.actor.system.attributes.movement.walk;
+            const targetMovementSpeed = target.actor.system.attributes.movement.speeds.walk;
             const hasReactionUsed = MidiQOL.hasUsedReaction(target.actor);
 
             let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
             const { animEnabled } = cprConfig;
             if(animEnabled) {
-                new Sequence({moduleName: "gambits-premades", softFail: true})
+                new Sequence()
                 .effect()
                     .file("jb2a.spell_projectile.music_note.greenyellow")
                     .atLocation(token)
@@ -33,16 +33,16 @@ export async function dissonantWhispers2024({ speaker, actor, token, character, 
             let castDamage = (workflow.castData.castLevel - 1) + 3;
             damageParts[0].number = castDamage;
 
-            await game.gps.socket.executeAsUser("gpsActivityUpdate", gmUser, { activityUuid: activityToUpdate.uuid, updates: {"damage.parts": damageParts} });
+            await game.gps.queryUser("gpsActivityUpdate", gmUser, { activityUuid: activityToUpdate.uuid, updates: {"damage.parts": damageParts} });
             const saveResult = await game.gps.gpsActivityUse({itemUuid: item.uuid, identifier: "syntheticSave", targetUuid: target.document.uuid});
 
-            if (saveResult.failedSaves.size === 1) {
+            if (saveResult?.failedSaves.size === 1 && !hasReactionUsed) {
                 if(!hasReactionUsed) await game.gps.addReaction({actorUuid: `${target.actor.uuid}`});
 
-                await game.gps.socket.executeAsGM("moveTokenByOriginPoint", {originX: token.center.x, originY: token.center.y, targetUuid: target.document.uuid, distance: targetMovementSpeed });
+                await game.gps.queryGM("moveTokenByOriginPoint", {originX: token.center.x, originY: token.center.y, targetUuid: target.document.uuid, distance: targetMovementSpeed });
 
                 let chatData = {
-                    author: gmUser,
+                    user: gmUser,
                     speaker: ChatMessage.getSpeaker({ token: token }),
                     content: game.i18n.localize(`The target moved ${targetMovementSpeed} feet away from ${token.actor.name}. The target doesn't move into obviously dangerous ground, adjust the movement if this occurs.`)
                 };

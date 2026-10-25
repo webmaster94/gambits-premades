@@ -1,4 +1,3 @@
-import { catDialog } from '../../utils/catDialog.js';
 export async function grimSiphon({ speaker, actor, token, character, item, args, scope, workflow, options, macroItem }) {
     if(args[0].macroPass === "postActiveEffects") {
         let target = workflow.failedSaves.first();
@@ -7,8 +6,8 @@ export async function grimSiphon({ speaker, actor, token, character, item, args,
         let validFriendlies = nearbyFriendlies.filter(t => t.document.disposition === token.document.disposition);
         if(validFriendlies.length === 0) return;
         let damageTotal = workflow.damageTotal;
-    
-        await catDialog.wait({
+
+        await game.gps.showAutomationDialog({
         window: { title: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ThirdPartySpells.GrimSiphon.Windowtitle") },
         content: `
             <div class="gps-dialog-container">
@@ -18,7 +17,7 @@ export async function grimSiphon({ speaker, actor, token, character, item, args,
                         <div>
                             <div class="gps-dialog-flex">
                                 <label for="ally-token" class="gps-dialog-label">${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ThirdPartySpells.GrimSiphon.HealLabel")}</label>
-                                ${validFriendlies.length >= 1 ? 
+                                ${validFriendlies.length >= 1 ?
                                 `<select id="ally-token" class="gps-dialog-select">
                                     ${validFriendlies.map(friendly => `<option class="gps-dialog-option" value="${friendly.document.uuid}">${friendly.actor.name}</option>`).join('')}
                                 </select>` : `<div style="padding: 4px; width: 100%; box-sizing: border-box; line-height: normal;">${game.i18n.localize("GAMBITSPREMADES.Dialogs.Common.NoValidAlliesInRange")}</div>`
@@ -36,20 +35,21 @@ export async function grimSiphon({ speaker, actor, token, character, item, args,
             action: "Heal",
             label: game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ThirdPartySpells.GrimSiphon.Heal"),
             callback: async (event, button, dialog) => {
-                const tokenUuid = document.querySelector('#ally-token').value;
+                const tokenUuid = dialog.element.querySelector("#ally-token").value;
                 const tokenToHeal = await fromUuid(tokenUuid);
                 if (tokenToHeal) {
                     const healingAmount = Math.floor(damageTotal / 2);
                     const damageRoll = await new CONFIG.Dice.DamageRoll(`${healingAmount}`, {}, {type: "healing", properties: ["mgc"]}).evaluate();
                     await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll');
-            
+
                     const itemData = {
-                        name: "Grim Siphon - Healing",
+                        flags: {autoanimations: {isEnabled: false, version: 5}},
+                        name: game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartySpells.GrimSiphon.Healing"),
                         type: "feat",
                         img: item.img
                     }
-            
-                    new MidiQOL.DamageOnlyWorkflow(actor, token, damageRoll.total, "healing", tokenToHeal.object ? [tokenToHeal.object] : [], damageRoll, {itemData: itemData, flavor: "Grim Siphon - Healing"});
+
+                    new MidiQOL.DamageOnlyWorkflow(actor, token, damageRoll.total, "healing", tokenToHeal.object ? [tokenToHeal.object] : [], damageRoll, {itemData: itemData, flavor: game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartySpells.GrimSiphon.Healing")});
                 }
             }
         }],

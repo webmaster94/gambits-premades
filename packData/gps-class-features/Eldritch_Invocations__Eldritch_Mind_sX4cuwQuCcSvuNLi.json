@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "revision": 1
     },
@@ -37,66 +37,27 @@
     "enchant": {}
   },
   "flags": {
-    "ddbimporter": {
-      "id": 388,
-      "type": "class",
-      "dndbeyond": {
-        "requiredLevel": 2,
-        "displayOrder": 5,
-        "levelScale": null,
-        "levelScales": [],
-        "limitedUse": [],
-        "choice": {
-          "label": "Eldritch Mind",
-          "choiceId": "3-1-261409312",
-          "componentId": 388,
-          "componentTypeId": 12168134,
-          "parentChoiceId": null,
-          "subType": null,
-          "wasOption": false,
-          "type": "class"
-        },
-        "class": "Warlock"
-      },
-      "class": "Warlock",
-      "subclass": "The Great Old One",
-      "importId": "r3U7b2PnBEc98MxS",
-      "overrideId": "NONE",
-      "ignoreIcon": false,
-      "ignoreItemImport": true,
-      "retainResourceConsumption": false
-    },
-    "scene-packer": {
-      "hash": "d5f199c36f459aeba3e22c5f15294156e3700adf",
-      "sourceId": "Actor.PpeGTVYvVoFsdZZD.Item.dYhkczIikAuzpwwP"
-    },
     "midi-qol": {
       "onUseMacroName": "",
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "effectCondition": ""
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "core": {},
     "dnd5e": {
       "riders": {
         "activity": []
       }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "effects": [
@@ -108,9 +69,6 @@
       "tint": "#ffffff",
       "transfer": true,
       "flags": {
-        "dfreds-convenient-effects": {
-          "description": ""
-        },
         "dae": {
           "selfTarget": false,
           "selfTargetAlways": false,
@@ -119,27 +77,14 @@
           "macroRepeat": "none",
           "specialDuration": [],
           "disableCondition": "",
-          "disableIncapacitated": false,
-          "showIcon": false
+          "disableIncapacitated": false
         },
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "radius": "undefined",
-          "alignment": "",
-          "type": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "nameOverride": "",
-          "customCheck": "",
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "name": "Eldritch Invocations: Eldritch Mind",
@@ -150,16 +95,16 @@
       "system": {
         "changes": [
           {
-            "key": "flags.midi-qol.advantage.concentration",
+            "key": "system.attributes.concentration.roll.mode",
             "value": 1,
             "priority": 20,
-            "type": "custom"
+            "type": "add"
           }
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!sX4cuwQuCcSvuNLi.XXAFZYmwpId9iXoO",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!sX4cuwQuCcSvuNLi.XXAFZYmwpId9iXoO"
     }
   ],
   "img": "icons/magic/death/skull-flames-white-blue.webp",

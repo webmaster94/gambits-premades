@@ -2,16 +2,15 @@ import {
     showLightDialog,
     lightExtinguish
 } from "../../utils/lightActions.js";
-  
+
 export async function lanternHooded({ speaker, actor, token, item, args, workflow }) {
-  if(!game.modules.get("ATL")?.active) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Items.Candle.MissingDependency"));
   const effectName = `${token.document.id} Hooded Lantern`;
   const gpsUuid = "4d035518-5171-42fb-94e0-2f68f1208e55";
   const gpsUuidDim = "16b82105-df43-4489-89ac-d20b4915e601";
   let filePath = "modules/gambits-premades/assets/images/hoodUpLantern.webp"
   let filePathDim = "modules/gambits-premades/assets/images/hoodDownLantern.webp"
   const animType = "lanternHooded";
-  
+
   if (args[0] === "off") {
     await lightExtinguish({ token, actor, effectName, gpsUuid, scenario: "off" });
     return;
@@ -25,31 +24,30 @@ export async function lanternHooded({ speaker, actor, token, item, args, workflo
     {
       origin: item.uuid,
       duration: { value: 21600, units: "seconds" },
-      start: { time: game.time?.worldTime ?? 0 },
       disabled: false,
       name: item.name,
       img: item.img,
       type: "base",
-      system: {
-        changes: [
-        { key: "ATL.light.dim", type: "custom", value: `${rangeDim}`, priority: 20 },
-        { key: "ATL.light.bright", type: "custom", value: `${rangeBright}`, priority: 20 },
-        { key: "ATL.light.alpha", type: "custom", value: "0.25", priority: 20 },
-        { key: "ATL.light.angle", type: "custom", value: "360", priority: 20 },
-        { key: "ATL.light.luminosity", type: "custom", value: "0.5", priority: 20 },
-        { key: "ATL.light.color", type: "custom", value: "#ffb433", priority: 20 },
-        { key: "ATL.light.animation", type: "custom", value: "{ type: \"torch\", speed: 4, intensity: 4 }", priority: 20 },
-        { key: "ATL.light.attenuation", type: "custom", value: "0.75", priority: 20 },
-        { key: "ATL.light.contrast", type: "custom", value: "0.15", priority: 20 },
-        { key: "ATL.light.shadows", type: "custom", value: "0.2", priority: 20 },
+      system: { changes: [
+        { key: "token.light.dim", type: "override", value: `${rangeDim}`, priority: 20 },
+        { key: "token.light.bright", type: "override", value: `${rangeBright}`, priority: 20 },
+        { key: "token.light.alpha", type: "override", value: 0.0625, priority: 20 },
+        { key: "token.light.angle", type: "override", value: 360, priority: 20 },
+        { key: "token.light.luminosity", type: "override", value: 0.5, priority: 20 },
+        { key: "token.light.color", type: "override", value: "#ffb433", priority: 20 },
+        { key: "token.light.animation.type", type: "override", value: "torch", priority: 20 },
+        { key: "token.light.animation.speed", type: "override", value: 4, priority: 20 },
+        { key: "token.light.animation.intensity", type: "override", value: 4, priority: 20 },
+        { key: "token.light.attenuation", type: "override", value: 0.75, priority: 20 },
+        { key: "token.light.contrast", type: "override", value: 0.15, priority: 20 },
+        { key: "token.light.shadows", type: "override", value: 0.2, priority: 20 },
         {
           key: "macro.itemMacro",
           type: "custom",
           value: "function.game.gps.lanternHooded",
           priority: 20
         }
-        ]
-      },
+      ] },
       transfer: false,
       flags: {
         "gambits-premades": { gpsUuid: gpsUuid }
@@ -61,31 +59,30 @@ export async function lanternHooded({ speaker, actor, token, item, args, workflo
     {
       origin: item.uuid,
       duration: { value: 21600, units: "seconds" },
-      start: { time: game.time?.worldTime ?? 0 },
       disabled: false,
       name: item.name,
       img: item.img,
       type: "base",
-      system: {
-        changes: [
-        { key: "ATL.light.dim", type: "custom", value: "5", priority: 20 },
-        { key: "ATL.light.bright", type: "custom", value: "0", priority: 20 },
-        { key: "ATL.light.alpha", type: "custom", value: "0.25", priority: 20 },
-        { key: "ATL.light.angle", type: "custom", value: "360", priority: 20 },
-        { key: "ATL.light.luminosity", type: "custom", value: "0.5", priority: 20 },
-        { key: "ATL.light.color", type: "custom", value: "#ffb433", priority: 20 },
-        { key: "ATL.light.animation", type: "custom", value: "{ type: \"torch\", speed: 4, intensity: 4 }", priority: 20 },
-        { key: "ATL.light.attenuation", type: "custom", value: "0.75", priority: 20 },
-        { key: "ATL.light.contrast", type: "custom", value: "0.15", priority: 20 },
-        { key: "ATL.light.shadows", type: "custom", value: "0.2", priority: 20 },
+      system: { changes: [
+        { key: "token.light.dim", type: "override", value: 5, priority: 20 },
+        { key: "token.light.bright", type: "override", value: 0, priority: 20 },
+        { key: "token.light.alpha", type: "override", value: 0.0625, priority: 20 },
+        { key: "token.light.angle", type: "override", value: 360, priority: 20 },
+        { key: "token.light.luminosity", type: "override", value: 0.5, priority: 20 },
+        { key: "token.light.color", type: "override", value: "#ffb433", priority: 20 },
+        { key: "token.light.animation.type", type: "override", value: "torch", priority: 20 },
+        { key: "token.light.animation.speed", type: "override", value: 4, priority: 20 },
+        { key: "token.light.animation.intensity", type: "override", value: 4, priority: 20 },
+        { key: "token.light.attenuation", type: "override", value: 0.75, priority: 20 },
+        { key: "token.light.contrast", type: "override", value: 0.15, priority: 20 },
+        { key: "token.light.shadows", type: "override", value: 0.2, priority: 20 },
         {
           key: "macro.itemMacro",
           type: "custom",
           value: "function.game.gps.lanternHooded",
           priority: 20
         }
-        ]
-      },
+      ] },
       transfer: false,
       flags: {
         "gambits-premades": { gpsUuid: gpsUuidDim }
@@ -93,8 +90,8 @@ export async function lanternHooded({ speaker, actor, token, item, args, workflo
     }
   ];
 
-  const activeLight = actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === gpsUuid && !e.duration?.expired);
-  const activeLightDim = actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === gpsUuid && !e.duration?.expired);
+  const activeLight = actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === gpsUuid);
+  const activeLightDim = actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === gpsUuidDim);
   const canThrow = game.modules.get("item-piles")?.active === true;
   const hasRemaining = (item.system.quantity !== 0);
 
@@ -118,9 +115,9 @@ export async function lanternHooded({ speaker, actor, token, item, args, workflo
   }
   else if (activeLightDim) {
     if (canThrow) {
-      await showLightDialog({ actions: ["light", "extinguish", "throw"], token, actor, item, effectName, filePath, lightEffect, animType, gpsUuid, lightEffectDim, gpsUuidDim });
+      await showLightDialog({ actions: ["light", "extinguish", "throw"], token, actor, item, effectName, filePath, lightEffect, animType, gpsUuid, filePathDim, lightEffectDim, gpsUuidDim });
     } else {
-      await showLightDialog({ actions: ["light", "extinguish"], token, actor, item, effectName, filePath, lightEffect, animType, gpsUuid, lightEffectDim, gpsUuidDim });
+      await showLightDialog({ actions: ["light", "extinguish"], token, actor, item, effectName, filePath, lightEffect, animType, gpsUuid, filePathDim, lightEffectDim, gpsUuidDim });
     }
   }
 }

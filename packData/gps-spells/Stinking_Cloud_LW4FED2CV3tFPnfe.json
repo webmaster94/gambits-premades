@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -172,7 +172,15 @@
           "postRemoveConditionText": ""
         },
         "otherActivityId": "none",
-        "otherActivityAsParentType": true
+        "otherActivityAsParentType": true,
+        "img": "",
+        "visibility": {
+          "level": {
+            "min": null,
+            "max": null
+          }
+        },
+        "flags": {}
       },
       "rXxdWAADxapJqp2j": {
         "type": "save",
@@ -314,27 +322,6 @@
       "removeAttackDamageButtons": "default",
       "reactionCondition": "",
       "otherCondition": ""
-    },
-    "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": true,
-      "magiceffect": true,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "confirmTargets": "never",
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
     },
     "dae": {
       "macro": {
@@ -584,27 +571,16 @@
       "version": 5
     },
     "core": {},
-    "character-actions-list-5e": {
-      "filter-override": true
-    },
-    "scene-packer": {
-      "sourceId": "Item.tzWEc6Yn33lJlyer",
-      "hash": "261d5d33244aea44e752b17da057ea09237c8200"
-    },
     "dnd5e": {
       "riders": {
-        "activity": [],
-        "effect": []
+        "activity": []
       }
     },
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
     },
-    "region-attacher": {
-      "attachRegionToTemplate": {
-        "dnd5eactivity000": true
-      },
+    "gambits-premades": {
       "regionBehaviors": {
         "dnd5eactivity000": [
           {
@@ -623,9 +599,9 @@
               "compendiumSource": null,
               "duplicateSource": null,
               "exportSource": null,
-              "coreVersion": "13.346",
+              "coreVersion": "13.351",
               "systemId": "dnd5e",
-              "systemVersion": "5.0.4",
+              "systemVersion": "5.2.5",
               "lastModifiedBy": null
             }
           },
@@ -637,7 +613,7 @@
               "events": [
                 "tokenEnter"
               ],
-              "source": "let effectData = event.data.token.actor.appliedEffects.some(e => e.name === \"Stinking Cloud\");\n\nif(!effectData) {\neffectData = [{\n      \"disabled\": false,\n      \"name\": \"Stinking Cloud\",\n      \"img\": \"icons/commodities/materials/glass-orb-green.webp\",\n      \"transfer\": false\n}];\n\nawait MidiQOL.socket().executeAsGM(\"createEffects\", { actorUuid: event.data.token.actor.uuid, effects: effectData });\n}"
+              "source": "if(game.user.id !== game.gps.getPrimaryGM() || !event.data.token.actor) return;\nconst recipient = event.data.token.actor;\nif(recipient.effects.some(effect => effect.flags[\"gambits-premades\"]?.regionUuid === region.uuid)) return;\nconst item = await fromUuid(region.getFlag(\"dnd5e\", \"item\"));\nif(!item) return;\nawait recipient.createEmbeddedDocuments(\"ActiveEffect\", [{\n    name: item.name, img: item.img, origin: item.uuid, transfer: false, showIcon: 2,\n    flags: {\"gambits-premades\": {regionUuid: region.uuid}}\n}]);"
             },
             "disabled": false,
             "flags": {},
@@ -645,11 +621,11 @@
               "compendiumSource": null,
               "duplicateSource": null,
               "exportSource": null,
-              "coreVersion": "13.346",
+              "coreVersion": "13.351",
               "systemId": "dnd5e",
-              "systemVersion": "5.0.4",
+              "systemVersion": "5.2.5",
               "lastModifiedBy": "roRDywD19pu2VxlC",
-              "modifiedTime": 1753913296551
+              "modifiedTime": 1785709496310
             }
           },
           {
@@ -660,7 +636,7 @@
               "events": [
                 "tokenExit"
               ],
-              "source": "let effectData = event.data.token.actor.appliedEffects.find(e => e.name === \"Stinking Cloud\");\n\nif(effectData) effectData.delete();"
+              "source": "if(game.user.id !== game.gps.getPrimaryGM() || !event.data.token.actor) return;\nconst recipient = event.data.token.actor;\nconst effects = recipient.effects.filter(effect => effect.flags[\"gambits-premades\"]?.regionUuid === region.uuid);\nif(effects.length) await recipient.deleteEmbeddedDocuments(\"ActiveEffect\", effects.map(effect => effect.id));"
             },
             "disabled": false,
             "flags": {},
@@ -668,26 +644,78 @@
               "compendiumSource": null,
               "duplicateSource": null,
               "exportSource": null,
-              "coreVersion": "13.346",
+              "coreVersion": "13.351",
               "systemId": "dnd5e",
-              "systemVersion": "5.0.4",
+              "systemVersion": "5.2.5",
               "lastModifiedBy": "roRDywD19pu2VxlC",
-              "modifiedTime": 1753913297426
+              "modifiedTime": 1785709502700
             }
           }
         ]
-      }
-    },
-    "chris-premades": {
-      "customConfig": [
-        {
-          "value": "playAnimation",
-          "label": "CHRISPREMADES.Config.PlayAnimation",
+      },
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
           "type": "checkbox",
           "default": true,
-          "category": "animation"
+          "category": "animations"
+        },
+        "regionVisibility": {
+          "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Name",
+          "type": "select",
+          "default": "LAYER",
+          "category": "animations",
+          "options": [
+            {
+              "value": "LAYER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Layer"
+            },
+            {
+              "value": "LAYER_UNLOCKED",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.LayerUnlocked"
+            },
+            {
+              "value": "GAMEMASTER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Gamemaster"
+            },
+            {
+              "value": "OBSERVER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Observer"
+            },
+            {
+              "value": "ALWAYS",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Always"
+            }
+          ]
         }
+      },
+      "animationModules": [
+        "JB2APatreon"
       ]
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      },
+      "rXxdWAADxapJqp2j": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save: Automation",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "_id": "LW4FED2CV3tFPnfe",

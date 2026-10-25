@@ -18,39 +18,37 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
             target = target?.object;
             let validTokenPrimary = await fromUuid(validTokenPrimaryUuid);
             let chosenItem = await fromUuid(chosenItemUuid);
+            if(!target?.actor || !validTokenPrimary?.actor || !chosenItem) continue;
+            saveResult = workflow.tokenSaves?.[targetUuid]?.total ?? saveResult;
             let chatContent;
 
             if(disposition === "ally") {
-                if(saveResult >= saveDC) {
-                    workflow.failedSaves.delete(target);
-                    workflow.saves.add(target)
+                if(workflow.saves.has(target)) {
 
                     chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.AllyDisadvantageRemovedSaveSuccess", { saveResult: saveResult })} <img src="${target.actor.img}" width="30" height="30" style="border:0px"></span>`;
                 }
                 else {
                     chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.AllyDisadvantageRemovedSaveFailure", { saveResult: saveResult })} <img src="${target.actor.img}" width="30" height="30" style="border:0px"></span>`;
                 }
-                await game.gps.socket.executeAsUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent});
+                await game.gps.queryUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent});
             }
             else if(disposition === "enemy") {
-                if(saveResult < saveDC) {
-                    workflow.failedSaves.add(target);
-                    workflow.saves.delete(target)
+                if(workflow.failedSaves.has(target)) {
 
                     chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.EnemyAdvantageRemovedSaveFailure", { saveResult: saveResult })} <img src="${target.actor.img}" width="30" height="30" style="border:0px"></span>`;
                 }
                 else {
                     chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.EnemyAdvantageRemovedSaveSuccess", { saveResult: saveResult })} <img src="${target.actor.img}" width="30" height="30" style="border:0px"></span>`;
                 }
-                await game.gps.socket.executeAsUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent});
+                await game.gps.queryUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent});
             }
         }
         return;
     }
     else if(workflowType === "savePost") return;
-    
-    let findValidTokens = game.gps.findValidTokens({initiatingToken: workflow.token, targetedToken: null, itemName: itemName, itemType: "feature", itemChecked: null, reactionCheck: true, sightCheck: true, rangeCheck: true, rangeTotal: 60, dispositionCheck: false, dispositionCheckType: "", workflowType: workflowType, workflowCombat: workflowCombat, gpsUuid: gpsUuid});
-    
+
+    let findValidTokens = game.gps.findValidTokens({initiatingToken: workflow.token, targetedToken: null, itemName: itemName, itemType: "feature", itemChecked: null, reactionCheck: true, sightCheck: workflowType === "attack", rangeCheck: workflowType === "attack", rangeTotal: 60, dispositionCheck: false, dispositionCheckType: "", workflowType: workflowType, workflowCombat: workflowCombat, gpsUuid: gpsUuid});
+
     let browserUser;
 
     for (const validTokenPrimary of findValidTokens) {
@@ -58,17 +56,18 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
         let itemProperName = chosenItem?.name;
         const dialogTitlePrimary = `${validTokenPrimary.actor.name} | ${itemProperName}`;
         const dialogTitleGM = game.i18n.format("GAMBITSPREMADES.Dialogs.Common.WaitingForSelection", { actorName: validTokenPrimary.actor.name, itemName: itemProperName });
-        
+
         browserUser = game.gps.getBrowserUser({ actorUuid: validTokenPrimary.actor.uuid });
 
         let dialogContent;
 
         if(workflowType === "save") {
-            let targetAllies = Array.from(workflow.targets).filter(t => t.document.disposition === validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && MidiQOL.computeDistance(validTokenPrimary, t, {wallsBlock: true, includeCover: true}) <= 60);
-            let targetEnemies = Array.from(workflow.targets).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && MidiQOL.computeDistance(validTokenPrimary, t, {wallsBlock: true, includeCover: true}) <= 60);
-            
-            targetAllies = targetAllies.filter(t => Object.values(workflow.tokenSaves ?? {}).find(roll => roll.data.actorId === t.actor.id && roll.formula.includes("kl") && !roll.formula.includes("kh")) !== undefined);
-            targetEnemies = targetEnemies.filter(t => Object.values(workflow.tokenSaves ?? {}).find(roll => roll.data.actorId === t.actor.id && !roll.formula.includes("kl") && roll.formula.includes("kh")) !== undefined);
+            let targetAllies = Array.from(workflow.targets).filter(t => t.document.disposition === validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
+            let targetEnemies = Array.from(workflow.targets).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
+
+            const tokenSaves = workflow.tokenSaves ?? {};
+            targetAllies = targetAllies.filter(t => game.gps.reactionCanChangeOutcome(workflow, {type: "save", desired: "success", target: t}) && tokenSaves[t.document.uuid]?.formula.includes("kl") && !tokenSaves[t.document.uuid].formula.includes("kh"));
+            targetEnemies = targetEnemies.filter(t => game.gps.reactionCanChangeOutcome(workflow, {type: "save", desired: "failure", target: t}) && tokenSaves[t.document.uuid]?.formula.includes("kh") && !tokenSaves[t.document.uuid].formula.includes("kl"));
 
             if((!targetAllies || targetAllies?.length === 0) && (!targetEnemies || targetEnemies?.length === 0)) {
                 if(debugEnabled) game.gps.logInfo(`${itemProperName} for ${validTokenPrimary.actor.name} failed at token disposition check`);
@@ -79,14 +78,14 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
             const targetAllyNames = targetAllies.map(t => t.document.name);
             const targetEnemyUuids = targetEnemies.map(t => t.document.uuid);
             const targetEnemyNames = targetEnemies.map(t => t.document.name);
-            
-            targetAllyUuids.map((uuid, index) => 
+
+            targetAllyUuids.map((uuid, index) =>
                 `<option value="${uuid}">${targetAllyNames[index]}</option>`
             ).join('');
-            targetEnemyUuids.map((uuid, index) => 
+            targetEnemyUuids.map((uuid, index) =>
                 `<option value="${uuid}">${targetEnemyNames[index]}</option>`
             ).join('');
-        
+
             dialogContent = `
                 <div class="gps-dialog-container">
                     <div class="gps-dialog-section">
@@ -94,30 +93,30 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
                             <p class="gps-dialog-paragraph">${game.i18n.format("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.Prompts.UseYourReaction.SelectTarget", { itemName: itemProperName, selectionHint: targetAllyUuids.length >= 1 && targetEnemyUuids.length === 0 ? game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.SelectionHint.ChooseAlly") : targetAllyUuids.length === 0 && targetEnemyUuids.length >= 1 ? game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.SelectionHint.ChooseEnemy") : targetAllyUuids.length >= 1 && targetEnemyUuids.length >= 1 ? game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.SelectionHint.ChooseAllyOrEnemy") : "" })}</p>
                             <div class="gps-dialog-flex-wrapper">
                                 <div class="gps-dialog-select-container">
-                                    ${targetAllyUuids.length >= 1 ? 
+                                    ${targetAllyUuids.length >= 1 ?
                                         `<div class="gps-dialog-flex">
                                             <label for="ally-token" class="gps-dialog-label">${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.Ally")}</label>
-                                            <select id="ally-token" class="gps-dialog-select"
-                                                ${targetAllyUuids.length >= 1 && targetEnemyUuids.length >= 1 ? 
-                                                    `${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.OnchangeResetenemyselect")} <option class="gps-dialog-option" value="" selected>${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.SelectAlly")}</option>` : 
-                                                    '>'
+                                            <select id="ally-token" class="gps-dialog-select" data-gps-token-group="reaction">
+                                                ${targetAllyUuids.length >= 1 && targetEnemyUuids.length >= 1 ?
+                                                    `<option class="gps-dialog-option" value="" selected>${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.SelectAlly")}</option>` :
+                                                    ''
                                                 }
-                                                ${targetAllyNames.map((name, index) => 
+                                                ${targetAllyNames.map((name, index) =>
                                                     `<option class="gps-dialog-option" value="${targetAllyUuids[index]}">${name}</option>`
                                                 ).join('')}
                                             </select>
-                                        </div>` 
+                                        </div>`
                                         : ''
                                     }
-                                    ${targetEnemyUuids.length >= 1 ? 
+                                    ${targetEnemyUuids.length >= 1 ?
                                         `<div class="gps-dialog-flex">
                                             <label for="enemy-token" class="gps-dialog-label">${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.Enemy")}</label>
-                                            <select id="enemy-token" class="gps-dialog-select"
-                                                ${targetAllyUuids.length >= 1 && targetEnemyUuids.length >= 1 ? 
-                                                    `${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.OnchangeResetallyselect")} <option class="gps-dialog-option" value="" selected>${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.SelectEnemy")}</option>` : 
-                                                    '>'
+                                            <select id="enemy-token" class="gps-dialog-select" data-gps-token-group="reaction">
+                                                ${targetAllyUuids.length >= 1 && targetEnemyUuids.length >= 1 ?
+                                                    `<option class="gps-dialog-option" value="" selected>${game.i18n.localize("GAMBITSPREMADES.Dialogs.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.SelectEnemy")}</option>` :
+                                                    ''
                                                 }
-                                                ${targetEnemyNames.map((name, index) => 
+                                                ${targetEnemyNames.map((name, index) =>
                                                     `<option class="gps-dialog-option" value="${targetEnemyUuids[index]}">${name}</option>`
                                                 ).join('')}
                                             </select>
@@ -140,6 +139,7 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
             `;
         }
         else if(workflowType === "attack") {
+            if(workflow.token.document.disposition !== validTokenPrimary.document.disposition && !game.gps.reactionCanChangeOutcome(workflow)) continue;
             if(workflow.token.document.disposition === validTokenPrimary.document.disposition && (!workflow.tracker.hasDisadvantage && !workflow.attackRoll.formula.includes("kl") || (workflow.tracker.hasAdvantage === true && workflow.tracker.hasDisadvantage === true) || (workflow.attackRoll.formula.includes("kl") && workflow.attackRoll.formula.includes("kh")))) {
                 if(debugEnabled) game.gps.logInfo(`${itemProperName} for ${validTokenPrimary.actor.name} failed at token disposition check`);
                 continue;
@@ -170,21 +170,21 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
         }
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableSaveTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { author: gmUser, content: content, roll: false };
+        let chatData = { user: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
-        
+
         let result;
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
-            let userDialogArgs = { dialogTitle: dialogTitlePrimary, dialogContent, dialogId, initialTimeLeft, validTokenPrimaryUuid: validTokenPrimary.document.uuid, source: "user", type: "multiDialog", browserUser: browserUser, notificationId: notificationMessage._id };
-            
-            let gmDialogArgs = { dialogTitle: dialogTitleGM, dialogContent, dialogId, initialTimeLeft, validTokenPrimaryUuid: validTokenPrimary.document.uuid, source: "gm", type: "multiDialog", notificationId: notificationMessage._id };
-            
-            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
+            let userDialogArgs = { dialogTitle: dialogTitlePrimary, dialogContent, dialogId, initialTimeLeft, validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: workflowType === "attack" ? workflow.token.document.uuid : undefined, source: "user", type: "multiDialog", browserUser: browserUser, notificationId: notificationMessage._id };
+
+            let gmDialogArgs = { dialogTitle: dialogTitleGM, dialogContent, dialogId, initialTimeLeft, validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: workflowType === "attack" ? workflow.token.document.uuid : undefined, source: "gm", type: "multiDialog", notificationId: notificationMessage._id };
+
+            result = await game.gps.handleDialogPromises({userDialogArgs, gmDialogArgs});
         } else {
-            result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
+            result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: workflowType === "attack" ? workflow.token.document.uuid : undefined,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
         }
-                
+
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, source, type } = result || {};
 
         if (!userDecision) {
@@ -206,14 +206,15 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
                     disposition = "enemy";
                 }
 
-                target = target.object;
+                target = target?.object;
+                if(!target || !workflow.tokenSaves?.[target.document.uuid]) continue;
             }
 
             let targetAC = target?.actor.system.attributes.ac.value;
-            let saveDC = game.gps.getWorkflowSaveDetails(workflow)?.dc?.value;
-            let saveDice = Object.values(workflow.tokenSaves ?? {}).find(dice => dice.data.actorId === target.actor.id);
+            let saveDC = workflow.saveActivity?.save?.dc?.value;
+            let saveDice = workflow.tokenSaves?.[target.document.uuid];
             let saveResult = saveDice?.dice[0].results[0].result + (saveDice?.total - saveDice?.dice[0].total);
-            let baseAttack = workflow.attackRoll?.dice[0].results[0].result;
+            let baseAttack = workflow.attackRoll?.dice[0].results.find(result => !result.rerolled)?.result;
             let bonusAttack = workflow.attackRoll?.total - workflow.attackRoll?.dice[0].total;
             let attackResult = baseAttack + (workflow.attackRoll?.total - workflow.attackRoll?.dice[0].total);
             let criticalSuccessThreshold = workflow.attackRoll?.options?.criticalSuccess;
@@ -231,33 +232,21 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
                 configureDialog: true,
                 targetUuids: [(enemyTokenUuid) ? enemyTokenUuid : (allyTokenUuid) ? allyTokenUuid : workflow.token.document.uuid],
             };
-            
-            let itemRoll;
-            if(source && source === "user") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", browserUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
-            else if(source && source === "gm") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", gmUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, options: options });
 
-            if(!itemRoll) continue;
+            let itemRoll;
+            if(source && source === "user") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", browserUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, config: { midiOptions: { ...options, workflowData: true } } });
+            else if(source && source === "gm") itemRoll = await MidiQOL.socket().executeAsUser("completeItemUse", gmUser, { itemData: chosenItem, actorUuid: validTokenPrimary.actor.uuid, config: { midiOptions: { ...options, workflowData: true } } });
+
+            if(!itemRoll || itemRoll.aborted) continue;
 
             await game.gps.addReaction({actorUuid: `${validTokenPrimary.actor.uuid}`});
 
             if(workflowType === "attack") {
-                if(criticalSuccess) {
-                    totalRoll = await new CONFIG.Dice.D20Roll('1d20').evaluateSync({maximize: true});
-                    await workflow.setAttackRoll(totalRoll);
-                }
-                else if(criticalFailure) {
-                    totalRoll = await new CONFIG.Dice.D20Roll('1d20').evaluateSync({minimize: true});
-                    await workflow.setAttackRoll(totalRoll);
-                }
-                else {
-                    baseRoll = await new CONFIG.Dice.BasicRoll(`${baseAttack}`).evaluate();
-                    bonusRoll = await new CONFIG.Dice.BasicRoll(`${bonusAttack}`).evaluate();
-                    totalRoll = await MidiQOL.addRollTo(baseRoll, bonusRoll);
-                    await workflow.setAttackRoll(totalRoll);
-                }
-
+                totalRoll = game.gps.replaceD20Result(workflow.attackRoll, baseAttack);
+                await game.gps.setAttackResult(workflow, totalRoll);
+                attackResult = totalRoll.total;
                 if(workflow.token.document.disposition === validTokenPrimary.document.disposition) {
-                    if(attackResult >= targetAC) {
+                    if(game.gps.attackHits(workflow, target)) {
                         if(criticalSuccess) chatContent = `<span style='text-wrap: wrap;'>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.AllyDisadvantageRemovedCriticalHit")} <img src="${workflow.actor.img}" width="30" height="30" style="border:0px"></span>`;
                         else chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.AllyDisadvantageRemovedAttackHit", { attackResult: attackResult })} <img src="${workflow.actor.img}" width="30" height="30" style="border:0px"></span>`;
                     }
@@ -265,11 +254,11 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
                         if(criticalFailure) chatContent = `<span style='text-wrap: wrap;'>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.AllyDisadvantageRemovedCriticalMiss")} <img src="${workflow.actor.img}" width="30" height="30" style="border:0px"></span>`;
                         else chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.AllyDisadvantageRemovedAttackMiss", { attackResult: attackResult })} <img src="${workflow.actor.img}" width="30" height="30" style="border:0px"></span>`;
                     }
-                    await game.gps.socket.executeAsUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent, rollData: totalRoll});
+                    await game.gps.queryUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent, rollData: totalRoll});
                     return;
                 }
                 else{
-                    if(attackResult < targetAC) {
+                    if(!game.gps.attackHits(workflow, target)) {
                         if(criticalFailure) chatContent = `<span style='text-wrap: wrap;'>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.EnemyAdvantageRemovedCriticalMiss")} <img src="${workflow.actor.img}" width="30" height="30" style="border:0px"></span>`;
                         else chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.EnemyAdvantageRemovedAttackMiss", { attackResult: attackResult })} <img src="${workflow.actor.img}" width="30" height="30" style="border:0px"></span>`;
                     }
@@ -277,20 +266,14 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
                         if(criticalSuccess) chatContent = `<span style='text-wrap: wrap;'>${game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.EnemyAdvantageRemovedCriticalHit")} <img src="${workflow.actor.img}" width="30" height="30" style="border:0px"></span>`;
                         else chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Sorcerer.ClockworkSoul.RestoreBalance.EnemyAdvantageRemovedAttackHit", { attackResult: attackResult })} <img src="${workflow.actor.img}" width="30" height="30" style="border:0px"></span>`;
                     }
-                    await game.gps.socket.executeAsUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent, rollData: totalRoll});
+                    await game.gps.queryUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent, rollData: totalRoll});
                     return;
                 }
             }
             else if(workflowType === "save") {
-                if(saveResult >= saveDC && disposition === "ally") {
-                    workflow.failedSaves.delete(target);
-                    workflow.saves.add(target)
-                }
-                if(saveResult < saveDC && disposition === "enemy") {
-                    workflow.failedSaves.add(target);
-                    workflow.saves.delete(target)
-                }
-
+                const revised = game.gps.replaceD20Result(saveDice, saveDice.dice[0].results.find(result => !result.rerolled)?.result);
+                await game.gps.updateSaveResult({workflow, token: target, roll: revised});
+                saveResult = revised.total;
                 ((workflow.gps ??= {}).restoreBalanceFlag ??= []).push({
                     targetUuid: target.document.uuid,
                     disposition,

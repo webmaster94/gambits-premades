@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014"
     },
@@ -176,28 +176,15 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [
             "1Attack"
           ]
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -214,30 +201,12 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!oQnmCdw2YZi2Ap49.hPR9ii2vho7FqWlZ",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!oQnmCdw2YZi2Ap49.hPR9ii2vho7FqWlZ"
     }
   ],
   "folder": null,
   "flags": {
-    "scene-packer": {
-      "hash": "56b4b90c6a6717f73765302f3d32affedcd988aa",
-      "sourceId": "Item.xQOQqkkAlYHtx1pw"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "rollOther": false
-    },
     "midi-qol": {
       "effectActivation": false,
       "itemCondition": "",
@@ -252,7 +221,7 @@
         "img": "icons/skills/ranged/projectile-spiral-gray.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"preCheckHits\") {\n    if(workflow.attackRoll.dice[0].total <= 7) {\n    let updatedRoll = (workflow.attackTotal - workflow.attackRoll.dice[0].total) + 8;\n    workflow.attackRoll._total = updatedRoll;\n    }\n}",
+        "command": "if(args[0]?.macroPass === \"preCheckHits\") {\n    const result = workflow.attackRoll?.dice.find(die => die.faces === 20)?.results.find(result => result.active && !result.discarded)?.result;\n    if(result <= 7) await game.gps.setAttackResult(workflow, game.gps.replaceD20Result(workflow.attackRoll, 8));\n}\n",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3
@@ -276,6 +245,26 @@
       "riders": {
         "activity": [],
         "effect": []
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
       }
     }
   },

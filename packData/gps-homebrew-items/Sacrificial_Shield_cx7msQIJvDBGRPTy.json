@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "0.5.40",
+      "custom": "",
       "book": "",
       "page": "",
       "license": "",
@@ -65,47 +65,6 @@
     "activities": {}
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Shield",
-        "filterType": "Armor",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": null,
-        "tags": [
-          "Warding"
-        ],
-        "sources": [
-          {
-            "sourceId": 1,
-            "pageNumber": null,
-            "sourceType": 2
-          },
-          {
-            "sourceId": 2,
-            "pageNumber": null,
-            "sourceType": 1
-          }
-        ],
-        "alternativeNames": [
-          "Shield Armor"
-        ]
-      },
-      "id": 0,
-      "entityTypeId": 0,
-      "definitionEntityTypeId": 701257905,
-      "definitionId": 8,
-      "originalName": "Shield",
-      "version": "3.5.7"
-    },
-    "scene-packer": {
-      "sourceId": "Item.",
-      "hash": "0201c6ba5b20cf12a1408a3c3ab701439933f6e3"
-    },
     "midi-qol": {
       "onUseMacroName": "",
       "rollAttackPerTarget": "default",
@@ -118,7 +77,7 @@
         "img": "icons/equipment/shield/oval-wooden-boss-steel.webp",
         "type": "script",
         "scope": "global",
-        "command": "if (args[0].macroPass === \"isHit\" && workflow.isCritical) {\n    await foundry.applications.api.DialogV2.wait({\n        window: { title: 'Sacrificial Shield' },\n        content: `\n            <div class=\"gps-dialog-container\">\n                <div class=\"gps-dialog-section\">\n                    <div class=\"gps-dialog-content\">\n                        <div>\n                            <div class=\"gps-dialog-flex\">\n                                <p class=\"gps-dialog-paragraph\">Would you like to destroy your shield to prevent a critical hit?</p>\n                                <div id=\"image-container\" class=\"gps-dialog-image-container\">\n                                    <img src=\"${macroItem.img}\" class=\"gps-dialog-image\">\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        `,\n        buttons: [{\n            action: \"Yes\",\n            label: \"Yes\",\n            callback: async (event, button, dialog) => {\n                workflow.isCritical = false;\n                workflow.hitDisplayData[workflow.hitTargets.first().document.uuid].hitString = \"hits\";\n\n                let actorPlayer = MidiQOL.playerForActor(actor);\n                ChatMessage.create({\n                    author: actorPlayer.id,\n                    content: `The ${macroItem.name} cracks from the heavy impact, but protects its wearer from a critical hit`,\n                    speaker: ChatMessage.getSpeaker({ token: token })\n                });\n\n                await macroItem.update({\n                    \"system.equipped\": false,\n                    \"name\": `${macroItem.name} (Broken)`\n                });\n            }\n        },\n        {\n            action: \"No\",\n            label: \"No\",\n            callback: async (event, button, dialog) => {\n                return;\n            }\n        }],\n        close: async (event, dialog) => {\n            return;\n        }, rejectClose:false\n    });\n}",
+        "command": "if (args[0].macroPass === \"isHit\" && workflow.isCritical) {\n    await game.gps.showAutomationDialog({\n        window: { title: macroItem.name },\n        content: `\n            <div class=\"gps-dialog-container\">\n                <div class=\"gps-dialog-section\">\n                    <div class=\"gps-dialog-content\">\n                        <div>\n                            <div class=\"gps-dialog-flex\">\n                                <p class=\"gps-dialog-paragraph\">${game.i18n.localize(\"GAMBITSPREMADES.Dialogs.SacrificialShield.Prompt\")}</p>\n                                <div id=\"image-container\" class=\"gps-dialog-image-container\">\n                                    <img src=\"${macroItem.img}\" class=\"gps-dialog-image\">\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        `,\n        buttons: [{\n            action: \"Yes\",\n            label: game.i18n.localize(\"GAMBITSPREMADES.Dialogs.Common.Yes\"),\n            callback: async (event, button, dialog) => {\n                workflow.isCritical = false;\n                workflow.hitDisplayData[workflow.hitTargets.first().document.uuid].hitString = \"hits\";\n\n                let actorPlayer = MidiQOL.playerForActor(actor);\n                ChatMessage.create({\n                    user: actorPlayer.id,\n                    content: `The ${macroItem.name} cracks from the heavy impact, but protects its wearer from a critical hit`,\n                    speaker: ChatMessage.getSpeaker({ token: token })\n                });\n\n                await macroItem.update({\n                    \"system.equipped\": false,\n                    \"name\": `${macroItem.name} (Broken)`\n                });\n            }\n        },\n        {\n            action: \"No\",\n            label: game.i18n.localize(\"GAMBITSPREMADES.Dialogs.Common.No\"),\n            callback: async (event, button, dialog) => {\n                return;\n            }\n        }],\n        close: async (event, dialog) => {\n            return;\n        }, rejectClose:false\n    });\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3
@@ -139,26 +98,20 @@
         }
       }
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "dnd5e": {
       "riders": {
         "activity": []
       }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "effects": [
@@ -190,7 +143,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
@@ -198,25 +150,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!cx7msQIJvDBGRPTy.rdCztK1Tsmy0bGcC",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!cx7msQIJvDBGRPTy.rdCztK1Tsmy0bGcC"
     }
   ],
   "img": "icons/equipment/shield/oval-wooden-boss-steel.webp",

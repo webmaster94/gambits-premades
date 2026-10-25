@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "revision": 1
     },
@@ -36,30 +36,6 @@
     }
   },
   "flags": {
-    "ddbimporter": {
-      "id": 709,
-      "data": {
-        "id": 709,
-        "name": "Scornful Rebuke",
-        "prerequisite": null,
-        "description": "<p>Starting at 15th level, those who dare to strike you are psychically punished for their audacity. Whenever a creature hits you with an attack, that creature takes psychic damage equal to your Charisma modifier (minimum of 1) if you’re not incapacitated.</p>",
-        "requiredLevel": 15,
-        "displayOrder": 4
-      },
-      "version": "3.4.63",
-      "featureId": 709,
-      "featureName": "Scornful Rebuke",
-      "requiredLevel": 15,
-      "prerequisite": null,
-      "class": "Paladin",
-      "classId": 106,
-      "subClass": "Oath of Conquest",
-      "parentClassId": 4
-    },
-    "scene-packer": {
-      "sourceId": "Item.rYrhsjs7HWxG8Ty7",
-      "hash": "64341c026ba47ac9b71be9fda68821ae65931720"
-    },
     "midi-qol": {
       "onUseMacroName": ""
     },
@@ -91,24 +67,20 @@
         }
       }
     },
-    "midiProperties": {
-      "confirmTargets": "never",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "dnd5e": {
       "riders": {
         "activity": []
       }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "img": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
@@ -130,31 +102,17 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
           "disableCondition": ""
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "core": {
           "overlay": false
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -171,8 +129,8 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!4FIlEdNlAY78XCap.dNyVYLbGpztKomkw",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!4FIlEdNlAY78XCap.dNyVYLbGpztKomkw"
     }
   ],
   "folder": "Rr6FA73OqipfG65M",

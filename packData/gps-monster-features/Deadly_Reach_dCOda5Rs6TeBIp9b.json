@@ -9,7 +9,7 @@
     "source": {
       "book": "Mordenkainen Presents: Monsters of the Multiverse",
       "page": "66",
-      "custom": "2.1.38",
+      "custom": "",
       "license": "",
       "revision": 1,
       "rules": "2014"
@@ -157,16 +157,6 @@
   },
   "effects": [],
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {},
-      "parentId": "jU2FmmOJfpkioZRv"
-    },
-    "monsterMunch": {
-      "titleHTML": "<strong>Deadly Reach.</strong>",
-      "fullName": "Deadly Reach.",
-      "actionCopy": false,
-      "type": "reaction"
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "rollAttackPerTarget": "default",
@@ -177,31 +167,7 @@
       "autoTarget": "default",
       "otherCondition": ""
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "core": {},
-    "scene-packer": {
-      "sourceId": "Compendium.world.ddb-spelljammer-adventures-in-space-ddb-monsters.Actor.jU2FmmOJfpkioZRv.Item.RO7OQdDmYKVvCwdU",
-      "hash": "744e094fd5b5c6aa08323cc2ddb78d2273bf8d29"
-    },
     "dnd5e": {
       "riders": {
         "activity": [],
@@ -214,6 +180,26 @@
     },
     "gambits-premades": {
       "gpsUuid": "e38813a6-9707-4ff3-bf2e-59c3c91b86ac"
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "img": "icons/skills/melee/blood-slash-foam-red.webp",

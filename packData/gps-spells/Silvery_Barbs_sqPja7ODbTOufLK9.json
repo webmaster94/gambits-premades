@@ -6,7 +6,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -172,56 +172,6 @@
   },
   "name": "Silvery Barbs",
   "flags": {
-    "ddbimporter": {
-      "id": 10075687,
-      "definitionId": 1239804,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "generic",
-        "lookupName": "generic",
-        "level": null,
-        "castAtLevel": null
-      },
-      "originalName": "Silvery Barbs",
-      "sources": [
-        {
-          "sourceId": 80,
-          "pageNumber": 38,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Buff",
-        "Debuff"
-      ],
-      "version": "3.5.7",
-      "effectsApplied": true
-    },
-    "midiProperties": {
-      "magicdam": true,
-      "magiceffect": true,
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "concentration": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "confirmTargets": "default",
-      "noConcentrationCheck": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "scene-packer": {
-      "sourceId": "Compendium.world.ddb-spelljammer-adventures-in-space-ddb-spells.Item.zn0gEciPsNGH8k0M",
-      "hash": "a9444ea0952bb1df7d5ba6a01731238b69198ba0"
-    },
     "midi-qol": {
       "effectActivation": false,
       "rollAttackPerTarget": "default",
@@ -241,17 +191,17 @@
     },
     "core": {},
     "gambits-premades": {
-      "gpsUuid": "548b5cab-f870-47b6-828a-8de7549debeb"
-    },
-    "chris-premades": {
-      "customConfig": [
-        {
-          "value": "playAnimation",
-          "label": "CHRISPREMADES.Config.PlayAnimation",
+      "gpsUuid": "548b5cab-f870-47b6-828a-8de7549debeb",
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
           "type": "checkbox",
           "default": true,
-          "category": "animation"
+          "category": "animations"
         }
+      },
+      "animationModules": [
+        "GPS"
       ]
     },
     "autoanimations": {
@@ -477,6 +427,22 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [],

@@ -6,7 +6,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "book": "Fizban's Treasury of Dragons",
       "page": "20",
       "license": "",
@@ -176,50 +176,6 @@
   },
   "name": "Fizban's Platinum Shield",
   "flags": {
-    "ddbimporter": {
-      "id": 9603627,
-      "definitionId": 1183864,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "generic",
-        "lookupName": "generic",
-        "level": null,
-        "castAtLevel": null
-      },
-      "originalName": "Fizban's Platinum Shield",
-      "sources": [
-        {
-          "sourceId": 81,
-          "pageNumber": 20,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Warding"
-      ],
-      "version": "5.0.1",
-      "effectsApplied": true
-    },
-    "midiProperties": {
-      "magicdam": true,
-      "magiceffect": true,
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "scene-packer": {
-      "sourceId": "Actor.Q7GcFBwAbXgQX9Yv.Item.vvqHOzXtcfxJf6gi",
-      "hash": "ae353eb68454933eb8e009d29d4a002bacf8b733"
-    },
     "dnd5e": {
       "riders": {
         "activity": [],
@@ -497,7 +453,34 @@
       "actionSection": ""
     },
     "gambits-premades": {
-      "fizbansPlatShieldTarget": "Scene.1mkVNeOdyVIlDdH7.Token.6oG1hK3sp8lNIVRu"
+      "fizbansPlatShieldTarget": "Scene.1mkVNeOdyVIlDdH7.Token.6oG1hK3sp8lNIVRu",
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        }
+      },
+      "animationModules": [
+        "JB2APatreon"
+      ]
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -521,7 +504,7 @@
             "type": "add"
           },
           {
-            "key": "system.abilities.dex.bonuses.save",
+            "key": "system.abilities.dex.save.roll.bonus",
             "value": "+2",
             "priority": 20,
             "type": "add"
@@ -563,7 +546,7 @@
             "type": "custom"
           },
           {
-            "key": "ATL.light.dim",
+            "key": "token.light.dim",
             "value": 5,
             "priority": 20,
             "type": "add"
@@ -588,36 +571,22 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
           "enableCondition": "",
           "disableCondition": ""
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "core": {
           "overlay": false
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!LTxLuJCxthHdlopJ.2TVoFB98ZtniR8Z7",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!LTxLuJCxthHdlopJ.2TVoFB98ZtniR8Z7"
     }
   ],
   "img": "icons/magic/defensive/shield-barrier-deflect-teal.webp",

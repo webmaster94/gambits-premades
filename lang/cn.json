@@ -634,10 +634,7 @@
             }
           },
           "LegendaryResistance": {
-            "Outcome": "豁免失败 -> 成功",
-            "PromptUseLegendaryResistance": "{actorName} 豁免失败了。你是否要使用 {itemName} 改为成功？",
-            "RemainingUses": "剩余传奇抗力：{remaining}/{max}。",
-            "Used": "{actorName} 使用 {itemName} 将失败的豁免改为成功。"
+            "PromptUseLegendaryResistance": "{actorName} 豁免失败了。你是否要使用 {itemName} 改为成功？"
           }
         },
         "Spells": {

@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -181,19 +181,6 @@
       }
     },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "itemCondition": "",
@@ -201,10 +188,6 @@
       "effectCondition": "",
       "removeAttackDamageButtons": "default",
       "otherCondition": ""
-    },
-    "scene-packer": {
-      "hash": "a7fe44b00e60c804818fd4864b2e73f27eb56b4d",
-      "sourceId": "Actor.1xFtQVMnMyuFm2w2.Item.SAI3GQb7tj2pVTEw"
     },
     "tidy5e-sheet": {
       "actionSection": "",
@@ -219,6 +202,26 @@
     },
     "gambits-premades": {
       "gpsUuid": "b8949110-fd25-4d67-a65f-1bdc3d03b36e"
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "folder": null,

@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -200,34 +200,6 @@
     }
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Wondrous item",
-        "filterType": "Wondrous item",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": null,
-        "tags": [],
-        "sources": [
-          {
-            "sourceId": 67,
-            "pageNumber": 119,
-            "sourceType": 1
-          }
-        ]
-      },
-      "id": 0,
-      "entityTypeId": 0,
-      "definitionEntityTypeId": 112130694,
-      "definitionId": 2411840,
-      "originalName": "Amulet of the Devout, +1",
-      "version": "3.5.7",
-      "effectsApplied": true
-    },
     "dae": {
       "alwaysActive": false,
       "activeEquipped": true,
@@ -269,28 +241,7 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "scene-packer": {
-      "sourceId": "Actor.4rgwJtcvBFEmAQ4A.Item.POaVqenRzBmkB6ml",
-      "hash": "dfd93f583a8e53b6db87ed25dabf41bf8ea66228"
-    },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "dnd5e": {
       "riders": {
         "activity": []
@@ -299,6 +250,26 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -313,7 +284,7 @@
       "system": {
         "changes": [
           {
-            "key": "system.bonuses.spell.attack",
+            "key": "system.rolls.attack.spell.bonus",
             "value": 1,
             "priority": 20,
             "type": "add"
@@ -335,28 +306,10 @@
         "dae": {
           "disableIncapacitated": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
           "disableCondition": ""
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "dnd5e": {
           "riders": {
@@ -365,10 +318,14 @@
         },
         "core": {
           "overlay": false
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!TnTZkvxXX7fuddqd.W8gOp16Ls6nszHdY",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!TnTZkvxXX7fuddqd.W8gOp16Ls6nszHdY"
     }
   ],
   "img": "icons/equipment/neck/amulet-carved-stone-cross.webp",

@@ -14,10 +14,11 @@ export async function protection({workflowData,workflowType,workflowCombat}) {
     if(enableProtectionOnSuccess && (workflow.attackTotal < target.actor.system.attributes.ac.value)) return;
 
     let findValidTokens = game.gps.findValidTokens({initiatingToken: workflow.token, targetedToken: target, itemName: itemName, itemType: "item", itemChecked: ["shield"], reactionCheck: true, sightCheck: true, rangeCheck: true, rangeTotal: 5, dispositionCheck: true, dispositionCheckType: "enemyAlly", workflowType: workflowType, workflowCombat: workflowCombat, gpsUuid: gpsUuid});
-    
+
     let browserUser;
-    
+
     for (const validTokenPrimary of findValidTokens) {
+        if(enableProtectionOnSuccess && !game.gps.reactionCanChangeOutcome(workflow, {target})) return;
         let chosenItem = validTokenPrimary.actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === gpsUuid);
         let itemProperName = chosenItem?.name;
         const dialogTitlePrimary = `${validTokenPrimary.actor.name} | ${itemProperName}`;
@@ -49,18 +50,18 @@ export async function protection({workflowData,workflowType,workflowCombat}) {
         `;
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableAttackTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { author: gmUser, content: content, roll: false };
+        let chatData = { user: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
         let result;
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
-            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser, notificationId: notificationMessage._id };
-            
-            let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: "gm",type: "multiDialog", notificationId: notificationMessage._id };
-        
-            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
+            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: target.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser, notificationId: notificationMessage._id };
+
+            let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: target.document.uuid,source: "gm",type: "multiDialog", notificationId: notificationMessage._id };
+
+            result = await game.gps.handleDialogPromises({userDialogArgs, gmDialogArgs});
         } else {
-            result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
+            result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: target.document.uuid,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
         }
 
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, source, type } = result || {};
@@ -71,26 +72,28 @@ export async function protection({workflowData,workflowType,workflowCombat}) {
         else if (userDecision) {
             await game.gps.addReaction({actorUuid: `${validTokenPrimary.actor.uuid}`});
 
-            let primaryFile = "jaamod.condition.magic_shield";
-            let alternateFile = "jb2a.icon.shield.blue";
-    
-            let fileToPlay = Sequencer.Database.getEntry(primaryFile) ? primaryFile : Sequencer.Database.getEntry(alternateFile) ? alternateFile : "";
-    
-            new Sequence({moduleName: "gambits-premades", softFail: true})
-                .effect()
-                .file(fileToPlay)
-                .atLocation(validTokenPrimary)
-                .moveTowards(target)
-                .scaleToObject(2.0)
-                .zIndex(0)
-                .belowTokens(false)
-                .fadeIn(250)
-                .fadeOut(250)
-                .play();
+            if(game.gps.getCprConfig({itemUuid: chosenItem.uuid}).animEnabled) {
+                let primaryFile = "jaamod.condition.magic_shield";
+                let alternateFile = "jb2a.icon.shield.blue";
+
+                let fileToPlay = Sequencer.Database.getEntry(primaryFile) ? primaryFile : Sequencer.Database.getEntry(alternateFile) ? alternateFile : "";
+
+                new Sequence()
+                    .effect()
+                    .file(fileToPlay)
+                    .atLocation(validTokenPrimary)
+                    .moveTowards(target)
+                    .scaleToObject(2.0)
+                    .zIndex(0)
+                    .belowTokens(false)
+                    .fadeIn(250)
+                    .fadeOut(250)
+                    .play();
+            }
 
             if(!enableProtectionOnSuccess) {
                 workflow.tracker.disadvantage.add(true, "Protection");
-            }            
+            }
             else if(enableProtectionOnSuccess) {
                 let straightRoll = workflow.attackRoll.dice[0].results[0].result;
                 let straightRollBonus = workflow.attackRoll.total - workflow.attackRoll.dice[0].total;
@@ -100,13 +103,13 @@ export async function protection({workflowData,workflowType,workflowCombat}) {
                     let reroll = await new Roll(`${straightRoll} + ${straightRollBonus}`).evaluate();
                     await workflow.setAttackRoll(reroll);
                     workflow.workflowOptions.noOnUseMacro = saveSetting;
-    
+
                     if(target.actor.system.attributes.ac.value > reroll.total) content = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Protection.TurnAdvantageToStraightRollMiss", { targetName: target.actor.name })} <img src="${workflow.token.actor.img}" width="30" height="30" style="border:0px"></span>`;
                     else content = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Protection.TurnAdvantageToStraightRollHit", { targetName: target.actor.name })} <img src="${workflow.token.actor.img}" width="30" height="30" style="border:0px"></span>`;
-            
+
                     let actorPlayer = MidiQOL.playerForActor(validTokenPrimary.actor);
                     let chatData = {
-                    author: actorPlayer.id,
+                    user: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: validTokenPrimary }),
                     content: content
                     };
@@ -120,15 +123,15 @@ export async function protection({workflowData,workflowType,workflowCombat}) {
                     if(reroll.total < workflow.attackTotal) await workflow.setAttackRoll(reroll);
                     await MidiQOL.displayDSNForRoll(reroll, 'damageRoll');
                     workflow.workflowOptions.noOnUseMacro = saveSetting;
-            
+
                     let content;
-            
+
                     if(target.actor.system.attributes.ac.value > reroll.total) content = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Protection.FightingStyleCause", { targetName: target.actor.name })} <img src="${workflow.token.actor.img}" width="30" height="30" style="border:0px"></span>`;
                     else content = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ClassFeatures.Protection.AttackHitAnyway", { targetName: target.actor.name })} <img src="${workflow.token.actor.img}" width="30" height="30" style="border:0px"></span>`;
-            
+
                     let actorPlayer = MidiQOL.playerForActor(validTokenPrimary.actor);
                     let chatData = {
-                    author: actorPlayer.id,
+                    user: actorPlayer.id,
                     speaker: ChatMessage.getSpeaker({ token: validTokenPrimary }),
                     content: content
                     };

@@ -2,22 +2,23 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
     if(args[0].macroPass === "postActiveEffects") {
         const fizbanChangeTarget = `
             if (args[0].macroPass === "preActiveEffects") {
+            const sourceItemUuid = macroItem.getFlag("gambits-premades", "fizbansPlatShieldItem");
             let currentTargetUuid = macroItem.getFlag("gambits-premades", "fizbansPlatShieldTarget");
             let currentTarget = await fromUuid(currentTargetUuid);
             if (!currentTarget) return macroItem.delete();
-            
-            const rangeCheck = MidiQOL.findNearby(null, token, 60, { includeToken: true });
+
+            const rangeCheck = MidiQOL.findNearby(null, token, game.gps.convertFromFeet({range: 60}), { includeToken: true });
             const withinRange = rangeCheck.filter(t => {
-                const hasShield = t.actor.appliedEffects.some(e => e.name === "Fizban's Platinum Shield" && !e.duration?.expired);
+                const hasShield = t.actor.appliedEffects.some(e => DAE.effectMatchesSource(e, sourceItemUuid));
                 return !hasShield && t.document.disposition === token.document.disposition;
             });
-            
+
             if (withinRange.length > 0) {
                 let dialogId = "fizbansplatinumshield";
                 let dialogTitlePrimary = \`\${token.actor.name} | \${macroItem.name}\`;
                 let browserUser = game.gps.getBrowserUser({ actorUuid: actor.uuid });
                 let gmUser = game.gps.getPrimaryGM();
-                
+
                 let dialogContent = \`
                 <div class="gps-dialog-container">
                     <div class="gps-dialog-section">
@@ -46,8 +47,8 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
                     </div>
                 </div>
                 \`;
-                
-                let result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {
+
+                let result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {
                 dialogTitle: dialogTitlePrimary,
                 dialogContent,
                 dialogId,
@@ -56,48 +57,48 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
                 source: gmUser === browserUser ? "gm" : "user",
                 type: "singleDialog"
                 });
-                
+
                 const { userDecision, allyTokenUuid } = result || {};
-                
+
                 if (!userDecision) {
                 return;
                 } else {
                 let returnedToken = await fromUuid(\`\${allyTokenUuid}\`);
-                let currentEffect = currentTarget.actor.appliedEffects.find(e => e.name === "Fizban's Platinum Shield");
-                
-                let newEffect = await MidiQOL.socket().executeAsGM("createEffects", {
-                    actorUuid: returnedToken.actor.uuid,
-                    effects: [currentEffect]
-                });
-                
-                let originItemUuid = macroItem.getFlag("gambits-premades", "fizbansPlatShieldItem");
-                const concEffect = MidiQOL.getConcentrationEffect(actor, originItemUuid);
-                let newEffectDoc = await fromUuid(newEffect[0].uuid);
-                await newEffectDoc?.setFlag('dnd5e', 'dependentOn', concEffect.uuid);
-                
+                if(!returnedToken || !withinRange.some(t => t.document.uuid === returnedToken.uuid)) return;
+                let currentEffect = currentTarget.actor.appliedEffects.find(e => DAE.effectMatchesSource(e, sourceItemUuid));
+
+                if(!currentEffect) return macroItem.delete();
+                const effectCopy = currentEffect.toObject();
+                delete effectCopy._id;
+                const newEffect = await MidiQOL.socket().executeAsGM("createEffects", {actorUuid: returnedToken.actor.uuid, effects: [effectCopy]});
+                if(!newEffect?.length) return;
+                await macroItem.setFlag("gambits-premades", "fizbansPlatShieldTarget", returnedToken.uuid);
+
                 await MidiQOL.socket().executeAsGM("removeEffects", {
                     actorUuid: currentTarget.actor.uuid,
                     effects: [currentEffect.id]
                 });
 
                 Sequencer.EffectManager.endEffects({ name: \`\${currentTarget.id}.FizbansPlatinumShield\`\ });
-                
-                new Sequence({moduleName: "gambits-premades", softFail: true})
 
-                .effect()
-                    .name(\`\${returnedToken.id}.FizbansPlatinumShield\`\)
-                    .file('jb2a.markers.shield_rampart.loop.03.blue')
-                    .attachTo(returnedToken,{bindVisibility: true})
-                    .scaleToObject(1.7)
-                    .opacity(0.85)
-                    .zIndex(0)
-                    .persist()
-                    .belowTokens(true)
-                    .fadeIn(2500)
-                    .fadeOut(2500)
+                if(game.gps.getCprConfig({itemUuid: sourceItemUuid}).animEnabled) {
+                    new Sequence()
 
-                .play()
-                
+                    .effect()
+                        .name(\`\${returnedToken.id}.FizbansPlatinumShield\`\)
+                        .file('jb2a.markers.shield_rampart.loop.03.blue')
+                        .attachTo(returnedToken,{bindVisibility: true})
+                        .scaleToObject(1.7)
+                        .opacity(0.85)
+                        .zIndex(0)
+                        .persist()
+                        .belowTokens(true)
+                        .fadeIn(2500)
+                        .fadeOut(2500)
+
+                    .play()
+                }
+
                 await macroItem.setFlag("gambits-premades", "fizbansPlatShieldTarget", returnedToken.uuid);
                 await macroItem.update({ name: \`Fizban's Platinum Shield - Change Target (\${returnedToken.actor.name})\` });
                 }
@@ -105,9 +106,11 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
             }
             `;
         let targets = workflow.targets;
-        
+
         for(let target of targets) {
-        let itemData = {
+        const concentration = MidiQOL.getConcentrationEffect(actor, item.uuid);
+        if(!concentration) continue;
+        let itemData = game.gps.disableBlfxAutoRecognition({
             "name": `Fizban's Platinum Shield - Change Target (${target.actor.name})`,
             "type": "feat",
             "img": "icons/magic/defensive/shield-barrier-deflect-teal.webp",
@@ -139,6 +142,8 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
                 }
             },
             "flags": {
+            autoanimations: {isEnabled: false, version: 5},
+            "dnd5e": {"dependentOn": concentration.uuid},
             "dae": {
                 "macro": {
                     "name": "Fizban's Platinum Shield - Change Target",
@@ -156,36 +161,35 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
                 "fizbansPlatShieldItem": item.uuid
             }
             },
-        }
-    
+        })
+
         await actor.createEmbeddedDocuments("Item", [itemData]);
-    
-        new Sequence({moduleName: "gambits-premades", softFail: true})
-    
-        .effect()
-        .name(`${target.document.id}.FizbansPlatinumShield`)
-        .file("jb2a.markers.shield_rampart.loop.03.blue")
-        .attachTo(target,{bindVisibility: true})
-        .scaleToObject(1.7)
-        .zIndex(0)
-        .persist()
-        .belowTokens(true)
-        .fadeIn(2500)
-        .fadeOut(2500)
-    
-        .play()
+
+        if(game.gps.getCprConfig({itemUuid: item.uuid}).animEnabled) {
+            new Sequence()
+
+            .effect()
+            .name(`${target.document.id}.FizbansPlatinumShield`)
+            .file("jb2a.markers.shield_rampart.loop.03.blue")
+            .attachTo(target,{bindVisibility: true})
+            .scaleToObject(1.7)
+            .zIndex(0)
+            .persist()
+            .belowTokens(true)
+            .fadeIn(2500)
+            .fadeOut(2500)
+
+            .play()
+        }
         }
     }
-    
+
     if(args[0] === "off") {
         let gmUser = game.gps.getPrimaryGM();
         const effectOriginActor = await fromUuid(args[2]);
-        let concData = await MidiQOL.getConcentrationEffect(effectOriginActor, args[3]);
-    
-        if(!concData) {
-            let itemData = effectOriginActor.items.getName(`Fizban's Platinum Shield - Change Target (${actor.name})`);
-            if(itemData) await game.gps.socket.executeAsUser("gmDeleteItem", gmUser, {itemUuid:itemData.uuid});
-            Sequencer.EffectManager.endEffects({ name: `${token.document.id}.FizbansPlatinumShield` });
-        }
+        if(!effectOriginActor) return;
+        const helpers = effectOriginActor.items.filter(helper => helper.getFlag("gambits-premades", "fizbansPlatShieldItem") === args[3] && helper.getFlag("gambits-premades", "fizbansPlatShieldTarget") === token.document.uuid);
+        for(const helper of helpers) await game.gps.queryUser("gmDeleteItem", gmUser, {itemUuid: helper.uuid});
+        Sequencer.EffectManager.endEffects({ name: `${token.document.id}.FizbansPlatinumShield` });
     }
 }

@@ -6,7 +6,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.16",
+      "custom": "",
       "book": "Player’s Handbook (2014)",
       "page": "265",
       "license": "",
@@ -184,49 +184,6 @@
   },
   "name": "Phantasmal Killer",
   "flags": {
-    "ddbimporter": {
-      "id": 138547,
-      "definitionId": 2202,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "generic",
-        "lookupName": "generic",
-        "level": null,
-        "castAtLevel": null
-      },
-      "originalName": "Phantasmal Killer",
-      "sources": [
-        {
-          "sourceId": 1,
-          "pageNumber": null,
-          "sourceType": 2
-        },
-        {
-          "sourceId": 2,
-          "pageNumber": 265,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Damage",
-        "Control"
-      ],
-      "version": "5.2.36",
-      "effectsApplied": true,
-      "isLegacy": true,
-      "chrisEffectsApplied": true,
-      "chrisPreEffectName": "Phantasmal Killer"
-    },
-    "midiProperties": {
-      "magicdam": true,
-      "magiceffect": true,
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "midi-qol": {
       "forceCEOff": true,
       "removeAttackDamageButtons": "default",
@@ -236,18 +193,31 @@
       "otherCondition": "",
       "effectCondition": ""
     },
-    "scene-packer": {
-      "sourceId": "Item.",
-      "hash": "554146e2c0871ce8f058775a980523104ba0521a"
-    },
     "dnd5e": {
       "riders": {
         "activity": [],
         "effect": []
       }
     },
-    "crux": {
-      "trayVisibility": "default"
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -270,13 +240,9 @@
           "selfTarget": false,
           "selfTargetAlways": false,
           "dontApply": false,
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
-        },
-        "ddbimporter": {
-          "disabled": false
         },
         "midi-qol": {
           "forceCEOff": true
@@ -289,22 +255,9 @@
             "statuses": []
           }
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "Enemy",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "name": "Phantasmal Killer",
@@ -321,17 +274,18 @@
           },
           {
             "key": "flags.midi-qol.OverTime",
-            "value": "label=Phantasmal Killer (End of Turn),turn=end,saveAbility=wis,saveDC=@attributes.spell.dc,saveMagic=true,damageRoll=(4+(@scaling-1))d10,damageType=psychic,savingThrow=true,damageBeforeSave=false,killAnim=true",
+            "value": "label=Phantasmal Killer (End of Turn),turn=end,saveAbility=wis,saveDC=@attributes.spell.dc,saveMagic=true,damageRoll=(4+@scaling)d10,damageType=psychic,savingThrow=true,damageBeforeSave=false,killAnim=true",
             "priority": 20,
-            "type": "override"
+            "type": "override",
+            "replacement": "origin"
           }
         ]
       },
       "description": "",
       "origin": null,
       "sort": 0,
-      "_key": "!items.effects!bUG2JJxbThnm9Uq3.Dc6XCuIlDfpSxju0",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!bUG2JJxbThnm9Uq3.Dc6XCuIlDfpSxju0"
     }
   ],
   "img": "icons/magic/death/undead-ghosts-trio-blue.webp",

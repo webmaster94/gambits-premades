@@ -9,7 +9,7 @@
     "source": {
       "book": "Monstrous Compendium Vol. 1: Spelljammer Creatures",
       "page": "3",
-      "custom": "1.0.1",
+      "custom": "",
       "license": "",
       "revision": 1,
       "rules": "2014"
@@ -165,28 +165,6 @@
   },
   "effects": [],
   "flags": {
-    "ddbimporter": {
-      "levelBonus": false,
-      "dndbeyond": {},
-      "effectsApplied": true,
-      "parentId": "HEuUjYbuzL7ku34L"
-    },
-    "monsterMunch": {
-      "titleHTML": "<em>Legendary Resistance (3/Day).</em>",
-      "fullName": "Legendary Resistance (3/Day).",
-      "actionCopy": false,
-      "type": "special",
-      "actionInfo": {
-        "damage": {
-          "parts": [],
-          "versatile": ""
-        },
-        "baseAbility": null,
-        "toHit": 0,
-        "proficient": false,
-        "extraAttackBonus": 0
-      }
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "forceCEOff": true,
@@ -196,28 +174,8 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "gambits-premades": {
       "gpsUuid": "d8956f7f-bc03-4ff1-8990-b48ffdef44cb"
-    },
-    "scene-packer": {
-      "sourceId": "Item.FihivLlQ0kgfQtQJ",
-      "hash": "89fa18de6656e57a9677d0a8a83679a8af0d18cf"
     },
     "dnd5e": {
       "riders": {
@@ -228,6 +186,26 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "img": "icons/magic/light/explosion-beam-impact-silhouette.webp",

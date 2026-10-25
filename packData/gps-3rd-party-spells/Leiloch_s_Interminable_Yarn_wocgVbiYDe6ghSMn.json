@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014"
     },
@@ -185,7 +185,7 @@
     {
       "origin": "Compendium.world.gps-3rd-party-spells.Item.bntrnUZ7NRmWduPG",
       "duration": {
-        "value": 3600,
+        "value": 600,
         "units": "seconds"
       },
       "disabled": false,
@@ -196,22 +196,22 @@
       "system": {
         "changes": [
           {
-            "key": "flags.midi-qol.fail.skill.inv",
+            "key": "system.skills.inv.roll.fail",
             "value": 1,
             "priority": 20,
-            "type": "custom"
+            "type": "override"
           },
           {
-            "key": "flags.midi-qol.fail.skill.ins",
+            "key": "system.skills.ins.roll.fail",
             "value": 1,
             "priority": 20,
-            "type": "custom"
+            "type": "override"
           },
           {
-            "key": "flags.midi-qol.fail.skill.prc",
+            "key": "system.skills.prc.roll.fail",
             "value": 1,
             "priority": 20,
-            "type": "custom"
+            "type": "override"
           },
           {
             "key": "macro.itemMacro",
@@ -233,30 +233,17 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!wocgVbiYDe6ghSMn.Nl1fac5sPmrnI9rj",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!wocgVbiYDe6ghSMn.Nl1fac5sPmrnI9rj"
     }
   ],
   "flags": {
@@ -276,23 +263,6 @@
       "effectCondition": "",
       "onUseMacroName": "[postActiveEffects]ItemMacro"
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
-    "scene-packer": {
-      "hash": "d2bc638d3ce306fb269d789c06466744a6df8aa7",
-      "sourceId": "Compendium.world.gps-spells.Item.DOOwUsMS2tIM69Ab"
-    },
     "rest-recovery": {
       "data": {
         "recovery": {
@@ -306,7 +276,7 @@
         "img": "icons/skills/trades/music-singing-voice-blue.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"postActiveEffects\") {\n    let itemData = {\n        \"name\": \"Leiloch’s Interminable Yarn - Pull Away\",\n        \"type\": \"feat\",\n        \"img\": macroItem.img,\n        \"system\": {\n            \"activation\": {\n                \"type\": \"special\",\n                \"cost\": null,\n                \"condition\": \"\"\n            },\n            \"target\": {\n                \"value\": null,\n                \"width\": null,\n                \"units\": \"\",\n                \"type\": \"self\",\n                \"prompt\": true\n            },\n            \"range\": {\n                \"value\": null,\n                \"long\": null,\n                \"units\": \"self\"\n            },\n            \"actionType\": \"save\",\n            \"save\": {\n                \"ability\": \"wis\",\n                \"dc\": actor.system.attributes.spelldc,\n                \"scaling\": \"flat\"\n            }\n        },\n        \"effects\": [\n            {\n                \"img\": macroItem.img,\n                \"duration\": { \"value\": 60, \"units\": \"seconds\" },\n            \"start\": { \"time\": game.time?.worldTime ?? 0 },\n                \"disabled\": false,\n                \"name\": \"Leiloch’s Interminable Yarn - Unconscious\",\n                \"system\": {\n                  \"changes\": [\n                    {\n                        \"key\": \"macro.StatusEffect\",\n                        \"type\": \"custom\",\n                        \"value\": \"Convenient Effect: Unconscious\",\n                        \"priority\": 20\n                    }\n                ]\n                },\n                \"transfer\": false\n            }\n        ],\n        \"flags\": {\n            \"midiProperties\": {\n                \"magiceffect\": true\n            },\n            \"midi-qol\": {\n                \"onUseMacroName\": \"[postActiveEffects]ItemMacro\"\n            },\n            \"dae\": {\n                \"macro\": {\n                    \"name\": \"Leiloch’s Interminable Yarn - Pull Away\",\n                    \"img\": macroItem.img,\n                    \"type\": \"script\",\n                    \"scope\": \"global\",\n                    \"command\": \"let effectData = actor.appliedEffects.find(e => e.name === 'Leiloch’s Interminable Yarn'); await effectData.delete(); await macroItem.delete();\"\n                }\n            }\n        }\n    }\n\n    for (let target of workflow.targets) {\n        await target.actor.createEmbeddedDocuments(\"Item\", [itemData]);\n    }\n}\n\nif(args[0] === \"off\") {\n    let itemData = actor.items.getName(\"Leiloch’s Interminable Yarn - Pull Away\");\n    await itemData.delete();\n}",
+        "command": "if(args[0].macroPass === \"postActiveEffects\") {\n    let itemData = game.gps.disableBlfxAutoRecognition({\n        \"name\": \"Leiloch’s Interminable Yarn - Pull Away\",\n        \"type\": \"feat\",\n        \"img\": macroItem.img,\n        \"system\": {\n            activities: {\n                gpsSynthetic0001: {\n                    type: \"save\",\n                    midiProperties: { magicEffect: true },\n                    activation: { type: \"special\" },\n                    consumption: { spellSlot: false, targets: [] },\n                    target: { affects: { type: \"self\" } },\n                    save: { ability: [\"wis\"], dc: { calculation: \"\", formula: String(actor.system.attributes.spell.dc) } },\n                    effects: [{ _id: \"gpsYarnSleep0001\", onSave: false }]\n                }\n            }\n        },\n        \"effects\": [\n            {\n                _id: \"gpsYarnSleep0001\",\n                img: macroItem.img,\n                \"duration\": { value: 60, units: \"seconds\" },\n                \"disabled\": false,\n                \"name\": \"Leiloch’s Interminable Yarn - Unconscious\",\n                system: { changes: [\n                    {\n                        \"key\": \"macro.StatusEffect\",\n                        type: \"custom\",\n                        \"value\": \"unconscious\",\n                        \"priority\": 20\n                    }\n                ] },\n                \"transfer\": false\n            }\n        ],\n        \"flags\": {\n            autoanimations: {isEnabled: false, version: 5},\n            \"midi-qol\": {\n                \"onUseMacroName\": \"[postActiveEffects]ItemMacro\"\n            },\n            \"dae\": {\n                \"macro\": {\n                    \"name\": \"Leiloch’s Interminable Yarn - Pull Away\",\n                    \"img\": macroItem.img,\n                    \"type\": \"script\",\n                    \"scope\": \"global\",\n                    \"command\": \"const source = await fromUuid(macroItem.getFlag(\\\"dnd5e\\\", \\\"dependentOn\\\")); await source?.delete(); if(actor.items.has(macroItem.id)) await macroItem.delete();\"\n                }\n            }\n        }\n    })\n\n    for (let target of workflow.targets) {\n        const source = target.actor.appliedEffects.find(effect => DAE.effectMatchesSource(effect, macroItem.uuid) && effect.name === macroItem.name);\n        if(!source) continue;\n        itemData.flags.dnd5e = {dependentOn: source.uuid};\n        await target.actor.createEmbeddedDocuments(\"Item\", [itemData]);\n    }\n}\n\nif(args[0] === \"off\") {\n    const sourceUuid = args.at(-1)?.effectUuid ?? `${actor.uuid}.ActiveEffect.${args.at(-1)?.effectId}`;\n    const helpers = actor.items.filter(helper => helper.getFlag(\"dnd5e\", \"dependentOn\") === sourceUuid);\n    if(helpers.length) await actor.deleteEmbeddedDocuments(\"Item\", helpers.map(helper => helper.id));\n}\n",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3
@@ -325,6 +295,26 @@
           "compendiumSource": null,
           "duplicateSource": null
         }
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
       }
     }
   },

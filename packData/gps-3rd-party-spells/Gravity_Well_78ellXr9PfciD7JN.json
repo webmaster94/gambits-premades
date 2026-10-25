@@ -1,9 +1,6 @@
 {
   "name": "Gravity Well",
   "flags": {
-    "bkit": {
-      "anchorId": "80kb8dtubo8"
-    },
     "dnd5e": {
       "riders": {
         "activity": [],
@@ -17,7 +14,7 @@
         "img": "icons/magic/air/air-burst-spiral-blue-gray.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"postDamageRoll\") {\n    let target = workflow.hitTargets.first();\n    if(!target) return;\n    let distance = MidiQOL.computeDistance(token, target, {wallsBlock: true, includeCover: true});\n    if(distance === 5) return;\n    let maxDistance = 20;\n    let moveDistance = Math.max(0, distance);\n    moveDistance = Math.min(moveDistance, maxDistance);\n    await game.gps.socket.executeAsGM(\"moveTokenByOriginPoint\", {originX: token.center.x, originY: token.center.y, targetUuid: target.document.uuid, distance: -moveDistance });\n}",
+        "command": "if(args[0].macroPass === \"postDamageRoll\") {\n    let target = workflow.hitTargets.first();\n    if(!target) return;\n    let distance = MidiQOL.computeDistance(token, target, {wallsBlock: true, includeCover: true});\n    if(distance === 5) return;\n    let maxDistance = 20;\n    let moveDistance = Math.max(0, distance);\n    moveDistance = Math.min(moveDistance, maxDistance);\n    await game.gps.queryGM(\"moveTokenByOriginPoint\", {originX: token.center.x, originY: token.center.y, targetUuid: target.document.uuid, distance: -moveDistance });\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3
@@ -48,29 +45,29 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
-    "scene-packer": {
-      "hash": "17fb6e916cc144ec563abacb1ae5e841793abb94",
-      "sourceId": "Item.AsB9TR0yekx8MIEr"
-    },
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Attack",
+        "activityType": "attack",
+        "version": 2
+      }
     }
   },
   "system": {
@@ -81,7 +78,7 @@
     "source": {
       "book": "SGEH",
       "page": "",
-      "custom": "2.1.38",
+      "custom": "",
       "license": "",
       "revision": 1,
       "rules": "2014"

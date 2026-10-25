@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -207,48 +207,6 @@
     }
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Rod",
-        "filterType": "Rod",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": null,
-        "tags": [
-          "Buff"
-        ],
-        "sources": [
-          {
-            "sourceId": 3,
-            "pageNumber": null,
-            "sourceType": 1
-          }
-        ]
-      },
-      "id": 1120065883,
-      "entityTypeId": 1439493548,
-      "containerEntityId": 87261088,
-      "containerEntityTypeId": 1581111423,
-      "definitionEntityTypeId": 112130694,
-      "definitionId": 11217,
-      "originalName": "Rod of the Pact Keeper, +1",
-      "version": "3.4.23",
-      "effectsApplied": true,
-      "importId": "LcPaJ2JvQf4Nz6op",
-      "pack": "world.ddb-spelljammer-adventures-in-space-ddb-override",
-      "originalItemName": "Rod of the Pact Keeper, +1",
-      "replaced": true,
-      "overrideId": "NONE",
-      "ignoreIcon": false,
-      "ignoreItemImport": true,
-      "ignoreItemForChrisPremades": false,
-      "retainResourceConsumption": false,
-      "ignoreItemUpdate": false
-    },
     "dae": {
       "alwaysActive": false,
       "activeEquipped": true,
@@ -289,24 +247,7 @@
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default"
     },
-    "scene-packer": {
-      "hash": "e14641d9eb133d1c5eafed9efa1799fcf8af5a5a",
-      "sourceId": "Item.fJHV2lLr0fgZLW3d"
-    },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "dnd5e": {
       "riders": {
         "activity": []
@@ -315,6 +256,26 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -333,14 +294,8 @@
           "macroRepeat": "none",
           "specialDuration": [],
           "dontApply": false,
-          "showIcon": false,
           "disableIncapacitated": false,
           "disableCondition": ""
-        },
-        "ddbimporter": {
-          "disabled": false,
-          "itemId": 1120065883,
-          "itemEntityTypeId": 1439493548
         },
         "midi-qol": {
           "forceCEOff": true
@@ -348,27 +303,14 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "nameOverride": "",
-          "customCheck": "",
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "dnd5e": {
           "riders": {
             "statuses": []
           }
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "_id": "ZrTNMwai89gqFKJo",
@@ -381,7 +323,7 @@
       "system": {
         "changes": [
           {
-            "key": "system.bonuses.spell.attack",
+            "key": "system.rolls.attack.spell.bonus",
             "value": 2,
             "priority": 18,
             "type": "add"
@@ -395,8 +337,8 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!hc0GxwvNFgj0Ywl0.ZrTNMwai89gqFKJo",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!hc0GxwvNFgj0Ywl0.ZrTNMwai89gqFKJo"
     }
   ],
   "img": "icons/commodities/tech/pipe-metal.webp",

@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.35",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -354,35 +354,22 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "endEveryTurn",
           "specialDuration": [],
           "enableCondition": "",
           "disableCondition": ""
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
-        },
         "core": {
           "overlay": false
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!0egCyhfiZhXnu2gz.0DQgdtRDzoHvkedJ",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!0egCyhfiZhXnu2gz.0DQgdtRDzoHvkedJ"
     }
   ],
   "flags": {
@@ -390,7 +377,7 @@
     "midi-qol": {
       "effectActivation": false,
       "forceCEOff": true,
-      "onUseMacroName": "[postActiveEffects]function.game.gps.hideousLaughter",
+      "onUseMacroName": "[prePreambleComplete]function.game.gps.hideousLaughter,[postActiveEffects]function.game.gps.hideousLaughter",
       "forceCEOn": false,
       "rollAttackPerTarget": "default",
       "itemCondition": "",
@@ -400,79 +387,6 @@
       "removeAttackDamageButtons": "default",
       "reactionCondition": "",
       "otherCondition": ""
-    },
-    "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "rollOther": false,
-      "critOther": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "toggleEffect": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "offHandWeapon": false,
-      "ignoreTotalCover": false,
-      "noConcentrationCheck": false,
-      "confirmTargets": "never",
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "ddbimporter": {
-      "overrideId": "3NbRgyFocMs6z3rI",
-      "ignoreIcon": false,
-      "ignoreItemImport": true,
-      "retainResourceConsumption": false,
-      "pack": "world.ddb-spelljammer-adventures-in-space-ddb-override",
-      "overrideItem": {
-        "name": "Tasha's Hideous Laughter",
-        "type": "spell",
-        "ddbId": 572839
-      },
-      "id": 572839,
-      "definitionId": 2320,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "classSpell",
-        "class": "Warlock",
-        "level": 6,
-        "characterClassId": 116570746,
-        "spellLevel": 1,
-        "ability": "cha",
-        "mod": 4,
-        "dc": 15,
-        "cantripBoost": false,
-        "overrideDC": false,
-        "id": 572839,
-        "entityTypeId": 435869154,
-        "healingBoost": 0,
-        "usesSpellSlot": true
-      },
-      "originalName": "Tasha's Hideous Laughter",
-      "sources": [
-        {
-          "sourceId": 2,
-          "pageNumber": 280,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Control",
-        "Debuff"
-      ],
-      "version": "3.4.15",
-      "effectsApplied": true,
-      "importId": "MWZxVY3bPe1fYtgb",
-      "originalItemName": "Tasha's Hideous Laughter",
-      "replaced": true
-    },
-    "scene-packer": {
-      "sourceId": "Actor.w88977HaPVOXN7mP.Item.cuuMI0T9VX1zp8GK",
-      "hash": "29a81ef68477e9ad7b4558e10bbcf6018ec33ec5"
     },
     "dae": {
       "macro": {
@@ -730,6 +644,45 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "gambits-premades": {
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        }
+      },
+      "animationModules": [
+        "JB2APatreon",
+        "EskiePatreon",
+        "GPS"
+      ]
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      },
+      "QFUn3VrqeywA1JFn": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save: Automation",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "folder": null,

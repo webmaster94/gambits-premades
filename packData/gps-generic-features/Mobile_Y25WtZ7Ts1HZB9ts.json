@@ -4,10 +4,10 @@
   "system": {
     "description": {
       "value": "",
-      "chat": "Your speed increases by 10 feet. When you use the Dash action, difficult terrain doesn't cost you extra movement on that turn. When you make a melee attack against a creature, you don't provoke opportunity attacks from that creature for the rest of the turn, whether you hit or not."
+      "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "book": "",
       "page": "",
@@ -37,15 +37,6 @@
     "properties": []
   },
   "flags": {
-    "ddbimporter": {
-      "featId": 34,
-      "version": "3.4.63",
-      "prerequisites": []
-    },
-    "scene-packer": {
-      "sourceId": "Item.u57F94lxzHSRpIYn",
-      "hash": "a5a0af56f1a8340e5939ee2f4f3f0a5a0237f8bd"
-    },
     "midi-qol": {
       "onUseMacroName": "",
       "rollAttackPerTarget": "default",
@@ -84,19 +75,6 @@
         }
       }
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "dnd5e": {
       "riders": {
         "activity": []
@@ -105,6 +83,16 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "img": "icons/skills/movement/feet-winged-boots-brown.webp",
@@ -126,29 +114,11 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "startEndEveryTurn",
           "specialDuration": [],
           "disableCondition": "",
           "enableCondition": ""
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         },
         "effectmacro": {},
         "core": {
@@ -158,6 +128,10 @@
           "riders": {
             "statuses": []
           }
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -166,7 +140,7 @@
       "system": {
         "changes": [
           {
-            "key": "system.attributes.movement.walk",
+            "key": "system.attributes.movement.speeds.walk",
             "value": "+ 10",
             "priority": 20,
             "type": "add"
@@ -186,8 +160,8 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!Y25WtZ7Ts1HZB9ts.ayGBoPfqCMspbtky",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!Y25WtZ7Ts1HZB9ts.ayGBoPfqCMspbtky"
     }
   ],
   "folder": null,

@@ -33,17 +33,17 @@ export async function entropicWard({ speaker, actor, token, character, item, arg
                 </div>
             </div>
         `;
-        
+
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
-            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser };
-            
-            let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source: "gm",type: "multiDialog" };
-        
-            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
+            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid, focusTokenUuid: workflow.token.document.uuid,source: "user",type: "multiDialog", browserUser: browserUser };
+
+            let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid, focusTokenUuid: workflow.token.document.uuid,source: "gm",type: "multiDialog" };
+
+            result = await game.gps.handleDialogPromises({userDialogArgs, gmDialogArgs});
         } else {
-            result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
+            result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: token.document.uuid, focusTokenUuid: workflow.token.document.uuid,source:gmUser === browserUser ? "gm" : "user",type:"singleDialog"});
         }
-                
+
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, abilityCheck, source, type } = result || {};
 
         if (!userDecision) {
@@ -62,36 +62,32 @@ export async function entropicWard({ speaker, actor, token, character, item, arg
         let gpsUuid = "f330325d-bce8-4352-9e47-9f696a0f9434"
         let chosenItem = actor.items.find(i => i.flags["gambits-premades"]?.gpsUuid === gpsUuid);
         let entropicFlag = actor.getFlag("gambits-premades", "entropicWardUsed");
-        
+
         if(entropicFlag && workflow.attackTotal < actor.system.attributes.ac.value) {
-            let initialEffectData = [{
+            let initialEffectData = [{ duration: { expiry: "sourceEnd" },
                 "origin": chosenItem.uuid,
                 "disabled": false,
                 "name": `${chosenItem.name} - Advantage`,
                 "img": chosenItem.img,
                 "type": "base",
-                "system": {
-                    "changes": [
-                        {
-                            "key": "flags.midi-qol.advantage.attack.all",
-                            "type": "custom",
-                            "value": "false",
-                            "priority": 20
-                        },
-                        {
-                            "key": "flags.midi-qol.onUseMacroName",
-                            "type": "custom",
-                            "value": "ItemMacro, postAttackRoll",
-                            "priority": 20
-                        }
-                    ]
-                },
+                system: { changes: [
+                    {
+                        "key": "flags.midi-qol.advantage.attack.all",
+                        type: "custom",
+                        "value": false,
+                        "priority": 20
+                    },
+                    {
+                        "key": "flags.midi-qol.onUseMacroName",
+                        type: "custom",
+                        "value": "ItemMacro, postAttackRoll",
+                        "priority": 20
+                    }
+                ] },
                 "transfer": true,
                 "flags": {
                     "dae": {
-                        "specialDuration": [
-                            "turnEndSource"
-                        ]
+                        "specialDuration": []
                     },
                     "gambits-premades": {
                         "entropicWardTarget": workflow.token.document.uuid,
@@ -106,13 +102,13 @@ export async function entropicWard({ speaker, actor, token, character, item, arg
                     let updatedChanges = [
                         {
                             "key": "flags.midi-qol.advantage.attack.all",
-                            "type": "custom",
+                            type: "custom",
                             "value": "\"@targetUuid\" === \"" + workflow.token.document.uuid + "\"",
                             "priority": 20
                         },
                         {
                             "key": "flags.midi-qol.onUseMacroName",
-                            "type": "custom",
+                            type: "custom",
                             "value": "ItemMacro, postAttackRoll",
                             "priority": 20
                         }
@@ -120,7 +116,7 @@ export async function entropicWard({ speaker, actor, token, character, item, arg
 
                     actor.updateEmbeddedDocuments("ActiveEffect", [{
                         _id: effectId,
-                        "system.changes": updatedChanges
+                        system: { changes: updatedChanges }
                     }]);
                 });
 

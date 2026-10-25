@@ -6,7 +6,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2024",
       "book": "",
@@ -31,7 +31,7 @@
       "template": {
         "units": "ft",
         "type": "",
-        "size": "10 + ((@item.level - 4) * 5)",
+        "size": "10 + 5 * @scaling.increase",
         "contiguous": false,
         "count": ""
       }
@@ -58,7 +58,8 @@
     "properties": [
       "vocal",
       "somatic",
-      "concentration"
+      "concentration",
+      "material"
     ],
     "activities": {
       "dnd5eactivity000": {
@@ -101,7 +102,7 @@
             "contiguous": false,
             "units": "ft",
             "type": "sphere",
-            "size": "10",
+            "size": "10 + 5 * @scaling.increase",
             "count": ""
           },
           "affects": {
@@ -185,11 +186,7 @@
         "otherActivityAsParentType": true,
         "friendlySave": "default",
         "img": "",
-        "flags": {
-          "region-attacher": {
-            "attachRegionToTemplate": false
-          }
-        },
+        "flags": {},
         "appliedEffects": [
           "ZhbfaYrtnhrdTaNL"
         ]
@@ -324,57 +321,6 @@
   },
   "name": "Confusion",
   "flags": {
-    "ddbimporter": {
-      "id": 136256,
-      "definitionId": 2038,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "generic",
-        "lookupName": "generic",
-        "level": null,
-        "castAtLevel": null
-      },
-      "originalName": "Confusion",
-      "sources": [
-        {
-          "sourceId": 1,
-          "pageNumber": null,
-          "sourceType": 2
-        },
-        {
-          "sourceId": 2,
-          "pageNumber": 224,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Control"
-      ],
-      "version": "3.4.63",
-      "effectsApplied": true,
-      "parentId": "xv827vqMjxeP1iGS"
-    },
-    "midiProperties": {
-      "magicdam": true,
-      "magiceffect": true,
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "concentration": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "confirmTargets": "never",
-      "noConcentrationCheck": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "midi-qol": {
       "forceCEOff": true,
       "effectActivation": false,
@@ -388,10 +334,6 @@
       "removeAttackDamageButtons": "default",
       "reactionCondition": "",
       "otherCondition": ""
-    },
-    "scene-packer": {
-      "sourceId": "Actor.qCpb5H6vLrBeOWAO.Item.xr9znH4YRxh5WKCr",
-      "hash": "1bd446286e3ad357eacd97939eca38242a49b8ce"
     },
     "dae": {
       "macro": {
@@ -427,9 +369,6 @@
       "riders": {
         "activity": []
       }
-    },
-    "region-attacher": {
-      "attachRegionToTemplate": false
     },
     "autoanimations": {
       "id": "82fa314d-85c7-4f58-a612-e0b334ff51f5",
@@ -651,20 +590,75 @@
       "fromAmmo": false,
       "version": 5
     },
-    "chris-premades": {
-      "customConfig": [
-        {
-          "value": "playAnimation",
-          "label": "CHRISPREMADES.Config.PlayAnimation",
-          "type": "checkbox",
-          "default": true,
-          "category": "animation"
-        }
-      ]
-    },
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "gambits-premades": {
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        },
+        "regionVisibility": {
+          "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Name",
+          "type": "select",
+          "default": "LAYER",
+          "category": "animations",
+          "options": [
+            {
+              "value": "LAYER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Layer"
+            },
+            {
+              "value": "LAYER_UNLOCKED",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.LayerUnlocked"
+            },
+            {
+              "value": "GAMEMASTER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Gamemaster"
+            },
+            {
+              "value": "OBSERVER",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Observer"
+            },
+            {
+              "value": "ALWAYS",
+              "label": "GAMBITSPREMADES.ItemConfig.RegionVisibility.Choices.Always"
+            }
+          ]
+        }
+      },
+      "animationModules": [
+        "JB2AFree",
+        "JAAMod"
+      ]
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      },
+      "UbhLznWGObzk7F3l": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save: Automation",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -705,7 +699,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "startEndEveryTurn",
           "specialDuration": [],
@@ -717,31 +710,18 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "dnd5e": {
           "riders": {
             "statuses": []
           }
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!wM9lSybW7BSAYta3.ZhbfaYrtnhrdTaNL",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!wM9lSybW7BSAYta3.ZhbfaYrtnhrdTaNL"
     }
   ],
   "img": "icons/magic/air/air-burst-spiral-teal-green.webp",

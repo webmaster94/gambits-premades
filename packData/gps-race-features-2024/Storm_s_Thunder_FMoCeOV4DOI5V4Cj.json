@@ -153,7 +153,7 @@
       "rules": "2024",
       "book": "",
       "page": "",
-      "custom": "2.1.11",
+      "custom": "",
       "license": ""
     },
     "enchant": {},
@@ -202,7 +202,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
@@ -215,26 +214,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!FMoCeOV4DOI5V4Cj.GORcWyNzv0ECAsWW",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!FMoCeOV4DOI5V4Cj.GORcWyNzv0ECAsWW"
     }
   ],
   "folder": "jlez19aJPCu4ecFC",
@@ -245,9 +231,6 @@
         "effect": []
       }
     },
-    "crux": {
-      "trayVisibility": "default"
-    },
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default",
@@ -256,14 +239,25 @@
       "otherCondition": "",
       "effectCondition": ""
     },
-    "midiProperties": {
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "3eWfDnXfYJVJqT1z": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Damage",
+        "activityType": "damage",
+        "version": 2
+      }
     }
   },
   "_id": "FMoCeOV4DOI5V4Cj",

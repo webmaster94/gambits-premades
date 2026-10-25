@@ -1,12 +1,13 @@
 export async function matalotok({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "preDamageRollComplete" && workflow.hitTargets.first() && workflow.activity.identifier !== "matalotok-cold-damage") {
+        if(!game.gps.getCprConfig({itemUuid: item.uuid}).animEnabled) return;
         let source = token;
         let targets = workflow.hitTargets;
-        
+
         if (!targets || targets?.size === 0) {
             return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Items.Matalotok.TargetAtLeastOneToken"))
         }
-                
+
         const weapon = 'jb2a.melee_attack.03.maul.01';
         const trail = 'jb2a.melee_attack.04.trail.04.blue';
         const impact = 'jb2a.impact.004.blue';
@@ -20,11 +21,11 @@ export async function matalotok({ speaker, actor, token, character, item, args, 
         const delayBetweenAttacks = 1000;
 
         await game.gps.weaponAnimations({weapon, trail, impact, impactScale, soundFileMelee, soundFileRange, delaySound, switchDistanceFt, range, returnFile, delayBetweenAttacks, source, targets});
-    
+
         let initialTarget = workflow.hitTargets.first();
 
-        await new Sequence({moduleName: "gambits-premades", softFail: true})
-    
+        await new Sequence()
+
         .effect()
         .atLocation(initialTarget)
         .file(`jb2a.explosion.07.bluewhite`)
@@ -33,8 +34,8 @@ export async function matalotok({ speaker, actor, token, character, item, args, 
         .scale(2)
         .zIndex(0)
         .waitUntilFinished(-1700)
-    
-    
+
+
         .effect()
         .atLocation(initialTarget)
         .file(`jb2a.sleet_storm.02.blue`)
@@ -44,7 +45,7 @@ export async function matalotok({ speaker, actor, token, character, item, args, 
         .duration(10000)
         .fadeIn(500, {ease: "easeOutCirc", delay: 500})
         .fadeOut(500, {ease: "linear"})
-    
+
         .play();
     }
 }

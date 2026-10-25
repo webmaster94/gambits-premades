@@ -4,166 +4,35 @@ export async function executeWorkflow({ workflowItem, workflowData, workflowType
     await game.gps[workflowItem]({ workflowData, workflowType, workflowCombat });
 }
 
-const _timers = new Map();
-const _lastApplied = new Map();
-const DEBOUNCE_MS = 2000;
-
-function _calcCenterPx(tokenDocument, updateData) {
-  const gridSize = (canvas.dimensions?.size ?? canvas.grid?.size) || 100;
-  const xTL = Number.isFinite(updateData?.x) ? updateData.x : tokenDocument.x;
-  const yTL = Number.isFinite(updateData?.y) ? updateData.y : tokenDocument.y;
-  const wG  = Number.isFinite(updateData?.width)  ? updateData.width  : tokenDocument.width  || 1;
-  const hG  = Number.isFinite(updateData?.height) ? updateData.height : tokenDocument.height || 1;
-  return { cx: xTL + (wG * gridSize) / 2, cy: yTL + (hG * gridSize) / 2 };
-}
-
-export function updateRegionPosition(region, tokenDocument, updatedElevation = null, updatedX = null, updatedY = null) {
-  if (game.user.id !== game.gps.getPrimaryGM()) return;
-  if (!region || !tokenDocument) return;
-
-  const wantsXY = Number.isFinite(updatedX) || Number.isFinite(updatedY);
-  const wantsZ  = Number.isFinite(updatedElevation);
-  if (!wantsXY && !wantsZ) return;
-
-  const key = `${region.id}:${tokenDocument.id}`;
-  const pending = _timers.get(key);
-  if (pending) clearTimeout(pending);
-
-  _timers.set(key, setTimeout(async () => {
-    _timers.delete(key);
-
-    const { cx, cy } = _calcCenterPx(tokenDocument, { x: updatedX, y: updatedY });
-
-    let bottom, top;
-    if (wantsZ) {
-      const range = region.getFlag("gambits-premades", "opportunityAttackRegionMaxRange") ?? 0;
-      bottom = updatedElevation - range;
-      top    = updatedElevation + range;
-    } else {
-      bottom = region.elevation?.bottom;
-      top    = region.elevation?.top;
-    }
-
-    const last = _lastApplied.get(key);
-    if (last && last.cx === cx && last.cy === cy && last.bottom === bottom && last.top === top) return;
-
-    const src = region.shapes;
-    const shapes = new Array(src.length);
-    for (let i = 0; i < src.length; i++) {
-      const s = src[i];
-      if (s.type === "ellipse") {
-        shapes[i] = { ...s, x: cx, y: cy };
-
-      } else if (s.type === "rectangle") {
-        const w = s.width  ?? ((s.radiusX ?? 0) * 2);
-        const h = s.height ?? ((s.radiusY ?? 0) * 2);
-        shapes[i] = { ...s, x: cx - w / 2, y: cy - h / 2 };
-
-      } else if (s.type === "polygon" && Array.isArray(s.points)) {
-        let sx = 0, sy = 0, n = 0;
-        for (let j = 0; j < s.points.length; j += 2) { sx += s.points[j]; sy += s.points[j+1]; n++; }
-        const dx = cx - (sx / n);
-        const dy = cy - (sy / n);
-        const pts = new Array(s.points.length);
-        for (let j = 0; j < s.points.length; j += 2) { pts[j] = s.points[j] + dx; pts[j+1] = s.points[j+1] + dy; }
-        shapes[i] = { ...s, points: pts };
-
-      } else {
-        shapes[i] = { ...s, x: cx, y: cy };
-      }
-    }
-
-    const wasDisabled = region.getFlag("gambits-premades", "regionDisabled");
-    if (!wasDisabled) await region.setFlag("gambits-premades", "regionDisabled", true);
-
-    try {
-      const patch = { shapes };
-      if (Number.isFinite(bottom) && Number.isFinite(top)) patch.elevation = { bottom, top };
-      await region.update(patch);
-      _lastApplied.set(key, { cx, cy, bottom, top });
-    } finally {
-      if (!wasDisabled) await region.unsetFlag("gambits-premades", "regionDisabled");
-    }
-  }, DEBOUNCE_MS));
-}
-
-export function refreshTemplateVisibility() {
-    // v14: placed templates render as Region placeables (flags.core.MeasuredTemplate);
-    canvas.scene?.regions?.forEach(regionDocument => {
-        if (!regionDocument.getFlag('core', 'MeasuredTemplate')) return;
-        if (game.gpsSettings.hideTemplates || regionDocument.getFlag('gambits-premades', 'templateHiddenOA')) {
-            if (regionDocument.object) hideTemplateElements(regionDocument.object);
-        }
-    });
-}
-
-export function hideTemplateElements(template) {
-    if (!template) return;
-
-    // Check if we're on the template/region layer, in which case I still want template visibility
-    if (canvas?.activeLayer === canvas?.templates || canvas?.activeLayer === canvas?.regions) return;
-
-    // Hide primary template/region placeable
-    template.alpha = 0;
-
-    // Hide highlight (legacy MeasuredTemplate placeables only — Region placeables have no highlight layer)
-    if (template.highlightId) {
-        const hl = canvas.interface.grid.getHighlightLayer(template.highlightId);
-        if (hl) {
-            hl.alpha = 0;
-        }
-    }
-
-    // Hide border
-    if (template.ruler) {
-        template.ruler.visible = false;
-    }
-
-    //Reduce unneeded (I think?) refresh activity
-    template.hitArea = null;
-}
-
-// v14 replacement for the region-attacher module. A placed template is already a Region, so we
-// recreate region-attacher's contract on it: copy the item's configured RegionBehaviors onto the
-// backing region and write the flags the automations read (attachedTemplate/attachedRegion/itemUuid/actorUuid).
-export async function applyRegionAttachment(regionDocument) {
-    const originUuid = regionDocument.getFlag('dnd5e', 'origin');
-    if (!originUuid) return;
-    const origin = await fromUuid(originUuid);
-    if (!origin) return;
-    const activity = origin.documentName === 'Item' ? null : origin;
-    const item = activity?.item ?? origin;
-    if (!item?.flags) return;
-    const raFlags = item.flags['region-attacher'];
-    const activityKey = activity?.id ?? 'dnd5eactivity000';
-    if (!raFlags?.attachRegionToTemplate?.[activityKey]) return;
-    await regionDocument.update({
-        flags: {
-            'region-attacher': {
-                // proxy-uuid form keeps legacy geometry reads working via the MeasuredTemplate shim
-                attachedTemplate: regionDocument.uuid.replace('.Region.', '.MeasuredTemplate.'),
-                attachedRegion: regionDocument.uuid,
-                itemUuid: item.uuid,
-                actorUuid: item.actor?.uuid
+export function registerWrapping() {
+    libWrapper.register("gambits-premades", "CONFIG.Dice.D20Roll.buildPost", async function(wrapped, rolls, config, message) {
+        const names = (config.hookNames ?? []).map(name => name.toLowerCase());
+        const workflowType = names.includes("skill") ? "skill" : names.includes("savingthrow") ? "save" : names.includes("abilitycheck") ? "ability" : null;
+        const midi = config.midiOptions ?? {};
+        if(game.gpsSettings.flashOfGeniusEnabled && workflowType && config.subject?.documentName === "Actor"
+            && !midi.saveItemUuid && !midi.itemCardUuid && !midi.workflow && config.evaluate !== false) {
+            for(let index = 0; index < rolls.length; index++) {
+                const revised = await game.gps.flashOfGenius({workflowData: {actor: config.subject, roll: rolls[index], abilityId: config.skill ?? config.ability}, workflowType, workflowCombat: false});
+                if(revised) rolls[index] = revised;
             }
         }
-    });
-    const behaviors = (raFlags.regionBehaviors?.[activityKey] ?? []).map(b => foundry.utils.deepClone(b));
-    if (behaviors.length) await regionDocument.createEmbeddedDocuments('RegionBehavior', behaviors);
-}
+        return wrapped(rolls, config, message);
+    }, "WRAPPER");
 
-export function registerWrapping() {
     let wrappingEnabled = game.settings.get("gambits-premades", "enableRegionWrapping");
     if (!wrappingEnabled) return;
 
-    libWrapper.register('gambits-premades', 'TokenDocument.prototype.testInsideRegion', function (wrapped, region, data = {}) {
+    libWrapper.register('gambits-premades', 'CONFIG.Token.documentClass.prototype.testInsideRegion', function (wrapped, region, data = {}) {
         if (game.gps.disableRegionTeleport) return false;
         if (region?.flags["gambits-premades"]?.excludeRegionHandling) return wrapped.call(this, region, data);
         for (const behavior of region.behaviors.values()) {
             if (behavior.type !== "executeScript") return wrapped.call(this, region, data);
         }
 
-        const size = canvas.dimensions.size;
+        const source = this._source;
+        data = { x: source.x, y: source.y, elevation: source.elevation, width: source.width, height: source.height, depth: source.depth, shape: source.shape, level: source.level, ...data };
+        if (!region.includedInLevel(data.level)) return false;
+        const size = this.parent.grid.size;
         const wPx = data.width  * size;
         const hPx = data.height * size;
         const reduction = Math.min(wPx, hPx) * 0.1;
@@ -180,20 +49,22 @@ export function registerWrapping() {
             { x: data.x + wPx / 2, y: data.y + hPx / 2, elevation: data.elevation }
         ];
 
-        const isInside = points.some(p => region.testPoint(p)); // v14: single point-object signature, elevation included in p
+        const isInside = points.some(p => region.testPoint(p, p.elevation));
         return isInside || wrapped.call(this, region, data);
     }, 'MIXED');
 
-    libWrapper.register('gambits-premades', 'TokenDocument.prototype.segmentizeRegionMovementPath', function (wrapped, region, waypoints) {
+    libWrapper.register('gambits-premades', 'CONFIG.Token.documentClass.prototype.segmentizeRegionMovementPath', function (wrapped, region, waypoints) {
         if (game.gps.disableRegionTeleport) return [];
         if (region?.flags["gambits-premades"]?.excludeRegionHandling) return wrapped.call(this, region, waypoints);
         for (const behavior of region.behaviors.values()) {
             if (behavior.type !== "executeScript") return wrapped.call(this, region, waypoints);
         }
 
-        const size = canvas.dimensions.size;
-        const wPx = this.width  * size;
-        const hPx = this.height * size;
+        if (waypoints.some(point => ["level", "width", "height", "depth", "shape"].some(key => point[key] !== undefined && point[key] !== this._source[key]))) return wrapped.call(this, region, waypoints);
+        if (!region.includedInLevel(this._source.level)) return [];
+        const size = this.parent.grid.size;
+        const wPx = this._source.width  * size;
+        const hPx = this._source.height * size;
         const reduction = Math.min(wPx, hPx) * 0.1;
 
         const points = [
@@ -228,11 +99,9 @@ export function updateSettings(settingKey = null) {
         'Enable Power Word Rebound': 'powerWordReboundEnabled',
         'Mirror 3rd Party Dialog for GMs': 'enableMirrorDialog',
         'enable3prNoCombat': 'enable3prNoCombat',
+        'skipResolvedReactions': 'skipResolvedReactions',
         'enableTimerFullAnim': 'enableTimerFullAnim',
-        'hideTemplates': 'hideTemplates',
         'debugEnabled': 'debugEnabled',
-        'Enable Identify Restrictions': 'identifyRestrictionEnabled',
-        'Identify Restriction Message': 'message',
         'enableMageSlayer': 'mageSlayerEnabled',
         'enableInstinctiveCharm': 'instinctiveCharmEnabled',
         'enableRainOfCinders': 'rainOfCindersEnabled',
@@ -280,6 +149,7 @@ export function daeAddFlags(fieldData) {
 }
 
 export function daeInjectFlags() {
+    foundry.utils.setProperty(game.i18n.translations, 'dae.fieldData.fieldCategories.GPS', game.i18n.localize("GAMBITSPREMADES.DAE.Category"));
     foundry.utils.setProperty(game.i18n.translations, 'dae.GPS.fieldData.flags.gambits-premades.oaImmunity', {
         name: game.i18n.localize("GAMBITSPREMADES.DAE.Flags.OAImmunity.Name"),
         description: game.i18n.localize("GAMBITSPREMADES.DAE.Flags.OAImmunity.Description")
@@ -296,7 +166,7 @@ export function daeInjectFlags() {
         name: game.i18n.localize("GAMBITSPREMADES.DAE.Flags.OADisadvantageSource.Name"),
         description: game.i18n.localize("GAMBITSPREMADES.DAE.Flags.OADisadvantageSource.Description")
     });
-    
+
     DAE.addAutoFields(daeFieldBrowserFields);
 }
 
@@ -306,7 +176,7 @@ export async function arcaneShotValidActivities({item, actor}) {
     if(!arcaneShotItem) return;
 
     const arcaneArcherLevel = actor.classes?.fighter?.system?.levels;
-    
+
     const arcaneShotTypes = [
         { identifier: `banishingArrow`, itemName: "Banishing Arrow", gpsUuid: "227991d1-e640-4f94-9a8b-9873ad694f15" },
         { identifier: `banishingArrow18`, itemName: "Banishing Arrow", gpsUuid: "227991d1-e640-4f94-9a8b-9873ad694f15" },
@@ -320,19 +190,19 @@ export async function arcaneShotValidActivities({item, actor}) {
         { identifier: `seekingArrow18`, itemName: "Seeking Arrow", gpsUuid: "21216197-2c8f-492e-ac5a-1ea44281fd79" },
         { identifier: "shadowArrow", itemName: "Shadow Arrow", gpsUuid: "ff16436c-47eb-450a-8d55-84b81e45a9a2" }
     ];
-    
+
     for (const shot of arcaneShotTypes) {
         const activity = item.system.activities.find(a => a.identifier === shot.identifier);
         if (!activity) continue;
-        
-        const hasArrowItem = actor.items.some(i => 
+
+        const hasArrowItem = actor.items.some(i =>
             i.name === shot.itemName || i.flags["gambits-premades"]?.gpsUuid === shot.gpsUuid
         );
-        
+
         const baseId = shot.identifier.replace(/18$/, '');
-        
+
         const pairVariants = arcaneShotTypes.filter(s => s.identifier.replace(/18$/, '') === baseId);
-        
+
         if (pairVariants.length > 1) {
             if (shot.identifier.endsWith("18")) {
                 const automationOnly = !(arcaneArcherLevel >= 18 && hasArrowItem);
@@ -346,10 +216,3 @@ export async function arcaneShotValidActivities({item, actor}) {
         }
     }
 }
-
-  Hooks.on('updateActor', async (actor, diff, options, userID) => {
-    const token = actor.getActiveTokens()?.[0];
-    if(!token) return;
-
-    await game.gps.wound({args: "woundRemovalFullHeal", token, options: diff})
-  });

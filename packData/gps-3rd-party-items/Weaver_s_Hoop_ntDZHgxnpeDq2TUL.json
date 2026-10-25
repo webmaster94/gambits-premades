@@ -20,26 +20,13 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -54,37 +41,20 @@
             "type": "add"
           },
           {
-            "key": "system.attributes.movement.climb",
-            "value": "@attributes.movement.walk",
+            "key": "system.attributes.movement.speeds.climb",
+            "value": "@attributes.movement.speeds.walk",
             "priority": 20,
             "type": "override"
           }
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!ntDZHgxnpeDq2TUL.UNiU6zoPTpbrxoIA",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!ntDZHgxnpeDq2TUL.UNiU6zoPTpbrxoIA"
     }
   ],
   "flags": {
     "core": {},
-    "scene-packer": {
-      "hash": "34e13030c037e552dc9e3c005ed1c2ee5a9e23f1",
-      "sourceId": "Compendium.world.gps-homebrew-items.Item.nN8SbUV8n3Mt40c1"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "midi-qol": {
       "effectActivation": false,
       "itemCondition": "",
@@ -97,6 +67,16 @@
       "riders": {
         "activity": []
       }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "system": {
@@ -105,7 +85,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "revision": 1
     },

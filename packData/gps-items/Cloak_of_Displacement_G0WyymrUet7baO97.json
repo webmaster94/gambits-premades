@@ -10,7 +10,7 @@
       "book": "Player’s Handbook (2014)",
       "page": "158",
       "license": "",
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "revision": 1
     },
@@ -67,51 +67,6 @@
     "activities": {}
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Clothing",
-        "avatarUrl": "https://www.dndbeyond.com/avatars/19/216/636382363396040957.jpeg",
-        "largeAvatarUrl": "https://www.dndbeyond.com/avatars/7/164/636284722823230171.jpeg",
-        "filterType": "Wondrous item",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": null,
-        "tags": [
-          "Deception",
-          "Warding",
-          "Outerwear"
-        ],
-        "sources": [
-          {
-            "sourceId": 1,
-            "pageNumber": null,
-            "sourceType": 2
-          },
-          {
-            "sourceId": 2,
-            "pageNumber": 158,
-            "sourceType": 1
-          }
-        ],
-        "pictureUrl": "ddb-images/other/item/equipment/cloak-of-displacement-large.webp",
-        "isLegacy": false
-      },
-      "id": 0,
-      "entityTypeId": 0,
-      "definitionEntityTypeId": 112130694,
-      "definitionId": 4605,
-      "originalName": "Cloak of Displacement",
-      "version": "5.2.36",
-      "effectsApplied": true,
-      "keepIcon": true,
-      "isLegacy": false,
-      "chrisEffectsApplied": true,
-      "chrisPreEffectName": "Cloak of Displacement"
-    },
     "dae": {
       "alwaysActive": false,
       "activeEquipped": true,
@@ -152,35 +107,6 @@
       "otherCondition": "",
       "effectCondition": ""
     },
-    "scene-packer": {
-      "sourceId": "Actor.edtGqNIYfHYowUUr.Item.MUTykrhFRFOEFseW",
-      "hash": "21969d3d87b0fbdd1a18ac8508841634a38d39d8"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "chris-premades": {
-      "customConfig": [
-        {
-          "value": "playAnimation",
-          "label": "CHRISPREMADES.Config.PlayAnimation",
-          "type": "checkbox",
-          "default": true,
-          "category": "animation"
-        }
-      ]
-    },
     "dnd5e": {
       "riders": {
         "activity": []
@@ -189,6 +115,29 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "gambits-premades": {
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        }
+      },
+      "animationModules": [
+        "GPS"
+      ]
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "effects": [
@@ -205,12 +154,8 @@
           "macroRepeat": "startEveryTurnAny",
           "disableCondition": "",
           "disableIncapacitated": true,
-          "showIcon": false,
           "durationExpression": "",
           "specialDuration": []
-        },
-        "ddbimporter": {
-          "disabled": false
         },
         "midi-qol": {
           "forceCEOff": true
@@ -218,28 +163,18 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "effectmacro": {},
         "dnd5e": {
           "riders": {
             "statuses": []
           }
+        },
+        "gambits-premades": {
+          "cloakOfDisplacement": "benefit"
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "name": "Cloak of Displacement",
@@ -271,12 +206,14 @@
       "description": "",
       "origin": "Compendium.world.gps-items.Item.EU01knV1iWL0qUwq",
       "sort": 0,
-      "_key": "!items.effects!G0WyymrUet7baO97.5el2lHipVzj3rUVC",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!G0WyymrUet7baO97.5el2lHipVzj3rUVC"
     },
     {
       "origin": "Compendium.world.gps-items.Item.EU01knV1iWL0qUwq",
-      "duration": {},
+      "duration": {
+        "expiry": "combatEnd"
+      },
       "disabled": false,
       "name": "Cloak of Displacement: Start-End",
       "img": "icons/equipment/back/cloak-plain-blue.webp",
@@ -302,37 +239,25 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [
-            "combatEnd",
             "joinCombat"
           ]
         },
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "gambits-premades": {
+          "cloakOfDisplacement": "controller"
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!G0WyymrUet7baO97.ldOYJlb9eTpZAfJj",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!G0WyymrUet7baO97.ldOYJlb9eTpZAfJj"
     }
   ],
   "img": "icons/equipment/back/cloak-plain-blue.webp",

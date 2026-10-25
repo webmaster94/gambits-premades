@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "book": "Deep Magic Vol. 2, page 204",
       "page": "",
       "license": "",
@@ -208,8 +208,9 @@
     {
       "origin": "Actor.1xFtQVMnMyuFm2w2.Item.6BDRx5MzIdbcnMfn",
       "duration": {
-        "value": 12,
-        "units": "seconds"
+        "value": null,
+        "units": "seconds",
+        "expiry": "targetEnd"
       },
       "disabled": false,
       "name": "Ominous Shadow",
@@ -219,16 +220,16 @@
       "system": {
         "changes": [
           {
-            "key": "flags.midi-qol.disadvantage.attack.all",
-            "value": 1,
-            "priority": 20,
-            "type": "custom"
+            "key": "attack",
+            "value": "-1",
+            "priority": 100,
+            "type": "dnd5e.advantage"
           },
           {
-            "key": "flags.midi-qol.disadvantage.save.all",
-            "value": 1,
-            "priority": 20,
-            "type": "custom"
+            "key": "save",
+            "value": "-1",
+            "priority": 100,
+            "type": "dnd5e.advantage"
           }
         ]
       },
@@ -246,31 +247,12 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
-          "specialDuration": [
-            "turnEnd"
-          ]
+          "specialDuration": []
         },
         "core": {
           "overlay": false
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
         },
         "autoanimations": {
           "id": "a5967ac2-5610-4988-b591-843eecabb09c",
@@ -420,8 +402,8 @@
           }
         }
       },
-      "_key": "!items.effects!vtqlE2dhGGC5SVMQ.oPIJGfVwcV2Ld5LV",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!vtqlE2dhGGC5SVMQ.oPIJGfVwcV2Ld5LV"
     }
   ],
   "flags": {
@@ -437,84 +419,14 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "confirmTargets": "default",
-      "saveDamage": "default",
-      "bonusSaveDamage": "default",
-      "noConcentrationCheck": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "dnd5e": {
-      "dependents": [
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.iDVLR98Q1KnCCbpE.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.iDVLR98Q1KnCCbpE.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.khikVA7je9dqdiM0.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.iDVLR98Q1KnCCbpE.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.iDVLR98Q1KnCCbpE.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.khikVA7je9dqdiM0.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.iDVLR98Q1KnCCbpE.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.iDVLR98Q1KnCCbpE.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.khikVA7je9dqdiM0.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.iDVLR98Q1KnCCbpE.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.khikVA7je9dqdiM0.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.khikVA7je9dqdiM0.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.khikVA7je9dqdiM0.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.iDVLR98Q1KnCCbpE.Actor.SNZJsEKbROB1q6bT.ActiveEffect.oPIJGfVwcV2Ld5LV"
-        }
-      ],
+      "dependents": [],
       "riders": {
         "activity": [],
         "effect": []
       }
     },
     "core": {},
-    "scene-packer": {
-      "hash": "7ffe9b25b9feea530aff98569edffe4ed84b820d",
-      "sourceId": "Item.hpfpYCAJkHau5Juo"
-    },
     "autoanimations": {
       "id": "182a377f-475c-400f-936b-a51269bcc1aa",
       "label": "Ominous Shadow",
@@ -696,17 +608,30 @@
           "zIndex": 1
         }
       },
-      "isEnabled": true,
+      "isEnabled": false,
       "isCustomized": true,
       "fromAmmo": false,
       "version": 5
     },
-    "region-attacher": {
-      "attachRegionToTemplate": false
-    },
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "folder": null,

@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "revision": 1
     },
@@ -35,30 +35,6 @@
     "enchant": {}
   },
   "flags": {
-    "ddbimporter": {
-      "id": 244,
-      "data": {
-        "id": 244,
-        "name": "Perfect Self",
-        "prerequisite": null,
-        "description": "<p class=\"Core-Styles_Core-Body\">At 20th level, when you roll for initiative and have no ki points remaining, you regain 4 ki points.</p>",
-        "requiredLevel": 20,
-        "displayOrder": 30
-      },
-      "version": "3.4.63",
-      "featureId": 244,
-      "featureName": "Perfect Self",
-      "requiredLevel": 20,
-      "prerequisite": null,
-      "class": "Monk",
-      "classId": 11,
-      "subClass": "",
-      "parentClassId": null
-    },
-    "scene-packer": {
-      "sourceId": "Item.kEiDdRi5zPvEf96F",
-      "hash": "c02ed8de9503daeb00849bb05ecf3954c373ee54"
-    },
     "midi-qol": {
       "onUseMacroName": "",
       "rollAttackPerTarget": "default",
@@ -66,20 +42,6 @@
       "effectCondition": ""
     },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "never",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "dae": {
       "macro": {
         "name": "Perfect Self",
@@ -111,6 +73,16 @@
       "riders": {
         "activity": []
       }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
     }
   },
   "img": "icons/magic/perception/third-eye-blue-red.webp",
@@ -134,7 +106,6 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [
@@ -142,26 +113,13 @@
           ],
           "disableCondition": ""
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
-        },
         "effectmacro": {},
         "core": {
           "overlay": false
+        },
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "tint": "#ffffff",
@@ -178,8 +136,8 @@
         ]
       },
       "sort": 0,
-      "_key": "!items.effects!ugNmjDFbPNnpG0CG.Z6aK5JHacSpklffP",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!ugNmjDFbPNnpG0CG.Z6aK5JHacSpklffP"
     }
   ],
   "folder": "QgRUG7AmY7FhONve",

@@ -6,6 +6,7 @@ export async function sentinel({workflowData,workflowType,workflowCombat}) {
     let itemName = "Sentinel";
     let dialogId = gpsUuid;
     let target = workflow.targets.first();
+    if(!target) return;
     let gmUser = game.gps.getPrimaryGM();
     const initialTimeLeft = Number(MidiQOL.safeGetGameSetting('gambits-premades', `${itemName} Timeout`));
 
@@ -27,10 +28,10 @@ export async function sentinel({workflowData,workflowType,workflowCombat}) {
         // Check valid weapons
         let validWeapons = validTokenPrimary.actor.items.filter(item => item.system.equipped && item.system.activities?.some(activity => activity?.actionType === "mwak"));
         if (!validWeapons.length) continue;
-        
+
         // Sort the weapons alphabetically
         validWeapons.sort((a, b) => a.name.localeCompare(b.name));
-        
+
         // Check for favorite weapon and put it on top
         let favoriteWeaponUuid = null;
         const favoriteWeaponIndex = validWeapons.findIndex(item => item.flags?.['midi-qol']?.oaFavoriteAttack);
@@ -83,19 +84,19 @@ export async function sentinel({workflowData,workflowType,workflowCombat}) {
         `;
 
         let content = `<span style='text-wrap: wrap;'><img src="${validTokenPrimary.actor.img}" style="width: 25px; height: auto;" /> ${game.i18n.format("GAMBITSPREMADES.ChatMessages.Common.ReactionAvailableAttackTrigger", { actorName: validTokenPrimary.actor.name, itemProperName: itemProperName })}</span>`
-        let chatData = { author: gmUser, content: content, roll: false };
+        let chatData = { user: gmUser, content: content, roll: false };
         let notificationMessage = await MidiQOL.socket().executeAsUser("createChatMessage", gmUser, { chatData });
 
         let result;
 
         if (MidiQOL.safeGetGameSetting('gambits-premades', 'Mirror 3rd Party Dialog for GMs') && browserUser !== gmUser) {
-            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: "user",type: "multiDialog",browserUser: browserUser, notificationId: notificationMessage._id };
-            
-            let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: "gm",type: "multiDialog", notificationId: notificationMessage._id };
-        
-            result = await game.gps.socket.executeAsUser("handleDialogPromises", gmUser, {userDialogArgs, gmDialogArgs});
+            let userDialogArgs = { dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: workflow.token.document.uuid,source: "user",type: "multiDialog",browserUser: browserUser, notificationId: notificationMessage._id };
+
+            let gmDialogArgs = { dialogTitle:dialogTitleGM,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: workflow.token.document.uuid,source: "gm",type: "multiDialog", notificationId: notificationMessage._id };
+
+            result = await game.gps.handleDialogPromises({userDialogArgs, gmDialogArgs});
         } else {
-            result = await game.gps.socket.executeAsUser("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
+            result = await game.gps.queryDialog("process3rdPartyReactionDialog", browserUser, {dialogTitle:dialogTitlePrimary,dialogContent,dialogId,initialTimeLeft,validTokenPrimaryUuid: validTokenPrimary.document.uuid, focusTokenUuid: workflow.token.document.uuid,source: gmUser === browserUser ? "gm" : "user",type:"singleDialog", notificationId: notificationMessage._id});
         }
 
         const { userDecision, enemyTokenUuid, allyTokenUuid, damageChosen, selectedItemUuid, favoriteCheck, source, type } = result || {};
@@ -109,13 +110,14 @@ export async function sentinel({workflowData,workflowType,workflowCombat}) {
                 continue;
             }
 
-            let chosenWeapon = await fromUuid(selectedItemUuid);
+            let chosenWeapon = validWeapons.find(weapon => weapon.uuid === selectedItemUuid);
+            if(!chosenWeapon) continue;
             let favoriteWeaponCheck = favoriteWeaponUuid;
             let favoriteWeapon;
             if(favoriteWeaponCheck !== "null") favoriteWeapon = await fromUuid(favoriteWeaponCheck);
             if(favoriteCheck && favoriteWeaponCheck) {
                await chosenWeapon.setFlag("midi-qol", "oaFavoriteAttack", true);
-               if (favoriteWeapon.uuid !== chosenWeapon.uuid) {
+               if (favoriteWeapon && favoriteWeapon.uuid !== chosenWeapon.uuid) {
                await favoriteWeapon.unsetFlag("midi-qol", "oaFavoriteAttack");
                }
             }
@@ -123,19 +125,6 @@ export async function sentinel({workflowData,workflowType,workflowCombat}) {
                await chosenWeapon.setFlag("midi-qol", "oaFavoriteAttack", true);
             }
 
-            let clonedWeapon = foundry.utils.deepClone(chosenWeapon);
-
-            foundry.utils.mergeObject(clonedWeapon, {
-            system: {
-                range: {
-                    value: null,
-                    long: null,
-                    units: ""
-                }
-            }
-            }, { inplace: true });
-    
-            chosenWeapon = clonedWeapon;
 
             const options = {
                 showFullCard: false,
@@ -151,43 +140,10 @@ export async function sentinel({workflowData,workflowType,workflowCombat}) {
             };
 
             let itemRoll;
-            if(source && source === "user") itemRoll = await game.gps.socket.executeAsUser("remoteCompleteItemUse", browserUser, { itemUuid: chosenWeapon.uuid, actorUuid: validTokenPrimary.actor.uuid, options: options });
-            else if(source && source === "gm") itemRoll = await game.gps.socket.executeAsUser("remoteCompleteItemUse", gmUser, { itemUuid: chosenWeapon.uuid, actorUuid: validTokenPrimary.actor.uuid, options: options });
-    
-            if(!itemRoll.baseLevel && !itemRoll.castLevel && !itemRoll.checkHits && !itemRoll.itemType) continue;
+            if(source && source === "user") itemRoll = await game.gps.queryUser("remoteCompleteItemUse", browserUser, { itemUuid: chosenWeapon.uuid, actorUuid: validTokenPrimary.actor.uuid, options: options });
+            else if(source && source === "gm") itemRoll = await game.gps.queryUser("remoteCompleteItemUse", gmUser, { itemUuid: chosenWeapon.uuid, actorUuid: validTokenPrimary.actor.uuid, options: options });
 
-            let checkHits = itemRoll.checkHits;
-
-            if(checkHits) {
-                let effectData = [
-                    {
-                        "img": `${chosenItem.img}`,
-                        "origin": `${validTokenPrimary.actor.uuid}`,
-                        "duration": {
-                        "value": 1,
-                        "units": "seconds"
-                        },
-                        "start": {
-                        "time": game.time?.worldTime ?? 0
-                        },
-                        "disabled": false,
-                        "name": "Sentinel - Movement",
-                        "system": {
-                        "changes": [
-                        {
-                            "key": "system.attributes.movement.all",
-                            "type": "custom",
-                            "value": "0",
-                            "priority": 20
-                        }
-                        ]
-                        },
-                        "transfer": false
-                    }
-                ];
-
-                await MidiQOL.socket().executeAsUser("createEffects", gmUser, { actorUuid: workflow.token.actor.uuid, effects: effectData });
-            }
+            if(!itemRoll?.completed) continue;
 
             await game.gps.addReaction({actorUuid: `${validTokenPrimary.actor.uuid}`});
         }

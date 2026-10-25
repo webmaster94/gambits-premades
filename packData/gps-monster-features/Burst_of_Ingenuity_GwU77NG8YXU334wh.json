@@ -8,7 +8,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.13",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -179,26 +179,6 @@
   "effects": [],
   "folder": "OAr1bo0tvaoZnzaf",
   "flags": {
-    "scene-packer": {
-      "hash": "7ee8c4424a45e078a2f2d521ce527a80958afad2",
-      "sourceId": "Item.Gkyoj8rgcIIn38rR"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "itemCondition": "",
@@ -216,24 +196,44 @@
         }
       }
     },
-    "chris-premades": {
-      "customConfig": [
-        {
-          "value": "playAnimation",
-          "label": "CHRISPREMADES.Config.PlayAnimation",
+    "gambits-premades": {
+      "gpsUuid": "e63afca6-62d3-4896-850f-afefd1d8ce0a",
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
           "type": "checkbox",
           "default": true,
-          "category": "animation"
+          "category": "animations"
         }
+      },
+      "animationModules": [
+        "GPS"
       ]
-    },
-    "gambits-premades": {
-      "gpsUuid": "e63afca6-62d3-4896-850f-afefd1d8ce0a"
     },
     "dnd5e": {},
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "_id": "GwU77NG8YXU334wh",

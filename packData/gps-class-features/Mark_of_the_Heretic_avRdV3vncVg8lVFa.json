@@ -4,7 +4,7 @@
   "system": {
     "description": {
       "value": "",
-      "chat": "<div class=\"ddb\">\nChoose a creature you can see within 30 ft. and for the next minute your weapon attacks against the chosen creature score a critical hit on a roll of 19–20.\n</div>"
+      "chat": ""
     },
     "cover": null,
     "crewed": false,
@@ -27,7 +27,7 @@
     ],
     "requirements": "",
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -92,7 +92,7 @@
           },
           "affects": {
             "count": "",
-            "type": "",
+            "type": "creature",
             "choice": false,
             "special": ""
           },
@@ -180,111 +180,37 @@
     "advancement": []
   },
   "flags": {
-    "ddbimporter": {
-      "id": "9112638",
-      "entityTypeId": "222216831",
-      "action": true,
-      "componentId": 9998203,
-      "componentTypeId": 12168134,
-      "originalName": "Mark of the Heretic",
-      "type": "class",
-      "class": "Paladin",
-      "classId": 4,
-      "subclass": "Oath of Zeal",
-      "subclassId": 2128783,
-      "dndbeyond": {
-        "levelScale": null,
-        "levelScales": [],
-        "limitedUse": [
-          {
-            "level": null,
-            "uses": 1
-          },
-          {
-            "level": null,
-            "uses": 1
-          },
-          {
-            "level": null,
-            "uses": 1
-          }
-        ]
-      },
-      "importId": "8RgFnU0fv27Kz6qA"
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "effectCondition": ""
     },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
     "dnd5e": {
       "advancementOrigin": "obNWLTT236ILqch8",
-      "dependents": [
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.t6hXhIjDcXxkQ2dL"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.p2CsXFgNUv49aqlZ"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.zy6NMzpoFjU7K58C"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.L9mQ8qgg09Yc1MNO"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.u4NLRpRWdjBpvGeh"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.BydWwAcqe0pbD9sC"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.qJT6Qi47ECfx98dT"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.8IvCaIW5gCJB6ndw"
-        },
-        {
-          "uuid": "Actor.vybaOfSojIBNixqp.ActiveEffect.naIrDO6INO4wRN1E"
-        },
-        {
-          "uuid": "Actor.vybaOfSojIBNixqp.ActiveEffect.gRhi4vg6y7bWRJvh"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.WpP4jqRxLfW9LkjP"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.fQBZGXOriOaIMsC7"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.OWyWjlVLQAA4wQsk"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.q1dQR3m5MuNaWHl9"
-        },
-        {
-          "uuid": "Scene.1mkVNeOdyVIlDdH7.Token.ebCSuEuAeiUZYOnQ.Actor.SNZJsEKbROB1q6bT.ActiveEffect.j9MYSHWFVW6uOqk4"
-        }
-      ],
+      "dependents": [],
       "riders": {
         "activity": []
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
       }
     }
   },
@@ -306,7 +232,8 @@
             "key": "flags.midi-qol.grants.criticalThreshold",
             "value": "tokenId === '@token' ? 19 : 20",
             "priority": 20,
-            "type": "custom"
+            "type": "custom",
+            "replacement": "origin"
           }
         ]
       },
@@ -324,7 +251,6 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
@@ -332,26 +258,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!avRdV3vncVg8lVFa.8CiXpIuTA3ibBGsT",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!avRdV3vncVg8lVFa.8CiXpIuTA3ibBGsT"
     }
   ],
   "img": "icons/magic/unholy/orb-stone-pink.webp",

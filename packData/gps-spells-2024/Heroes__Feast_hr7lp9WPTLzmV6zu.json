@@ -236,7 +236,7 @@
       "book": "PHB",
       "page": "",
       "license": "",
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2024",
       "revision": 1
     },
@@ -309,14 +309,9 @@
           "selfTarget": false,
           "selfTargetAlways": false,
           "dontApply": false,
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
-        },
-        "ddbimporter": {
-          "disabled": false,
-          "activityMatch": "Consume Feast"
         },
         "midi-qol": {
           "forceCEOff": true
@@ -325,34 +320,14 @@
           "overlay": false
         },
         "dnd5e": {
-          "dependents": [
-            {
-              "uuid": "Actor.9SDnT6BTxs3e8pXd.ActiveEffect.dwdNlPOHm9GtfJCN"
-            },
-            {
-              "uuid": "Actor.1NNLZbcJpvSfwvnd.ActiveEffect.qVUJrV86JipVxjjt"
-            }
-          ],
+          "dependents": [],
           "riders": {
             "statuses": []
           }
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
       "description": "",
@@ -362,7 +337,7 @@
         "changes": [
           {
             "key": "system.attributes.hp.tempmax",
-            "value": "[[2d10]]",
+            "value": "[[[2d10]]]",
             "priority": 20,
             "type": "add"
           },
@@ -385,68 +360,21 @@
             "type": "add"
           },
           {
-            "key": "flags.midi-qol.advantage.save.wis",
+            "key": "system.abilities.wis.save.roll.mode",
             "value": 1,
             "priority": 20,
-            "type": "override"
+            "type": "add"
           }
         ]
       },
       "origin": null,
       "sort": 0,
-      "_key": "!items.effects!hr7lp9WPTLzmV6zu.guYbniQzjSBEbDyB",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!hr7lp9WPTLzmV6zu.guYbniQzjSBEbDyB"
     }
   ],
   "name": "Heroes' Feast",
   "flags": {
-    "ddbimporter": {
-      "id": 138070,
-      "definitionId": 2143,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "classSpell",
-        "class": "Druid",
-        "level": 12,
-        "characterClassId": 123887919,
-        "spellLevel": 6,
-        "ability": "wis",
-        "mod": 5,
-        "dc": 17,
-        "cantripBoost": false,
-        "overrideDC": false,
-        "id": 138070,
-        "entityTypeId": 435869154,
-        "healingBoost": 0,
-        "usesSpellSlot": true,
-        "forceMaterial": false,
-        "homebrew": false
-      },
-      "originalName": "Heroes' Feast",
-      "sources": [
-        {
-          "sourceId": 1,
-          "pageNumber": null,
-          "sourceType": 2
-        },
-        {
-          "sourceId": 2,
-          "pageNumber": 250,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Buff",
-        "Social"
-      ],
-      "version": "6.1.10",
-      "is2014": true,
-      "is2024": false,
-      "addSpellEffects": true,
-      "legacy": true,
-      "effectsApplied": true,
-      "importId": "9U8PMC6BXZCoArbM"
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "onUseMacroName": "[postActiveEffects]function.DDBImporter.lib.DDBMacros.macroFunction.spell(\"heroesFeast.js\")",
@@ -456,16 +384,6 @@
       "reactionCondition": "",
       "otherCondition": "",
       "effectCondition": ""
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "magicdam": true,
-      "magiceffect": true,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
     },
     "tidy5e-sheet": {
       "parentClass": "druid"
@@ -481,6 +399,34 @@
             "0": "healing"
           }
         }
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "utilityHeroeFeas": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Create Feast",
+        "activityType": "utility",
+        "version": 2
+      },
+      "dpcTO6sCjQEKwapI": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Consume Feast",
+        "activityType": "utility",
+        "version": 2
       }
     }
   },

@@ -6,7 +6,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "book": "Player’s Handbook (2014)",
       "page": "267",
       "license": "",
@@ -173,63 +173,6 @@
   },
   "name": "Power Word Stun",
   "flags": {
-    "ddbimporter": {
-      "id": 138581,
-      "definitionId": 2211,
-      "entityTypeId": 435869154,
-      "dndbeyond": {
-        "lookup": "generic",
-        "lookupName": "generic",
-        "level": null,
-        "castAtLevel": null
-      },
-      "originalName": "Power Word Stun",
-      "sources": [
-        {
-          "sourceId": 1,
-          "pageNumber": null,
-          "sourceType": 2
-        },
-        {
-          "sourceId": 2,
-          "pageNumber": 267,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Control"
-      ],
-      "version": "5.2.36",
-      "effectsApplied": true,
-      "isLegacy": true,
-      "chrisEffectsApplied": true,
-      "chrisPreEffectName": "Power Word Stun"
-    },
-    "midiProperties": {
-      "magicdam": true,
-      "magiceffect": true,
-      "confirmTargets": "default",
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "scene-packer": {
-      "sourceId": "Item.",
-      "hash": "c68d7e0bb234c227b91ffe4717c0bcd82e4c5488"
-    },
     "midi-qol": {
       "effectActivation": false,
       "removeAttackDamageButtons": "default",
@@ -243,11 +186,7 @@
       "otherCondition": ""
     },
     "dnd5e": {
-      "dependents": [
-        {
-          "uuid": "Scene.bAQsBAiUKXSqmows.Token.6vurRyomcJ2N0BDF.Actor.E7vwcKE4WtxUBgj1.ActiveEffect.ktu921oUQI8gZnNe"
-        }
-      ],
+      "dependents": [],
       "riders": {
         "activity": [],
         "effect": []
@@ -483,7 +422,7 @@
           "zIndex": 1
         }
       },
-      "isEnabled": true,
+      "isEnabled": false,
       "isCustomized": true,
       "fromAmmo": false,
       "version": 5
@@ -491,6 +430,22 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -509,9 +464,10 @@
         "changes": [
           {
             "key": "flags.midi-qol.OverTime",
-            "value": "turn=end,rollType=save,saveAbility=con,saveDC=@attributes.spelldc,saveMagic=true,name=Power Word Stun",
+            "value": "turn=end,rollType=save,saveAbility=con,saveDC=@attributes.spell.dc,saveMagic=true,name=Power Word Stun",
             "priority": 20,
-            "type": "custom"
+            "type": "custom",
+            "replacement": "origin"
           },
           {
             "key": "macro.StatusEffect",
@@ -531,7 +487,6 @@
           "disableCondition": "",
           "disableIncapacitated": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [],
@@ -542,22 +497,6 @@
         },
         "core": {
           "overlay": false
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
         },
         "autoanimations": {
           "id": "23a2098b-742e-452a-a9e0-d5e53d4dee93",
@@ -702,8 +641,8 @@
           "version": 5
         }
       },
-      "_key": "!items.effects!QuYjryGrsYLd2yQD.YNLL7EqvJIny51tK",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!QuYjryGrsYLd2yQD.YNLL7EqvJIny51tK"
     }
   ],
   "img": "icons/magic/sonic/scream-wail-shout-teal.webp",

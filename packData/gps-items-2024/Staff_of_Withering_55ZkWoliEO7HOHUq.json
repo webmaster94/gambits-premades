@@ -7,7 +7,7 @@
       "chat": ""
     },
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2024",
       "book": "",
@@ -39,7 +39,8 @@
       "recovery": [
         {
           "period": "dawn",
-          "type": "recoverAll"
+          "type": "formula",
+          "formula": "1d3"
         }
       ],
       "spent": 0
@@ -156,14 +157,8 @@
         },
         "uses": {
           "spent": 0,
-          "max": "3",
-          "recovery": [
-            {
-              "period": "dawn",
-              "type": "formula",
-              "formula": "1d3"
-            }
-          ]
+          "max": "",
+          "recovery": []
         },
         "attack": {
           "ability": "str",
@@ -384,50 +379,6 @@
     "equipped": true
   },
   "flags": {
-    "ddbimporter": {
-      "dndbeyond": {
-        "type": "Staff",
-        "avatarUrl": "https://www.dndbeyond.com/avatars/19/261/636382374640662408.jpeg",
-        "largeAvatarUrl": "https://www.dndbeyond.com/avatars/7/430/636284771278196881.jpeg",
-        "filterType": "Staff",
-        "isConsumable": false,
-        "isContainer": false,
-        "isCustomItem": false,
-        "isHomebrew": false,
-        "isMonkWeapon": false,
-        "isPack": false,
-        "levelInfusionGranted": null,
-        "tags": [
-          "Damage",
-          "Debuff",
-          "Combat"
-        ],
-        "sources": [
-          {
-            "sourceId": 1,
-            "pageNumber": null,
-            "sourceType": 2
-          },
-          {
-            "sourceId": 2,
-            "pageNumber": 205,
-            "sourceType": 1
-          }
-        ],
-        "pictureUrl": "https://www.dndbeyond.com/avatars/7/430/636284771278196881.jpeg"
-      },
-      "id": 0,
-      "entityTypeId": 0,
-      "definitionEntityTypeId": 112130694,
-      "definitionId": 4771,
-      "originalName": "Staff of Withering",
-      "version": "3.5.7",
-      "keepIcon": true
-    },
-    "scene-packer": {
-      "sourceId": "Actor.TV5LomChYHrq6k2D.Item.g62ktsdkZjFhw32e",
-      "hash": "bf86dc44e5f3c70480a03a8eee97e84a450f010f"
-    },
     "midi-qol": {
       "onUseMacroName": "[preDamageRollComplete]function.game.gps.staffOfWithering",
       "fumbleThreshold": null,
@@ -440,19 +391,6 @@
       "rollAttackPerTarget": "default"
     },
     "core": {},
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": true,
-      "magiceffect": true,
-      "concentration": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "dae": {
       "macro": {
         "name": "Staff of Withering",
@@ -502,6 +440,34 @@
     "tidy5e-sheet": {
       "section": "",
       "actionSection": ""
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Attack",
+        "activityType": "attack",
+        "version": 2
+      },
+      "HMFVRnkvvl1o5cL4": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save: Automation",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "effects": [],

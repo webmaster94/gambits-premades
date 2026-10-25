@@ -1,5 +1,14 @@
 # Changelog
 
+## [v3.2.0] - 2026-10-25
+- Integrates official GPS 3.0.2 while preserving this fork's CAT migration, world-settings interface, and compact teleport prompts and destination rings.
+- Uses upstream's native Foundry user queries and regions, updated V14/D&D 6 automations, contextual token-focus dialogs, resolved-reaction suppression, and animation-provider fallbacks. Adds 2014 Fury of the Small.
+- CAT is the sole automation catalog and updater. GPS registers its current per-item versions and configuration directly with CAT, without CPR's former Medkit provider.
+- Existing Interception and Protection compendium UUIDs remain valid. Saved CAT choices and GPS world settings remain intact.
+- Requires Foundry 14.369+, D&D 6.0.x, CAT 0.1.3+, Midi-QOL 14.6.4+, DAE 14.6.3+, Sequencer 4.2.3+, and Aura Effects 2.2.0+. The Aura Effects dependency points to the maintained V14 fork.
+- Verification includes migration/dialog regression tests, syntax/JSON checks, rebuilt packs, and isolated Foundry checks with CAT 0.1.3, Midi-QOL 14.6.4, DAE 14.6.3, Sequencer 4.3.0, and Aura Effects 2.4.1. Individual automations were not all played through.
+
+
 ## [v3.1.0] - 2026-10-11
 - Requires CAT 0.1.1+, Foundry 14.368+, D&D 6.0.x, Midi-QOL 14.6.0+, and DAE 14.6.0+.
 - Registers GPS's existing compendiums in CAT. Supported item animation and homebrew options, module settings menus, and callback-based dialogs use CAT's interface.

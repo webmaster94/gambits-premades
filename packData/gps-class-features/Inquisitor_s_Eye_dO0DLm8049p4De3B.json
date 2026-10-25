@@ -4,7 +4,7 @@
   "system": {
     "description": {
       "value": "",
-      "chat": "<div class=\"ddb\">\nAs a bonus action, you grant yourself advantage on &amp;Reference[int]{Intelligence} (&amp;Reference[inv]{Investigation}), &amp;Reference[wis]{Wisdom} (&amp;Reference[ins]{Insight}), and &amp;Reference[wis]{Wisdom} (&amp;Reference[prc]{Perception}) ability checks for the next 10 minutes. During this time, you can’t be surprised.\n</div>"
+      "chat": ""
     },
     "cover": null,
     "crewed": false,
@@ -25,7 +25,7 @@
     "properties": [],
     "requirements": "",
     "source": {
-      "custom": "2.1.38",
+      "custom": "",
       "revision": 1,
       "rules": "2014",
       "book": "",
@@ -66,8 +66,7 @@
           }
         ],
         "range": {
-          "value": "5",
-          "units": "ft",
+          "units": "self",
           "special": "",
           "override": false
         },
@@ -83,7 +82,7 @@
           },
           "affects": {
             "count": "",
-            "type": "",
+            "type": "self",
             "choice": false,
             "special": ""
           },
@@ -160,59 +159,11 @@
     "advancement": []
   },
   "flags": {
-    "ddbimporter": {
-      "id": "9112639",
-      "entityTypeId": "222216831",
-      "action": true,
-      "componentId": 9998203,
-      "componentTypeId": 12168134,
-      "originalName": "Inquisitor's Eye",
-      "type": "class",
-      "class": "Paladin",
-      "classId": 4,
-      "subclass": "Oath of Zeal",
-      "subclassId": 2128783,
-      "dndbeyond": {
-        "levelScale": null,
-        "levelScales": [],
-        "limitedUse": [
-          {
-            "level": null,
-            "uses": 1
-          },
-          {
-            "level": null,
-            "uses": 1
-          },
-          {
-            "level": null,
-            "uses": 1
-          }
-        ]
-      },
-      "importId": "8RgFnU0fv27Kz6qA"
-    },
     "midi-qol": {
       "removeAttackDamageButtons": "default",
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "effectCondition": ""
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
     },
     "dnd5e": {
       "advancementOrigin": "obNWLTT236ILqch8",
@@ -223,6 +174,26 @@
     },
     "tidy5e-sheet": {
       "action-filter-override": false
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      }
     }
   },
   "effects": [
@@ -240,22 +211,22 @@
       "system": {
         "changes": [
           {
-            "key": "flags.midi-qol.advantage.skill.inv",
+            "key": "system.skills.inv.roll.mode",
             "value": 1,
             "priority": 20,
-            "type": "custom"
+            "type": "add"
           },
           {
-            "key": "flags.midi-qol.advantage.skill.ins",
+            "key": "system.skills.ins.roll.mode",
             "value": 1,
             "priority": 20,
-            "type": "custom"
+            "type": "add"
           },
           {
-            "key": "flags.midi-qol.advantage.skill.prc",
+            "key": "system.skills.prc.roll.mode",
             "value": 1,
             "priority": 20,
-            "type": "custom"
+            "type": "add"
           }
         ]
       },
@@ -273,7 +244,6 @@
           "selfTargetAlways": true,
           "dontApply": false,
           "stackable": "noneName",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": []
@@ -281,25 +251,13 @@
         "core": {
           "overlay": false
         },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system"
+        "autoanimations": {
+          "isEnabled": false,
+          "version": 5
         }
       },
-      "_key": "!items.effects!dO0DLm8049p4De3B.Cu36e1fVZhmr56qx",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!dO0DLm8049p4De3B.Cu36e1fVZhmr56qx"
     }
   ],
   "img": "icons/magic/unholy/hand-marked-pink.webp",

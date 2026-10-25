@@ -155,7 +155,7 @@
       "book": "XGtE",
       "page": "",
       "license": "",
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "revision": 1
     },
@@ -336,7 +336,7 @@
               "zIndex": 1
             }
           },
-          "isEnabled": true,
+          "isEnabled": false,
           "isCustomized": true,
           "fromAmmo": false,
           "version": 5,
@@ -351,13 +351,13 @@
               "customPath": ""
             },
             "sound": {
-              "enable": true,
+              "enable": false,
               "delay": 0,
               "repeat": 1,
               "repeatDelay": 250,
               "startTime": 0,
               "volume": 0.75,
-              "file": "modules/dnd5e-animations/assets/sounds/Spells/Hex.mp3"
+              "file": ""
             },
             "options": {
               "addTokenWidth": false,
@@ -434,8 +434,8 @@
               "autoSize": true
             },
             "sound": {
-              "enable": true,
-              "file": "modules/dnd5e-animations/assets/sounds/Spells/Hex.mp3",
+              "enable": false,
+              "file": "",
               "volume": 0.75,
               "delay": 2000,
               "startTime": 0
@@ -470,7 +470,6 @@
           "selfTargetAlways": false,
           "dontApply": false,
           "stackable": "multi",
-          "showIcon": false,
           "durationExpression": "",
           "macroRepeat": "none",
           "specialDuration": [
@@ -485,111 +484,18 @@
         },
         "core": {
           "overlay": false
-        },
-        "ActiveAuras": {
-          "isAura": false,
-          "aura": "None",
-          "nameOverride": "",
-          "radius": "",
-          "alignment": "",
-          "type": "",
-          "customCheck": "",
-          "ignoreSelf": false,
-          "height": false,
-          "hidden": false,
-          "displayTemp": false,
-          "hostile": false,
-          "onlyOnce": false,
-          "wallsBlock": "system",
-          "statuses": []
         }
       },
-      "_key": "!items.effects!rlrfM6muqv1HaFa9.ALD0yIwzOKUYORqW",
-      "start": null
+      "start": null,
+      "_key": "!items.effects!rlrfM6muqv1HaFa9.ALD0yIwzOKUYORqW"
     }
   ],
   "name": "Mental Prison",
   "flags": {
-    "ddbimporter": {
-      "id": 256,
-      "definitionId": 14883,
-      "entityTypeId": 420821570,
-      "dndbeyond": {
-        "class": "Warlock",
-        "lookup": "classFeature",
-        "lookupName": "Mystic Arcanum (6th level)",
-        "lookupId": 390,
-        "level": 12,
-        "ability": "cha",
-        "mod": 5,
-        "dc": 17,
-        "overrideDC": false,
-        "id": 256,
-        "entityTypeId": 420821570,
-        "healingBoost": 0,
-        "cantripBoost": false,
-        "usesSpellSlot": false,
-        "forceMaterial": false,
-        "homebrew": false,
-        "forcePact": true
-      },
-      "originalName": "Mental Prison",
-      "sources": [
-        {
-          "sourceId": 27,
-          "pageNumber": 161,
-          "sourceType": 1
-        }
-      ],
-      "tags": [
-        "Damage",
-        "Control"
-      ],
-      "version": "6.0.79",
-      "is2014": true,
-      "is2024": false,
-      "addSpellEffects": true,
-      "legacy": false,
-      "defaultAdditionalActivities": {
-        "enabled": true,
-        "data": {}
-      },
-      "effectsApplied": true,
-      "importId": "5fPcXrHV2q1yvwO5",
-      "chrisEffectsApplied": true,
-      "chrisPreEffectName": "Mental Prison"
-    },
     "tidy5e-sheet": {
       "parentClass": "Warlock",
       "section": "",
       "actionSection": ""
-    },
-    "tidy5e-sheet-kgar": {
-      "parentClass": "Warlock"
-    },
-    "scene-packer": {
-      "hash": "97f9186abd6b1237586c21523ea92241ba16dd77",
-      "sourceId": "Item.MoJ7sZ1BysgmTfqG"
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": true,
-      "magiceffect": true,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "saveDamage": "fulldam",
-      "bonusSaveDamage": "default",
-      "concentration": true,
-      "otherSaveDamage": "nodam",
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
     },
     "midi-qol": {
       "rollAttackPerTarget": "default",
@@ -754,7 +660,7 @@
           "zIndex": 1
         }
       },
-      "isEnabled": true,
+      "isEnabled": false,
       "isCustomized": true,
       "fromAmmo": false,
       "version": 5,
@@ -769,13 +675,13 @@
           "customPath": ""
         },
         "sound": {
-          "enable": true,
+          "enable": false,
           "delay": 0,
           "repeat": 1,
           "repeatDelay": 250,
           "startTime": 0,
           "volume": 0.75,
-          "file": "modules/dnd5e-animations/assets/sounds/Spells/Hex.mp3"
+          "file": ""
         },
         "options": {
           "addTokenWidth": false,
@@ -852,8 +758,8 @@
           "autoSize": true
         },
         "sound": {
-          "enable": true,
-          "file": "modules/dnd5e-animations/assets/sounds/Spells/Hex.mp3",
+          "enable": false,
+          "file": "",
           "volume": 0.75,
           "delay": 2000,
           "startTime": 0
@@ -878,6 +784,22 @@
           "targetPlay": "end"
         },
         "enable": true
+      }
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "boss-loot-assets-premium": {
+      "dnd5eactivity000": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
       }
     }
   },

@@ -1,6 +1,7 @@
-export async function animateLightMovement({ tokenData, actor, effectName, filePath, animType }) {
-  if(animType === "torch") {
-    new Sequence({moduleName: "gambits-premades", softFail: true})
+export async function animateLightMovement({ tokenData, position, effectName, filePath, animType, animEnabled = true }) {
+  if (!position) return null;
+  if(animEnabled && animType === "torch") {
+    new Sequence()
       .effect()
         .name(`${effectName}_ip`)
         .file(game.modules.get("jb2a_patreon")?.active ? "jb2a.impact.002.orange" : "")
@@ -25,23 +26,12 @@ export async function animateLightMovement({ tokenData, actor, effectName, fileP
     .play();
   }
 
-  actor.sheet.minimize();
+  if (!animEnabled) {
+    await new Sequence().animation().on(tokenData).teleportTo(position).snapToGrid().opacity(1).play();
+    return position;
+  }
 
-  let config = {
-    gridHighlight: true,
-    icon: { texture: filePath, borderVisible: true },
-    location: {
-      obj: tokenData,
-      limitMaxRange: 60,
-      showRange: true,
-      wallBehavior: Sequencer.Crosshair.PLACEMENT_RESTRICTIONS.NO_COLLIDABLES
-    }
-  };
-
-  const position = await Sequencer.Crosshair.show(config);
-  if (!position) return null;
-
-  new Sequence({moduleName: "gambits-premades", softFail: true})
+  await new Sequence()
     .animation()
       .on(tokenData)
       .opacity(0)
@@ -75,8 +65,6 @@ export async function animateLightMovement({ tokenData, actor, effectName, fileP
       .opacity(1)
     .play();
 
-  actor.sheet.maximize();
-
   return position;
 }
 
@@ -85,7 +73,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
     const torchOffsetX = offsets.torchOffsetX ?? 0.35 * tokenData.document.width;
     const flameOffsetX = offsets.flameOffsetX ?? 0.5 * tokenData.document.width;
 
-    new Sequence({moduleName: "gambits-premades", softFail: true})
+    new Sequence()
       .effect()
         .delay(150)
         .name(effectName)
@@ -137,7 +125,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
     return;
   }
   else if(animType === "lamp") {
-    new Sequence({moduleName: "gambits-premades", softFail: true})
+    new Sequence()
       .effect()
         .name(effectName)
         .file(filePath)
@@ -159,7 +147,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
     return;
   }
   else if(animType === "lanternBullseye") {
-    new Sequence({moduleName: "gambits-premades", softFail: true})
+    new Sequence()
       .effect()
         .name(effectName)
         .file(filePath)
@@ -182,7 +170,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
   }
   else if(animType === "lanternHooded") {
     if(!filePathDim) {
-      new Sequence({moduleName: "gambits-premades", softFail: true})
+      new Sequence()
         .effect()
           .name(effectName)
           .file(filePath)
@@ -204,7 +192,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
       return;
     }
     else {
-      new Sequence({moduleName: "gambits-premades", softFail: true})
+      new Sequence()
         .effect()
           .name(effectName)
           .file(filePathDim)
@@ -230,7 +218,7 @@ export async function animateLight({ tokenData, effectName, filePath, offsets = 
     const torchOffsetX = offsets.torchOffsetX ?? 0.35 * tokenData.document.width;
     const flameOffsetX = offsets.flameOffsetX ?? 0.43 * tokenData.document.width;
 
-    new Sequence({moduleName: "gambits-premades", softFail: true})
+    new Sequence()
       .effect()
         .delay(150)
         .name(effectName)
@@ -292,7 +280,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
       async function meleeAttack({target, randMelee, randTrail, impact, isMirrored, targetScale, within5ft}) {
           const sourceScale = { x: source?.document?.texture?.scaleX ?? 1, y: source?.document?.texture?.scaleY ?? 1 }
           const gridSize = canvas.grid.size;
-          
+
           const amplitude = Sequencer.Helpers.random_float_between(0.0, 0.2);
           let hitRay = new foundry.canvas.geometry.Ray(source, target);
           const shakeDirection = { x: Math.sign(hitRay.dx), y: Math.sign(hitRay.dy) };
@@ -303,7 +291,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
           const interval = 50;
           const easeOption = "easeInOutSine";
 
-          new Sequence({moduleName: "gambits-premades", softFail: true})
+          new Sequence()
 
               .effect()
               .copySprite(source)
@@ -430,7 +418,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
       async function rangedAttack({target, targetScale}) {
           const sourceScale = { x: source?.document?.texture?.scaleX ?? 1, y: source?.document?.texture?.scaleY ?? 1 }
           const amplitude = Sequencer.Helpers.random_float_between(0.0, 0.2);
-          let hitRay = new foundry.canvas.geometry.Ray(source, target); // v14: bare Ray global removed
+          let hitRay = new Ray(source, target);
           const shakeDirection = { x: Math.sign(hitRay.dx), y: Math.sign(hitRay.dy) };
           const values = {
               x: [0, -amplitude * shakeDirection.y, amplitude * shakeDirection.y, (-amplitude * shakeDirection.y) / 4, (amplitude * shakeDirection.y) / 4, 0],
@@ -439,7 +427,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
           const interval = 50;
           const easeOption = "easeInOutSine";
 
-          new Sequence({moduleName: "gambits-premades", softFail: true})
+          new Sequence()
 
               .sound()
               .file(soundFileRange)
@@ -523,9 +511,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
               .play()
       }
 
-      /**************************
-       * ANIMATION CALL AND LOOP*
-       **************************/
+
 
       const dbPath = weapon;
       const entries = Sequencer.Database.getEntry(dbPath) ?? null;
@@ -539,7 +525,7 @@ export async function weaponAnimations({enableTrail = true, enableImpact = true,
           let randMelee = `${dbPath}.${rand}`;
           let randTrail;
           enableTrail ? randTrail =`${trail}.${rand}` : randTrail = ''
-          
+
           // Let's add to the randomisation by mirroring the animation half the time, on top of the random attack variation.
           let isMirrored = Math.random() < 0.5; // 50% probability. 0.1 would make it 10%, 0.2 20%...etc
 

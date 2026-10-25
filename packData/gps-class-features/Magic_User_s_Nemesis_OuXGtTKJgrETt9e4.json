@@ -9,7 +9,7 @@
     "source": {
       "page": "",
       "license": "",
-      "custom": "2.1.38",
+      "custom": "",
       "rules": "2014",
       "revision": 1,
       "book": ""
@@ -282,33 +282,6 @@
     ]
   },
   "flags": {
-    "ddbimporter": {
-      "id": 732,
-      "data": {
-        "id": 732,
-        "name": "Magic-User’s Nemesis",
-        "prerequisite": null,
-        "description": "<p class=\"Core-Styles_Core-Body\">At 11th level, you gain the ability to thwart someone else’s magic. When you see a creature casting a spell or teleporting within 60 feet of you, you can use your reaction to try to magically foil it. The creature must succeed on a Wisdom saving throw against your spell save DC, or its spell or teleport fails and is wasted.</p>\r\n<p class=\"Core-Styles_Core-Body\">Once you use this feature, you can’t use it again until you finish a short or long rest.</p>",
-        "requiredLevel": 11,
-        "displayOrder": 5
-      },
-      "version": "5.2.36",
-      "featureId": 732,
-      "featureName": "Magic-User’s Nemesis",
-      "requiredLevel": 11,
-      "prerequisite": null,
-      "class": "Ranger",
-      "classId": 110,
-      "subClass": "Monster Slayer",
-      "parentClassId": 5,
-      "effectsApplied": true,
-      "chrisEffectsApplied": true,
-      "chrisPreEffectName": "Magic-User’s Nemesis"
-    },
-    "scene-packer": {
-      "sourceId": "Item.",
-      "hash": "bf692d46210da7981d1e67a21a36b4ba7fe4297f"
-    },
     "midi-qol": {
       "onUseMacroName": "",
       "rollAttackPerTarget": "default",
@@ -324,17 +297,47 @@
         "effect": []
       }
     },
-    "midiProperties": {
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false
-    },
     "gambits-premades": {
-      "gpsUuid": "e573e3f4-d9f5-4105-8187-d44f09ae6a0b"
+      "gpsUuid": "e573e3f4-d9f5-4105-8187-d44f09ae6a0b",
+      "itemConfig": {
+        "playAnimation": {
+          "label": "GAMBITSPREMADES.ItemConfig.PlayAnimation",
+          "type": "checkbox",
+          "default": true,
+          "category": "animations"
+        }
+      },
+      "animationModules": [
+        "JB2APatreon"
+      ]
+    },
+    "cat": {
+      "automation": {
+        "source": "gambits-premades",
+        "version": "3.0.1"
+      }
+    },
+    "autoanimations": {
+      "isEnabled": false,
+      "version": 5
+    },
+    "boss-loot-assets-premium": {
+      "S73e3dXo1wUaYk1e": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Use",
+        "activityType": "utility",
+        "version": 2
+      },
+      "PlBKD3anOzKhjaxO": {
+        "autoRec": {
+          "enabled": false
+        },
+        "activityName": "Save",
+        "activityType": "save",
+        "version": 2
+      }
     }
   },
   "img": "icons/magic/control/debuff-chains-ropes-net-green.webp",
