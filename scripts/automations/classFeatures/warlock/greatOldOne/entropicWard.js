@@ -130,6 +130,6 @@ export async function entropicWard({ speaker, actor, token, character, item, arg
         if(!effectData) return;
         let effectDataTarget = effectData.getFlag("gambits-premades", "entropicWardTarget");
         if(!effectDataTarget) return;
-        if(effectData && effectDataTarget === workflow.targets.first().document.uuid) await effectData.delete();
+        if(effectData && effectDataTarget === workflow.targets.tokens[0].document.uuid) await effectData.delete();
     }
 }

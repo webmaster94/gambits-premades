@@ -1,5 +1,13 @@
 # Changelog
 
+## [v3.3.0] - 2026-11-14
+- Targets D&D 6.1.0 and incorporates upstream GPS fixes through 3.0.5. Fixes region movement crashes and recursion during synthetic actor preparation, including Freedom of Movement and Elemental Affinity.
+- Uses Midi's explicit token collection views and counts. Preserves document-aware target sets when reactions change hits, including targets without canvas graphics.
+- Updates embedded item macros and normalizes the affected 2014 identifiers. Existing CAT choices, Interception/Protection UUID aliases, and compact teleport prompts remain intact.
+- Requires CAT 0.1.8+, Midi-QOL 14.6.12+, and DAE 14.6.9+. The installed Midi build must permit D&D 6.1; upstream 14.6.12 currently caps its manifest at 6.0.x.
+- Validated with regression tests, JavaScript/JSON checks, and compendium builds. No new in-game validation or complete automation playthrough was performed.
+
+
 ## [v3.2.0] - 2026-10-25
 - Integrates official GPS 3.0.2 while preserving this fork's CAT migration, world-settings interface, and compact teleport prompts and destination rings.
 - Uses upstream's native Foundry user queries and regions, updated V14/D&D 6 automations, contextual token-focus dialogs, resolved-reaction suppression, and animation-provider fallbacks. Adds 2014 Fury of the Small.

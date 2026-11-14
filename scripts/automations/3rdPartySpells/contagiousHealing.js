@@ -41,7 +41,7 @@ export async function contagiousHealing({ speaker, actor, token, character, item
     }
 
     else if(args[0].macroPass === "postActiveEffects") {
-        let target = workflow.targets.first();
+        let target = workflow.targets.tokens[0];
         if(!target) return;
         let effectData = target.actor.appliedEffects.find(e => DAE.effectMatchesSource(e, macroItem.uuid) && e.name === macroItem.name);
         if(!effectData) return;

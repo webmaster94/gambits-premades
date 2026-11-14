@@ -29,16 +29,16 @@ export async function weaponOil({actor, token, item, macroItem, args, workflow})
     if(!coated) return;
     const pass = args[0]?.macroPass;
     if(oilType === "anti-demon") {
-        const target = (pass === "preWaitForAttackRoll" ? workflow.targets : workflow.hitTargets).first();
+        const target = (pass === "preWaitForAttackRoll" ? workflow.targets : workflow.hitTargets).tokens[0];
         if(!target || !["undead", "fiend"].includes(MidiQOL.raceOrType(target))) return;
         if(pass === "preWaitForAttackRoll") workflow.advantage = true;
         if(pass !== "preDamageApplication") return;
         const roll = await new CONFIG.Dice.DamageRoll(`${workflow.isCritical ? 2 : 1}d6`, {}, {type: "radiant", properties: ["mgc"]}).evaluate();
         await MidiQOL.displayDSNForRoll(roll, "damageRoll");
-        new MidiQOL.DamageOnlyWorkflow(actor, token, roll.total, "radiant", [target], roll, {itemData: {flags: {autoanimations: {isEnabled: false, version: 5}}, name: oil.name, type: "feat", img: oil.img}});
+        new MidiQOL.DamageOnlyWorkflow(actor, token, roll.total, "radiant", [target], roll, {itemData: {flags: {}, name: oil.name, type: "feat", img: oil.img}});
     }
     if(oilType === "corrosive") {
-        for(const target of workflow.hitTargets) {
+        for(const target of workflow.hitTargets.tokens) {
             if(pass === "preDamageRoll") await MidiQOL.socket().executeAsGM("createEffects", {actorUuid: target.actor.uuid, effects: [{
                 name: "Corrosive Damage DR", img: oil.img, origin: oil.uuid,
                 flags: {"gambits-premades": {corrosiveWorkflow: workflow.id}}, duration: {expiry: "turnEnd"},

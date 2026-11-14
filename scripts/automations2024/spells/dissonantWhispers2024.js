@@ -1,6 +1,6 @@
 export async function dissonantWhispers2024({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if (args[0].macroPass === "postActiveEffects") {
-        const targets = workflow.hitTargets;
+        const targets = workflow.hitTargets.tokens;
         const gmUser = game.gps.getPrimaryGM();
         for(let target of targets) {
             const targetMovementSpeed = target.actor.system.attributes.movement.speeds.walk;

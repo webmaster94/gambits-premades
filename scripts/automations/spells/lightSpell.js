@@ -6,7 +6,7 @@ export async function lightSpell({ actor, token, item, args, workflow }) {
     const sourceActor = sourceItem?.actor ?? actor;
     if(!sourceItem || !sourceActor || workflow.activity?.identifier === "syntheticSave") return;
 
-    const target = workflow.targets.first() ?? token;
+    const target = workflow.targets.tokens[0] ?? token;
     const targetDocument = target?.document ?? target;
     const isLightEffect = effect => !effect.transfer
         && effect.system?.changes?.some(change => change.key === "token.light.color");
@@ -36,7 +36,7 @@ export async function lightSpell({ actor, token, item, args, workflow }) {
         }
         for(const scene of game.scenes) {
             for(const sceneToken of scene.tokens) {
-                if(sceneToken.actorLink || !sceneToken.delta?._source.effects?.some(effect => isLightEffect(effect) && matchesSource(effect))) continue;
+                if(sceneToken.actorLink || !sceneToken._source.delta?.effects?.some(effect => isLightEffect(effect) && matchesSource(effect))) continue;
                 for(const effect of sceneToken.actor?.effects ?? []) {
                     if(isLightEffect(effect) && matchesSource(effect)) candidates.set(effect.uuid, effect);
                 }

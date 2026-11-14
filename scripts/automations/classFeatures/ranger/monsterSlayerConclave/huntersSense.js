@@ -1,7 +1,7 @@
 export async function huntersSense({ speaker, actor, token, character, item, args, scope, workflow, options }) {
-    if (args[0].macroPass == 'preActiveEffects' && workflow.targets.size !== 1) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.ClassFeatures.Ranger.MonsterSlayerConclave.HuntersSense.TargetSingleCreature"));
+    if (args[0].macroPass == 'preActiveEffects' && workflow.targets.count !== 1) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.ClassFeatures.Ranger.MonsterSlayerConclave.HuntersSense.TargetSingleCreature"));
 
-    const targetActor = workflow.targets.first().actor;
+    const targetActor = workflow.targets.tokens[0].actor;
     const actorPlayer = MidiQOL.playerForActor(actor);
 
     // Effect names to check if target is immune to Divination Magic, add additional effects below

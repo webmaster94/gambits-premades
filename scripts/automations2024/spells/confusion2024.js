@@ -151,7 +151,7 @@ export async function confusion2024({ speaker, actor, token, character, item, ar
     }
     else if(args[0].macroPass === "postAllRollsComplete") {
         let template = await fromUuid(workflow.templateUuid);
-        if(!workflow.failedSaves.size) {
+        if(!workflow.failedSaves.count) {
             const hasConcApplied = MidiQOL.getConcentrationEffect(actor, item.uuid)
             if (hasConcApplied)	await hasConcApplied.delete();
         }

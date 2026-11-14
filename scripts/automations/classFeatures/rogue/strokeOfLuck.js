@@ -1,7 +1,7 @@
 export async function strokeOfLuck({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "preCheckHits") {
-        if(workflow.targets.size !== 1 || item.system.uses.spent >= item.system.uses.max) return;
-        if(workflow.attackTotal >= workflow.targets.first().actor.system.attributes.ac.value) return;
+        if(workflow.targets.count !== 1 || item.system.uses.spent >= item.system.uses.max) return;
+        if(workflow.attackTotal >= workflow.targets.tokens[0].actor.system.attributes.ac.value) return;
 
         let dialogId = "strokeofluck";
         let dialogTitlePrimary = `${token.actor.name} | ${item.name}`;

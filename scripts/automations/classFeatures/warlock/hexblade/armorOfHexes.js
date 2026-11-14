@@ -1,7 +1,7 @@
 export async function armorOfHexes({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "isAttacked") {
         const targetUuid = token.document?.uuid ?? token.uuid;
-        let target = [...workflow.targets].find(t => t.document.uuid === targetUuid && t.actor.uuid === actor.uuid);
+        let target = [...workflow.targets.tokens].find(t => t.document.uuid === targetUuid && t.actor.uuid === actor.uuid);
         if(!target) return;
         const ownedCurse = workflow.actor.appliedEffects.some(effect => {
             if(effect.name !== "Hexblade's Curse: Target") return false;

@@ -105,7 +105,7 @@ export async function fizbansPlatinumShield({ speaker, actor, token, character, 
             }
             }
             `;
-        let targets = workflow.targets;
+        let targets = workflow.targets.tokens;
 
         for(let target of targets) {
         const concentration = MidiQOL.getConcentrationEffect(actor, item.uuid);

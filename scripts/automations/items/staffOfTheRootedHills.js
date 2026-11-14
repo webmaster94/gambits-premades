@@ -2,7 +2,7 @@ export async function staffOfTheRootedHills({ speaker, actor, token, character, 
     if(args[0].macroPass === "postDamageRoll") {
         let flagValue = await item.getFlag("gambits-premades", "rootedHillsStaff");
         if(flagValue === 0) return;
-        let target = workflow.hitTargets.first();
+        let target = workflow.hitTargets.tokens[0];
         if(!target) return;
         const saveResult = await game.gps.gpsActivityUse({itemUuid: item.uuid, identifier: "syntheticSave", targetUuid: target.document.uuid});
 

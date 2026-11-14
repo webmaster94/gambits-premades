@@ -29,11 +29,11 @@ export async function ensureRegionEscape({tokenUuid, regionUuid}) {
         data.midiProperties = {...data.midiProperties, automationOnly: false, identifier: `regionEscape-${ability}`, confirmTargets: "none"};
         activities[data._id] = data;
     }
-    const [created] = await token.actor.createEmbeddedDocuments("Item", [game.gps.disableBlfxAutoRecognition({
+    const [created] = await token.actor.createEmbeddedDocuments("Item", [{
         name: game.i18n.format("GAMBITSPREMADES.RegionEscape.Name", {spell: spell.name}), type: "feat", img: spell.img,
         system: {type: {value: "monster"}, description: {value: game.i18n.localize("GAMBITSPREMADES.RegionEscape.Description")}, activities, source: {rules: spell.system.source.rules}},
-        flags: {autoanimations: {isEnabled: false, version: 5}, dnd5e: {dependentOn: restraint.uuid}, "gambits-premades": {regionEscape: {regionUuid, tokenUuid}}, "midi-qol": {onUseMacroName: "[prePreambleComplete]function.game.gps.regionEscapeAction,[postActiveEffects]function.game.gps.regionEscapeAction"}}
-    })]);
+        flags: {dnd5e: {dependentOn: restraint.uuid}, "gambits-premades": {regionEscape: {regionUuid, tokenUuid}}, "midi-qol": {onUseMacroName: "[prePreambleComplete]function.game.gps.regionEscapeAction,[postActiveEffects]function.game.gps.regionEscapeAction"}}
+    }]);
     return created?.uuid;
 }
 
@@ -47,7 +47,7 @@ export async function regionEscapeAction({item, args, workflow}) {
             workflow.aborted = true;
             return;
         }
-        workflow.targets = new Set([token.object]);
+        workflow.targets = new MidiQOL.TokenDocumentSet([token.object]);
     }
     if(args?.[0]?.macroPass === "postActiveEffects" && !workflow.aborted && workflow.saves?.has(token?.object)) {
         await game.gps.queryGM("setRegionStatus", {tokenUuid: token.uuid, regionUuid: region.uuid, active: false});

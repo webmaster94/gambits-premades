@@ -9,7 +9,7 @@ export async function calculatedFlourish({workflowData,workflowType,workflowComb
     if (!actionTypes.some(type => workflow.activity?.actionType?.includes(type))) {
         return;
     }
-    let target = workflow.targets.first();
+    let target = workflow.targets.tokens[0];
     if(!target) return;
     let gmUser = game.gps.getPrimaryGM();
     const initialTimeLeft = Number(MidiQOL.safeGetGameSetting('gambits-premades', `Calculated Flourish Timeout`));

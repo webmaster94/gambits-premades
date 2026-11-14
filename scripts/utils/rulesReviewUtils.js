@@ -10,8 +10,10 @@ export function registerRulesReviewHooks() {
         const result = freedomMovementChanges.call(this, wrapped, phase);
         if(phase === "final") {
             const item = this.items.find(item => item.system.identifier === "elemental-affinity" && item.system.source.rules === "2024");
-            const type = item && elementalAffinityType(item);
-            if(type && item.effects.some(effect => effect.active && effect.transfer)) this.system.traits.dr.value.add(type);
+            if(item?.effects.some(effect => effect.active && effect.transfer)) {
+                const type = elementalAffinityType(item);
+                if(type) this.system.traits.dr.value.add(type);
+            }
         }
         return result;
     }, "WRAPPER");
@@ -38,7 +40,7 @@ export function commandExpiredAtTurnStart(effectUuid) {
 
 export function damagedAttackTarget(workflow) {
     if(!workflow.activity?.hasAttack) return;
-    return [...workflow.hitTargets].find(target => workflow.damageList?.some(damage =>
+    return [...workflow.hitTargets.tokens].find(target => workflow.damageList?.some(damage =>
         (damage.tokenUuid === target.document.uuid || damage.actorUuid === target.actor.uuid)
         && Number(damage.totalDamage) > 0));
 }
@@ -47,9 +49,9 @@ export async function foresight({actor, item, args, workflow}) {
     if(args?.[0]?.macroPass !== "postActiveEffects" || workflow.aborted) return;
     const actors = new Map([...game.actors].map(actor => [actor.uuid, actor]));
     for(const scene of game.scenes) for(const token of scene.tokens) {
-        if(!token.actorLink && token.delta?._source.effects?.some(effect => effect.flags?.["gambits-premades"]?.foresight)) actors.set(token.actor.uuid, token.actor);
+        if(!token.actorLink && token._source.delta?.effects?.some(effect => effect.flags?.["gambits-premades"]?.foresight)) actors.set(token.actor.uuid, token.actor);
     }
-    const currentTargets = new Set([...workflow.targets].map(token => token.actor.uuid));
+    const currentTargets = new Set([...workflow.targets.tokens].map(token => token.actor.uuid));
     for(const recipient of actors.values()) {
         const effects = recipient.effects.filter(effect => effect.flags?.["gambits-premades"]?.foresight
             && effect.getSourceActor()?.uuid === actor.uuid);
@@ -78,9 +80,9 @@ export async function bindFeatureResource({actor, item, workflow}) {
 }
 
 export async function huntersSense({actor, token, workflow, args}) {
-    const target = workflow.targets.first();
+    const target = workflow.targets.tokens[0];
     if(args?.[0]?.macroPass === "preItemRoll") {
-        if(!target || workflow.targets.size !== 1 || !game.gps.withinRange(token, target, 60) || !MidiQOL.canSee(token, target)) {
+        if(!target || workflow.targets.count !== 1 || !game.gps.withinRange(token, target, 60) || !MidiQOL.canSee(token, target)) {
             workflow.aborted = true;
             return false;
         }

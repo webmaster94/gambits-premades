@@ -1,6 +1,6 @@
 export async function powerWordHeal2024({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "postPreambleComplete") {
-        const targets = workflow.targets;
+        const targets = workflow.targets.tokens;
         let gmUser = game.gps.getPrimaryGM();
         for(let target of targets) {
 
@@ -22,7 +22,7 @@ export async function powerWordHeal2024({ speaker, actor, token, character, item
             let healRoll = await new CONFIG.Dice.DamageRoll(`${remainingHP}`, {}, {type: "healing", properties: ["mgc"]}).evaluate();
 
             const itemData = {
-                flags: {autoanimations: {isEnabled: false, version: 5}},
+                flags: {},
                 name: "Power Word Healing",
                 type: "feat",
                 img: item.img

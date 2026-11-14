@@ -7,7 +7,7 @@ export async function poetryInMisery({workflowData,workflowType,workflowCombat})
     let dialogId = gpsUuid;
     const triggeringTokens = workflowType === "save" && workflow
         ? Object.entries(workflow.tokenSaves ?? {}).filter(([, roll]) => roll.isFumble)
-            .map(([uuid]) => [...(workflow.targets ?? [])].find(token => token.document?.uuid === uuid) ?? fromUuidSync(uuid)?.object).filter(token => token?.actor)
+            .map(([uuid]) => [...(workflow.targets?.tokens ?? [])].find(token => token.document?.uuid === uuid) ?? fromUuidSync(uuid)?.object).filter(token => token?.actor)
         : (workflow ? workflow.attackRoll : workflowData.roll)?.isFumble
             ? [workflow?.token ?? await MidiQOL.tokenForActor(workflowData.actor)].filter(token => token?.actor)
             : [];

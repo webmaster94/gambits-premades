@@ -5,7 +5,7 @@ export async function interception({workflowData,workflowType,workflowCombat}) {
     if(workflow.item.flags["gambits-premades"]?.gpsUuid === gpsUuid) return;
     let itemName = "Fighting Style: Interception";
     let dialogId = gpsUuid;
-    let target = workflow.hitTargets.first();
+    let target = workflow.hitTargets.tokens[0];
     const actionTypes = ["mwak", "rwak", "msak", "rsak"];
     if (!actionTypes.some(type => workflow.activity?.actionType?.includes(type))) return;
     if (!target) return;

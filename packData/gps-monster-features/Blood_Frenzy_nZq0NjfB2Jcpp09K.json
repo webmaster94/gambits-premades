@@ -44,7 +44,7 @@
         "img": "icons/skills/wounds/blood-spurt-spray-red.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"preAttackRoll\") {\n    if(workflow.activity?.actionType !== \"mwak\" && workflow.activity?.actionType !== \"msak\") return;\n    let target = workflow.targets.first();\n    if(target.actor.system.attributes.hp.effectiveMax !== target.actor.system.attributes.hp.value) workflow.advantage = true;\n}",
+        "command": "if(args[0].macroPass === \"preAttackRoll\") {\n    if(workflow.activity?.actionType !== \"mwak\" && workflow.activity?.actionType !== \"msak\") return;\n    let target = workflow.targets.tokens[0];\n    if(target.actor.system.attributes.hp.effectiveMax !== target.actor.system.attributes.hp.value) workflow.advantage = true;\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3
@@ -88,17 +88,14 @@
     "cat": {
       "automation": {
         "source": "gambits-premades",
-        "version": "3.0.1"
+        "version": "3.3.0"
       }
-    },
-    "autoanimations": {
-      "isEnabled": false,
-      "version": 5
     }
   },
   "img": "icons/skills/wounds/blood-spurt-spray-red.webp",
   "effects": [
     {
+      "sort": 0,
       "origin": "Compendium.world.gps-monster-features.Item.nZq0NjfB2Jcpp09K",
       "duration": {},
       "disabled": false,
@@ -120,7 +117,6 @@
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
-      "sort": 0,
       "flags": {
         "dae": {
           "disableIncapacitated": false,
@@ -132,10 +128,6 @@
         },
         "core": {
           "overlay": false
-        },
-        "autoanimations": {
-          "isEnabled": false,
-          "version": 5
         }
       },
       "start": null,

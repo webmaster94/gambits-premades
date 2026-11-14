@@ -1,7 +1,7 @@
 export async function infestation({ speaker, actor, token, character, item, args, scope, workflow, options }) {
-    if(args[0].macroPass === "postSavesComplete" && workflow.failedSaves.size !== 0) {
+    if(args[0].macroPass === "postSavesComplete" && workflow.failedSaves.count !== 0) {
         let gmUser = game.gps.getPrimaryGM();
-        let targets = workflow.failedSaves;
+        let targets = workflow.failedSaves.tokens;
         for(let target of targets) {
             const directionRoll = await new CONFIG.Dice.DamageRoll(`1d4`).evaluate();
             await MidiQOL.displayDSNForRoll(directionRoll, 'damageRoll')

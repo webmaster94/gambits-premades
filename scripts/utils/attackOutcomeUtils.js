@@ -17,8 +17,8 @@ export function isAttackForcedMiss(workflow, target) {
 }
 
 function allTargetsMiss(workflow) {
-    return isAttackForcedMiss(workflow) || (workflow.targets.size > 0
-        && [...workflow.targets].every(target => isAttackForcedMiss(workflow, target)));
+    return isAttackForcedMiss(workflow) || (workflow.targets.count > 0
+        && workflow.targets.documents.every(target => isAttackForcedMiss(workflow, target)));
 }
 
 /** Records an explicit miss without altering the rolled dice or actor effects. Returns false for a duplicate override. */
@@ -50,10 +50,11 @@ function applyAttackMisses(workflow) {
     for(const key of ["hitTargets", "hitTargetsEC"]) {
         const targets = workflow[key];
         if(!targets) continue;
-        const remaining = new Set([...targets].filter(target => !isAttackForcedMiss(workflow, target)));
-        if(remaining.size !== targets.size) workflow[key] = remaining;
+        for(const target of targets.documents) {
+            if(isAttackForcedMiss(workflow, target)) targets.delete(target);
+        }
     }
-    for(const target of workflow.targets) {
+    for(const target of workflow.targets.documents) {
         if(!isAttackForcedMiss(workflow, target)) continue;
         const hit = workflow.hitDisplayData?.[target.document?.uuid ?? target.uuid];
         if(hit) Object.assign(hit, {isHit: false, hitClass: "failure", hitSymbol: "fa-xmark", hitResultNumeric: ""});

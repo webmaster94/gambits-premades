@@ -2,7 +2,7 @@ export async function entangle({ tokenUuid, regionUuid, regionScenario, speaker,
     if(args?.[0]?.macroPass === "postSave")
     {
         const template = await fromUuid(workflow.templateUuid);
-        const targets = Array.from(workflow.failedSaves);
+        const targets = Array.from(workflow.failedSaves.tokens);
 
         for (let target of targets) {
             const hasEffectApplied = game.gps.regionStatusEffects(target, template.uuid).length > 0;

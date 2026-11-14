@@ -5,14 +5,14 @@ export async function powerWordRebound({workflowData,workflowType,workflowCombat
     if(workflow.item.flags["gambits-premades"]?.gpsUuid === gpsUuid) return;
     let itemName = "Power Word Rebound";
     let dialogId = gpsUuid;
-    let target = workflow.targets.first();
+    let target = workflow.targets.tokens[0];
     if(!target) return;
     let gmUser = game.gps.getPrimaryGM();
     const initialTimeLeft = Number(MidiQOL.safeGetGameSetting('gambits-premades', `${itemName} Timeout`));
 
     if(target.actor.system.attributes.hp.value >= Math.floor(target.actor.system.attributes.hp.max / 2)) return;
     if(workflow.attackTotal < target.actor.system.attributes.ac.value) return;
-    if(workflow.targets.size > 1) return;
+    if(workflow.targets.count > 1) return;
 
     let findValidTokens = game.gps.findValidTokens({initiatingToken: workflow.token, targetedToken: target, itemName: itemName, itemType: "spell", itemChecked: null, reactionCheck: true, sightCheck: true, rangeCheck: true, rangeTotal: 60, dispositionCheck: true, dispositionCheckType: "enemy", workflowType: workflowType, workflowCombat: workflowCombat, gpsUuid: gpsUuid});
 

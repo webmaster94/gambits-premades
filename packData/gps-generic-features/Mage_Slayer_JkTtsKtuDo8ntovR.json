@@ -50,7 +50,7 @@
         "img": "icons/weapons/polearms/halberd-crescent-glowing.webp",
         "type": "script",
         "scope": "global",
-        "command": "if(args[0].macroPass === \"preDamageRollComplete\") {\n  if(workflow.hitTargets.size === 0) return;\n  let target = workflow.hitTargets.first();\n\n  const hasConcApplied = target.actor.appliedEffects.some(e => e.name.includes(\"Concentrating\"));\n\tif (!hasConcApplied) return;\n\n  let effectData = [{\n    \"origin\": macroItem.uuid,\n    \"disabled\": false,\n    \"name\": `${macroItem.name} - Disadvantage`,\n    \"img\": macroItem.img,\n    \"type\": \"base\",\n    system: { changes: [\n      {\n        \"key\": \"system.attributes.concentration.roll.mode\",\n        type: \"add\",\n        \"value\": -1,\n        \"priority\": 20\n      }\n    ] },\n    \"transfer\": false,\n    \"flags\": {\n      \"dae\": {\n        \"specialDuration\": [\n          \"isSave.con\"\n        ]\n      }\n    }\n  }];\n\n  await MidiQOL.socket().executeAsGM(\"createEffects\", { actorUuid: target.actor.uuid, effects: effectData });\n}",
+        "command": "if(args[0].macroPass === \"preDamageRollComplete\") {\n  if(workflow.hitTargets.count === 0) return;\n  let target = workflow.hitTargets.tokens[0];\n\n  const hasConcApplied = target.actor.appliedEffects.some(e => e.name.includes(\"Concentrating\"));\n\tif (!hasConcApplied) return;\n\n  let effectData = [{\n    \"origin\": macroItem.uuid,\n    \"disabled\": false,\n    \"name\": `${macroItem.name} - Disadvantage`,\n    \"img\": macroItem.img,\n    \"type\": \"base\",\n    system: { changes: [\n      {\n        \"key\": \"system.attributes.concentration.roll.mode\",\n        type: \"add\",\n        \"value\": -1,\n        \"priority\": 20\n      }\n    ] },\n    \"transfer\": false,\n    \"flags\": {\n      \"dae\": {\n        \"specialDuration\": [\n          \"isSave.con\"\n        ]\n      }\n    }\n  }];\n\n  await MidiQOL.socket().executeAsGM(\"createEffects\", { actorUuid: target.actor.uuid, effects: effectData });\n}",
         "author": "roRDywD19pu2VxlC",
         "ownership": {
           "default": 3
@@ -86,17 +86,14 @@
     "cat": {
       "automation": {
         "source": "gambits-premades",
-        "version": "3.0.1"
+        "version": "3.3.0"
       }
-    },
-    "autoanimations": {
-      "isEnabled": false,
-      "version": 5
     }
   },
   "img": "icons/weapons/polearms/halberd-crescent-glowing.webp",
   "effects": [
     {
+      "sort": 0,
       "origin": "Compendium.world.gps-generic-features.Item.iuUGS62pqYBuo1U0",
       "duration": {},
       "disabled": false,
@@ -118,7 +115,6 @@
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
-      "sort": 0,
       "flags": {
         "dae": {
           "disableIncapacitated": false,
@@ -129,10 +125,6 @@
           "selfTarget": false,
           "selfTargetAlways": false,
           "dontApply": false
-        },
-        "autoanimations": {
-          "isEnabled": false,
-          "version": 5
         }
       },
       "start": null,

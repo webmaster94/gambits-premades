@@ -1,6 +1,6 @@
 export async function beguilingArrow({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "postSave") {
-        let target = workflow.failedSaves.first();
+        let target = workflow.failedSaves.tokens[0];
         if(!target) return;
         const allies = canvas.tokens.placeables.filter(t => t.actor && t.actor.uuid !== actor.uuid && t.actor.uuid !== target.actor.uuid && t.document.disposition === token.document.disposition && MidiQOL.canSee(token, t) && game.gps.withinRange(target, t, 30));
 

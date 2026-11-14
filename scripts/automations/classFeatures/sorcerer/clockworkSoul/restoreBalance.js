@@ -62,8 +62,8 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
         let dialogContent;
 
         if(workflowType === "save") {
-            let targetAllies = Array.from(workflow.targets).filter(t => t.document.disposition === validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
-            let targetEnemies = Array.from(workflow.targets).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
+            let targetAllies = Array.from(workflow.targets.tokens).filter(t => t.document.disposition === validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
+            let targetEnemies = Array.from(workflow.targets.tokens).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
 
             const tokenSaves = workflow.tokenSaves ?? {};
             targetAllies = targetAllies.filter(t => game.gps.reactionCanChangeOutcome(workflow, {type: "save", desired: "success", target: t}) && tokenSaves[t.document.uuid]?.formula.includes("kl") && !tokenSaves[t.document.uuid].formula.includes("kh"));
@@ -195,7 +195,7 @@ export async function restoreBalance({workflowData,workflowType,workflowCombat})
 
             let target;
             let disposition;
-            if(workflowType === "attack") target = await workflow.targets.first();
+            if(workflowType === "attack") target = await workflow.targets.tokens[0];
             else if(workflowType === "save") {
                 if(allyTokenUuid) {
                     target = await fromUuid(allyTokenUuid);

@@ -19,7 +19,7 @@ export async function flashOfGenius({workflowData,workflowType,workflowCombat}) 
     let browserUser;
 
     for (const validTokenPrimary of findValidTokens) {
-        let targets = workflow ? Array.from(workflow.targets).filter(t => t.document.disposition === validTokenPrimary.document.disposition) : [initiatingToken];
+        let targets = workflow ? Array.from(workflow.targets.tokens).filter(t => t.document.disposition === validTokenPrimary.document.disposition) : [initiatingToken];
         targets = targets.filter(t => {
             if(!game.gps.reactionCanChangeOutcome(workflow, {type: "save", desired: "success", target: t})) return false;
             if(!t || (workflow && !workflow.tokenSaves?.[t.document.uuid])) return false;

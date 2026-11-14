@@ -1,6 +1,6 @@
 export async function updateSaveResult({workflow, token, roll, saved}) {
     const uuid = token?.document?.uuid ?? token?.uuid;
-    token = Array.from(workflow.targets ?? []).find(t => t.document.uuid === uuid) ?? token?.object ?? token;
+    token = Array.from(workflow.targets?.tokens ?? []).find(t => t.document.uuid === uuid) ?? token?.object ?? token;
     if(!uuid || !token?.actor || !roll) return;
     if(!(roll instanceof Roll)) roll = Roll.fromJSON(JSON.stringify(roll));
     const previous = workflow.tokenSaves?.[uuid];
@@ -9,7 +9,7 @@ export async function updateSaveResult({workflow, token, roll, saved}) {
     if(workflow.determineCriticalOrFumble) {
         const result = workflow.determineCriticalOrFumble(roll, roll.total);
         for(const [key, active] of [["criticalSaves", result.isCritical], ["fumbleSaves", result.isFumble]]) {
-            workflow[key] ??= new Set();
+            workflow[key] ??= new MidiQOL.TokenDocumentSet();
             workflow[key].delete(token);
             if(active) workflow[key].add(token);
         }

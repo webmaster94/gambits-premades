@@ -1,9 +1,9 @@
 export async function mentalPrison({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "postActiveEffects") {
-        const targets = workflow.failedSaves;
+        const targets = workflow.failedSaves.tokens;
         const hasConcApplied = MidiQOL.getConcentrationEffect(actor, item.uuid)
-        const checkFails = workflow.failedSaves.size === workflow.activationFails.size;
-        const checkElements = [...workflow.failedSaves].every(token =>
+        const checkFails = workflow.failedSaves.count === workflow.activationFails.size;
+        const checkElements = [...workflow.failedSaves.tokens].every(token =>
         workflow.activationFails.has(token)
         );
 
@@ -20,7 +20,7 @@ export async function mentalPrison({ speaker, actor, token, character, item, arg
         await MidiQOL.displayDSNForRoll(damageRoll, 'damageRoll')
 
         const itemData = {
-            flags: {autoanimations: {isEnabled: false, version: 5}},
+            flags: {},
             name: "Mental Prison - Effect End",
             type: "feat",
             img: item.img

@@ -1,6 +1,6 @@
 export async function sleep2024({ speaker, actor, token, character, item, args, scope, workflow, options, rolledItem, rolledActivity, macroItem }) {
     if(args?.[0].macroPass === "preSavesComplete") {
-        for (let target of workflow.failedSaves) {
+        for (let target of workflow.failedSaves.tokens) {
             if(/magical sleep/i.test(target.actor.system.traits.ci.custom ?? "") || target.actor.system.traits.ci.value.has("exhaustion")) {
                 workflow.failedSaves.delete(target);
                 workflow.saves.add(target);

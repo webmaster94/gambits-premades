@@ -10,7 +10,7 @@ export async function taleOfHubris({workflowData,workflowType,workflowCombat}) {
     let gmUser = game.gps.getPrimaryGM();
     const initialTimeLeft = Number(MidiQOL.safeGetGameSetting('gambits-premades', `${itemName} Timeout`));
 
-    let findValidTokens = game.gps.findValidTokens({initiatingToken: initiatingToken, targetedToken: workflow.hitTargets.first(), itemName: itemName, itemType: "feature", itemChecked: ["bardic inspiration"], reactionCheck: true, sightCheck: true, rangeCheck: true, rangeTotal: 60, dispositionCheck: true, dispositionCheckType: "enemy", workflowType: workflowType, workflowCombat: workflowCombat, gpsUuid: gpsUuid});
+    let findValidTokens = game.gps.findValidTokens({initiatingToken: initiatingToken, targetedToken: workflow.hitTargets.tokens[0], itemName: itemName, itemType: "feature", itemChecked: ["bardic inspiration"], reactionCheck: true, sightCheck: true, rangeCheck: true, rangeTotal: 60, dispositionCheck: true, dispositionCheckType: "enemy", workflowType: workflowType, workflowCombat: workflowCombat, gpsUuid: gpsUuid});
 
     let browserUser;
 

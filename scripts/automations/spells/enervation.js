@@ -137,7 +137,7 @@ async function startBeam(state, caster, target) {
 export async function enervation({actor, token, item, args, workflow}) {
     if(args[0]?.macroPass === "postActiveEffects") {
         const concentration = actor.effects.get(workflow.concentrationId) ?? MidiQOL.getConcentrationEffect(actor, item.uuid);
-        const targets = Array.from(workflow.failedSaves ?? []).filter(target => target.actor);
+        const targets = Array.from(workflow.failedSaves?.tokens ?? []).filter(target => target.actor);
         if(!targets.length) {
             await healFromDamage(workflow, actor, token, item);
             await removeEffect(concentration);

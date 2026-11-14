@@ -40,7 +40,7 @@ export async function motivationalSpeech({ speaker, actor, token, character, ite
       let gmUser = game.gps.getPrimaryGM();
       const spellLevel = workflow.castData.castLevel - 2;
       const tempHpAmount = parseInt(spellLevel) * 5;
-      await game.gps.queryUser("gpsApplyTempHp", gmUser, { actorUuids: Array.from(workflow.targets).filter(target => target.actor).map(target => target.actor.uuid), tempHp: tempHpAmount, motivationalSpeechSource: item.uuid });
+      await game.gps.queryUser("gpsApplyTempHp", gmUser, { actorUuids: Array.from(workflow.targets.tokens).filter(target => target.actor).map(target => target.actor.uuid), tempHp: tempHpAmount, motivationalSpeechSource: item.uuid });
     }
 
     if(args?.[0] === "on")

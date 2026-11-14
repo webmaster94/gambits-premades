@@ -110,7 +110,7 @@ export async function drafynsBaneOfExcellence({actor, token, item, args, workflo
     }
     if(args?.[0]?.macroPass === "postActiveEffects" && !workflow.aborted) {
         item = macroItem ?? item;
-        for(const target of workflow.failedSaves) {
+        for(const target of workflow.failedSaves.tokens) {
             const effect = target.actor.appliedEffects.find(candidate => candidate.active && candidate.getFlag(MODULE_ID, "gpsUuid") === EFFECT_ID
                 && DAE.effectMatchesSource(candidate, item.uuid));
             if(effect) await game.gps.queryUser("initializeDrafynMotes", game.gps.getPrimaryGM(), {
@@ -135,7 +135,7 @@ export async function drafynsBaneOfExcellence({actor, token, item, args, workflo
     if(workflowType === "save") {
         workflow = MidiQOL.Workflow.getWorkflow(workflowData);
         if(!workflow) return;
-        for(const target of [...workflow.saves]) {
+        for(const target of [...workflow.saves.tokens]) {
             const roll = workflow.tokenSaves?.[target.document.uuid];
             if(!naturalTwenty(roll)) continue;
             const effect = curse(target.actor);

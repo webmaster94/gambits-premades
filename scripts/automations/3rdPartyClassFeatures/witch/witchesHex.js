@@ -42,7 +42,7 @@ export async function witchesHex({workflowData,workflowType,workflowCombat}) {
         let dialogContent;
 
         if(workflowType === "save") {
-            let targets = Array.from(workflow.saves).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
+            let targets = Array.from(workflow.saves.tokens).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
 
             const targetUuids = targets.map(t => t.document.uuid);
             const targetNames = targets.map(t => t.document.name);
@@ -208,7 +208,7 @@ export async function witchesHex({workflowData,workflowType,workflowCombat}) {
                 }
             }
             else if(workflowType === "attack") {
-                let targetAC = workflow.targets.first().actor.system.attributes.ac.value;
+                let targetAC = workflow.targets.tokens[0].actor.system.attributes.ac.value;
 
                 if(source && source === "user") reroll = await game.gps.queryUser("rollAsUser", browserUser, { rollParams: `1${hexDie}`, type: workflowType });
                 if(source && source === "gm") reroll = await game.gps.queryUser("rollAsUser", gmUser, { rollParams: `1${hexDie}`, type: workflowType });
@@ -217,7 +217,7 @@ export async function witchesHex({workflowData,workflowType,workflowCombat}) {
 
                 await game.gps.setAttackResult(workflow, rerollNew);
 
-                if(!game.gps.attackHits(workflow, workflow.targets.first())) {
+                if(!game.gps.attackHits(workflow, workflow.targets.tokens[0])) {
                     chatContent = `<span style='text-wrap: wrap;'>${game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.ThirdPartyClassFeatures.Witch.WitchesHex.HexReducedAttackMiss", { reduction: reroll.total })} <img src="${workflow.token.actor.img}" width="30" height="30" style="border:0px"></span>`;
                     await game.gps.queryUser("replaceChatCard", gmUser, {actorUuid: validTokenPrimary.actor.uuid, itemUuid: chosenItem.uuid, chatContent: chatContent, rollData: rerollNew});
                     if(game.gpsSettings.skipResolvedReactions && game.gps.reactionCanChangeOutcome(workflow)) continue;

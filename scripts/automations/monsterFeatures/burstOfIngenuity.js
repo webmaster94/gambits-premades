@@ -17,7 +17,7 @@ export async function burstOfIngenuity({ workflowData,workflowType,workflowComba
     if(findValidTokens.length === 0 || !findValidTokens) return;
 
     for (const validTokenPrimary of findValidTokens) {
-        let targets = Array.from(workflow.targets).filter(t => {
+        let targets = Array.from(workflow.targets.tokens).filter(t => {
             if(!game.gps.reactionCanChangeOutcome(workflow, {type: "save", desired: "success", target: t})) return false;
             if(t.document.disposition !== validTokenPrimary.document.disposition || !workflow.tokenSaves?.[t.document.uuid]) return false;
             const distance = MidiQOL.computeDistance(validTokenPrimary, t, {wallsBlock: true, includeCover: true});

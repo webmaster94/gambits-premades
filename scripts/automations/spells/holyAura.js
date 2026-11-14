@@ -7,7 +7,7 @@ export async function holyAura({actor, item, args, workflow}) {
         if(!data) return;
         delete data._id;
         delete data._key;
-        const recipients = Array.from(workflow.targets, target => target.document.uuid);
+        const recipients = Array.from(workflow.targets.tokens, target => target.document.uuid);
         data.type = "auraeffects.aura";
         data.origin = item.uuid;
         data.flags.dnd5e = {dependentOn: concentration.uuid};

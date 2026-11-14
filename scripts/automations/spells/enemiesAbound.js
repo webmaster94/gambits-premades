@@ -1,6 +1,6 @@
 export async function enemiesAbound({ speaker, actor, token, character, item, macroItem, args, scope, workflow, options }) {
     if(args[0].macroPass === "postActiveEffects") {
-        const targets = workflow.failedSaves;
+        const targets = workflow.failedSaves.tokens;
         for(let target of targets) {
             const immunity = target.actor.system.traits?.ci?.value?.has("frightened");
 

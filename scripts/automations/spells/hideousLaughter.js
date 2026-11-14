@@ -1,11 +1,11 @@
 export async function hideousLaughter({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0]?.macroPass === "prePreambleComplete" && item.system.source.rules === "2014") {
-        for(const target of Array.from(workflow.targets)) {
+        for(const target of Array.from(workflow.targets.tokens)) {
             if(target.actor.system.abilities.int.value > 4) continue;
             workflow.targets.delete(target);
             ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.HideousLaughter.TargetNotAffectedIntTooLow"));
         }
-        if(!workflow.targets.size) workflow.aborted = true;
+        if(!workflow.targets.count) workflow.aborted = true;
         return;
     }
     if (args[0].macroPass === "isDamaged" || args[0] === "each")
@@ -35,9 +35,9 @@ export async function hideousLaughter({ speaker, actor, token, character, item, 
 
     else if (args[0].macroPass === "postActiveEffects")
     {
-        let targets = workflow.failedSaves;
+        let targets = workflow.failedSaves.tokens;
         const hasConcApplied = MidiQOL.getConcentrationEffect(actor, item.uuid)
-        if(!targets.size && hasConcApplied) {
+        if(!targets.length && hasConcApplied) {
             await hasConcApplied.delete();
             return;
         }
@@ -201,8 +201,8 @@ export async function hideousLaughter({ speaker, actor, token, character, item, 
             }
         }
 
-        targets = workflow.failedSaves;
-        if(!targets.size && hasConcApplied) {
+        targets = workflow.failedSaves.tokens;
+        if(!targets.length && hasConcApplied) {
             await hasConcApplied.delete();
             return;
         }

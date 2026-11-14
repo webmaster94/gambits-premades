@@ -1,6 +1,6 @@
 export async function viciousMockery({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if(args[0].macroPass === "prePreambleComplete" && item.system.source.rules === "2014") {
-        const targets = workflow.targets;
+        const targets = workflow.targets.tokens;
         for(let target of targets) {
             const hasEffectApplied = target.document.hasStatusEffect("deafened");
             if(hasEffectApplied) {
@@ -9,15 +9,15 @@ export async function viciousMockery({ speaker, actor, token, character, item, a
             }
         }
 
-        if(workflow.targets.size === 0) return workflow.aborted = true;
+        if(workflow.targets.count === 0) return workflow.aborted = true;
     }
 
     if(args[0].macroPass === "postSavesComplete") {
         let cprConfig = game.gps.getCprConfig({itemUuid: item.uuid});
         const { animEnabled } = cprConfig;
 
-        const targets = workflow.failedSaves;
-        if(targets.size === 0) return;
+        const targets = workflow.failedSaves.tokens;
+        if(targets.length === 0) return;
 
         for(let target of targets) {
             const targetActor = target.actor;

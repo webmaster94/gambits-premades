@@ -77,7 +77,7 @@ export function registerHooks() {
 
     Hooks.on("midi-qol.preCheckHits", async (workflow) => {
         if(!workflow.activity.hasAttack) return;
-        if(isAttackForcedMiss(workflow) || (workflow.targets.size > 0 && [...workflow.targets].every(target => isAttackForcedMiss(workflow, target)))) return;
+        if(isAttackForcedMiss(workflow) || (workflow.targets.count > 0 && [...workflow.targets.tokens].every(target => isAttackForcedMiss(workflow, target)))) return;
         let workflowItemUuid = workflow.itemCardUuid;
         if (game.gpsSettings.silveryBarbsEnabled) await executeWorkflow({ workflowItem: "silveryBarbs", workflowData: workflowItemUuid, workflowType: "attack", workflowCombat: true });
         if (game.gpsSettings.cuttingWordsEnabled) await executeWorkflow({ workflowItem: "cuttingWords", workflowData: workflowItemUuid, workflowType: "attack", workflowCombat: true });
@@ -120,7 +120,7 @@ export function registerHooks() {
     Hooks.on("midi-qol.preSavesComplete", async (workflow) => {
         if(!workflow.saveActivity) return;
         let workflowItemUuid = workflow.itemCardUuid;
-        const hasDrafynsBaneOfExcellence = Array.from(workflow.saves).some(t => t.document.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "e6e24759-a9d3-4993-b0f2-6328010a6520"));
+        const hasDrafynsBaneOfExcellence = Array.from(workflow.saves.tokens).some(t => t.document.actor.appliedEffects.some(e => e.flags["gambits-premades"]?.gpsUuid === "e6e24759-a9d3-4993-b0f2-6328010a6520"));
         if (hasDrafynsBaneOfExcellence) await executeWorkflow({ workflowItem: "drafynsBaneOfExcellence", workflowData: workflowItemUuid, workflowType: "save", workflowCombat: true });
         if (game.gpsSettings.restoreBalanceEnabled) await executeWorkflow({ workflowItem: "restoreBalance", workflowData: workflowItemUuid, workflowType: "save", workflowCombat: true });
         if (game.gpsSettings.flashOfGeniusEnabled) await executeWorkflow({ workflowItem: "flashOfGenius", workflowData: workflowItemUuid, workflowType: "save", workflowCombat: true });

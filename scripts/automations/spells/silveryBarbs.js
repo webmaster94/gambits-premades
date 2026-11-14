@@ -16,9 +16,9 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
     if(workflow.legendaryResistanceUsed) return;
 
     // Check if attack hits
-    if(workflowType === "attack" && !game.gpsSettings.skipResolvedReactions && workflow.attackTotal < workflow.targets?.first()?.actor.system.attributes.ac.value) return debugEnabled ? game.gps.logInfo(`${itemName} failed due to no valid attack targets`) : "";
+    if(workflowType === "attack" && !game.gpsSettings.skipResolvedReactions && workflow.attackTotal < workflow.targets?.tokens[0]?.actor.system.attributes.ac.value) return debugEnabled ? game.gps.logInfo(`${itemName} failed due to no valid attack targets`) : "";
     // Check if there is a save success
-    if(workflowType === "save" && workflow.saves.size === 0) return debugEnabled ? game.gps.logInfo(`${itemName} failed due to no valid save targets`) : "";
+    if(workflowType === "save" && workflow.saves.count === 0) return debugEnabled ? game.gps.logInfo(`${itemName} failed due to no valid save targets`) : "";
 
     let findValidTokens;
 
@@ -46,7 +46,7 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
         let validFriendlies = nearbyFriendlies.filter(token => token.document.disposition === validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary.document.uuid,token.document.uuid) && !token.actor.effects.getName(`${itemProperName} - Advantage`));
 
         if(workflowType === "save") {
-            let targets = Array.from(workflow.saves).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
+            let targets = Array.from(workflow.saves.tokens).filter(t => t.document.disposition !== validTokenPrimary.document.disposition && MidiQOL.canSee(validTokenPrimary, t) && game.gps.withinRange(validTokenPrimary, t, 60));
 
             if(targets.length === 0) {
                 debugEnabled ? game.gps.logInfo(`${itemName} for ${validTokenPrimary.actor.name} failed due to no valid save targets`) : "";
@@ -223,7 +223,7 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
             }
 
             if(workflowType === "save") {
-                const workflowTarget = Array.from(workflow.saves).find(t => t.document.uuid === enemyTokenUuid);
+                const workflowTarget = Array.from(workflow.saves.tokens).find(t => t.document.uuid === enemyTokenUuid);
                 if(!workflowTarget) continue;
                 const original = workflow.tokenSaves[enemyTokenUuid];
                 const rolled = await game.gps.queryUser("rollAsUser", game.gps.getBrowserUser({actorUuid: workflowTarget.actor.uuid}), {rollParams: "1d20"});
@@ -246,7 +246,7 @@ export async function silveryBarbs({workflowData,workflowType,workflowCombat}) {
             }
             else if(workflowType === "attack") {
                 let rerollAddition = workflow.attackRoll.total - workflow.attackRoll.dice[0].total;
-                let targetAC = workflow.targets.first().actor.system.attributes.ac.value;
+                let targetAC = workflow.targets.tokens[0].actor.system.attributes.ac.value;
                 let reroll;
                 if(source && source === "user") reroll = await game.gps.queryUser("rollAsUser", browserUser, { rollParams: `1d20 + ${rerollAddition}` });
                 if(source && source === "gm") reroll = await game.gps.queryUser("rollAsUser", gmUser, { rollParams: `1d20 + ${rerollAddition}` });

@@ -5,7 +5,7 @@ export async function protection({workflowData,workflowType,workflowCombat}) {
     if(workflow.item.flags["gambits-premades"]?.gpsUuid === gpsUuid) return;
     let itemName = "Fighting Style: Protection";
     let dialogId = gpsUuid;
-    let target = workflow.targets.first();
+    let target = workflow.targets.tokens[0];
     let enableProtectionOnSuccess = MidiQOL.safeGetGameSetting('gambits-premades', 'enableProtectionOnSuccess');
     if ((enableProtectionOnSuccess && workflow.attackRoll.formula.includes("kl")) || (!enableProtectionOnSuccess && workflow.tracker.hasDisadvantage)) return;
     let gmUser = game.gps.getPrimaryGM();

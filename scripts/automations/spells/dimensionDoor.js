@@ -1,7 +1,7 @@
 export async function dimensionDoor({ speaker, actor, token, character, item, args, scope, workflow, options }) {
     if (args[0].macroPass === "preActiveEffects") {
-        if (workflow.targets.size > 1) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.CanOnlySelectOne"));
-        const traveler = await game.gps.chooseTeleportTraveler({token, item, target: workflow.targets.first()});
+        if (workflow.targets.count > 1) return ui.notifications.warn(game.i18n.localize("GAMBITSPREMADES.Notifications.Spells.DimensionDoor.CanOnlySelectOne"));
+        const traveler = await game.gps.chooseTeleportTraveler({token, item, target: workflow.targets.tokens[0]});
         if (traveler.cancelled) return;
         let target = traveler.token ?? null;
         if(target) {
