@@ -1,6 +1,6 @@
 # CAT integration
 
-GPS 3.3.2 targets Foundry 14.370 and D&D 6.1.0 and requires Foundry 14.369+, CAT 0.1.8+, Midi QOL Enhanced 14.6.12.1+, and DAE 14.6.9+.
+GPS 3.3.3 targets Foundry 14.370 and D&D 6.1.0 and requires Foundry 14+, CAT 0.1.8+, Midi QOL Enhanced 14.6.12.1+, and DAE 14.6.9+.
 
 CAT lists the existing GPS compendiums. Animation configuration and supported custom dice or damage-type options appear on the item. GPS's module settings menus use CAT's renderer. Upstream 3.0.2 supplies the automation dialogs with token focus, reaction timers, mirrored decisions, and form selections. Native Foundry user queries replace the former socketlib transport.
 
