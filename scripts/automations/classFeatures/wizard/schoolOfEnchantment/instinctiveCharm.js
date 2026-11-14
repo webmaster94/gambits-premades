@@ -17,7 +17,7 @@ export async function instinctiveCharm({workflowData,workflowType,workflowCombat
     for (const validTokenPrimary of findValidTokens) {
         if(!workflow.targets.has(validTokenPrimary)) continue;
         let targets = canvas.tokens.placeables.filter(t => t.actor && t !== validTokenPrimary && t !== target
-            && MidiQOL.canSee(target, t) && MidiQOL.checkRange(workflow.activity, target, new Set([t]), false).result !== "fail");
+            && MidiQOL.canSee(target, t) && MidiQOL.checkActivityRange(workflow.activity, target, new Set([t]), false).result !== "fail");
 
         if(targets.length === 0) {
             if(debugEnabled) game.gps.logInfo(`${itemName} for ${validTokenPrimary.actor.name} failed at alternate target within range`);

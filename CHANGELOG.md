@@ -1,5 +1,12 @@
 # Changelog
 
+## [v3.3.1] - 2026-11-14
+- Uses Midi's current checkActivityRange API for Riposte, Instinctive Charm, Confusion and Calculated Flourish.
+- Save-reaction updates replace the correct display row in document mode and retain off-canvas targets in outcome checks.
+- Reads returned failed-save UUIDs directly while preserving the GPS query result contract.
+- Targets Midi QOL Enhanced 14.6.12.1 with D&D 6.1 support. Shared save-reaction regression, syntax and package checks pass.
+
+
 ## [v3.3.0] - 2026-11-14
 - Targets D&D 6.1.0 and incorporates upstream GPS fixes through 3.0.5. Fixes region movement crashes and recursion during synthetic actor preparation, including Freedom of Movement and Elemental Affinity.
 - Uses Midi's explicit token collection views and counts. Preserves document-aware target sets when reactions change hits, including targets without canvas graphics.

@@ -63,3 +63,25 @@ test('Freedom of Movement reads synthetic item sources without preparing the tok
     token._source.delta.items.push({_id: 'spell', _deleted: true});
     assert.equal(isMagicalEffect({origin: 'Scene.scene.Token.token.Item.spell'}, {uuid: 'Actor.other'}), false);
 });
+
+test('save reactions replace a document-mode result without leaving duplicate display rows', async () => {
+    const target = {documentName: 'Token', uuid: 'Scene.s.Token.target', actor: {}};
+    Object.defineProperty(target, 'document', {get() {throw new Error('Document mode must not read .document');}});
+    const roll = {total: 17, options: {}};
+    class Roll {}
+    Object.setPrototypeOf(roll, Roll.prototype);
+    const collection = members => ({
+        documents: members, has: member => members.includes(member),
+        add: member => {if(!members.includes(member)) members.push(member);},
+        delete: member => {const index = members.indexOf(member); if(index >= 0) members.splice(index, 1);}
+    });
+    const workflow = {targets: collection([target]), saves: collection([]), failedSaves: collection([target]),
+        saveDC: 15, tokenSaves: {[target.uuid]: {total: 4}}, saveDisplayData: [{target}],
+        buildSaveDisplayEntry: async function(token) {this.saveDisplayData.push({target: token});}};
+    const {updateSaveResult} = await load('utils/saveUtils.js', {Roll, MidiQOL: {}});
+    await updateSaveResult({workflow, token: target, roll, saved: true});
+    assert.equal(workflow.saves.has(target), true);
+    assert.equal(workflow.failedSaves.has(target), false);
+    assert.equal(workflow.saveDisplayData.length, 1);
+    assert.equal(workflow.targetSaveDetails[target.uuid].saveRoll, roll);
+});

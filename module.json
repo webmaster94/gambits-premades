@@ -10,7 +10,7 @@
       "ko-fi": "https://ko-fi.com/gambit07"
     }
   ],
-  "version": "3.3.0",
+  "version": "3.3.1",
   "compatibility": {
     "minimum": "14.369",
     "verified": "14.369",
@@ -227,8 +227,8 @@
         "id": "midi-qol",
         "type": "module",
         "compatibility": {
-          "minimum": "14.6.12",
-          "verified": "14.6.12"
+          "minimum": "14.6.12.1",
+          "verified": "14.6.12.1"
         }
       },
       {
@@ -316,5 +316,5 @@
     }
   ],
   "manifest": "https://github.com/webmaster94/gambits-premades/releases/latest/download/module.json",
-  "download": "https://github.com/webmaster94/gambits-premades/releases/download/3.3.0/module.zip"
+  "download": "https://github.com/webmaster94/gambits-premades/releases/download/3.3.1/module.zip"
 }

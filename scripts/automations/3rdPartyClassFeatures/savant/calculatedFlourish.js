@@ -35,7 +35,7 @@ export async function calculatedFlourish({workflowData,workflowType,workflowComb
         browserUser = game.gps.getBrowserUser({ actorUuid: validTokenPrimary.actor.uuid });
 
         // Check valid weapons
-        let validWeapons = validTokenPrimary.actor.items.filter(item => item.system.equipped === true && item.system.activities?.some(activity => activity?.actionType === "mwak" && MidiQOL.checkRange(activity, validTokenPrimary, new Set([workflow.token]), false).result !== "fail"));
+        let validWeapons = validTokenPrimary.actor.items.filter(item => item.system.equipped === true && item.system.activities?.some(activity => activity?.actionType === "mwak" && MidiQOL.checkActivityRange(activity, validTokenPrimary, new Set([workflow.token]), false).result !== "fail"));
         if (!validWeapons.length) continue;
 
         // Sort the weapons alphabetically

@@ -409,7 +409,7 @@
     "cat": {
       "automation": {
         "source": "gambits-premades",
-        "version": "3.3.0"
+        "version": "3.3.1"
       }
     }
   },

@@ -66,7 +66,7 @@ export async function confusion2024({ speaker, actor, token, character, item, ar
             content = game.i18n.localize("GAMBITSPREMADES.ChatMessages.Automations.Spells.Confusion.NoMoveOrActions");
             await updateConfusionEffect(token.actor, true)
         } else if (result < 9) {
-            const rangeCheck = canvas.tokens.placeables.filter(target => target.id !== token.id && target.actor && token.actor.items.some(weapon => weapon.system.equipped && weapon.system.activities?.some(activity => activity.actionType === "mwak" && MidiQOL.checkRange(activity, token, new Set([target]), false).result !== "fail")));
+            const rangeCheck = canvas.tokens.placeables.filter(target => target.id !== token.id && target.actor && token.actor.items.some(weapon => weapon.system.equipped && weapon.system.activities?.some(activity => activity.actionType === "mwak" && MidiQOL.checkActivityRange(activity, token, new Set([target]), false).result !== "fail")));
             if(rangeCheck.length > 0) {
             const randomSelection = rangeCheck[Math.floor(Math.random() * rangeCheck.length)];
             content = game.i18n.format("GAMBITSPREMADES.ChatMessages.Automations.Spells.Confusion.MustMoveAndMeleeAttack", { targetName: randomSelection.actor.name });

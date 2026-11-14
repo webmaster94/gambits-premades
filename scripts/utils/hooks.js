@@ -77,7 +77,7 @@ export function registerHooks() {
 
     Hooks.on("midi-qol.preCheckHits", async (workflow) => {
         if(!workflow.activity.hasAttack) return;
-        if(isAttackForcedMiss(workflow) || (workflow.targets.count > 0 && [...workflow.targets.tokens].every(target => isAttackForcedMiss(workflow, target)))) return;
+        if(isAttackForcedMiss(workflow) || (workflow.targets.count > 0 && workflow.targets.documents.every(target => isAttackForcedMiss(workflow, target)))) return;
         let workflowItemUuid = workflow.itemCardUuid;
         if (game.gpsSettings.silveryBarbsEnabled) await executeWorkflow({ workflowItem: "silveryBarbs", workflowData: workflowItemUuid, workflowType: "attack", workflowCombat: true });
         if (game.gpsSettings.cuttingWordsEnabled) await executeWorkflow({ workflowItem: "cuttingWords", workflowData: workflowItemUuid, workflowType: "attack", workflowCombat: true });

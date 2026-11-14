@@ -1,6 +1,6 @@
 export async function updateSaveResult({workflow, token, roll, saved}) {
-    const uuid = token?.document?.uuid ?? token?.uuid;
-    token = Array.from(workflow.targets?.tokens ?? []).find(t => t.document.uuid === uuid) ?? token?.object ?? token;
+    const uuid = token?.documentName === 'Token' ? token.uuid : token?.document?.uuid ?? token?.uuid;
+    token = workflow.targets?.documents.find(t => t.uuid === uuid) ?? token;
     if(!uuid || !token?.actor || !roll) return;
     if(!(roll instanceof Roll)) roll = Roll.fromJSON(JSON.stringify(roll));
     const previous = workflow.tokenSaves?.[uuid];
@@ -31,7 +31,8 @@ export async function updateSaveResult({workflow, token, roll, saved}) {
     workflow.failedSaves.delete(token);
     (saved ? workflow.saves : workflow.failedSaves).add(token);
     if(workflow.buildSaveDisplayEntry) {
-        workflow.saveDisplayData = (workflow.saveDisplayData ?? []).filter(entry => entry.target?.document?.uuid !== uuid);
+        workflow.saveDisplayData = (workflow.saveDisplayData ?? []).filter(entry =>
+            (entry.target?.documentName === 'Token' ? entry.target.uuid : entry.target?.document?.uuid ?? entry.target?.uuid) !== uuid);
         await workflow.buildSaveDisplayEntry(token, roll, saved, dc);
     }
     return saved;

@@ -1189,7 +1189,7 @@ export async function gpsActivityUse({itemUuid, identifier, targetUuid}) {
     const options = { midiOptions: { targetUuids: targetUuids, noOnUseMacro: true, configureDialog: false, showFullCard: false, ignoreUserTargets: true, checkGMstatus: true, autoRollAttack: true, autoRollDamage: "always", fastForwardAttack: true, fastForwardDamage: true, workflowData: true } };
     let activityUse = await MidiQOL.completeActivityUse(activity.uuid, options, {}, {});
     if (!activityUse || activityUse.aborted) return;
-    const failedSaveUuids = activityUse.failedSaveUuids ?? Array.from(activityUse.failedSaves ?? [], target => target.document.uuid);
+    const failedSaveUuids = activityUse.failedSaveUuids ?? activityUse.failedSaves?.uuids ?? [];
     const message = activityUse.itemCardUuid ? MidiQOL.getCachedChatMessage(activityUse.itemCardUuid) : null;
     const saveRoll = activityUse.tokenSaves?.[targetUuids[0]] ?? Object.values(activityUse.tokenSaves ?? {})[0]
         ?? message?.rolls.find(roll => roll.options?.["midi-qol"]?.rollType === "save" && roll.options["midi-qol"].targetUuid === targetUuids[0]);
