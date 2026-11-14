@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.2 - Foundry 14.370
+- Updates the Foundry compatibility target to 14.370 and retains 14.369 as the minimum supported build.
+- Metadata-only release. Automation behavior and dependency requirements are unchanged.
+
+
 ## [v3.3.1] - 2026-11-14
 - Uses Midi's current checkActivityRange API for Riposte, Instinctive Charm, Confusion and Calculated Flourish.
 - Save-reaction updates replace the correct display row in document mode and retain off-canvas targets in outcome checks.
